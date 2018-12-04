@@ -1,9 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.chunlangjiu.app.fans.activity.FansHomeActivity">
-
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/ll_invite_code"
+        android:paddingTop="@dimen/layout_padding_12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/layout_padding_12dp"
+        android:paddingRight="@dimen/layout_padding_12dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fans_your_invite_code"
+            android:textSize="@dimen/text_size_16sp"
+            android:textColor="@color/black"/>
+        <TextView android:id="@+id/tv_invite_fans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_padding_4dp"
+            android:textSize="@dimen/text_size_15sp"
+            android:textColor="@color/black"/>
+        <TextView android:id="@+id/tv_copy"
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:text="@string/fans_copy"
+            android:layout_marginLeft="@dimen/layout_padding_16dp"
+            android:textSize="@dimen/text_size_14sp"
+            android:textColor="@color/t_grey"
+            android:gravity="center"
+            android:background="@drawable/bg_white_soild_gray_stroke"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_invite_person"
+        android:paddingTop="@dimen/layout_padding_8dp"
+        android:paddingBottom="@dimen/layout_padding_12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_below="@+id/ll_invite_code"
+        android:paddingLeft="@dimen/layout_padding_12dp"
+        android:paddingRight="@dimen/layout_padding_12dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fans_invite_person"
+            android:textSize="@dimen/text_size_16sp"
+            android:textColor="@color/black"/>
+        <TextView android:id="@+id/tv_invite_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/layout_padding_4dp"
+            android:textSize="@dimen/text_size_15sp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+    <Button android:id="@+id/btn_invite_fans"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fans_invite_money"
+        android:background="@drawable/bg_white_soild_gray_stroke_round"
+        android:layout_marginLeft="@dimen/layout_margin_22dp"
+        android:layout_marginRight="@dimen/layout_margin_22dp"
+        android:layout_marginBottom="@dimen/layout_margin_24dp"/>
+</RelativeLayout>

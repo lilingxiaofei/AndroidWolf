@@ -1,4 +1,25 @@
 <resources>
     <string name="app_name">醇狼</string>
     <string name="rmb">¥</string>
+    <!-- 粉丝的字符码 -->
+    <string name="fans_manager">粉丝管理</string>
+    <string name="fans_list">粉丝列表</string>
+    <string name="fans_my_code">我的邀请码</string>
+    <string name="fans_invite">邀请粉丝</string>
+    <string name="fans_invite_tips">全民抢粉丝，赢取海量佣金！</string>
+    <string name="fans_num">粉丝数：%s 位</string>
+    <string name="fans_name">粉丝名称</string>
+    <string name="fans_contact_way">联系方式</string>
+    <string name="fans_register_money">注册金额</string>
+    <string name="fans_total_commission">累计佣金(%￥)</string>
+    <string name="fans_not_user">未认证用户</string>
+    <string name="fans_your_invite_code">您的邀请码：</string>
+    <string name="fans_invite_person">您的邀请人：</string>
+    <string name="fans_invite_money">邀请粉丝赢佣金</string>
+    <string name="fans_input_phone_tips">请输入您的手机号码</string>
+    <string name="fans_input_code">请输入验证码</string>
+    <string name="fans_send_code">发送验证码</string>
+    <string name="fans_reset_send">重新发送</string>
+    <string name="fans_register">注册</string>
+    <string name="fans_copy">复制</string>
 </resources>
