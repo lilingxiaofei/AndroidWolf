@@ -258,7 +258,15 @@
             android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <!-- 支付宝支付 -->
 
-        <activity android:name=".fans.activity.FansHomeActivity"></activity>
+        <activity android:name=".fans.activity.FansHomeActivity"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <activity android:name=".fans.activity.FansListActivity"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
+        <activity android:name=".fans.activity.FansInfoActivity"
+            android:exported="false"
+            android:screenOrientation="behind"></activity>
     </application>
 
 </manifest>

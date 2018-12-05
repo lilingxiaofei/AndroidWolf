@@ -16,6 +16,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.fans.activity.FansHomeActivity;
 import com.chunlangjiu.app.goods.dialog.EditAccountNameDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainActivity;
@@ -51,6 +52,7 @@ import com.umeng.socialize.media.UMWeb;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -173,6 +175,7 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlBankCardSecond;
     private RelativeLayout rlMyEvaluate;
     private RelativeLayout rlMySecondPlace;
+    private RelativeLayout rlFansManage ;
     /*我的管理*/
 
     private static final int TYPE_BUYER = 0;//买家中心
@@ -191,6 +194,7 @@ public class UserFragment extends BaseFragment {
     private String personName;
     private String companyName;
     private String shopName;
+
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -331,6 +335,9 @@ public class UserFragment extends BaseFragment {
                     break;
                 case R.id.rlMyEvaluate:// 我的估价
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_EVALUATE + BaseApplication.getToken(), "我的估价");
+                    break;
+                case R.id.rl_fans_manage:// 粉丝管理
+                    startActivity(new Intent(getActivity(), FansHomeActivity.class));
                     break;
             }
         }
@@ -488,8 +495,10 @@ public class UserFragment extends BaseFragment {
         rlBankCardSecond = rootView.findViewById(R.id.rlBankCardSecond);
         rlMyEvaluate = rootView.findViewById(R.id.rlMyEvaluate);
         rlMySecondPlace = rootView.findViewById(R.id.rlMySecondPlace);
+        rlFansManage = rootView.findViewById(R.id.rl_fans_manage);
         rlBankCardSecond.setOnClickListener(onClickListener);
         rlMyEvaluate.setOnClickListener(onClickListener);
+        rlFansManage.setOnClickListener(onClickListener);
 
         if (BaseApplication.HIDE_AUCTION) {
             llAuctionContent.setVisibility(View.GONE);

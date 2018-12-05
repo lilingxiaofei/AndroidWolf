@@ -3,58 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg_gray"
+    android:layout_height="56dp"
+    android:minHeight="56dp"
+    android:orientation="horizontal"
+    android:background="@color/bg_white"
     tools:context="com.chunlangjiu.app.fans.activity.FansHomeActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/white"
-        android:divider="@drawable/line_vertical"
-        android:dividerPadding="@dimen/dp_10"
-        android:orientation="horizontal"
-        android:showDividers="middle">
-        <TextView
+        <TextView android:id="@+id/tv_fans_name"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_14sp"
             android:textColor="@color/black"
             android:gravity="center"
-            android:text="@string/fans_name"
             />
-        <TextView
+        <TextView  android:id="@+id/tv_fans_phone"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_14sp"
             android:textColor="@color/black"
             android:gravity="center"
-            android:text="@string/fans_contact_way"
             />
-        <TextView
+        <TextView android:id="@+id/tv_register_time"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_14sp"
             android:textColor="@color/black"
             android:gravity="center"
-            android:text="@string/fans_register_time"
             />
-        <TextView
+        <TextView android:id="@+id/tv_money"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_14sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:text="@string/fans_total_commission"
-            />
-    </LinearLayout>
-    <android.support.v7.widget.RecyclerView android:id="@+id/rv_fans_list"
-        android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_height="wrap_content"/>
+            android:textColor="@color/t_red"
+            android:gravity="center"/>
 </LinearLayout>

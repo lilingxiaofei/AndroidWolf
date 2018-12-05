@@ -45,12 +45,13 @@
             android:drawableLeft="@mipmap/goods_details_msg"
             android:drawablePadding="@dimen/dp_10"
             android:text="@string/fans_my_code"/>
+
         <TextView android:id="@+id/tv_invite_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_15sp"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:drawableRight="@mipmap/black_right_arrow"
             android:drawablePadding="@dimen/dp_10"/>
     </RelativeLayout>

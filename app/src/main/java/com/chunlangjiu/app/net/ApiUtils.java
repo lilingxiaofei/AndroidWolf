@@ -8,6 +8,8 @@ import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
+import com.chunlangjiu.app.fans.bean.FansBean;
+import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
@@ -484,5 +486,12 @@ public class ApiUtils {
 
     public Flowable<ResultBean> editShopName(String token, String name) {
         return apiService.editShopName("user.update.shop", "v1", token, name);
+    }
+
+    public Flowable<ResultBean<List<FansItemBean>>> getFansList() {
+        return apiService.getFansList("user.update.shop", "v1");
+    }
+    public Flowable<ResultBean<FansBean>> getFansInfo() {
+        return apiService.getFansInfo("user.update.shop", "v1");
     }
 }

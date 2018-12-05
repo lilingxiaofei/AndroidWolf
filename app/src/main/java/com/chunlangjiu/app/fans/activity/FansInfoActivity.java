@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
+import com.chunlangjiu.app.fans.bean.FansBean;
+import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
 import butterknife.BindView;
@@ -34,8 +36,11 @@ public class FansInfoActivity extends BaseActivity {
     }
 
     private void updateView(){
-        tvInviteFans.setText("");
-        tvInvitePerson.setText("");
+        FansBean fansBean = getIntent().getParcelableExtra("fansBean");
+        if(fansBean!=null){
+            tvInviteFans.setText(fansBean.getInviteCode());
+            tvInvitePerson.setText(fansBean.getInvitePerson());
+        }
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -69,9 +74,9 @@ public class FansInfoActivity extends BaseActivity {
      * 启动邀请码Activity
      */
     public void startInviteFansActivity(){
-        Intent intent = new Intent();
-        intent.setClass(this,FansInviteActivity.class);
-        startActivity(intent);
+        String url = "http://www.baidu.com";
+        String title = getString(R.string.fans_register_app);
+        WebViewActivity.startWebViewActivity(this,url,title);
     }
 
     @Override

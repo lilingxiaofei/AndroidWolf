@@ -1677,10 +1677,29 @@
                     android:textSize="@dimen/sp_small" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <RelativeLayout android:id="@+id/rl_fans_manage"
                 android:layout_width="0dp"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1" >
+                <ImageView android:id="@+id/iv_fans_manage"
+                    android:layout_width="24dp"
+                    android:layout_height="22dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="14dp"
+                    android:src="@mipmap/my_evaluate" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_fans_manage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="我的估价"
+                    android:textColor="@color/t_black"
+                    android:textSize="@dimen/sp_small" />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
