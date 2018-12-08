@@ -13,12 +13,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.chunlangjiu.app.R;
-import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.goods.activity.GoodsListActivity;
-import com.chunlangjiu.app.goods.activity.ShopMainActivity;
-import com.chunlangjiu.app.goods.bean.FilterStoreBean;
 import com.chunlangjiu.app.goods.bean.GoodsListDetailBean;
-import com.chunlangjiu.app.goods.bean.OrderGoodsBean;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
 
@@ -34,31 +30,30 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
     private int itemType = LIST_GRID;
 
     private Context context ;
-    private boolean isShowStoreView = false;
+    private boolean isShowStoreView = true;
     public GoodsAdapter(Context context, List<GoodsListDetailBean> data) {
         super(data);
         this.context = context ;
-        getMultiTypeDelegate()
-                .registerItemType(LIST_LINEAR, R.layout.amain_item_goods_list_linear)
-                .registerItemType(LIST_GRID, R.layout.amain_item_goods_list_grid);
-
         setMultiTypeDelegate(new MultiTypeDelegate<GoodsListDetailBean>() {
             @Override
             protected int getItemType(GoodsListDetailBean cartGoodsBean) {
                 return itemType;
             }
         });
+        getMultiTypeDelegate()
+                .registerItemType(LIST_LINEAR, R.layout.amain_item_goods_list_linear)
+                .registerItemType(LIST_GRID, R.layout.amain_item_goods_list_grid);
     }
     //切换布局显示样式
     public void switchListType(){
         itemType = itemType == LIST_LINEAR?LIST_GRID:LIST_LINEAR;
     }
     //设置布局显示样式
-    private void setListType(int type){
+    public void setListType(int type){
         itemType = type == LIST_LINEAR?LIST_LINEAR:LIST_GRID;
     }
 
-    private void setShowStoreView(boolean isShow){
+    public void setShowStoreView(boolean isShow){
         isShowStoreView = isShow;
     }
 
@@ -75,9 +70,19 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             TextView tvStartPrice = helper.getView(R.id.tvStartPrice);
             TextView tvAnPaiStr = helper.getView(R.id.tvAnPaiStr);
 
+
+            //网格布局的时候设置图片大小
+            ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
+            if(itemType == LIST_GRID && layoutParams.width == layoutParams.height && layoutParams.width>0){
+                int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(40)) / 2;
+                layoutParams.width = picWidth;
+                layoutParams.height = picWidth;
+                imgPic.setLayoutParams(layoutParams);
+            }
+
+
             GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
             helper.setText(R.id.tv_name, item.getTitle());
-
 
             if (TextUtils.isEmpty(item.getAuction().getAuctionitem_id())) {
                 //普通商品
@@ -91,7 +96,6 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 helper.setText(R.id.tvStartPriceStr, "原价：");
                 tvStartPrice.setText(item.getMkt_price());
                 tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
-                helper.setText(R.id.tvSellPriceStr, "");
             } else {
                 //竞拍
                 imgAuction.setVisibility(View.VISIBLE);
@@ -144,6 +148,12 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                     helper.setGone(R.id.tv_partner,false);
                 }
             }
+
+
+
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
