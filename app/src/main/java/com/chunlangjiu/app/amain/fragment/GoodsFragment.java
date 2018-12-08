@@ -1,5 +1,7 @@
 package com.chunlangjiu.app.amain.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ import com.chunlangjiu.app.amain.bean.ThirdClassBean;
 import com.chunlangjiu.app.goods.activity.AuctionDetailActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
+import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
@@ -66,7 +69,7 @@ import io.reactivex.schedulers.Schedulers;
  * @Describe:
  */
 public class GoodsFragment extends BaseFragment {
-
+    private Activity activity ;
     private RelativeLayout rlBrand;
     private TextView tvBrand;
     private RelativeLayout rlArea;
@@ -88,9 +91,9 @@ public class GoodsFragment extends BaseFragment {
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private List<GoodsListDetailBean> lists;
-    private LinearAdapter linearAdapter;
-    private GridAdapter gridAdapter;
-    private boolean listType = false;//是否是列表形式
+//    private LinearAdapter linearAdapter;
+//    private GridAdapter gridAdapter;
+    private GoodsAdapter goodsAdapter ;
     private int pageNum = 1;
 
     private String brandId = "";
@@ -140,6 +143,11 @@ public class GoodsFragment extends BaseFragment {
         return goodsFragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (Activity)context ;
+    }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -280,21 +288,10 @@ public class GoodsFragment extends BaseFragment {
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         recyclerView = rootView.findViewById(R.id.recyclerView);
         lists = new ArrayList<>();
-        linearAdapter = new LinearAdapter(R.layout.amain_item_goods_list_linear, lists);
-        linearAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        goodsAdapter = new GoodsAdapter(activity,lists);
+        goodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
-                    GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), lists.get(position).getItem_id());
-                } else {
-                    AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
-                }
-            }
-        });
-        gridAdapter = new GridAdapter(R.layout.amain_item_goods_list_grid, lists);
-        gridAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
                     GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), lists.get(position).getItem_id());
                 } else {
@@ -303,7 +300,7 @@ public class GoodsFragment extends BaseFragment {
             }
         });
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setAdapter(gridAdapter);
+        recyclerView.setAdapter(goodsAdapter);
 
         refreshLayout.setEnableAutoLoadMore(false);//关闭自动加载更多
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -514,58 +511,29 @@ public class GoodsFragment extends BaseFragment {
             } else {
                 refreshLayout.setNoMoreData(false);
             }
-            if (listType) {
-                if (lists.size() == 0) {
-                    linearAdapter.setNewData(lists);
-                    linearAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-                } else {
-                    linearAdapter.setNewData(lists);
-                }
+
+
+            if (lists.size() == 0) {
+                goodsAdapter.setNewData(lists);
+                goodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
             } else {
-                if (lists.size() == 0) {
-                    gridAdapter.setNewData(lists);
-                    gridAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-                } else {
-                    gridAdapter.setNewData(lists);
-                }
+                goodsAdapter.setNewData(lists);
             }
         } else {
             lists.clear();
-            if (listType) {
-                linearAdapter.setNewData(lists);
-                linearAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-            } else {
-                gridAdapter.setNewData(lists);
-                gridAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-            }
+            goodsAdapter.setNewData(lists);
+            goodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
         }
     }
 
     private void changeListType() {
-        if (listType) {
-            //列表切换到网格
-            listType = false;
+        goodsAdapter.switchListType();
+        if(goodsAdapter.isGridLayout()){
             imgTitleRightTwoF.setImageResource(R.mipmap.icon_list);
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-            recyclerView.setAdapter(gridAdapter);
-            if (lists.size() == 0) {
-                gridAdapter.setNewData(lists);
-                gridAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-            } else {
-                gridAdapter.setNewData(lists);
-            }
-        } else {
-            //网格切换到列表
-            listType = true;
+        }else{
             imgTitleRightTwoF.setImageResource(R.mipmap.icon_grid);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(linearAdapter);
-            if (lists.size() == 0) {
-                linearAdapter.setNewData(lists);
-                linearAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-            } else {
-                linearAdapter.setNewData(lists);
-            }
         }
     }
 
@@ -850,6 +818,20 @@ public class GoodsFragment extends BaseFragment {
                 }
                 helper.setText(R.id.tvAttention, item.getView_count() + "人关注");
                 helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
+
+                helper.addOnClickListener(R.id.ll_store_name);
+                helper.setText(R.id.tv_store_name,item.getStoreName());
+                String level = item.getStoreLevel();
+                if("1".equals(level)){
+                    helper.setGone(R.id.tv_star_level,true);
+                    helper.setGone(R.id.tv_partner,false);
+                }else if("2".equals(level)){
+                    helper.setGone(R.id.tv_star_level,false);
+                    helper.setGone(R.id.tv_partner,true);
+                }else{
+                    helper.setGone(R.id.tv_star_level,false);
+                    helper.setGone(R.id.tv_partner,false);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

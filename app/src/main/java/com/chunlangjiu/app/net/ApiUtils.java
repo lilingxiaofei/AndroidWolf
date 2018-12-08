@@ -494,4 +494,7 @@ public class ApiUtils {
     public Flowable<ResultBean<FansBean>> getFansInfo() {
         return apiService.getFansInfo("user.update.shop", "v1");
     }
+    public Flowable<ResultBean> submitInviteCode(String inviteCode) {
+        return apiService.submitInviteCode("user.update.shop", "v1",inviteCode);
+    }
 }

@@ -23,4 +23,8 @@
     <string name="fans_register">注册</string>
     <string name="fans_copy">复制</string>
     <string name="fans_register_app">注册醇狼APP</string>
+    <string name="fans_input_invite_code">填写邀请码</string>
+    <string name="authenticated">已认证</string>
+    <string name="star_level">星级用户</string>
+    <string name="partner">城市合伙人</string>
 </resources>

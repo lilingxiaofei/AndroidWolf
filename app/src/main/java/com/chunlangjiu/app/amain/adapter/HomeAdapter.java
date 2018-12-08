@@ -65,6 +65,20 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 TextView tv_attention = viewHolder.getView(R.id.tv_attention);
                 TextView tv_evaluate = viewHolder.getView(R.id.tv_evaluate);
 
+                viewHolder.addOnClickListener(R.id.ll_store_name);
+                viewHolder.setText(R.id.tv_store_name,item.getStoreName());
+                String level = item.getStoreLevel();
+                if("1".equals(level)){
+                    viewHolder.setGone(R.id.tv_star_level,true);
+                    viewHolder.setGone(R.id.tv_partner,false);
+                }else if("2".equals(level)){
+                    viewHolder.setGone(R.id.tv_star_level,false);
+                    viewHolder.setGone(R.id.tv_partner,true);
+                }else{
+                    viewHolder.setGone(R.id.tv_star_level,false);
+                    viewHolder.setGone(R.id.tv_partner,false);
+                }
+
                 GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
                 viewHolder.setText(R.id.tv_name, item.getTitle());
 //                tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
@@ -139,6 +153,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 break;
         }
     }
+
 
     /**
      * 以下两个接口代替 activity.onStart() 和 activity.onStop(), 控制 timer 的开关

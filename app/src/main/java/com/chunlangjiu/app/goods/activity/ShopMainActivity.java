@@ -857,6 +857,22 @@ public class ShopMainActivity extends BaseActivity {
                 }
                 helper.setText(R.id.tvAttention, item.getView_count() + "人关注");
                 helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
+                helper.setText(R.id.tvAttention, item.getView_count() + "人关注");
+                helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
+
+                helper.addOnClickListener(R.id.ll_store_name);
+                helper.setText(R.id.tv_store_name,item.getStoreName());
+                String level = item.getStoreLevel();
+                if("1".equals(level)){
+                    helper.setGone(R.id.tv_star_level,true);
+                    helper.setGone(R.id.tv_partner,false);
+                }else if("2".equals(level)){
+                    helper.setGone(R.id.tv_star_level,false);
+                    helper.setGone(R.id.tv_partner,true);
+                }else{
+                    helper.setGone(R.id.tv_star_level,false);
+                    helper.setGone(R.id.tv_partner,false);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

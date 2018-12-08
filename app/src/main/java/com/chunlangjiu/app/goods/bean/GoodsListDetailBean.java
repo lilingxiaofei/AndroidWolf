@@ -21,6 +21,10 @@ public class GoodsListDetailBean {
     private GiftDetail gift;
     private Auction auction;
 
+    private String storeId ;//店铺id
+    private String storeName ;//店铺id
+    private String storeLevel ;//店铺等级
+
     public Auction getAuction() {
         return auction;
     }
@@ -226,4 +230,27 @@ public class GoodsListDetailBean {
         }
     }
 
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getStoreLevel() {
+        return storeLevel;
+    }
+
+    public void setStoreLevel(String storeLevel) {
+        this.storeLevel = storeLevel;
+    }
 }

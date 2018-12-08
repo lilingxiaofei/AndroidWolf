@@ -420,6 +420,16 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         });
+        homeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                int resId = view.getId();
+                HomeBean homeBean = lists.get(position);
+                if(resId == R.id.ll_store_name){
+                    ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getStoreId());
+                }
+            }
+        });
     }
 
     private void choiceCity() {

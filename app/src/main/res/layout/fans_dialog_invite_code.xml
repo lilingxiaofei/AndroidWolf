@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout android:id="@+id/rl_invite_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/common_dialog_bg"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="15dp"
+                android:text="@string/fans_input_invite_code"
+                android:textColor="#333333"
+                android:textSize="15sp" />
+
+            <!--        <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#eeeeee" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:text="嗨！欢迎来到醇狼高端酒交易平台，您可以在下面的输入框填写您的邀请人（选填）："
+                android:textColor="@color/t_gray"
+                android:textSize="10sp" />
+
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/my_input_name_bg"
+                    android:hint="请填写邀请人的邀请码~~~"
+                    android:textColorHint="@color/t_gray"
+                    android:maxLength="7"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/t_red"
+                    android:textSize="12sp" />
+
+
+            <include layout="@layout/line_horizontal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+                <TextView
+                    android:id="@+id/tvConfirm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/bg_red"
+                    android:gravity="center"
+                    android:text="填好了"
+                    android:textColor="@color/t_white"
+                    android:textSize="@dimen/sp_small" />
+                <TextView
+                    android:id="@+id/tvCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="没人邀请，不填了"
+                    android:textColor="@color/t_black"
+                    android:textSize="@dimen/sp_small" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <!--<RelativeLayout android:id="@+id/rl_loading"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_alignTop="@+id/rl_invite_layout"-->
+        <!--android:layout_alignBottom="@+id/rl_invite_layout">-->
+        <!--<include layout="@layout/dialog_common_loading" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true"/>-->
+    <!--</RelativeLayout>-->
+
+</RelativeLayout>
