@@ -130,3 +130,5 @@
 -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 # ----------------------- Glide  end  ------------------------------
+-keepattributes InnerClasses
+-dontoptimize

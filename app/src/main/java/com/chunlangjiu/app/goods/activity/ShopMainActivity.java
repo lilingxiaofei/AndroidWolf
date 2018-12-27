@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,7 +43,6 @@ import com.lzy.widget.HeaderViewPager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.KeyBoardUtils;
-import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.pkqup.commonlibrary.view.MyHeaderRecycleView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -141,8 +139,8 @@ public class ShopMainActivity extends BaseActivity {
 
     private CompositeDisposable disposable;
     private List<GoodsListDetailBean> lists;
-    private GoodsAdapter goodsAdapter ;
-//    private boolean listType = false;//是否是列表形式
+    private GoodsAdapter goodsAdapter;
+    //    private boolean listType = false;//是否是列表形式
 //    private LinearAdapter linearAdapter;
 //    private GridAdapter gridAdapter;
     private String classId;
@@ -273,11 +271,12 @@ public class ShopMainActivity extends BaseActivity {
         scrollableLayout.setCurrentScrollableContainer(recycleView);
 
         lists = new ArrayList<>();
-        goodsAdapter = new GoodsAdapter(this,lists);
+        goodsAdapter = new GoodsAdapter(this, lists);
         goodsAdapter.setShowStoreView(false);
         goodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                GoodsListDetailBean details = lists.get(position);
                 if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
                     GoodsDetailsActivity.startGoodsDetailsActivity(ShopMainActivity.this, lists.get(position).getItem_id());
                 } else {
@@ -537,10 +536,10 @@ public class ShopMainActivity extends BaseActivity {
 
     private void changeListType() {
         goodsAdapter.switchListType();
-        if(goodsAdapter.isGridLayout()){
+        if (goodsAdapter.isGridLayout()) {
             titleImgRightTwo.setImageResource(R.mipmap.icon_list);
             recycleView.setLayoutManager(new GridLayoutManager(this, 2));
-        }else{
+        } else {
             titleImgRightTwo.setImageResource(R.mipmap.icon_grid);
             recycleView.setLayoutManager(new LinearLayoutManager(this));
         }

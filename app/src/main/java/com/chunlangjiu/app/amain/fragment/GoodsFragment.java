@@ -3,7 +3,6 @@ package com.chunlangjiu.app.amain.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +28,7 @@ import com.chunlangjiu.app.amain.bean.ThirdClassBean;
 import com.chunlangjiu.app.goods.activity.AuctionDetailActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
+import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
@@ -46,10 +44,8 @@ import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoicePricePopWindow;
 import com.chunlangjiu.app.util.UmengEventUtil;
-import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.KeyBoardUtils;
-import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -289,15 +285,20 @@ public class GoodsFragment extends BaseFragment {
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         recyclerView = rootView.findViewById(R.id.recyclerView);
-        lists = new ArrayList<>();
         goodsAdapter = new GoodsAdapter(activity,lists);
+        lists = new ArrayList<>();
         goodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
-                    GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), lists.get(position).getItem_id());
-                } else {
-                    AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
+                GoodsListDetailBean details= lists.get(position);
+                if(view.getId() == R.id.rl_store_layout){
+                    ShopMainActivity.startShopMainActivity(activity, details.getStoreId());
+                }else{
+                    if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
+                        GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), details.getItem_id());
+                    } else {
+                        AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), details.getItem_id());
+                    }
                 }
             }
         });

@@ -25,6 +25,20 @@ public class GoodsListDetailBean {
     private String storeName ;//店铺id
     private String storeLevel ;//店铺等级
 
+
+
+    private String imgsrc;
+
+    private boolean isAuction;
+    private String auction_starting_price;
+    private String max_price;
+    private String auction_end_time;
+    private String auction_status;
+    private String auction_number;
+
+
+
+
     public Auction getAuction() {
         return auction;
     }

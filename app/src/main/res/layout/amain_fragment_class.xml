@@ -8,7 +8,7 @@
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/bg_black">
+        android:background="@color/bg_red">
 
         <TextView
             android:id="@+id/tv_city"

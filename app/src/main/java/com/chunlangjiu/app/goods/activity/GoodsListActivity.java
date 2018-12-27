@@ -2,7 +2,6 @@ package com.chunlangjiu.app.goods.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,13 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.amain.bean.FirstClassBean;
@@ -36,7 +33,6 @@ import com.chunlangjiu.app.goods.bean.GoodsListBean;
 import com.chunlangjiu.app.goods.bean.GoodsListDetailBean;
 import com.chunlangjiu.app.goods.dialog.ClassPopWindow;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.KeyBoardUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
@@ -316,7 +312,12 @@ public class GoodsListActivity extends BaseActivity {
         goodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                GoodsDetailsActivity.startGoodsDetailsActivity(GoodsListActivity.this, lists.get(position).getItem_id());
+                GoodsListDetailBean details = lists.get(position);
+                if(view.getId() == R.id.rl_store_layout){
+                    ShopMainActivity.startShopMainActivity(GoodsListActivity.this, details.getStoreId());
+                }else{
+                    GoodsDetailsActivity.startGoodsDetailsActivity(GoodsListActivity.this, details.getItem_id());
+                }
             }
         });
 

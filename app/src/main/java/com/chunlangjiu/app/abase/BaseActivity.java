@@ -3,7 +3,6 @@ package com.chunlangjiu.app.abase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +27,7 @@ public abstract class BaseActivity extends FragmentActivity {
     public ImageView titleImgRightTwo;
     public RelativeLayout titleSearchView;
     public EditText titleSearchEdit;
+    public TextView tvRight;
 
     public RelativeLayout contentView;//内容
     public RelativeLayout loadingView;//加载
@@ -75,7 +75,8 @@ public abstract class BaseActivity extends FragmentActivity {
         titleImgRightTwo = findViewById(R.id.img_title_right_two);
         titleSearchView = findViewById(R.id.rl_title_search);
         titleSearchEdit = findViewById(R.id.et_title_search);
-
+        tvRight = findViewById(R.id.tv_right);
+        
         contentView = findViewById(R.id.content_view);
         loadingView = findViewById(R.id.loading_view);
         emptyView = findViewById(R.id.empty_view);
@@ -85,6 +86,7 @@ public abstract class BaseActivity extends FragmentActivity {
         errorListView = View.inflate(this, R.layout.abase_activity_error_view, null);
         tvEmpty = emptyListView.findViewById(R.id.tvEmpty);
         tvError = emptyListView.findViewById(R.id.tvError);
+
     }
 
     @Override
@@ -95,7 +97,7 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     private void setStatusBarColor() {
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_black),
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_red),
                 StatusBarUtil.DEFAULT_STATUS_BAR_ALPHA);
     }
 

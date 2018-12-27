@@ -1,255 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/img_pic"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/imgAuction"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@id/img_pic"
+        android:layout_alignTop="@id/img_pic"
+        android:src="@mipmap/auction_icon"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/img_pic"
+        android:layout_alignRight="@id/img_pic"
+        android:layout_below="@id/img_pic"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/t_black"
+        android:textSize="@dimen/sp_mid"
+        tools:text="法国凡特纳酒庄 全都是系列 康帝" />
+
+    <LinearLayout
+        android:id="@+id/llFlag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/img_pic"
+        android:layout_below="@id/tv_name"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="@color/bg_gray"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
+            android:textColor="@color/t_black"
+            android:textSize="12sp"
+            tools:text="法国" />
+
+        <TextView
+            android:id="@+id/tv_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_gray"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
+            android:textColor="@color/t_black"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:text="92年" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llStartPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/img_pic"
+        android:layout_below="@id/llFlag"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvStartPriceStr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="起拍价："
+            android:textColor="@color/t_gray"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvStartPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥4000.00"
+            android:textColor="@color/t_gray"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/img_pic"
+        android:layout_below="@id/llStartPrice"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llHighPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvSellPriceStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最高出价："
+                android:textColor="@color/t_gray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvSellPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥5000.00"
+                android:textColor="@color/t_red"
+                android:textSize="@dimen/sp_mid" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvAnPaiStr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="暗拍商品，保密出价"
+            android:textColor="@color/t_orange"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvAttention"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/img_pic"
+        android:layout_below="@id/ll_flag"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/t_gray"
+        android:textSize="10sp"
+        tools:text="300人关注" />
+
+    <TextView
+        android:id="@+id/tvEvaluate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_flag"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@id/tvAttention"
+        android:textColor="@color/t_gray"
+        android:textSize="10sp"
+        tools:text="30条评价" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/tvEvaluate"
+        android:textColor="@color/t_gray"
+        android:textSize="10sp"
+        tools:text="30条评价" />
+
+    <ImageView
+        android:id="@+id/imgAddCart"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@id/tvEvaluate"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-8dp"
+        android:padding="10dp"
+        android:src="@mipmap/goods_cart"
+        android:visibility="gone" />
+
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/img_pic"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop" />
-
-        <ImageView
-            android:id="@+id/imgAuction"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignLeft="@id/img_pic"
-            android:layout_alignTop="@id/img_pic"
-            android:src="@mipmap/auction_icon"
-            android:visibility="gone" />
+        android:id="@+id/rl_store_layout"
+        android:layout_below="@+id/tvEvaluate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/img_pic"
+        android:layout_alignRight="@id/img_pic"
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="match_parent"
+            android:id="@+id/tv_store_level"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/img_pic"
-            android:layout_alignRight="@id/img_pic"
-            android:layout_below="@id/img_pic"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="@color/t_black"
-            android:textSize="@dimen/sp_mid"
-            tools:text="法国凡特纳酒庄 全都是系列 康帝" />
-
-        <LinearLayout
-            android:id="@+id/llFlag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/img_pic"
-            android:layout_below="@id/tv_name"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:background="@color/bg_gray"
-                android:paddingBottom="2dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="2dp"
-                android:textColor="@color/t_black"
-                android:textSize="12sp"
-                tools:text="法国" />
-
-            <TextView
-                android:id="@+id/tv_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/bg_gray"
-                android:paddingBottom="2dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="2dp"
-                android:textColor="@color/t_black"
-                android:textSize="12sp"
-                android:visibility="gone"
-                tools:text="92年" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llStartPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/img_pic"
-            android:layout_below="@id/llFlag"
-            android:layout_marginTop="2dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvStartPriceStr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="起拍价："
-                android:textColor="@color/t_gray"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvStartPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¥4000.00"
-                android:textColor="@color/t_gray"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_flag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/img_pic"
-            android:layout_below="@id/llStartPrice"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/llHighPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvSellPriceStr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="最高出价："
-                    android:textColor="@color/t_gray"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tvSellPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="¥5000.00"
-                    android:textColor="@color/t_red"
-                    android:textSize="@dimen/sp_mid" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvAnPaiStr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="暗拍商品，保密出价"
-                android:textColor="@color/t_orange"
-                android:textSize="12sp"
-                android:visibility="gone" />
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/tvAttention"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/img_pic"
-            android:layout_below="@id/ll_flag"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/t_gray"
+            android:layout_marginRight="5dp"
+            android:background="@color/bg_red"
+            android:gravity="center"
+            android:textColor="@color/white"
             android:textSize="10sp"
             tools:text="300人关注" />
 
         <TextView
-            android:id="@+id/tvEvaluate"
+            android:id="@+id/tv_store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_flag"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="4dp"
-            android:layout_toRightOf="@id/tvAttention"
+            android:layout_toRightOf="@+id/tv_store_level"
+            android:layout_toLeftOf="@+id/tv_store_into"
             android:textColor="@color/t_gray"
+            android:lines="1"
             android:textSize="10sp"
             tools:text="30条评价" />
 
-        <ImageView
-            android:id="@+id/imgAddCart"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignBottom="@id/tvEvaluate"
+        <TextView
+            android:id="@+id/tv_store_into"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="-8dp"
-            android:padding="10dp"
-            android:src="@mipmap/goods_cart"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/ll_store_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal"
-            android:layout_below="@+id/tvAttention"
-            android:layout_alignLeft="@+id/img_pic"
-            android:visibility="visible">
-
-            <TextView
-                android:id="@+id/tv_store_name"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:drawablePadding="3dp"
-                android:textColor="@color/t_grey"
-                android:textSize="@dimen/sp_12" />
-
-            <TextView
-                android:id="@+id/tv_store_enter"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_marginLeft="5dp"
-                android:drawablePadding="3dp"
-                android:drawableRight="@mipmap/black_right_arrow"
-                android:text="进店"
-                android:textColor="@color/t_grey"
-                android:textSize="@dimen/sp_12" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_store_grade"
-            android:layout_alignLeft="@+id/img_pic"
-            android:layout_below="@+id/ll_store_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal"
-            android:visibility="visible">
-
-            <TextView
-                android:id="@+id/tv_authenticated"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:drawablePadding="3dp"
-                android:text="@string/authenticated"
-                android:textColor="@color/t_grey"
-                android:textSize="@dimen/sp_12" />
-
-            <TextView
-                android:id="@+id/tv_star_level"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_marginRight="5dp"
-                android:drawablePadding="3dp"
-                android:text="@string/star_level"
-                android:textColor="@color/t_grey"
-                android:textSize="@dimen/sp_12" />
-
-            <TextView
-                android:id="@+id/tv_partner"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_marginRight="5dp"
-                android:drawablePadding="3dp"
-                android:text="@string/partner"
-                android:textColor="@color/t_grey"
-                android:textSize="@dimen/sp_12" />
-        </LinearLayout>
+            android:drawablePadding="4dp"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:textColor="@color/t_gray"
+            android:textSize="11sp"
+            tools:text="进店" />
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

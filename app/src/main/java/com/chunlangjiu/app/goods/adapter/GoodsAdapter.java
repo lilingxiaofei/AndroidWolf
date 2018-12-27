@@ -13,7 +13,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.chunlangjiu.app.R;
-import com.chunlangjiu.app.goods.activity.GoodsListActivity;
 import com.chunlangjiu.app.goods.bean.GoodsListDetailBean;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
@@ -131,20 +130,19 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             helper.setText(R.id.tv_evaluate, item.getRate_count() + "条评价");
 
 
-            helper.setGone(R.id.ll_store_name,isShowStoreView);
-            helper.setGone(R.id.ll_store_grade,isShowStoreView);
+            helper.setGone(R.id.rl_store_layout,isShowStoreView);
             if(isShowStoreView){
                 helper.addOnClickListener(R.id.ll_store_name);
                 helper.setText(R.id.tv_store_name,item.getStoreName());
                 String level = item.getStoreLevel();
                 if("1".equals(level)){
-                    helper.setGone(R.id.tv_star_level,true);
+                    helper.setGone(R.id.tv_store_level,true);
                     helper.setGone(R.id.tv_partner,false);
                 }else if("2".equals(level)){
-                    helper.setGone(R.id.tv_star_level,false);
+                    helper.setGone(R.id.tv_store_level,false);
                     helper.setGone(R.id.tv_partner,true);
                 }else{
-                    helper.setGone(R.id.tv_star_level,false);
+                    helper.setGone(R.id.tv_store_level,false);
                     helper.setGone(R.id.tv_partner,false);
                 }
             }

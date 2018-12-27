@@ -25,6 +25,7 @@ import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.activity.CompanyAuthActivity;
 import com.chunlangjiu.app.user.activity.PersonAuthActivity;
+import com.chunlangjiu.app.user.activity.SettingActivity;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
@@ -52,7 +53,6 @@ import com.umeng.socialize.media.UMWeb;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -207,7 +207,8 @@ public class UserFragment extends BaseFragment {
                 case R.id.tvToLogin:
                     break;
                 case R.id.imgSetting:
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SETTING + BaseApplication.getToken(), "设置");
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SETTING + BaseApplication.getToken(), "设置");
+                    SettingActivity.startActivity(getActivity());
                     break;
                 case R.id.imgHead:
                     setHeadIcon();
