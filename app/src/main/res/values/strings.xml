@@ -20,9 +20,11 @@
     <string name="fans_input_code">请输入验证码</string>
     <string name="fans_send_code">发送验证码</string>
     <string name="fans_reset_send">重新发送</string>
+    <string name="fans_register_time">重新发送</string>
     <string name="fans_register">注册</string>
     <string name="fans_copy">复制</string>
     <string name="classify">分类</string>
+
     <string name="fans_register_app">注册醇狼APP</string>
     <string name="fans_input_invite_code">填写邀请码</string>
     <string name="authenticated">已认证</string>
