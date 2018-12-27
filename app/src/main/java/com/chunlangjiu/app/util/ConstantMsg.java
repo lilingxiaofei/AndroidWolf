@@ -1,5 +1,7 @@
 package com.chunlangjiu.app.util;
 
+import com.pkqup.commonlibrary.net.HttpUtils;
+
 /**
  * @CreatedbBy: liucun on 2018/8/9
  * @Describe:
@@ -26,8 +28,26 @@ public class ConstantMsg {
     public static final String AUCTION_COUNT_END = "auction_count_end";//竞拍倒计时完成
     public static final String DETAIL_COUNT_END = "detail_count_end";//详情倒计时完成
 
+    public static final String WEB_URL_MESSAGE = HttpUtils.BASE_URL+ "index.php/wap/app-information.html?apitoken=";//消息
+    public static final String WEB_URL_SETTING = HttpUtils.BASE_URL+ "index.php/wap/app-setting.html?apitoken=";//设置
+    public static final String WEB_URL_LICENSE = HttpUtils.BASE_URL+ "index.php/wap/app-license.html";//协议
 
-    public static final String WEB_URL_MESSAGE = "http://mall.chunlangjiu.com/index.php/wap/app-information.html?apitoken=";//消息
+    public static final String WEB_URL_GOODS_MANAGER = HttpUtils.BASE_URL+ "index.php/wap/app-itemCenter.html?apitoken=";//商品管理
+    public static final String WEB_URL_SELL_GOODS = HttpUtils.BASE_URL+ "index.php/wap/onsale.html?apitoken=";//在售商品
+    public static final String WEB_URL_ACTION_GOODS = HttpUtils.BASE_URL+ "index.php/wap/auctionList.html?apitoken=";//竞拍商品
+    public static final String WEB_URL_STORE_GOODS = HttpUtils.BASE_URL+ "index.php/wap/instock.html?apitoken=";//仓库商品
+    public static final String WEB_URL_AUTH_GOODS = HttpUtils.BASE_URL+ "index.php/wap/app-pending.html?apitoken=";//审核商品
+
+    public static final String WEB_URL_MONEY_MANAGER = HttpUtils.BASE_URL+ "index.php/wap/app-capital.html?apitoken=";//资金管理
+    public static final String WEB_URL_COLLECT = HttpUtils.BASE_URL+ "index.php/wap/app-collect.html?apitoken=";//我的收藏
+    public static final String WEB_URL_VIP_INFO = HttpUtils.BASE_URL+ "index.php/wap/app-storeinfo.html?apitoken=";//个人会员资料
+    public static final String WEB_URL_SHOP_INFO = HttpUtils.BASE_URL+ "index.php/wap/app-shopinfo.html?apitoken=";//商家会员资料
+    public static final String WEB_URL_BANK_CARD = HttpUtils.BASE_URL+ "index.php/wap/app-bank.html?apitoken=";//银行卡管理
+    public static final String WEB_URL_EVALUATE = HttpUtils.BASE_URL+ "index.php/wap/app-evaluate.html?apitoken=";//我的估值
+
+
+
+   /* public static final String WEB_URL_MESSAGE = "http://mall.chunlangjiu.com/index.php/wap/app-information.html?apitoken=";//消息
     public static final String WEB_URL_SETTING = "http://mall.chunlangjiu.com/index.php/wap/app-setting.html?apitoken=";//设置
     public static final String WEB_URL_LICENSE = "http://mall.chunlangjiu.com/index.php/wap/app-license.html";//协议
 
@@ -43,5 +63,5 @@ public class ConstantMsg {
     public static final String WEB_URL_SHOP_INFO = "http://mall.chunlangjiu.com/index.php/wap/app-shopinfo.html?apitoken=";//商家会员资料
     public static final String WEB_URL_BANK_CARD = "http://mall.chunlangjiu.com/index.php/wap/app-bank.html?apitoken=";//银行卡管理
     public static final String WEB_URL_EVALUATE = "http://mall.chunlangjiu.com/index.php/wap/app-evaluate.html?apitoken=";//我的估值
-
+*/
 }

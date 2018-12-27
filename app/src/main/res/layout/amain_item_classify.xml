@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <com.pkqup.commonlibrary.view.RoundedImageView
+        android:id="@+id/riv_pic"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:sriv_aoval="true"
+        app:sriv_left_bottom_corner_radius="5dp"
+        app:sriv_right_bottom_corner_radius="5dp"
+        app:sriv_left_top_corner_radius="5dp"
+        app:sriv_right_top_corner_radius="5dp"
+        />
+    <TextView
+        android:id="@+id/tvClass"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="全部"
+        android:textColor="@color/t_black"
+        android:textSize="@dimen/text_size_15sp" />
+
+</LinearLayout>
