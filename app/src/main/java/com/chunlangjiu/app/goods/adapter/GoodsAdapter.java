@@ -62,7 +62,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
     @Override
     protected void convert(BaseViewHolder helper, GoodsListDetailBean item) {
         try {
-            ImageView imgPic = helper.getView(R.id.img_pic);
+            ImageView imgPic = helper.getView(R.id.imgPic);
             ImageView imgAuction = helper.getView(R.id.imgAuction);
             LinearLayout llStartPrice = helper.getView(R.id.llStartPrice);
             LinearLayout llHighPrice = helper.getView(R.id.llHighPrice);
@@ -73,7 +73,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             //网格布局的时候设置图片大小
             ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
             if(itemType == LIST_GRID && layoutParams.width == layoutParams.height && layoutParams.width>0){
-                int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(40)) / 2;
+                int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(25)) / 2;
                 layoutParams.width = picWidth;
                 layoutParams.height = picWidth;
                 imgPic.setLayoutParams(layoutParams);
@@ -132,18 +132,15 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
 
             helper.setGone(R.id.rl_store_layout,isShowStoreView);
             if(isShowStoreView){
-                helper.addOnClickListener(R.id.ll_store_name);
+                helper.addOnClickListener(R.id.rl_store_layout);
                 helper.setText(R.id.tv_store_name,item.getStoreName());
                 String level = item.getStoreLevel();
                 if("1".equals(level)){
-                    helper.setGone(R.id.tv_store_level,true);
-                    helper.setGone(R.id.tv_partner,false);
+                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_partner);
                 }else if("2".equals(level)){
-                    helper.setGone(R.id.tv_store_level,false);
-                    helper.setGone(R.id.tv_partner,true);
+                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_star);
                 }else{
-                    helper.setGone(R.id.tv_store_level,false);
-                    helper.setGone(R.id.tv_partner,false);
+                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_common);
                 }
             }
 

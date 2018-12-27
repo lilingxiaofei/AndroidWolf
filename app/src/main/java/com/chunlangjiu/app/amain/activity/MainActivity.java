@@ -20,6 +20,7 @@ import com.chunlangjiu.app.abase.BaseFragmentAdapter;
 import com.chunlangjiu.app.amain.bean.CheckUpdateBean;
 import com.chunlangjiu.app.amain.fragment.AuctionFragment;
 import com.chunlangjiu.app.amain.fragment.CartFragment;
+import com.chunlangjiu.app.amain.fragment.ClassifyFragment;
 import com.chunlangjiu.app.amain.fragment.GoodsFragment;
 import com.chunlangjiu.app.amain.fragment.HomeFragment;
 import com.chunlangjiu.app.amain.fragment.UserFragment;
@@ -30,7 +31,6 @@ import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GeTuiIntentService;
 import com.chunlangjiu.app.util.GeTuiPushService;
 import com.chunlangjiu.app.util.UmengEventUtil;
-import com.chunlangjiu.app.web.WebViewActivity;
 import com.igexin.sdk.PushManager;
 import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -206,7 +206,8 @@ public class MainActivity extends BaseActivity {
     private void initData() {
         fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
-        fragments.add(GoodsFragment.newInstance("", false, "", ""));
+//        fragments.add(GoodsFragment.newInstance("", false, "", ""));
+        fragments.add(new ClassifyFragment());
         fragments.add(new AuctionFragment());
         fragments.add(new CartFragment());
         fragments.add(new UserFragment());

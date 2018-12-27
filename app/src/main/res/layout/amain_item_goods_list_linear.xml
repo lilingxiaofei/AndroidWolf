@@ -80,7 +80,7 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/img_pic"
+        android:id="@+id/imgPic"
         android:layout_below="@+id/llTime"
         android:layout_width="130dp"
         android:layout_height="130dp"
@@ -91,17 +91,17 @@
         android:id="@+id/imgAuction"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_alignTop="@id/img_pic"
-        android:layout_alignLeft="@id/img_pic"
+        android:layout_alignTop="@id/imgPic"
+        android:layout_alignLeft="@id/imgPic"
         android:src="@mipmap/auction_icon"
         android:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/img_pic"
+        android:layout_alignTop="@id/imgPic"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/img_pic"
+        android:layout_toRightOf="@id/imgPic"
         android:orientation="vertical">
 
 
@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name"
-                android:layout_toRightOf="@id/img_pic"
+                android:layout_toRightOf="@id/imgPic"
                 android:background="@color/bg_gray"
                 android:paddingBottom="2dp"
                 android:paddingLeft="5dp"
@@ -295,7 +295,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_below="@id/img_pic"
+        android:layout_below="@id/imgPic"
         android:layout_marginTop="10dp"
         android:background="@color/line" />
 

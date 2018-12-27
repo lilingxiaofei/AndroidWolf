@@ -30,4 +30,9 @@
     <string name="authenticated">已认证</string>
     <string name="star_level">星级用户</string>
     <string name="partner">城市合伙人</string>
+    <string name="my_data">我的资料</string>
+    <string name="my_authentication">我的认证</string>
+    <string name="login_pwd">登录密码</string>
+    <string name="address_manager">地址管理</string>
+    <string name="bank_manager">银行卡管理</string>
 </resources>

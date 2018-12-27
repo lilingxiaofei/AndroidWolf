@@ -6,6 +6,7 @@ package com.chunlangjiu.app.amain.bean;
  */
 public class HomeBean {
 
+    public static final int ITEM_GRID_GOODS = 0;
     public static final int ITEM_GOODS = 1;
     public static final int ITEM_JINGPAI = 2;
     public static final int ITEM_TUIJIAN = 3;

@@ -5,19 +5,18 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/img_pic"
+        android:id="@+id/imgPic"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
         android:scaleType="centerCrop" />
 
     <ImageView
         android:id="@+id/imgAuction"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_alignLeft="@id/img_pic"
-        android:layout_alignTop="@id/img_pic"
+        android:layout_alignLeft="@id/imgPic"
+        android:layout_alignTop="@id/imgPic"
         android:src="@mipmap/auction_icon"
         android:visibility="gone" />
 
@@ -25,9 +24,9 @@
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/img_pic"
-        android:layout_alignRight="@id/img_pic"
-        android:layout_below="@id/img_pic"
+        android:layout_alignLeft="@id/imgPic"
+        android:layout_alignRight="@id/imgPic"
+        android:layout_below="@id/imgPic"
         android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:maxLines="2"
@@ -39,7 +38,7 @@
         android:id="@+id/llFlag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/img_pic"
+        android:layout_alignLeft="@id/imgPic"
         android:layout_below="@id/tv_name"
         android:layout_marginTop="2dp"
         android:orientation="horizontal">
@@ -77,7 +76,7 @@
         android:id="@+id/llStartPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/img_pic"
+        android:layout_alignLeft="@id/imgPic"
         android:layout_below="@id/llFlag"
         android:layout_marginTop="2dp"
         android:orientation="horizontal">
@@ -103,7 +102,7 @@
         android:id="@+id/ll_flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/img_pic"
+        android:layout_alignLeft="@id/imgPic"
         android:layout_below="@id/llStartPrice"
         android:orientation="vertical">
 
@@ -128,6 +127,15 @@
                 android:text="¥5000.00"
                 android:textColor="@color/t_red"
                 android:textSize="@dimen/sp_mid" />
+            <TextView
+                android:id="@+id/tv_give_price_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="出价人数："
+                android:textColor="@color/t_gray"
+                android:textSize="12sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
@@ -146,7 +154,7 @@
         android:id="@+id/tvAttention"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/img_pic"
+        android:layout_alignLeft="@id/imgPic"
         android:layout_below="@id/ll_flag"
         android:layout_marginTop="4dp"
         android:textColor="@color/t_gray"
@@ -191,8 +199,8 @@
         android:layout_below="@+id/tvEvaluate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/img_pic"
-        android:layout_alignRight="@id/img_pic"
+        android:layout_alignLeft="@id/imgPic"
+        android:layout_alignRight="@id/imgPic"
         android:orientation="horizontal"
         android:visibility="visible">
 

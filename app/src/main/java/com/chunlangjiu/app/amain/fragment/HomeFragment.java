@@ -32,8 +32,6 @@ import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.activity.ValuationActivity;
-import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
-import com.chunlangjiu.app.goods.bean.GoodsListDetailBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.store.activity.StoreListActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
@@ -121,12 +119,6 @@ public class HomeFragment extends BaseFragment {
     private BrandAdapter brandAdapter;
     private List<HomeModulesBean.Pic> brandLists;
 
-    //竞拍列表
-    private RelativeLayout rlAuctionLayout;
-    private TextView tvMoreAuction ;
-    private RecyclerView rvAuctionList ;
-    private GoodsAdapter auctionAdapter ;
-    private List<GoodsListDetailBean> auctionList ;
 
     //酒列表
     private RelativeLayout rlLoading;
@@ -225,10 +217,6 @@ public class HomeFragment extends BaseFragment {
         llBrand = headerView.findViewById(R.id.llBrand);
         recyclerViewBrand = headerView.findViewById(R.id.recyclerViewBrand);
 
-        rlAuctionLayout = headerView.findViewById(R.id.rlAuctionLayout);
-        tvMoreAuction  = headerView.findViewById(R.id.tvMoreAuction);
-        rvAuctionList  = headerView.findViewById(R.id.rvAuctionList);
-        tvMoreAuction.setOnClickListener(onClickListener);
 
         rlLoading = rootView.findViewById(R.id.rlLoading);
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
@@ -622,7 +610,7 @@ public class HomeFragment extends BaseFragment {
         if (newLists == null) newLists = new ArrayList<>();
         if (auction_list == null) auction_list = new ArrayList<>();
         for (HomeBean homeBean : newLists) {
-            homeBean.setItemType(HomeBean.ITEM_GOODS);
+            homeBean.setItemType(HomeBean.ITEM_GRID_GOODS);
             homeBean.setAuction(false);
         }
         if (isRefresh) {

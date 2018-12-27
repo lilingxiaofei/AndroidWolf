@@ -131,4 +131,5 @@
 
 # ----------------------- Glide  end  ------------------------------
 -keepattributes InnerClasses
+-keepattributes EnclosingMethod
 -dontoptimize
