@@ -52,6 +52,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
     protected void convert(BaseViewHolder viewHolder, HomeBean item) {
         int itemType = viewHolder.getItemViewType();
         switch (itemType) {
+            case HomeBean.ITEM_GRID_GOODS:
             case HomeBean.ITEM_GOODS:
                 CountdownView countdownView = viewHolder.getView(R.id.countdownView);
                 ImageView imgPic = viewHolder.getView(R.id.imgPic);
@@ -65,8 +66,8 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 TextView tvSellPriceStr = viewHolder.getView(R.id.tvSellPriceStr);
                 TextView tvSellPrice = viewHolder.getView(R.id.tvSellPrice);
 
-                TextView tv_attention = viewHolder.getView(R.id.tv_attention);
-                TextView tv_evaluate = viewHolder.getView(R.id.tv_evaluate);
+                TextView tv_attention = viewHolder.getView(R.id.tvAttention);
+                TextView tv_evaluate = viewHolder.getView(R.id.tvEvaluate);
 
 
                 //网格布局的时候设置图片大小
@@ -143,7 +144,6 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 } else {
                     llStartPrice.setVisibility(View.GONE);
                     tv_give_price_num.setVisibility(View.GONE);
-                    llTime.setVisibility(View.GONE);
                     tvSellPriceStr.setVisibility(View.GONE);
                     llHighPrice.setVisibility(View.VISIBLE);
                     tvAnPaiStr.setVisibility(View.GONE);

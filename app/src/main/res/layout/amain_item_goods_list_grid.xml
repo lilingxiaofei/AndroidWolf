@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/bg_white">
 
     <ImageView
         android:id="@+id/imgPic"
@@ -29,7 +30,7 @@
         android:layout_below="@id/imgPic"
         android:layout_marginTop="8dp"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="1"
         android:textColor="@color/t_black"
         android:textSize="@dimen/sp_mid"
         tools:text="法国凡特纳酒庄 全都是系列 康帝" />
@@ -41,6 +42,8 @@
         android:layout_alignLeft="@id/imgPic"
         android:layout_below="@id/tv_name"
         android:layout_marginTop="2dp"
+        android:minHeight="21dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -49,10 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:background="@color/bg_gray"
-            android:paddingBottom="2dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:paddingTop="2dp"
             android:textColor="@color/t_black"
             android:textSize="12sp"
             tools:text="法国" />
@@ -62,10 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/bg_gray"
-            android:paddingBottom="2dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:paddingTop="2dp"
             android:textColor="@color/t_black"
             android:textSize="12sp"
             android:visibility="gone"
@@ -168,7 +167,8 @@
         android:layout_below="@id/ll_flag"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="4dp"
-        android:layout_toRightOf="@id/tvAttention"
+        android:layout_toRightOf="@+id/tvAttention"
+        android:layout_alignBottom="@+id/tvAttention"
         android:textColor="@color/t_gray"
         android:textSize="10sp"
         tools:text="30条评价" />
@@ -178,6 +178,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/tvEvaluate"
+        android:layout_alignBottom="@+id/tvAttention"
         android:textColor="@color/t_gray"
         android:textSize="10sp"
         tools:text="30条评价" />

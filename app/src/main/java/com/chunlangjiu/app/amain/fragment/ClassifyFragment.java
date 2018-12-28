@@ -88,7 +88,7 @@ public class ClassifyFragment extends BaseFragment {
 //        thirdClassBean.setCat_id("");
 //        thirdClassBean.setCat_name("全部");
 //        classLists.add(thirdClassBean);
-        classAdapter = new ClassAdapter(R.layout.amain_item_class, classLists);
+        classAdapter = new ClassAdapter(R.layout.amain_item_classify, classLists);
         recyclerViewClass.setLayoutManager(new GridLayoutManager(activity, 2));
         recyclerViewClass.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(activity, 10), false));
         recyclerViewClass.setAdapter(classAdapter);

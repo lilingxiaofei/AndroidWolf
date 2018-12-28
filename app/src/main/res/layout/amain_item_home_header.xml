@@ -185,11 +185,6 @@
             android:textColor="@color/t_black"
             android:textSize="@dimen/text_size_15sp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/bg_gray" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewBrand"
             android:layout_width="match_parent"
