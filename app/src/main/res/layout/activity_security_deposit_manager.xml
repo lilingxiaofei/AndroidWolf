@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/addBankCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_size_48dp"
+                    android:drawableLeft="@mipmap/address_add"
+                    android:drawablePadding="@dimen/layout_padding_12dp"
+                    android:gravity="center"
+                    android:text="添加银行卡" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/bankCardList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_size_48dp"
+            android:layout_marginLeft="@dimen/layout_padding_12dp"
+            android:gravity="center_vertical"
+            android:text="本次卡最多可支付¥5000.00" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_white"
+            android:paddingLeft="@dimen/layout_padding_12dp"
+            android:paddingTop="@dimen/layout_padding_12dp"
+            android:paddingBottom="@dimen/layout_padding_12dp"
+            android:text="交纳金额" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/icon_size_48dp"
+            android:layout_marginTop="@dimen/layout_padding_1dp"
+            android:background="@color/bg_white"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/layout_padding_12dp"
+            android:text="¥5000.00" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/icon_size_48dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/layout_padding_12dp"
+                android:layout_marginRight="@dimen/layout_padding_12dp"
+                android:text="保证金交纳说明：1、保证金交纳成功后，用户即可成为星级卖家，尊享海量特权 2、保证金" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_white"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/icon_size_32dp"
+                android:paddingBottom="@dimen/icon_size_32dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/delete_ic" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/layout_padding_12dp"
+                    android:text="您确定要撤销保证金吗？" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/layout_padding_12dp"
+                android:paddingLeft="@dimen/layout_padding_12dp"
+                android:paddingRight="@dimen/layout_padding_12dp"
+                android:text="撤销保证金后：
+1、您的卖家账户变成普通卖家，失去星级卖家的相关特权；
+2、您的撤销申请经平台审核后，保证金将从冻结金额转入账户余额，
+您即可进行资金提现；撤销申请时间约为1~3个工作日；
+3、如您的撤销申请审核失败，请致电400-0000-000咨询原因，感谢
+您的理解与支持" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_gray_solid"
+                android:layout_marginBottom="@dimen/layout_padding_12dp"
+                android:text="下一步" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:background="@color/bg_white"
+              android:paddingTop="@dimen/layout_padding_32dp"
+              android:paddingBottom="@dimen/layout_padding_32dp">
+
+              <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:src="@mipmap/delete_ic" />
+              <TextView
+                  android:layout_marginTop="@dimen/layout_margin_22dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:text="您的撤销保证金申请已提交成功！
+平台处理时间约为1~3个工作日，请您耐心等待！"/>
+
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_marginTop="@dimen/layout_margin_22dp"
+                  android:gravity="center">
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="取消撤销申请"/>
+                  <Button
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="返回会员中心"/>
+              </LinearLayout>
+
+          </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

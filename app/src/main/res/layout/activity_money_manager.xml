@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f8f8f8"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bg_white"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/relSelectBalance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/top_tab_selector"
+                android:text="余额" />
+
+            <View
+                android:id="@+id/vLineBalance"
+                android:layout_width="40dp"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="#B31F3F" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relSelectSecurityDeposit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvSecurityDeposit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/top_tab_selector"
+                android:text="保证金" />
+
+            <View
+                android:id="@+id/vLineSecurityDeposit"
+                android:layout_width="40dp"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="#B31F3F" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relBalance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/bg_white_solid"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="可用余额"
+                    android:textColor="#B31F3F"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/layout_margin_8dp"
+                    android:text="--"
+                    android:textColor="#333333"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="冻结余额"
+                    android:textColor="#B31F3F"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/layout_margin_8dp"
+                    android:text="--"
+                    android:textColor="#333333"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg_white"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnWithdraw"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:background="@drawable/bg_red_rectangle"
+                android:text="提现"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_15sp" />
+
+            <Button
+                android:id="@+id/btnRecharge"
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="25dp"
+                android:background="@drawable/bg_red_rectangle"
+                android:text="充值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_15sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relSecurityDeposit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/bg_white_solid"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保证金额"
+                android:textColor="#B31F3F"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_8dp"
+                android:text="--"
+                android:textColor="#333333"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg_white"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnPaySecurityDeposit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_red_rectangle"
+                android:text="交纳保证金"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_15sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/bg_white"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:orientation="vertical"-->
+    <!--android:paddingLeft="@dimen/layout_padding_12dp"-->
+    <!--android:paddingTop="18dp"-->
+    <!--android:paddingBottom="18dp">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="可用余额"-->
+    <!--android:textSize="12sp" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/dp_10"-->
+    <!--android:text="¥5000.00"-->
+    <!--android:textSize="24sp" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/dp_10"-->
+    <!--android:text="冻结金额：¥1000.00"-->
+    <!--android:textSize="12sp" />-->
+    <!--</LinearLayout>-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/reCharge"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/icon_size_48dp"-->
+    <!--android:layout_marginTop="@dimen/layout_padding_12dp"-->
+    <!--android:background="@color/bg_white"-->
+    <!--android:drawableRight="@mipmap/black_right_arrow"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:paddingLeft="@dimen/layout_padding_12dp"-->
+    <!--android:paddingRight="@dimen/layout_padding_12dp"-->
+    <!--android:text="充值" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/withDraw"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/icon_size_48dp"-->
+    <!--android:layout_marginTop="1dp"-->
+    <!--android:background="@color/bg_white"-->
+    <!--android:drawableRight="@mipmap/black_right_arrow"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:paddingLeft="@dimen/layout_padding_12dp"-->
+    <!--android:paddingRight="@dimen/layout_padding_12dp"-->
+    <!--android:text="提现" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/fundDetails"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/icon_size_48dp"-->
+    <!--android:layout_marginTop="1dp"-->
+    <!--android:background="@color/bg_white"-->
+    <!--android:drawableRight="@mipmap/black_right_arrow"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:paddingLeft="@dimen/layout_padding_12dp"-->
+    <!--android:paddingRight="@dimen/layout_padding_12dp"-->
+    <!--android:text="资金明细" />-->
+
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/payingDeposit"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/icon_size_48dp"-->
+    <!--android:layout_marginTop="@dimen/layout_padding_12dp"-->
+    <!--android:background="@color/bg_white"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingRight="@dimen/layout_padding_12dp">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:paddingLeft="@dimen/layout_padding_12dp"-->
+    <!--android:paddingRight="@dimen/layout_padding_12dp"-->
+    <!--android:text="交纳保证金" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:drawableEnd="@mipmap/black_right_arrow"-->
+    <!--android:drawableRight="@mipmap/black_right_arrow" />-->
+    <!--</RelativeLayout>-->
+
+</LinearLayout>
