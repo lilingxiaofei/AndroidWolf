@@ -8,6 +8,8 @@ import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
+import com.chunlangjiu.app.fans.bean.FansBean;
+import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
@@ -51,8 +53,10 @@ import java.util.List;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Url;
 
 /**
  * @CreatedbBy: liucun on 2018/7/6
@@ -569,5 +573,15 @@ public interface ApiService {
     Flowable<ResultBean> editShopName(@Field("method") String method, @Field("v") String v,
                                       @Field("accessToken") String accessToken, @Field("company_name") String company_name);
 
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<List<FansItemBean>>> getFansList(@Field("method") String method, @Field("v") String v);
 
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FansBean>> getFansInfo(@Field("method") String method, @Field("v") String v);
+
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> submitInviteCode(@Field("method") String method, @Field("v") String v,@Field("inviteCode") String inviteCode);
 }

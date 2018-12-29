@@ -1,5 +1,7 @@
 package com.chunlangjiu.app.user.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.chunlangjiu.app.R;
@@ -22,5 +24,12 @@ public class SetAccountPasswordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_set_account_password);
+    }
+
+    public static void startActivity(Activity activity){
+        if(activity!=null){
+            Intent intent = new Intent(activity,SetAccountPasswordActivity.class);
+            activity.startActivity(intent);
+        }
     }
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/bg_gray">
+    
+    <ImageView android:id="@+id/ivQrCode"
+        android:layout_marginTop="100dp"
+        android:layout_width="225dp"
+        android:layout_height="225dp" />
+
+    <TextView android:id="@+id/tvMyCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_15sp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/t_black"
+        android:text="我的推荐码"
+        android:layout_marginTop="15dp"
+        android:drawablePadding="@dimen/dp_10"/>
+
+    <TextView android:id="@+id/tvScanTips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_15sp"
+        android:layout_marginTop="11dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:text="扫一扫，推荐好友一起"
+        android:drawablePadding="@dimen/dp_10"/>
+
+    <TextView android:id="@+id/tvShare"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="38dp"
+        android:layout_marginLeft="38dp"
+        android:textSize="@dimen/text_size_15sp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:text="一键分享"
+        android:textColor="@color/t_white"
+        android:gravity="center"
+        android:background="@drawable/round_red_bg"
+        android:drawablePadding="@dimen/dp_10"/>
+
+</LinearLayout>

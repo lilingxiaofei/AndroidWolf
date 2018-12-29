@@ -10,123 +10,104 @@
         android:background="@color/bg_white"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <TextView android:id="@+id/tvLoginPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="44dp">
-
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:text="账号密码"
-                android:textColor="@color/t_black"
-                android:textSize="@dimen/sp_mid" />
-
-            <TextView
-                android:id="@+id/tvAccountPsw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="45dp"
-                android:gravity="center_vertical"
-                android:text="未设置"
-                android:textColor="@color/t_gray"
-                android:textSize="@dimen/sp_mid" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/black_right_arrow" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line" />
-        <RelativeLayout
+            android:minHeight="40dp"
+            android:layout_centerVertical="true"
+            android:text="@string/login_pwd"
+            android:paddingLeft="21dp"
+            android:paddingRight="21dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:textSize="@dimen/sp_mid" />
+        <TextView android:id="@+id/tvMyData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="44dp">
-
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:text="支付密码"
-                android:textColor="@color/t_black"
-                android:textSize="@dimen/sp_mid" />
-
-            <TextView
-                android:id="@+id/tvPayPsw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="45dp"
-                android:gravity="center_vertical"
-                android:text="未设置"
-                android:textColor="@color/t_gray"
-                android:textSize="@dimen/sp_mid" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/black_right_arrow" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line" />
-
-        <RelativeLayout
+            android:minHeight="40dp"
+            android:layout_centerVertical="true"
+            android:text="我的资料"
+            android:paddingLeft="21dp"
+            android:paddingRight="21dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:textSize="@dimen/sp_mid" />
+        <TextView android:id="@+id/tvMyAttestation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="44dp">
-
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:text="关于醇狼"
-                android:textColor="@color/t_black"
-                android:textSize="@dimen/sp_mid" />
-
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/black_right_arrow" />
-        </RelativeLayout>
+            android:minHeight="40dp"
+            android:layout_centerVertical="true"
+            android:text="我的认证"
+            android:paddingLeft="21dp"
+            android:paddingRight="21dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:textSize="@dimen/sp_mid" />
+        <TextView  android:id="@+id/tvAddressManager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:layout_centerVertical="true"
+            android:text="@string/address_manager"
+            android:paddingLeft="21dp"
+            android:paddingRight="21dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:textSize="@dimen/sp_mid" />
+        <TextView android:id="@+id/tvBankManager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:layout_centerVertical="true"
+            android:text="@string/bank_manager"
+            android:paddingLeft="21dp"
+            android:paddingRight="21dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:textSize="@dimen/sp_mid" />
+        <TextView android:id="@+id/tvAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:layout_centerVertical="true"
+            android:text="关于醇狼"
+            android:paddingLeft="21dp"
+            android:paddingRight="21dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:textSize="@dimen/sp_mid" />
+        <TextView android:id="@+id/tvUseAgreement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:layout_centerVertical="true"
+            android:text="使用协议"
+            android:paddingLeft="21dp"
+            android:paddingRight="21dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:textSize="@dimen/sp_mid" />
     </LinearLayout>
 
 
     <TextView
         android:id="@+id/tvLogOut"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/bg_red"
+        android:layout_margin="10dp"
+        android:background="@drawable/round_red_bg"
         android:gravity="center"
         android:text="退出登录"
         android:textColor="@color/t_white"
-        android:textSize="@dimen/sp_big" />
+        android:textSize="@dimen/text_size_15sp" />
 
 
 </RelativeLayout>

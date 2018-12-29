@@ -3,9 +3,9 @@ package com.chunlangjiu.app.amain.fragment;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +35,6 @@ import com.chunlangjiu.app.goods.activity.ValuationActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.store.activity.StoreListActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
-import com.chunlangjiu.app.user.activity.EditGoodsActivity;
 import com.chunlangjiu.app.user.activity.PersonAuthActivity;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.util.AreaUtils;
@@ -43,6 +42,8 @@ import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.LocationUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.chunlangjiu.app.web.WebViewActivity;
+import com.lzy.imagepicker.util.Utils;
+import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.BannerGlideLoader;
 import com.pkqup.commonlibrary.glide.GlideUtils;
@@ -120,9 +121,11 @@ public class HomeFragment extends BaseFragment {
     private BrandAdapter brandAdapter;
     private List<HomeModulesBean.Pic> brandLists;
 
+
     //酒列表
     private RelativeLayout rlLoading;
     private SmartRefreshLayout refreshLayout;
+    private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
     private List<HomeBean> lists;
@@ -217,9 +220,11 @@ public class HomeFragment extends BaseFragment {
         llBrand = headerView.findViewById(R.id.llBrand);
         recyclerViewBrand = headerView.findViewById(R.id.recyclerViewBrand);
 
+
         rlLoading = rootView.findViewById(R.id.rlLoading);
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         recyclerView = rootView.findViewById(R.id.listView);
+
         rlLoading.setVisibility(View.VISIBLE);
         refreshLayout.setVisibility(View.GONE);
         bannerUrls = new ArrayList<>();
@@ -375,10 +380,34 @@ public class HomeFragment extends BaseFragment {
      */
     private void initRecyclerView() {
         lists = new ArrayList<>();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
         homeAdapter = new HomeAdapter(getActivity(), lists);
         homeAdapter.addHeaderView(headerView);
+        // 运营位置一行6个item
+        gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        // 设置运营位置一行有多少个Item
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                // spanCount=6代表 position这个Item需要占用6个Item位置，也就是一行只有一个item
+                int spanCount = gridLayoutManager.getSpanCount();
+                int index = position - 1;
+                if (index>0 && index <= lists.size() - 1) {
+                    HomeBean vo = lists.get(index);
+                    int itemType = vo.getItemType();
+                    switch (itemType) {
+                        case HomeBean.ITEM_GRID_GOODS:
+                            spanCount = 1;
+                            break;
+                    }
+                    Log.d("getItemType", "position=" + position + ",itemType=" + itemType + ",spanCount=" + spanCount);
+                }
+                return spanCount;
+            }
+        });
         recyclerView.setAdapter(homeAdapter);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(getActivity(), 5), false));
+        recyclerView.setLayoutManager(gridLayoutManager);
 
         refreshLayout.setEnableAutoLoadMore(true);//开启滑到底部自动加载
         refreshLayout.setFooterHeight(30);
@@ -417,6 +446,16 @@ public class HomeFragment extends BaseFragment {
                     }
                 } else if (homeBean.getItemType() == HomeBean.ITEM_TUIJIAN) {
 
+                }
+            }
+        });
+        homeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                int resId = view.getId();
+                HomeBean homeBean = lists.get(position);
+                if (resId == R.id.ll_store_name) {
+                    ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getStoreId());
                 }
             }
         });
@@ -572,6 +611,7 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+
     private void getHomeList(int pageNo, final boolean isRefresh) {
         disposable.add(ApiUtils.getInstance().getHomeLists(pageNo)
                 .subscribeOn(Schedulers.io())
@@ -598,7 +638,7 @@ public class HomeFragment extends BaseFragment {
         if (newLists == null) newLists = new ArrayList<>();
         if (auction_list == null) auction_list = new ArrayList<>();
         for (HomeBean homeBean : newLists) {
-            homeBean.setItemType(HomeBean.ITEM_GOODS);
+            homeBean.setItemType(HomeBean.ITEM_GRID_GOODS);
             homeBean.setAuction(false);
         }
         if (isRefresh) {

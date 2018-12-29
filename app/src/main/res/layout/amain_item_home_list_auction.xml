@@ -1,17 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:background="@color/bg_red"-->
+        <!--android:gravity="center"-->
+        <!--android:text="疯狂竞拍"-->
+        <!--android:textColor="@color/t_white"-->
+        <!--android:textSize="@dimen/sp_big" />-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/bg_red"
+        android:background="@color/bg_white"
         android:gravity="center"
         android:text="疯狂竞拍"
-        android:textColor="@color/t_white"
-        android:textSize="@dimen/sp_big" />
+        android:textColor="@color/t_red"
+        android:textSize="@dimen/text_size_15sp"
+        android:visibility="visible" />
+    <TextView android:id="@+id/tvMoreAuction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_white"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:text="更多竞拍"
+        android:layout_marginTop="17dp"
+        android:drawablePadding="5dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingRight="11dp"
+        android:drawableRight="@mipmap/black_right_arrow"
+        android:textColor="@color/t_grey"
+        android:textSize="@dimen/text_size_12sp"
+        android:visibility="visible" />
 
-</LinearLayout>
+</RelativeLayout>

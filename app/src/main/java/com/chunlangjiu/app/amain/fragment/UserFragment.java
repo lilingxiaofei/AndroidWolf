@@ -16,6 +16,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.fans.activity.FansHomeActivity;
 import com.chunlangjiu.app.goods.dialog.EditAccountNameDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainActivity;
@@ -24,6 +25,7 @@ import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.activity.CompanyAuthActivity;
 import com.chunlangjiu.app.user.activity.PersonAuthActivity;
+import com.chunlangjiu.app.user.activity.SettingActivity;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
@@ -173,6 +175,7 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlBankCardSecond;
     private RelativeLayout rlMyEvaluate;
     private RelativeLayout rlMySecondPlace;
+    private RelativeLayout rlFansManage ;
     /*我的管理*/
 
     private static final int TYPE_BUYER = 0;//买家中心
@@ -192,6 +195,7 @@ public class UserFragment extends BaseFragment {
     private String companyName;
     private String shopName;
 
+
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -203,7 +207,8 @@ public class UserFragment extends BaseFragment {
                 case R.id.tvToLogin:
                     break;
                 case R.id.imgSetting:
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SETTING + BaseApplication.getToken(), "设置");
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SETTING + BaseApplication.getToken(), "设置");
+                    SettingActivity.startActivity(getActivity());
                     break;
                 case R.id.imgHead:
                     setHeadIcon();
@@ -331,6 +336,9 @@ public class UserFragment extends BaseFragment {
                     break;
                 case R.id.rlMyEvaluate:// 我的估价
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_EVALUATE + BaseApplication.getToken(), "我的估价");
+                    break;
+                case R.id.rl_fans_manage:// 粉丝管理
+                    startActivity(new Intent(getActivity(), FansHomeActivity.class));
                     break;
             }
         }
@@ -488,8 +496,10 @@ public class UserFragment extends BaseFragment {
         rlBankCardSecond = rootView.findViewById(R.id.rlBankCardSecond);
         rlMyEvaluate = rootView.findViewById(R.id.rlMyEvaluate);
         rlMySecondPlace = rootView.findViewById(R.id.rlMySecondPlace);
+        rlFansManage = rootView.findViewById(R.id.rl_fans_manage);
         rlBankCardSecond.setOnClickListener(onClickListener);
         rlMyEvaluate.setOnClickListener(onClickListener);
+        rlFansManage.setOnClickListener(onClickListener);
 
         if (BaseApplication.HIDE_AUCTION) {
             llAuctionContent.setVisibility(View.GONE);

@@ -6,6 +6,7 @@ package com.chunlangjiu.app.amain.bean;
  */
 public class HomeBean {
 
+    public static final int ITEM_GRID_GOODS = 0;
     public static final int ITEM_GOODS = 1;
     public static final int ITEM_JINGPAI = 2;
     public static final int ITEM_TUIJIAN = 3;
@@ -21,6 +22,10 @@ public class HomeBean {
     private String imgsrc;
     private String view_count;//关注人数
     private String rate_count;//评价条数
+
+    private String storeId ;//店铺id
+    private String storeName ;//店铺id
+    private String storeLevel ;//店铺等级
 
     private boolean isAuction;
     private String auction_starting_price;
@@ -155,5 +160,29 @@ public class HomeBean {
 
     public void setImgsrc(String imgsrc) {
         this.imgsrc = imgsrc;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getStoreLevel() {
+        return storeLevel;
+    }
+
+    public void setStoreLevel(String storeLevel) {
+        this.storeLevel = storeLevel;
     }
 }

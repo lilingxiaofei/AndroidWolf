@@ -33,6 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/check_store"
+            android:src="@drawable/bg_btn_pre"
             android:scaleType="centerCrop" />
 
         <TextView

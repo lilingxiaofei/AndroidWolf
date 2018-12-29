@@ -2,7 +2,6 @@ package com.chunlangjiu.app.goods.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,19 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.amain.bean.FirstClassBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.goods.adapter.FilterBrandAdapter;
 import com.chunlangjiu.app.goods.adapter.FilterStoreAdapter;
+import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
 import com.chunlangjiu.app.goods.bean.FilterBrandBean;
 import com.chunlangjiu.app.goods.bean.FilterListBean;
 import com.chunlangjiu.app.goods.bean.FilterStoreBean;
@@ -35,7 +33,6 @@ import com.chunlangjiu.app.goods.bean.GoodsListBean;
 import com.chunlangjiu.app.goods.bean.GoodsListDetailBean;
 import com.chunlangjiu.app.goods.dialog.ClassPopWindow;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.KeyBoardUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
@@ -112,10 +109,11 @@ public class GoodsListActivity extends BaseActivity {
 
     private CompositeDisposable disposable;
     private List<TextView> sortTextViewLists;
-    private boolean listType = true;//是否是列表形式
     private List<GoodsListDetailBean> lists;
-    private LinearAdapter linearAdapter;
-    private GridAdapter gridAdapter;
+    private GoodsAdapter goodsAdapter ;
+//    private LinearAdapter linearAdapter;
+//    private boolean listType = true;//是否是列表形式
+//    private GridAdapter gridAdapter;
 
     //三级分类列表
     private List<FirstClassBean> categoryLists;
@@ -310,22 +308,22 @@ public class GoodsListActivity extends BaseActivity {
         sortTextViewLists.add(tvFilter);
 
         lists = new ArrayList<>();
-        linearAdapter = new LinearAdapter(R.layout.amain_item_goods_list_linear, lists);
-        linearAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        goodsAdapter = new GoodsAdapter(this,lists);
+        goodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GoodsDetailsActivity.startGoodsDetailsActivity(GoodsListActivity.this, lists.get(position).getItem_id());
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                GoodsListDetailBean details = lists.get(position);
+                if(view.getId() == R.id.rl_store_layout){
+                    ShopMainActivity.startShopMainActivity(GoodsListActivity.this, details.getStoreId());
+                }else{
+                    GoodsDetailsActivity.startGoodsDetailsActivity(GoodsListActivity.this, details.getItem_id());
+                }
             }
         });
-        gridAdapter = new GridAdapter(R.layout.amain_item_goods_list_grid, lists);
-        gridAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GoodsDetailsActivity.startGoodsDetailsActivity(GoodsListActivity.this, lists.get(position).getItem_id());
-            }
-        });
+
         recycleView.setLayoutManager(new LinearLayoutManager(this));
-        recycleView.setAdapter(linearAdapter);
+        goodsAdapter.setListType(goodsAdapter.LIST_LINEAR);
+        recycleView.setAdapter(goodsAdapter);
 
         refreshLayout.setEnableAutoLoadMore(false);//关闭自动加载更多
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -432,25 +430,14 @@ public class GoodsListActivity extends BaseActivity {
             } else {
                 refreshLayout.setNoMoreData(false);
             }
-            if (listType) {
-                if (lists.size() == 0) {
-                    linearAdapter.setEmptyView(notDataView);
-                } else {
-                    linearAdapter.setNewData(lists);
-                }
+            if (lists.size() == 0) {
+                goodsAdapter.setEmptyView(notDataView);
             } else {
-                if (lists.size() == 0) {
-                    gridAdapter.setEmptyView(notDataView);
-                } else {
-                    gridAdapter.setNewData(lists);
-                }
+                goodsAdapter.setNewData(lists);
             }
+
         } else {
-            if (listType) {
-                linearAdapter.setEmptyView(notDataView);
-            } else {
-                gridAdapter.setEmptyView(notDataView);
-            }
+            goodsAdapter.setEmptyView(notDataView);
         }
     }
 
@@ -494,90 +481,18 @@ public class GoodsListActivity extends BaseActivity {
     }
 
     private void changeListType() {
-        if (listType) {
-            //列表切换到网格
-            listType = false;
+        goodsAdapter.switchListType();
+        if(goodsAdapter.isGridLayout()){
             titleImgRightTwo.setImageResource(R.mipmap.icon_list);
             recycleView.setLayoutManager(new GridLayoutManager(this, 2));
-            recycleView.setAdapter(gridAdapter);
-            gridAdapter.setNewData(lists);
-        } else {
-            //网格切换到列表
-            listType = true;
+        }else{
             titleImgRightTwo.setImageResource(R.mipmap.icon_grid);
             recycleView.setLayoutManager(new LinearLayoutManager(this));
-            recycleView.setAdapter(linearAdapter);
-            linearAdapter.setNewData(lists);
         }
     }
 
 
-    public class LinearAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseViewHolder> {
-        public LinearAdapter(int layoutResId, List<GoodsListDetailBean> data) {
-            super(layoutResId, data);
-        }
 
-        @Override
-        protected void convert(BaseViewHolder helper, GoodsListDetailBean item) {
-            ImageView imgPic = helper.getView(R.id.img_pic);
-            TextView tvStartPrice = helper.getView(R.id.tvStartPrice);
-
-            GlideUtils.loadImage(GoodsListActivity.this, item.getImage_default_id(), imgPic);
-            helper.setText(R.id.tv_name, item.getTitle());
-            helper.setText(R.id.tvStartPriceStr, "原价：");
-            tvStartPrice.setText(item.getMkt_price());
-            tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
-            helper.setText(R.id.tvSellPriceStr, "");
-            helper.setText(R.id.tvSellPrice, item.getPrice());
-
-            LinearLayout llTime = helper.getView(R.id.llTime);
-            llTime.setVisibility(View.GONE);
-            helper.setText(R.id.tvLabel, item.getLabel());
-            TextView tvLabel = helper.getView(R.id.tvLabel);
-            if (TextUtils.isEmpty(item.getLabel())) {
-                tvLabel.setVisibility(View.GONE);
-            } else {
-                tvLabel.setVisibility(View.VISIBLE);
-            }
-            helper.setText(R.id.tv_attention, item.getView_count() + "人关注");
-            helper.setText(R.id.tv_evaluate, item.getRate_count() + "条评价");
-        }
-    }
-
-    public class GridAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseViewHolder> {
-        public GridAdapter(int layoutResId, List<GoodsListDetailBean> data) {
-            super(layoutResId, data);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, GoodsListDetailBean item) {
-            ImageView imgPic = helper.getView(R.id.img_pic);
-            ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
-            int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(40)) / 2;
-            layoutParams.width = picWidth;
-            layoutParams.height = picWidth;
-            imgPic.setLayoutParams(layoutParams);
-            GlideUtils.loadImage(GoodsListActivity.this, item.getImage_default_id(), imgPic);
-            helper.setText(R.id.tv_name, item.getTitle());
-
-            TextView tvStartPrice = helper.getView(R.id.tvStartPrice);
-            helper.setText(R.id.tvStartPriceStr, "原价：");
-            tvStartPrice.setText(item.getMkt_price());
-            tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
-            helper.setText(R.id.tvSellPriceStr, "");
-            helper.setText(R.id.tvSellPrice, item.getPrice());
-
-            helper.setText(R.id.tvLabel, item.getLabel());
-            TextView tvLabel = helper.getView(R.id.tvLabel);
-            if (TextUtils.isEmpty(item.getLabel())) {
-                tvLabel.setVisibility(View.GONE);
-            } else {
-                tvLabel.setVisibility(View.VISIBLE);
-            }
-            helper.setText(R.id.tvAttention, item.getView_count() + "人关注");
-            helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
-        }
-    }
 
 
     private void checkBack() {

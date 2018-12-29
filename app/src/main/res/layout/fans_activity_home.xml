@@ -1,9 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chunlangjiu.app.fans.activity.FansHomeActivity">
+    android:orientation="vertical"
+    android:background="@color/bg_gray">
+    <RelativeLayout android:id="@+id/rl_fans_list"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/layout_padding_12dp"
+        android:paddingRight="@dimen/layout_padding_12dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/goods_details_msg"
+            android:drawablePadding="@dimen/dp_10"
+            android:text="@string/fans_list"/>
+        <TextView android:id="@+id/tv_fans_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:drawablePadding="@dimen/dp_10"
+            android:text="@string/fans_num"/>
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/rl_invite_code"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/layout_padding_12dp"
+        android:paddingRight="@dimen/layout_padding_12dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/goods_details_msg"
+            android:drawablePadding="@dimen/dp_10"
+            android:text="@string/fans_my_code"/>
 
-</android.support.constraint.ConstraintLayout>
+        <TextView android:id="@+id/tv_invite_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:drawablePadding="@dimen/dp_10"/>
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/rl_invite_fans"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/layout_padding_12dp"
+        android:paddingRight="@dimen/layout_padding_12dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/goods_details_msg"
+            android:drawablePadding="@dimen/dp_10"
+            android:text="@string/fans_invite"/>
+        <TextView android:id="@+id/tv_invite_fans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableRight="@mipmap/black_right_arrow"
+            android:drawablePadding="@dimen/dp_10"
+            android:text="@string/fans_invite_tips"/>
+    </RelativeLayout>
+</LinearLayout>
