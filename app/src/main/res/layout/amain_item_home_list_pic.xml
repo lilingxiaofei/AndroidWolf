@@ -4,18 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/bg_gray" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#97A959"
+        android:layout_height="50dp"
+        android:background="@color/bg_white"
         android:gravity="center"
         android:text="好酒推荐"
-        android:textColor="@color/t_white"
-        android:textSize="@dimen/sp_big" />
+        android:textColor="@color/t_red"
+        android:textSize="@dimen/text_size_15sp" />
 
 </LinearLayout>

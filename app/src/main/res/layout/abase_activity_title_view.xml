@@ -3,7 +3,7 @@
     android:id="@+id/title_view"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/bg_black">
+    android:background="@color/bg_red">
 
     <ImageView
         android:id="@+id/img_title_left"
@@ -12,10 +12,11 @@
         android:padding="14dp"
         android:src="@mipmap/white_left_arrow" />
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/ll_right_layout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
+        android:minWidth="48dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -33,6 +34,12 @@
             android:layout_alignParentRight="true"
             android:padding="13dp"
             android:visibility="gone" />
+        <TextView android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:minWidth="48dp"
+            android:textSize="15sp"
+            android:textColor="@color/t_white"/>
     </LinearLayout>
 
 
@@ -41,14 +48,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:lines="1"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
         android:text="标题"
+        android:gravity="center"
         android:textColor="@color/t_white"
         android:textSize="18sp" />
 
     <RelativeLayout
         android:id="@+id/rl_title_search"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_toLeftOf="@+id/ll_right_layout"
+        android:layout_toRightOf="@+id/img_title_left"
         android:layout_centerInParent="true"
         android:background="@drawable/search_bg"
         android:visibility="gone">

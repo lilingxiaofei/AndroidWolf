@@ -1,22 +1,23 @@
 package com.chunlangjiu.app.amain.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.chunlangjiu.app.R;
-import com.chunlangjiu.app.amain.bean.AuctionListBean;
 import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
+import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.view.countdownview.CountdownView;
 
 import java.util.List;
@@ -40,7 +41,8 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
             }
         });
         getMultiTypeDelegate()
-                .registerItemType(HomeBean.ITEM_GOODS, R.layout.amain_item_home_list_goods)
+                .registerItemType(HomeBean.ITEM_GOODS, R.layout.amain_item_goods_list_linear)
+                .registerItemType(HomeBean.ITEM_GRID_GOODS, R.layout.amain_item_goods_list_grid)
                 .registerItemType(HomeBean.ITEM_JINGPAI, R.layout.amain_item_home_list_auction)
                 .registerItemType(HomeBean.ITEM_TUIJIAN, R.layout.amain_item_home_list_pic);
     }
@@ -48,22 +50,45 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder viewHolder, HomeBean item) {
-        switch (viewHolder.getItemViewType()) {
+        int itemType = viewHolder.getItemViewType();
+        switch (itemType) {
+            case HomeBean.ITEM_GRID_GOODS:
             case HomeBean.ITEM_GOODS:
                 CountdownView countdownView = viewHolder.getView(R.id.countdownView);
                 ImageView imgPic = viewHolder.getView(R.id.imgPic);
                 TextView tvStartPrice = viewHolder.getView(R.id.tvStartPrice);
                 TextView tv_give_price_num = viewHolder.getView(R.id.tv_give_price_num);
                 LinearLayout llStartPrice = viewHolder.getView(R.id.llStartPrice);
-                LinearLayout llTime = viewHolder.getView(R.id.llTime);
+                RelativeLayout llTime = viewHolder.getView(R.id.llTime);
                 TextView tvStartPriceStr = viewHolder.getView(R.id.tvStartPriceStr);
                 LinearLayout llHighPrice = viewHolder.getView(R.id.llHighPrice);
                 TextView tvAnPaiStr = viewHolder.getView(R.id.tvAnPaiStr);
                 TextView tvSellPriceStr = viewHolder.getView(R.id.tvSellPriceStr);
                 TextView tvSellPrice = viewHolder.getView(R.id.tvSellPrice);
 
-                TextView tv_attention = viewHolder.getView(R.id.tv_attention);
-                TextView tv_evaluate = viewHolder.getView(R.id.tv_evaluate);
+                TextView tv_attention = viewHolder.getView(R.id.tvAttention);
+                TextView tv_evaluate = viewHolder.getView(R.id.tvEvaluate);
+
+
+                //网格布局的时候设置图片大小
+                ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
+                if(itemType == HomeBean.ITEM_GRID_GOODS && layoutParams.width == layoutParams.height && layoutParams.width>0){
+                    int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(25)) / 2;
+                    layoutParams.width = picWidth;
+                    layoutParams.height = picWidth;
+                    imgPic.setLayoutParams(layoutParams);
+                }
+
+                viewHolder.addOnClickListener(R.id.rl_store_layout);
+                viewHolder.setText(R.id.tv_store_name,item.getStoreName());
+                String level = item.getStoreLevel();
+                if("1".equals(level)){
+                    viewHolder.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_partner);
+                }else if("2".equals(level)){
+                    viewHolder.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_star);
+                }else{
+                    viewHolder.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_common);
+                }
 
                 GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
                 viewHolder.setText(R.id.tv_name, item.getTitle());
@@ -119,7 +144,6 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 } else {
                     llStartPrice.setVisibility(View.GONE);
                     tv_give_price_num.setVisibility(View.GONE);
-                    llTime.setVisibility(View.GONE);
                     tvSellPriceStr.setVisibility(View.GONE);
                     llHighPrice.setVisibility(View.VISIBLE);
                     tvAnPaiStr.setVisibility(View.GONE);
@@ -139,6 +163,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 break;
         }
     }
+
 
     /**
      * 以下两个接口代替 activity.onStart() 和 activity.onStop(), 控制 timer 的开关

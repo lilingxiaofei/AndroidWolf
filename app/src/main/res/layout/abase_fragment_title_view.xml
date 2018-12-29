@@ -3,7 +3,7 @@
     android:id="@+id/title_view"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/bg_black"
+    android:background="@color/bg_red"
     android:visibility="visible">
 
     <ImageView

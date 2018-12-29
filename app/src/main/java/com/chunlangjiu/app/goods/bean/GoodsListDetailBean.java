@@ -21,6 +21,24 @@ public class GoodsListDetailBean {
     private GiftDetail gift;
     private Auction auction;
 
+    private String storeId ;//店铺id
+    private String storeName ;//店铺id
+    private String storeLevel ;//店铺等级
+
+
+
+    private String imgsrc;
+
+    private boolean isAuction;
+    private String auction_starting_price;
+    private String max_price;
+    private String auction_end_time;
+    private String auction_status;
+    private String auction_number;
+
+
+
+
     public Auction getAuction() {
         return auction;
     }
@@ -226,4 +244,27 @@ public class GoodsListDetailBean {
         }
     }
 
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getStoreLevel() {
+        return storeLevel;
+    }
+
+    public void setStoreLevel(String storeLevel) {
+        this.storeLevel = storeLevel;
+    }
 }

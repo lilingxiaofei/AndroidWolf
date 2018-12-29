@@ -1,7 +1,8 @@
 package com.chunlangjiu.app.amain.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +28,8 @@ import com.chunlangjiu.app.amain.bean.ThirdClassBean;
 import com.chunlangjiu.app.goods.activity.AuctionDetailActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
+import com.chunlangjiu.app.goods.activity.ShopMainActivity;
+import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
@@ -43,10 +44,8 @@ import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoicePricePopWindow;
 import com.chunlangjiu.app.util.UmengEventUtil;
-import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.KeyBoardUtils;
-import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -66,7 +65,7 @@ import io.reactivex.schedulers.Schedulers;
  * @Describe:
  */
 public class GoodsFragment extends BaseFragment {
-
+    private Activity activity ;
     private RelativeLayout rlBrand;
     private TextView tvBrand;
     private RelativeLayout rlArea;
@@ -88,8 +87,10 @@ public class GoodsFragment extends BaseFragment {
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private List<GoodsListDetailBean> lists;
-    private LinearAdapter linearAdapter;
-    private GridAdapter gridAdapter;
+//    private LinearAdapter linearAdapter;
+//    private GridAdapter gridAdapter;
+
+    private GoodsAdapter goodsAdapter ;
     private boolean listType = false;//是否是列表形式
     private int pageNum = 1;
 
@@ -140,6 +141,11 @@ public class GoodsFragment extends BaseFragment {
         return goodsFragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (Activity)context ;
+    }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -279,31 +285,25 @@ public class GoodsFragment extends BaseFragment {
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         recyclerView = rootView.findViewById(R.id.recyclerView);
+        goodsAdapter = new GoodsAdapter(activity,lists);
         lists = new ArrayList<>();
-        linearAdapter = new LinearAdapter(R.layout.amain_item_goods_list_linear, lists);
-        linearAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        goodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
-                    GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), lists.get(position).getItem_id());
-                } else {
-                    AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
-                }
-            }
-        });
-        gridAdapter = new GridAdapter(R.layout.amain_item_goods_list_grid, lists);
-        gridAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
-                    GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), lists.get(position).getItem_id());
-                } else {
-                    AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                GoodsListDetailBean details= lists.get(position);
+                if(view.getId() == R.id.rl_store_layout){
+                    ShopMainActivity.startShopMainActivity(activity, details.getStoreId());
+                }else{
+                    if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
+                        GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), details.getItem_id());
+                    } else {
+                        AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), details.getItem_id());
+                    }
                 }
             }
         });
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setAdapter(gridAdapter);
+        recyclerView.setAdapter(goodsAdapter);
 
         refreshLayout.setEnableAutoLoadMore(false);//关闭自动加载更多
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -514,58 +514,29 @@ public class GoodsFragment extends BaseFragment {
             } else {
                 refreshLayout.setNoMoreData(false);
             }
-            if (listType) {
-                if (lists.size() == 0) {
-                    linearAdapter.setNewData(lists);
-                    linearAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-                } else {
-                    linearAdapter.setNewData(lists);
-                }
+
+
+            if (lists.size() == 0) {
+                goodsAdapter.setNewData(lists);
+                goodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
             } else {
-                if (lists.size() == 0) {
-                    gridAdapter.setNewData(lists);
-                    gridAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-                } else {
-                    gridAdapter.setNewData(lists);
-                }
+                goodsAdapter.setNewData(lists);
             }
         } else {
             lists.clear();
-            if (listType) {
-                linearAdapter.setNewData(lists);
-                linearAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-            } else {
-                gridAdapter.setNewData(lists);
-                gridAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-            }
+            goodsAdapter.setNewData(lists);
+            goodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
         }
     }
 
     private void changeListType() {
-        if (listType) {
-            //列表切换到网格
-            listType = false;
+        goodsAdapter.switchListType();
+        if(goodsAdapter.isGridLayout()){
             imgTitleRightTwoF.setImageResource(R.mipmap.icon_list);
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-            recyclerView.setAdapter(gridAdapter);
-            if (lists.size() == 0) {
-                gridAdapter.setNewData(lists);
-                gridAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-            } else {
-                gridAdapter.setNewData(lists);
-            }
-        } else {
-            //网格切换到列表
-            listType = true;
+        }else{
             imgTitleRightTwoF.setImageResource(R.mipmap.icon_grid);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(linearAdapter);
-            if (lists.size() == 0) {
-                linearAdapter.setNewData(lists);
-                linearAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
-            } else {
-                linearAdapter.setNewData(lists);
-            }
         }
     }
 
@@ -720,139 +691,6 @@ public class GoodsFragment extends BaseFragment {
             TextView tvClass = helper.getView(R.id.tvClass);
             tvClass.setText(item.getCat_name());
             tvClass.setSelected(item.getCat_id().equals(selectClassId));
-        }
-    }
-
-    public class LinearAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseViewHolder> {
-        public LinearAdapter(int layoutResId, List<GoodsListDetailBean> data) {
-            super(layoutResId, data);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, GoodsListDetailBean item) {
-            try {
-                ImageView imgPic = helper.getView(R.id.img_pic);
-                ImageView imgAuction = helper.getView(R.id.imgAuction);
-                LinearLayout llStartPrice = helper.getView(R.id.llStartPrice);
-                LinearLayout llHighPrice = helper.getView(R.id.llHighPrice);
-                TextView tvStartPrice = helper.getView(R.id.tvStartPrice);
-                TextView tvAnPaiStr = helper.getView(R.id.tvAnPaiStr);
-
-                GlideUtils.loadImage(getActivity(), item.getImage_default_id(), imgPic);
-                helper.setText(R.id.tv_name, item.getTitle());
-
-                if (TextUtils.isEmpty(item.getAuction().getAuctionitem_id())) {
-                    //普通商品
-                    imgAuction.setVisibility(View.GONE);
-                    llStartPrice.setVisibility(View.GONE);
-                    llHighPrice.setVisibility(View.VISIBLE);
-                    tvAnPaiStr.setVisibility(View.GONE);
-                    helper.setText(R.id.tvSellPriceStr, "");
-                    helper.setText(R.id.tvSellPrice, item.getPrice());
-                } else {
-                    //竞拍
-                    imgAuction.setVisibility(View.VISIBLE);
-                    llStartPrice.setVisibility(View.VISIBLE);
-                    helper.setText(R.id.tvStartPriceStr, "起拍价：");
-                    tvStartPrice.setText("¥" + item.getAuction().getStarting_price());
-                    if ("true".equals(item.getAuction().getAuction_status())) {
-                        //明拍
-                        llHighPrice.setVisibility(View.VISIBLE);
-                        tvAnPaiStr.setVisibility(View.GONE);
-                        helper.setText(R.id.tvSellPriceStr, "最高出价：");
-                        if (TextUtils.isEmpty(item.getAuction().getMax_price())) {
-                            helper.setText(R.id.tvSellPrice, "暂无出价");
-                        } else {
-                            helper.setText(R.id.tvSellPrice, "¥" + item.getAuction().getMax_price());
-                        }
-                    } else {
-                        llHighPrice.setVisibility(View.GONE);
-                        tvAnPaiStr.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                LinearLayout llTime = helper.getView(R.id.llTime);
-                llTime.setVisibility(View.GONE);
-                helper.setText(R.id.tvLabel, item.getLabel());
-                TextView tvLabel = helper.getView(R.id.tvLabel);
-                if (TextUtils.isEmpty(item.getLabel())) {
-                    tvLabel.setVisibility(View.GONE);
-                } else {
-                    tvLabel.setVisibility(View.VISIBLE);
-                }
-                helper.setText(R.id.tv_attention, item.getView_count() + "人关注");
-                helper.setText(R.id.tv_evaluate, item.getRate_count() + "条评价");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public class GridAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseViewHolder> {
-        public GridAdapter(int layoutResId, List<GoodsListDetailBean> data) {
-            super(layoutResId, data);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, GoodsListDetailBean item) {
-            try {
-                ImageView imgPic = helper.getView(R.id.img_pic);
-                ImageView imgAuction = helper.getView(R.id.imgAuction);
-                LinearLayout llStartPrice = helper.getView(R.id.llStartPrice);
-                LinearLayout llHighPrice = helper.getView(R.id.llHighPrice);
-                TextView tvStartPrice = helper.getView(R.id.tvStartPrice);
-                TextView tvAnPaiStr = helper.getView(R.id.tvAnPaiStr);
-
-                ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
-                int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(40)) / 2;
-                layoutParams.width = picWidth;
-                layoutParams.height = picWidth;
-                imgPic.setLayoutParams(layoutParams);
-                GlideUtils.loadImage(getActivity(), item.getImage_default_id(), imgPic);
-                helper.setText(R.id.tv_name, item.getTitle());
-
-                if (TextUtils.isEmpty(item.getAuction().getAuctionitem_id())) {
-                    //普通商品
-                    imgAuction.setVisibility(View.GONE);
-                    llStartPrice.setVisibility(View.GONE);
-                    llHighPrice.setVisibility(View.VISIBLE);
-                    tvAnPaiStr.setVisibility(View.GONE);
-                    helper.setText(R.id.tvSellPriceStr, "");
-                    helper.setText(R.id.tvSellPrice, item.getPrice());
-                } else {
-                    //竞拍
-                    imgAuction.setVisibility(View.VISIBLE);
-                    llStartPrice.setVisibility(View.VISIBLE);
-                    helper.setText(R.id.tvStartPriceStr, "起拍价：");
-                    tvStartPrice.setText("¥" + item.getAuction().getStarting_price());
-                    if ("true".equals(item.getAuction().getAuction_status())) {
-                        //明拍
-                        llHighPrice.setVisibility(View.VISIBLE);
-                        tvAnPaiStr.setVisibility(View.GONE);
-                        helper.setText(R.id.tvSellPriceStr, "最高出价：");
-                        if (TextUtils.isEmpty(item.getAuction().getMax_price())) {
-                            helper.setText(R.id.tvSellPrice, "暂无出价");
-                        } else {
-                            helper.setText(R.id.tvSellPrice, "¥" + item.getAuction().getMax_price());
-                        }
-                    } else {
-                        llHighPrice.setVisibility(View.GONE);
-                        tvAnPaiStr.setVisibility(View.VISIBLE);
-                    }
-                }
-
-                helper.setText(R.id.tvLabel, item.getLabel());
-                TextView tvLabel = helper.getView(R.id.tvLabel);
-                if (TextUtils.isEmpty(item.getLabel())) {
-                    tvLabel.setVisibility(View.GONE);
-                } else {
-                    tvLabel.setVisibility(View.VISIBLE);
-                }
-                helper.setText(R.id.tvAttention, item.getView_count() + "人关注");
-                helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 
