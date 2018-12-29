@@ -18,6 +18,7 @@ import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.amain.activity.LoginActivity;
 import com.chunlangjiu.app.fans.activity.FansHomeActivity;
 import com.chunlangjiu.app.goods.dialog.EditAccountNameDialog;
+import com.chunlangjiu.app.money.activity.MoneyManagerActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainActivity;
 import com.chunlangjiu.app.order.params.OrderParams;
@@ -310,7 +311,8 @@ public class UserFragment extends BaseFragment {
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
                     break;
                 case R.id.rlMoneyManager:// 资金管理
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_MONEY_MANAGER + BaseApplication.getToken(), "资金管理");
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_MONEY_MANAGER + BaseApplication.getToken(), "资金管理");
+                    startActivity(new Intent(getActivity(),MoneyManagerActivity.class));
                     break;
                 case R.id.rlShare:// 分享
                     showShareDialog();
