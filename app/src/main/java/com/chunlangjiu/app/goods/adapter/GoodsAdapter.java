@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -46,6 +47,10 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
     //切换布局显示样式
     public void switchListType(){
         itemType = itemType == LIST_LINEAR?LIST_GRID:LIST_LINEAR;
+    }
+
+    public int getItemType(){
+        return itemType;
     }
     //设置布局显示样式
     public void setListType(int type){
@@ -90,7 +95,8 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 llHighPrice.setVisibility(View.VISIBLE);
                 tvAnPaiStr.setVisibility(View.GONE);
                 helper.setText(R.id.tvSellPriceStr, "");
-                helper.setText(R.id.tvSellPrice, item.getPrice());
+                helper.setText(R.id.tvSellPrice, "");
+                helper.setText(R.id.tvGoodsPrice,"¥" +item.getPrice());
 
                 helper.setText(R.id.tvStartPriceStr, "原价：");
                 tvStartPrice.setText(item.getMkt_price());
@@ -101,6 +107,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 llStartPrice.setVisibility(View.VISIBLE);
                 helper.setText(R.id.tvStartPriceStr, "起拍价：");
                 tvStartPrice.setText("¥" + item.getAuction().getStarting_price());
+                helper.setText(R.id.tvGoodsPrice,"");
                 if ("true".equals(item.getAuction().getAuction_status())) {
                     //明拍
                     llHighPrice.setVisibility(View.VISIBLE);
@@ -117,17 +124,18 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 }
             }
 
-            LinearLayout llTime = helper.getView(R.id.llTime);
-            llTime.setVisibility(View.GONE);
-            helper.setText(R.id.tvLabel, item.getLabel());
-            TextView tvLabel = helper.getView(R.id.tvLabel);
-            if (TextUtils.isEmpty(item.getLabel())) {
-                tvLabel.setVisibility(View.GONE);
-            } else {
-                tvLabel.setVisibility(View.VISIBLE);
+            RelativeLayout llTime = helper.getView(R.id.llTime);
+            if(llTime!=null){
+                llTime.setVisibility(View.GONE);
             }
-            helper.setText(R.id.tv_attention, item.getView_count() + "人关注");
-            helper.setText(R.id.tv_evaluate, item.getRate_count() + "条评价");
+
+            String label  = item.getLabel();
+            helper.setText(R.id.tvLabel, label);
+            helper.setGone(R.id.tvLabel, !TextUtils.isEmpty(label));
+            helper.setText(R.id.tvAttention, item.getView_count() + "人关注");
+            helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
+            helper.setText(R.id.tv_good_evaluate, item.getRate_count() + "好评");
+
 
 
             helper.setGone(R.id.rl_store_layout,isShowStoreView);

@@ -1,5 +1,7 @@
 package com.chunlangjiu.app.amain.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v4.content.ContextCompat;
@@ -35,6 +37,7 @@ import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
 import com.chunlangjiu.app.util.ShareUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
+import com.jaeger.library.StatusBarUtil;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -69,14 +72,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class UserFragment extends BaseFragment {
 
+    private LinearLayout llNotLogin;
     private TextView tvToLogin;
     private RelativeLayout rlHead;
 
-    private RelativeLayout rlBackground;
-    private ImageView imgSetting;
 
-    private LinearLayout llMyTitle;
-    private ImageView imgMyTitleType;
     private TextView tvMyTitle;
 
     private LinearLayout llAuthStatus;
@@ -96,6 +96,14 @@ public class UserFragment extends BaseFragment {
     private TextView tvNotUseMoney;
     private LinearLayout llMessageNum;
     private TextView tvMessageNum;
+
+
+    //切换用户布局
+    private LinearLayout llSwitchLayout ;
+    private ImageView ivSwitchIcon ;
+    private TextView tvSwitchText;
+
+
 
     /*订单管理*/
     private RelativeLayout rlOrderManager;
@@ -173,10 +181,9 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlAddress;
     private RelativeLayout rlBankCard;
     private LinearLayout llMyManagerSecond;
-    private RelativeLayout rlBankCardSecond;
     private RelativeLayout rlMyEvaluate;
-    private RelativeLayout rlMySecondPlace;
     private RelativeLayout rlFansManage ;
+    private RelativeLayout rlSetting;
     /*我的管理*/
 
     private static final int TYPE_BUYER = 0;//买家中心
@@ -205,9 +212,12 @@ public class UserFragment extends BaseFragment {
                 return;
             }
             switch (view.getId()) {
+                case R.id.llSwitchLayout:
+                    checkStatus();// 切换买/卖家中心
+                    break;
                 case R.id.tvToLogin:
                     break;
-                case R.id.imgSetting:
+                case R.id.rl_setting:
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SETTING + BaseApplication.getToken(), "设置");
                     SettingActivity.startActivity(getActivity());
                     break;
@@ -216,9 +226,6 @@ public class UserFragment extends BaseFragment {
                     break;
                 case R.id.imgEditName://编辑昵称或者店铺名
                     showEditNameDialog();
-                    break;
-                case R.id.tvChangeType:// 切换买/卖家中心
-                    checkStatus();
                     break;
                 case R.id.tvAuthRealName:// 个人认证
                     checkPersonStatus();
@@ -333,9 +340,6 @@ public class UserFragment extends BaseFragment {
                 case R.id.rlBankCard:// 银行卡管理
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_BANK_CARD + BaseApplication.getToken(), "银行卡管理");
                     break;
-                case R.id.rlBankCardSecond:// 银行卡管理
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_BANK_CARD + BaseApplication.getToken(), "银行卡管理");
-                    break;
                 case R.id.rlMyEvaluate:// 我的估价
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_EVALUATE + BaseApplication.getToken(), "我的估价");
                     break;
@@ -346,27 +350,39 @@ public class UserFragment extends BaseFragment {
         }
     };
 
+    private Activity activity ;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity  = (Activity)context ;
+    }
 
     @Override
     public void getContentView(LayoutInflater inflater, ViewGroup container) {
         inflater.inflate(R.layout.amain_fragment_user, container, true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatusBarUtil.setColor(activity, ContextCompat.getColor(activity, R.color.bg_red),0);
+    }
+
 
     @Override
     public void initView() {
+        llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
         tvToLogin.setOnClickListener(onClickListener);
         rlHead = rootView.findViewById(R.id.rlHead);
 
-        rlBackground = rootView.findViewById(R.id.rlBackground);
-        imgSetting = rootView.findViewById(R.id.imgSetting);
-        imgSetting.setOnClickListener(onClickListener);
 
-        llMyTitle = rootView.findViewById(R.id.llMyTitle);
-        llMyTitle.setVisibility(View.GONE);
-        imgMyTitleType = rootView.findViewById(R.id.imgMyTitleType);
-        tvMyTitle = rootView.findViewById(R.id.tvMyTitle);
+        tvMyTitle = rootView.findViewById(R.id.tvUserTitle);
         llAuthStatus = rootView.findViewById(R.id.llAuthStatus);
         llAuthStatus.setVisibility(View.GONE);
         imgAuthStatus = rootView.findViewById(R.id.imgAuthStatus);
@@ -495,53 +511,62 @@ public class UserFragment extends BaseFragment {
         rlBankCard.setOnClickListener(onClickListener);
 
         llMyManagerSecond = rootView.findViewById(R.id.llMyManagerSecond);
-        rlBankCardSecond = rootView.findViewById(R.id.rlBankCardSecond);
         rlMyEvaluate = rootView.findViewById(R.id.rlMyEvaluate);
-        rlMySecondPlace = rootView.findViewById(R.id.rlMySecondPlace);
         rlFansManage = rootView.findViewById(R.id.rl_fans_manage);
-        rlBankCardSecond.setOnClickListener(onClickListener);
+        rlSetting = rootView.findViewById(R.id.rl_setting);
         rlMyEvaluate.setOnClickListener(onClickListener);
         rlFansManage.setOnClickListener(onClickListener);
+        rlSetting.setOnClickListener(onClickListener);
 
-        if (BaseApplication.HIDE_AUCTION) {
-            llAuctionContent.setVisibility(View.GONE);
-            rlAuctionGoods.setVisibility(View.GONE);
-            rlGoodsManagerPlace.setVisibility(View.VISIBLE);
-        } else {
-            llAuctionContent.setVisibility(View.VISIBLE);
-            rlAuctionGoods.setVisibility(View.VISIBLE);
-            rlGoodsManagerPlace.setVisibility(View.GONE);
-        }
+
+        //切换用户布局
+        llSwitchLayout = rootView.findViewById(R.id.llSwitchLayout) ;
+        ivSwitchIcon  = rootView.findViewById(R.id.ivSwitchIcon) ;
+        tvSwitchText = rootView.findViewById(R.id.tvSwitchText) ;
+        llSwitchLayout.setOnClickListener(onClickListener);
+
+//        if (BaseApplication.HIDE_AUCTION) {
+//            llAuctionContent.setVisibility(View.GONE);
+//            rlAuctionGoods.setVisibility(View.GONE);
+//            rlGoodsManagerPlace.setVisibility(View.VISIBLE);
+//        } else {
+//            llAuctionContent.setVisibility(View.VISIBLE);
+//            rlAuctionGoods.setVisibility(View.VISIBLE);
+//            rlGoodsManagerPlace.setVisibility(View.GONE);
+//        }
 
         checkLogin();
     }
 
     private void checkLogin() {
         if (BaseApplication.isLogin()) {
-            tvToLogin.setVisibility(View.GONE);
-            rlHead.setVisibility(View.VISIBLE);
+            llNotLogin.setVisibility(View.GONE);
+//            rlHead.setVisibility(View.VISIBLE);
             showUserTypeView();
         } else {
-            tvToLogin.setVisibility(View.VISIBLE);
-            rlHead.setVisibility(View.GONE);
+            llNotLogin.setVisibility(View.VISIBLE);
+//            rlHead.setVisibility(View.GONE);
         }
     }
 
     private void showUserTypeView() {
         if (userType == TYPE_BUYER) {
             //买家中心
-            rlBackground.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.my_buy_bg));
             imgEditName.setVisibility(View.GONE);
             llNotUseMoney.setVisibility(View.GONE);
             tvName.setText(loginAccount);
 
-            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-                tvMyTitle.setText("企业买家");
-                imgMyTitleType.setImageResource(R.mipmap.my_company);
-            } else {
-                tvMyTitle.setText("个人买家");
-                imgMyTitleType.setImageResource(R.mipmap.my_person);
-            }
+            tvMyTitle.setText("买家中心");
+//            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+////                tvMyTitle.setText("企业买家");
+//                tvMyTitle.setText("卖家中心");
+//                tvSwitchText.setText("进入买家中心");
+//                ivSwitchIcon.setImageResource(R.mipmap.center_seller);
+//                imgMyTitleType.setImageResource(R.mipmap.my_company);
+//            } else {
+////                tvMyTitle.setText("个人买家");
+//                imgMyTitleType.setImageResource(R.mipmap.my_person);
+//            }
 
             llBuyOrder.setVisibility(View.VISIBLE);
             llSellOrder.setVisibility(View.GONE);
@@ -555,11 +580,8 @@ public class UserFragment extends BaseFragment {
             rlCollect.setVisibility(View.VISIBLE);
             rlBankCard.setVisibility(View.GONE);
             llMyManagerSecond.setVisibility(View.VISIBLE);
-            rlBankCardSecond.setVisibility(View.VISIBLE);
-            rlMySecondPlace.setVisibility(View.GONE);
         } else {
             //卖家中心
-            rlBackground.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.my_sell_bg));
             imgEditName.setVisibility(View.VISIBLE);
             llNotUseMoney.setVisibility(View.VISIBLE);
             if (TextUtils.isEmpty(shopName)) {
@@ -573,13 +595,17 @@ public class UserFragment extends BaseFragment {
             }
 
 
-            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-                tvMyTitle.setText("企业卖家");
-                imgMyTitleType.setImageResource(R.mipmap.my_company);
-            } else {
-                tvMyTitle.setText("个人卖家");
-                imgMyTitleType.setImageResource(R.mipmap.my_person);
-            }
+            tvMyTitle.setText("卖家中心");
+            tvSwitchText.setText("进入买家中心");
+            ivSwitchIcon.setImageResource(R.mipmap.center_buyer);
+
+//            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+//                tvMyTitle.setText("企业卖家");
+//                imgMyTitleType.setImageResource(R.mipmap.my_company);
+//            } else {
+//                tvMyTitle.setText("个人卖家");
+//                imgMyTitleType.setImageResource(R.mipmap.my_person);
+//            }
 
             llBuyOrder.setVisibility(View.GONE);
             llSellOrder.setVisibility(View.VISIBLE);
@@ -593,8 +619,6 @@ public class UserFragment extends BaseFragment {
             rlCollect.setVisibility(View.GONE);
             rlBankCard.setVisibility(View.VISIBLE);
             llMyManagerSecond.setVisibility(View.VISIBLE);
-            rlBankCardSecond.setVisibility(View.GONE);
-            rlMySecondPlace.setVisibility(View.VISIBLE);
         }
     }
 
@@ -782,24 +806,24 @@ public class UserFragment extends BaseFragment {
             tvAuthCompany.setVisibility(View.VISIBLE);
         }
 
-        llMyTitle.setVisibility(View.VISIBLE);
-        if (userType == TYPE_BUYER) {
-            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-                tvMyTitle.setText("企业买家");
-                imgMyTitleType.setImageResource(R.mipmap.my_company);
-            } else {
-                tvMyTitle.setText("个人买家");
-                imgMyTitleType.setImageResource(R.mipmap.my_person);
-            }
-        } else {
-            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-                tvMyTitle.setText("企业卖家");
-                imgMyTitleType.setImageResource(R.mipmap.my_company);
-            } else {
-                tvMyTitle.setText("个人卖家");
-                imgMyTitleType.setImageResource(R.mipmap.my_person);
-            }
-        }
+//        llMyTitle.setVisibility(View.VISIBLE);
+//        if (userType == TYPE_BUYER) {
+//            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+//                tvMyTitle.setText("企业买家");
+//                imgMyTitleType.setImageResource(R.mipmap.my_company);
+//            } else {
+//                tvMyTitle.setText("个人买家");
+//                imgMyTitleType.setImageResource(R.mipmap.my_person);
+//            }
+//        } else {
+//            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+//                tvMyTitle.setText("企业卖家");
+//                imgMyTitleType.setImageResource(R.mipmap.my_company);
+//            } else {
+//                tvMyTitle.setText("个人卖家");
+//                imgMyTitleType.setImageResource(R.mipmap.my_person);
+//            }
+//        }
     }
 
 
@@ -955,23 +979,23 @@ public class UserFragment extends BaseFragment {
                             tvAuthCompany.setVisibility(View.GONE);
                             imgAuthStatus.setImageResource(R.mipmap.my_auth);
                             tvAuthStatus.setText("已认证");
-                            if (userType == TYPE_BUYER) {
-                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-                                    tvMyTitle.setText("企业买家");
-                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
-                                } else {
-                                    tvMyTitle.setText("个人买家");
-                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
-                                }
-                            } else {
-                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-                                    tvMyTitle.setText("企业卖家");
-                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
-                                } else {
-                                    tvMyTitle.setText("个人卖家");
-                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
-                                }
-                            }
+//                            if (userType == TYPE_BUYER) {
+//                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+//                                    tvMyTitle.setText("企业买家");
+//                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
+//                                } else {
+//                                    tvMyTitle.setText("个人买家");
+//                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
+//                                }
+//                            } else {
+//                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+//                                    tvMyTitle.setText("企业卖家");
+//                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
+//                                } else {
+//                                    tvMyTitle.setText("个人卖家");
+//                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
+//                                }
+//                            }
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -1069,10 +1093,10 @@ public class UserFragment extends BaseFragment {
             BaseApplication.initToken();
             checkLogin();
             userType = TYPE_BUYER;
-            llMyTitle.setVisibility(View.GONE);
             tvOrderOneNum.setVisibility(View.GONE);
             tvOrderTwoNum.setVisibility(View.GONE);
             tvOrderThreeNum.setVisibility(View.GONE);
+            llNotUseMoney.setVisibility(View.VISIBLE);
             disposable.add(ApiUtils.getInstance().logout()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
