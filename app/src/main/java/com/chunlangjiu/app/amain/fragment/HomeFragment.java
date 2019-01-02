@@ -26,8 +26,8 @@ import com.chunlangjiu.app.amain.bean.HomeAuctionBean;
 import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
-import com.chunlangjiu.app.goods.activity.AuctionDetailActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
+import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
@@ -436,10 +436,13 @@ public class HomeFragment extends BaseFragment {
                 if (homeBean.getItemType() == HomeBean.ITEM_GOODS || homeBean.getItemType() == HomeBean.ITEM_GRID_GOODS) {
                     if(resId == R.id.ll_store_name){
                         ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getStoreId());
-                    }else if (homeBean.isAuction()) {
-                        AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
-                    } else {
-                        GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), homeBean.getItem_id());
+                    }
+//                    else if (homeBean.isAuction()) {
+//                        AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
+//                    }
+                    else {
+                        GoodsDetailslNewActivity.startActivity(getActivity(), homeBean.getItem_id());
+//                        GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), homeBean.getItem_id());
                         if (auction_list != null && auction_list.size() > 0) {
                             if (position > 1 + auction_list.size() && position < 2 + auction_list.size() + 6) {
                                 UmengEventUtil.recommendEvent(getActivity(), position - 1 - auction_list.size() + "");
