@@ -97,8 +97,7 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     private void setStatusBarColor() {
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_red),
-                StatusBarUtil.DEFAULT_STATUS_BAR_ALPHA);
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_red),0);
     }
 
     public abstract void setTitleView();

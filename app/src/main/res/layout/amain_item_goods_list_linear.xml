@@ -2,19 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlContentLayout"
+    android:id="@+id/rl_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bg_white"
-    android:paddingLeft="10dp"
+    android:background="@drawable/bg_round_white"
+    android:paddingLeft="5dp"
     android:paddingTop="10dp"
-    android:paddingRight="10dp">
+    android:paddingBottom="10dp">
 
     <RelativeLayout
         android:id="@+id/llTime"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="5dp"
+        android:background="@color/bg_white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -102,6 +104,8 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/imgPic"
         android:layout_marginLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@color/bg_white"
         android:layout_toRightOf="@id/imgPic"
         android:orientation="vertical">
 
@@ -119,6 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:minHeight="15dp"
             android:orientation="horizontal">
 
             <TextView
@@ -127,12 +132,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name"
                 android:layout_toRightOf="@id/imgPic"
-                android:background="@color/bg_gray"
+                android:background="@drawable/bg_round_gray"
                 android:paddingBottom="2dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="2dp"
                 android:textColor="@color/t_black"
+                android:visibility="gone"
                 android:textSize="11sp"
                 tools:text="法国" />
 
@@ -143,14 +149,14 @@
                 android:layout_below="@id/tv_name"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/tvLabel"
-                android:background="@color/bg_gray"
+                android:background="@drawable/bg_round_gray"
                 android:paddingBottom="2dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="2dp"
                 android:textColor="@color/t_black"
                 android:textSize="11sp"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:text="92年" />
         </LinearLayout>
 
@@ -198,7 +204,14 @@
                 android:layout_height="wrap_content"
                 android:text="¥5000.00"
                 android:textColor="@color/t_red"
-                android:textSize="@dimen/sp_mid" />
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tvGoodsPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥5000.00"
+                android:textColor="@color/t_red"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_give_price_num"
@@ -285,19 +298,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/t_gray"
+                android:textColor="@color/t_black"
                 android:textSize="10sp"
                 android:layout_alignParentRight="true"
                 android:drawablePadding="4dp"
-                android:drawableRight="@mipmap/black_right_arrow"
+                android:drawableRight="@mipmap/black_right_arrow_two"
                 tools:text="30条评价" />
         </RelativeLayout>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@id/imgPic"
-        android:layout_marginTop="10dp"
-        android:background="@color/line" />
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1px"-->
+        <!--android:layout_below="@id/imgPic"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@color/line" />-->
 
 </RelativeLayout>

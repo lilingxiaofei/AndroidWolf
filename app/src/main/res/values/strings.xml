@@ -35,4 +35,10 @@
     <string name="login_pwd">登录密码</string>
     <string name="address_manager">地址管理</string>
     <string name="bank_manager">银行卡管理</string>
+
+
+    <string name="into_seller_center">进入卖家中心</string>
+    <string name="into_buyer_center">进入买家中心</string>
+    <string name="find_all_order">查看全部订单</string>
+
 </resources>

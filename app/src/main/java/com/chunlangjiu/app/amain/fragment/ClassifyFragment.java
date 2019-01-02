@@ -18,6 +18,7 @@ import com.chunlangjiu.app.amain.bean.FirstClassBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.amain.bean.SecondClassBean;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
+import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.lzy.imagepicker.util.Utils;
@@ -97,7 +98,9 @@ public class ClassifyFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 UmengEventUtil.search_category(getActivity(), classLists.get(position).getCat_name());
                 selectClassId = classLists.get(position).getCat_id();
-                classAdapter.notifyDataSetChanged();
+                String classifyName = classLists.get(position).getCat_name();
+                GoodsListNewActivity.startGoodsListNewActivity(activity,selectClassId,classifyName,"");
+//                classAdapter.notifyDataSetChanged();
             }
         });
 

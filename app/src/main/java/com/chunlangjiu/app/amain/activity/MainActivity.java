@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,7 +22,6 @@ import com.chunlangjiu.app.amain.bean.CheckUpdateBean;
 import com.chunlangjiu.app.amain.fragment.AuctionFragment;
 import com.chunlangjiu.app.amain.fragment.CartFragment;
 import com.chunlangjiu.app.amain.fragment.ClassifyFragment;
-import com.chunlangjiu.app.amain.fragment.GoodsFragment;
 import com.chunlangjiu.app.amain.fragment.HomeFragment;
 import com.chunlangjiu.app.amain.fragment.UserFragment;
 import com.chunlangjiu.app.dialog.AppUpdateDialog;
@@ -32,6 +32,7 @@ import com.chunlangjiu.app.util.GeTuiIntentService;
 import com.chunlangjiu.app.util.GeTuiPushService;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.igexin.sdk.PushManager;
+import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -222,18 +223,23 @@ public class MainActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tab_one:
+                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(0);
                     break;
                 case R.id.tab_two:
+                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(1);
                     break;
                 case R.id.tab_three:
+                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(2);
                     break;
                 case R.id.tab_four:
+                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(3);
                     break;
                 case R.id.tab_five:
+                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_black),0);
                     setPageFragment(4);
                     break;
             }

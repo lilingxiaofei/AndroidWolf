@@ -44,6 +44,8 @@ import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoicePricePopWindow;
 import com.chunlangjiu.app.util.UmengEventUtil;
+import com.lzy.imagepicker.util.Utils;
+import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.KeyBoardUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -302,7 +304,17 @@ public class GoodsFragment extends BaseFragment {
                 }
             }
         });
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(activity, 5), false));
+//        // 设置运营位置一行有多少个Item
+//        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(int position) {
+//                int spanCount = goodsAdapter.isGridLayout()?1:2;
+//                return spanCount;
+//            }
+//        });
         recyclerView.setAdapter(goodsAdapter);
 
         refreshLayout.setEnableAutoLoadMore(false);//关闭自动加载更多
@@ -533,9 +545,11 @@ public class GoodsFragment extends BaseFragment {
         goodsAdapter.switchListType();
         if(goodsAdapter.isGridLayout()){
             imgTitleRightTwoF.setImageResource(R.mipmap.icon_list);
+            recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(activity, 5), false));
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }else{
             imgTitleRightTwoF.setImageResource(R.mipmap.icon_grid);
+            recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, Utils.dp2px(activity, 5), false));
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
     }

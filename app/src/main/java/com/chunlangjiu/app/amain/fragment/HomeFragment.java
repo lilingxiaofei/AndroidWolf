@@ -225,6 +225,8 @@ public class HomeFragment extends BaseFragment {
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         recyclerView = rootView.findViewById(R.id.listView);
 
+
+
         rlLoading.setVisibility(View.VISIBLE);
         refreshLayout.setVisibility(View.GONE);
         bannerUrls = new ArrayList<>();
@@ -363,6 +365,7 @@ public class HomeFragment extends BaseFragment {
     private void initBrandRecycleView() {
         brandAdapter = new BrandAdapter(getActivity(), R.layout.amain_itme_brand, brandLists);
         recyclerViewBrand.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        recyclerViewBrand.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(getActivity(), 8), false));
         recyclerViewBrand.setAdapter(brandAdapter);
         recyclerViewBrand.setHasFixedSize(true);
         recyclerViewBrand.setNestedScrollingEnabled(false);
@@ -408,7 +411,6 @@ public class HomeFragment extends BaseFragment {
         recyclerView.setAdapter(homeAdapter);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(getActivity(), 5), false));
         recyclerView.setLayoutManager(gridLayoutManager);
-
         refreshLayout.setEnableAutoLoadMore(true);//开启滑到底部自动加载
         refreshLayout.setFooterHeight(30);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
