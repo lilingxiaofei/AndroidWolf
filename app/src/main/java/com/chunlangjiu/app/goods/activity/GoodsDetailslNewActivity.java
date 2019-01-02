@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,10 +24,12 @@ import com.chunlangjiu.app.cart.CartActivity;
 import com.chunlangjiu.app.cart.ChoiceNumDialog;
 import com.chunlangjiu.app.goods.bean.ConfirmOrderBean;
 import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
+import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.dialog.CallDialog;
 import com.chunlangjiu.app.goods.fragment.GoodsCommentFragment;
 import com.chunlangjiu.app.goods.fragment.GoodsDetailsFragment;
 import com.chunlangjiu.app.goods.fragment.GoodsWebFragment;
+import com.chunlangjiu.app.goods.fragment.ScrollViewFragment;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.ShareUtils;
@@ -33,16 +37,20 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
+import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
+import com.pkqup.commonlibrary.view.countdownview.CountdownView;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -50,40 +58,49 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class GoodsDetailsActivity extends BaseActivity {
+public class GoodsDetailslNewActivity extends BaseActivity {
 
-    @BindView(R.id.img_back)
-    ImageView imgBack;
-    @BindView(R.id.img_share)
-    ImageView imgShare;
-    @BindView(R.id.tab)
-    SlidingTabLayout tab;
-    @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    //竞拍和普通商品公用的UI
+    private RelativeLayout rlBanner;
+    private Banner banner;
+    private LinearLayout indicator;
+    private TextView tvPrice;
+    private TextView tvGoodsName;
+    private TextView tvGoodsNameSecond;
+    private TextView tvCountry;
+    private TextView tvYear;
+    private TextView tvDesc;
 
-    @BindView(R.id.rlBottom)
-    RelativeLayout rlBottom;
-    @BindView(R.id.tvBuy)
-    TextView tvBuy;
-    @BindView(R.id.tvAddCart)
-    TextView tvAddCart;
+    private CircleImageView imgStore;
+    private TextView tvStoreName;
+    private TextView tvStoreDesc;
+    private TextView tvLookAll;
 
-    @BindView(R.id.rlChat)
-    RelativeLayout rlChat;
-    @BindView(R.id.rlCollect)
-    RelativeLayout rlCollect;
-    @BindView(R.id.imgCollect)
-    ImageView imgCollect;
-    @BindView(R.id.rlCart)
-    RelativeLayout rlCart;
-    @BindView(R.id.tvCartNum)
-    TextView tvCartNum;
+    private RelativeLayout rlEvaluate;
+    private TextView tvEvaluate;
+    private LinearLayout llEvaluate;
 
-    private GoodsDetailsFragment goodsDetailsFragment;
+    private LinearLayout llAuctionInfo;//拍品详情
+    private TextView tvAuName;//名称
+    private TextView tvAuYear;//年份
+    private TextView tvAuChateau;//酒庄
+    private TextView tvAuVolume;//容量
+    private TextView tvAuMaterial;//原料
+    private TextView tvAuStorage;//储存条件
+    private TextView tvAuResources;//来源
 
-    private BaseFragmentAdapter fragmentAdapter;
-    private final String[] mTitles = {"商品", "详情", "评价"};
-    private List<Fragment> mFragments;
+    private LinearLayout llSeeMore;
+    private RecyclerView recyclerView;//推荐商品列表
+
+    private RelativeLayout rlBottom;
+    private ImageView ivService;
+    private ImageView ivCollect;
+
+
+    private List<ImageView> imageViews;
+    private List<String> bannerUrls;
+
+    private List<RecommendGoodsBean> recommendLists;
 
     private CompositeDisposable disposable;
     private GoodsDetailBean goodsDetailBean;
@@ -99,14 +116,32 @@ public class GoodsDetailsActivity extends BaseActivity {
     private CallDialog callDialog;
 
 
+    //普通商品需要和竞拍区分的UI
+    private TextView tvBuy;
+    private TextView tvAddCart;
+    private RelativeLayout rlCart;
+    private TextView tvCartNum;
+
+    //竞拍需要和普通商品有差别的UI
+    private RelativeLayout rlAuctionTime;
+    private CountdownView countdownView;
+    private RelativeLayout rlAuctionExplain;
+    private TextView tvMoreExplain;
+    private LinearLayout llAuctionMode;
+    private TextView tvType;
+    private TextView tvPriceList;
+    private TextView tvAuctionBuy;
+    private TextView tvPayMoney;
+
+
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.img_back:
+                case R.id.img_title_left:
                     finish();
                     break;
-                case R.id.img_share://分享
+                case R.id.img_title_right_one://分享
                     showShare();
                     break;
             }
@@ -131,19 +166,18 @@ public class GoodsDetailsActivity extends BaseActivity {
                         changeCollectStatus();
                         break;
                     case R.id.rlCart://跳转到购物车
-                        startActivity(new Intent(GoodsDetailsActivity.this, CartActivity.class));
+                        startActivity(new Intent(GoodsDetailslNewActivity.this, CartActivity.class));
                         break;
                 }
             } else {
-                startActivity(new Intent(GoodsDetailsActivity.this, LoginActivity.class));
+                startActivity(new Intent(GoodsDetailslNewActivity.this, LoginActivity.class));
             }
         }
     };
 
 
-
-    public static void startGoodsDetailsActivity(Activity activity, String goodsId) {
-        Intent intent = new Intent(activity, GoodsDetailsActivity.class);
+    public static void startActivity(Activity activity, String goodsId) {
+        Intent intent = new Intent(activity, GoodsDetailslNewActivity.class);
         intent.putExtra("goodsId", goodsId);
         activity.startActivity(intent);
     }
@@ -151,29 +185,85 @@ public class GoodsDetailsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.goods_activity_details);
-        EventManager.getInstance().registerListener(onNotifyListener);
+        setContentView(R.layout.goods_activity_details_new);
         initView();
         initData();
     }
 
     @Override
     public void setTitleView() {
-        hideTitleView();
+        titleName.setText("商品详情");
+        titleImgRightOne.setVisibility(View.VISIBLE);
+        titleImgRightOne.setImageResource(R.mipmap.white_share);
+        titleImgRightOne.setOnClickListener(onClickListener);
+        titleImgLeft.setOnClickListener(onClickListener);
     }
 
-    private void initView() {
-        tab.setVisibility(View.GONE);
-        imgShare.setVisibility(View.GONE);
-        viewPager.setVisibility(View.GONE);
-        rlBottom.setVisibility(View.GONE);
 
-        imgBack.setOnClickListener(onClickListener);
-        imgShare.setOnClickListener(onClickListener);
+    private void initView() {
+        rlBanner = findViewById(R.id.rlBanner);
+        banner = findViewById(R.id.banner);
+        indicator = findViewById(R.id.indicator);
+
+        int screenWidth = SizeUtils.getScreenWidth();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rlBanner.getLayoutParams();
+        layoutParams.height = screenWidth;
+        rlBanner.setLayoutParams(layoutParams);
+
+        tvPrice = findViewById(R.id.tvPrice);
+        tvGoodsName = findViewById(R.id.tvGoodsName);
+        tvGoodsNameSecond = findViewById(R.id.tvGoodsNameSecond);
+        tvCountry = findViewById(R.id.tvCountry);
+        tvYear = findViewById(R.id.tvYear);
+        tvDesc = findViewById(R.id.tvDesc);
+
+        imgStore = findViewById(R.id.imgStore);
+        tvStoreName = findViewById(R.id.tvStoreName);
+        tvStoreDesc = findViewById(R.id.tvStoreDesc);
+        tvLookAll = findViewById(R.id.tvLookAll);
+        tvLookAll.setOnClickListener(onClickListener);
+
+        rlEvaluate = findViewById(R.id.rlEvaluate);
+        rlEvaluate.setOnClickListener(onClickListener);
+        tvEvaluate = findViewById(R.id.tvEvaluate);
+        llEvaluate = findViewById(R.id.llEvaluate);
+        llSeeMore = findViewById(R.id.llSeeMore);
+        llSeeMore.setOnClickListener(onClickListener);
+        recyclerView = findViewById(R.id.recyclerView);
+
+
+        llAuctionInfo = findViewById(R.id.llAuctionInfo);//拍品详情
+        tvAuName = findViewById(R.id.tvAuName);//名称
+        tvAuYear = findViewById(R.id.tvAuYear);//年份
+        tvAuChateau = findViewById(R.id.tvAuChateau);//酒庄
+        tvAuVolume = findViewById(R.id.tvAuVolume);//容量
+        tvAuMaterial = findViewById(R.id.tvAuMaterial);//原料
+        tvAuStorage = findViewById(R.id.tvAuStorage);//储存条件
+        tvAuResources = findViewById(R.id.tvAuResources);//来源
+
+        //普通商品需要和竞拍区分的UI
+        tvBuy = findViewById(R.id.tvBuy);
+        tvAddCart = findViewById(R.id.tvAddCart);
+        rlCart = findViewById(R.id.rlCart);
+        tvCartNum = findViewById(R.id.tvCartNum);
+
+
+        //竞拍需要和普通商品有差别的UI
+        rlAuctionTime = findViewById(R.id.rlAuctionTime);
+        countdownView = findViewById(R.id.countdownView);
+        rlAuctionExplain = findViewById(R.id.rlAuctionExplain);
+        tvMoreExplain = findViewById(R.id.tvMoreExplain);
+        llAuctionMode = findViewById(R.id.llAuctionMode);
+        tvType = findViewById(R.id.tvType);
+        tvPriceList = findViewById(R.id.tvPriceList);
+        tvAuctionBuy = findViewById(R.id.tvAuctionBuy);
+        tvPayMoney = findViewById(R.id.tvPayMoney);
+
+        rlBottom.setVisibility(View.GONE);
         tvBuy.setOnClickListener(onClickListenerLogin);
         tvAddCart.setOnClickListener(onClickListenerLogin);
-        rlChat.setOnClickListener(onClickListenerLogin);
-        rlCollect.setOnClickListener(onClickListenerLogin);
+        ivService.setOnClickListener(onClickListenerLogin);
+        ivCollect.setOnClickListener(onClickListenerLogin);
         rlCart.setOnClickListener(onClickListenerLogin);
 
         itemId = getIntent().getStringExtra("goodsId");
@@ -184,6 +274,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         getCartNum();
         getGoodsDetail();
     }
+
 
     private void getCartNum() {
         disposable.add(ApiUtils.getInstance().getCartCount()
@@ -234,29 +325,14 @@ public class GoodsDetailsActivity extends BaseActivity {
     }
 
     private void updateView() {
-        tab.setVisibility(View.VISIBLE);
-        imgShare.setVisibility(View.VISIBLE);
-        viewPager.setVisibility(View.VISIBLE);
         rlBottom.setVisibility(View.VISIBLE);
-        if("true".equals(goodsDetailBean.getItem().getIs_collect())){
+        if ("true".equals(goodsDetailBean.getItem().getIs_collect())) {
             isFavorite = true;
-            imgCollect.setBackgroundResource(R.mipmap.collect_true);
-        }else{
+            ivCollect.setBackgroundResource(R.mipmap.collect_true);
+        } else {
             isFavorite = false;
-            imgCollect.setBackgroundResource(R.mipmap.collect_false);
+            ivCollect.setBackgroundResource(R.mipmap.collect_false);
         }
-
-
-        mFragments = new ArrayList<>();
-        goodsDetailsFragment = GoodsDetailsFragment.newInstance(goodsDetailBean);
-        mFragments.add(goodsDetailsFragment);
-        mFragments.add(GoodsWebFragment.newInstance(goodsDetailBean.getDesc()));
-        mFragments.add(GoodsCommentFragment.newInstance(itemId));
-        fragmentAdapter = new BaseFragmentAdapter(getSupportFragmentManager());
-        fragmentAdapter.setLists(mFragments);
-        viewPager.setAdapter(fragmentAdapter);
-        tab.setViewPager(viewPager, mTitles);
-        viewPager.setCurrentItem(0);
     }
 
 
@@ -298,7 +374,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                         public void accept(ResultBean resultBean) throws Exception {
                             hideLoadingDialog();
                             isFavorite = false;
-                            imgCollect.setBackgroundResource(R.mipmap.collect_false);
+                            ivCollect.setBackgroundResource(R.mipmap.collect_false);
                             ToastUtils.showShort("取消收藏成功");
                         }
                     }, new Consumer<Throwable>() {
@@ -318,7 +394,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                         public void accept(ResultBean resultBean) throws Exception {
                             hideLoadingDialog();
                             isFavorite = true;
-                            imgCollect.setBackgroundResource(R.mipmap.collect_true);
+                            ivCollect.setBackgroundResource(R.mipmap.collect_true);
                             ToastUtils.showShort("收藏成功");
                         }
                     }, new Consumer<Throwable>() {
@@ -331,40 +407,6 @@ public class GoodsDetailsActivity extends BaseActivity {
         }
     }
 
-    private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
-        @Override
-        public void onNotify(Object object, String eventTag) {
-            changeToEvaluate(eventTag);
-            changeSlide(object, eventTag);
-        }
-    };
-
-    /**
-     * 图文详情滑动变化
-     *
-     * @param object
-     * @param eventTag
-     */
-    private void changeSlide(Object object, String eventTag) {
-        if (eventTag.equals(ConstantMsg.GOODS_SLIDE_CHANGE)) {
-            int pageType = (int) object;
-            if (pageType == 0) {
-                viewPager.setCurrentItem(1);
-                goodsDetailsFragment.goTop();
-            }
-        }
-    }
-
-    /**
-     * 跳转到评价tab
-     *
-     * @param eventTag 标识
-     */
-    private void changeToEvaluate(String eventTag) {
-        if (eventTag.equals(ConstantMsg.CHANGE_TO_EVALUATE)) {
-            viewPager.setCurrentItem(2);
-        }
-    }
 
     private void showAddCartDialog() {
         if (addCartDialog == null) {
@@ -407,7 +449,7 @@ public class GoodsDetailsActivity extends BaseActivity {
             callDialog.setCallBack(new CallDialog.CallBack() {
                 @Override
                 public void onConfirm() {
-                    Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + goodsDetailBean.getShop().getMobile()));//跳转到拨号界面，同时传递电话号码
+                    Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + goodsDetailBean.getShop().getMobile()));//跳转到拨号界面，同时传递电话号码
                     startActivity(dialIntent);
                 }
 
@@ -448,7 +490,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean<ConfirmOrderBean> resultBean) throws Exception {
                         hideLoadingDialog();
-                        ConfirmOrderActivity.startConfirmOrderActivity(GoodsDetailsActivity.this, resultBean.getData(), "fastbuy");
+                        ConfirmOrderActivity.startConfirmOrderActivity(GoodsDetailslNewActivity.this, resultBean.getData(), "fastbuy");
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -463,6 +505,5 @@ public class GoodsDetailsActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         disposable.dispose();
-        EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
 }

@@ -430,9 +430,13 @@ public class HomeFragment extends BaseFragment {
         homeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                int resId = view.getId();
+
                 HomeBean homeBean = lists.get(position);
-                if (homeBean.getItemType() == HomeBean.ITEM_GOODS) {
-                    if (homeBean.isAuction()) {
+                if (homeBean.getItemType() == HomeBean.ITEM_GOODS || homeBean.getItemType() == HomeBean.ITEM_GRID_GOODS) {
+                    if(resId == R.id.ll_store_name){
+                        ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getStoreId());
+                    }else if (homeBean.isAuction()) {
                         AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
                     } else {
                         GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), homeBean.getItem_id());
@@ -448,16 +452,6 @@ public class HomeFragment extends BaseFragment {
                     }
                 } else if (homeBean.getItemType() == HomeBean.ITEM_TUIJIAN) {
 
-                }
-            }
-        });
-        homeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                int resId = view.getId();
-                HomeBean homeBean = lists.get(position);
-                if (resId == R.id.ll_store_name) {
-                    ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getStoreId());
                 }
             }
         });
