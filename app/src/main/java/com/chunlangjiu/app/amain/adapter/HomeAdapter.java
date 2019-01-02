@@ -29,6 +29,7 @@ import java.util.List;
 public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
 
     private Context context;
+    private int gridHead = -100; ;
 
     public HomeAdapter(Context context, List<HomeBean> list) {
         super(list);
@@ -51,11 +52,37 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder viewHolder, HomeBean item) {
         int itemType = viewHolder.getItemViewType();
+        ImageView imgPic  ;
         switch (itemType) {
             case HomeBean.ITEM_GRID_GOODS:
+                if(gridHead >0){
+                    int li = viewHolder.getLayoutPosition()-gridHead;
+                    RelativeLayout contentLayout = viewHolder.getView(R.id.rlContentLayout);
+                    int left = contentLayout.getPaddingLeft();
+                    int top = contentLayout.getPaddingTop();
+                    int right = contentLayout.getPaddingRight();
+                    int bottom = contentLayout.getPaddingBottom();
+                    if(li%2==0){
+                       left = SizeUtils.dp2px(10);
+                    }else {
+                       right = SizeUtils.dp2px(10);
+                    }
+                    contentLayout.setPadding(left,top,right,bottom);
+                }
+
+                //网格布局的时候设置图片大小
+                imgPic = viewHolder.getView(R.id.imgPic);
+                ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
+                if(layoutParams.width == layoutParams.height && layoutParams.width>0){
+                    int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(25)) / 2;
+                    layoutParams.width = picWidth;
+                    layoutParams.height = picWidth;
+                    imgPic.setLayoutParams(layoutParams);
+                }
+
             case HomeBean.ITEM_GOODS:
                 CountdownView countdownView = viewHolder.getView(R.id.countdownView);
-                ImageView imgPic = viewHolder.getView(R.id.imgPic);
+                imgPic = viewHolder.getView(R.id.imgPic);
                 TextView tvStartPrice = viewHolder.getView(R.id.tvStartPrice);
                 TextView tv_give_price_num = viewHolder.getView(R.id.tv_give_price_num);
                 LinearLayout llStartPrice = viewHolder.getView(R.id.llStartPrice);
@@ -69,15 +96,6 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 TextView tv_attention = viewHolder.getView(R.id.tvAttention);
                 TextView tv_evaluate = viewHolder.getView(R.id.tvEvaluate);
 
-
-                //网格布局的时候设置图片大小
-                ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
-                if(itemType == HomeBean.ITEM_GRID_GOODS && layoutParams.width == layoutParams.height && layoutParams.width>0){
-                    int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(25)) / 2;
-                    layoutParams.width = picWidth;
-                    layoutParams.height = picWidth;
-                    imgPic.setLayoutParams(layoutParams);
-                }
 
                 viewHolder.addOnClickListener(R.id.rl_store_layout);
                 viewHolder.setText(R.id.tv_store_name,item.getStoreName());
@@ -159,7 +177,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 }
                 break;
             case HomeBean.ITEM_TUIJIAN:
-
+                gridHead = viewHolder.getLayoutPosition();
                 break;
         }
     }

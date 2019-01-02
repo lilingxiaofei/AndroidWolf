@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bg_white"
+    android:background="@color/bg_gray"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -35,7 +35,7 @@
             android:layout_height="70dp"
             android:layout_below="@+id/banner"
             android:layout_margin="10dp"
-            android:background="@color/bg_white"
+            android:background="@drawable/bg_round_white"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -174,6 +174,9 @@
         android:id="@+id/llBrand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_round_white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -184,13 +187,13 @@
             android:text="品牌推荐"
             android:textColor="@color/t_black"
             android:textSize="@dimen/text_size_15sp" />
-
+        <include layout="@layout/line_horizontal"/>x
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="10dp"
             android:id="@+id/recyclerViewBrand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+
             android:background="@color/bg_white" />
 
     </LinearLayout>
