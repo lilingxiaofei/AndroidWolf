@@ -7,13 +7,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_white"
         android:orientation="vertical">
 
         <TextView android:id="@+id/tvLoginPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="40dp"
+            android:background="@color/bg_white"
             android:layout_centerVertical="true"
             android:text="@string/login_pwd"
             android:paddingLeft="21dp"
@@ -22,18 +22,21 @@
             android:textColor="@color/t_black"
             android:drawableRight="@mipmap/black_right_arrow"
             android:textSize="@dimen/sp_mid" />
+        <include layout="@layout/line_horizontal"/>
         <TextView android:id="@+id/tvMyData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="40dp"
             android:layout_centerVertical="true"
             android:text="我的资料"
+            android:background="@color/bg_white"
             android:paddingLeft="21dp"
             android:paddingRight="21dp"
             android:gravity="center_vertical"
             android:textColor="@color/t_black"
             android:drawableRight="@mipmap/black_right_arrow"
             android:textSize="@dimen/sp_mid" />
+        <include layout="@layout/line_horizontal"/>
         <TextView android:id="@+id/tvMyAttestation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,9 +46,11 @@
             android:paddingLeft="21dp"
             android:paddingRight="21dp"
             android:gravity="center_vertical"
+            android:background="@color/bg_white"
             android:textColor="@color/t_black"
             android:drawableRight="@mipmap/black_right_arrow"
             android:textSize="@dimen/sp_mid" />
+        <include layout="@layout/line_horizontal"/>
         <TextView  android:id="@+id/tvAddressManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,11 +58,13 @@
             android:layout_centerVertical="true"
             android:text="@string/address_manager"
             android:paddingLeft="21dp"
+            android:background="@color/bg_white"
             android:paddingRight="21dp"
             android:gravity="center_vertical"
             android:textColor="@color/t_black"
             android:drawableRight="@mipmap/black_right_arrow"
             android:textSize="@dimen/sp_mid" />
+        <include layout="@layout/line_horizontal"/>
         <TextView android:id="@+id/tvBankManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,10 +74,12 @@
             android:paddingLeft="21dp"
             android:paddingRight="21dp"
             android:gravity="center_vertical"
+            android:background="@color/bg_white"
             android:textColor="@color/t_black"
             android:drawableRight="@mipmap/black_right_arrow"
             android:textSize="@dimen/sp_mid" />
         <TextView android:id="@+id/tvAbout"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="40dp"
@@ -78,10 +87,12 @@
             android:text="关于醇狼"
             android:paddingLeft="21dp"
             android:paddingRight="21dp"
+            android:background="@color/bg_white"
             android:gravity="center_vertical"
             android:textColor="@color/t_black"
             android:drawableRight="@mipmap/black_right_arrow"
             android:textSize="@dimen/sp_mid" />
+        <include layout="@layout/line_horizontal"/>
         <TextView android:id="@+id/tvUseAgreement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,6 +101,7 @@
             android:text="使用协议"
             android:paddingLeft="21dp"
             android:paddingRight="21dp"
+            android:background="@color/bg_white"
             android:gravity="center_vertical"
             android:textColor="@color/t_black"
             android:drawableRight="@mipmap/black_right_arrow"
@@ -98,7 +110,7 @@
 
 
     <TextView
-        android:id="@+id/tvLogOut"
+        android:id="@+id/tvLoginOut"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
