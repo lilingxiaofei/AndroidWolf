@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:visibility="gone"
-        android:background="@color/bg_white">
+        android:background="@drawable/bg_round_white">
     </android.support.v7.widget.RecyclerView>
 
     <View

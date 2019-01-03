@@ -53,6 +53,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
+
+
     @BindView(R.id.view_pager)
     MyViewPager viewPager;
 

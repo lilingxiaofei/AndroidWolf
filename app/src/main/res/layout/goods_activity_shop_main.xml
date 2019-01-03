@@ -4,14 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/bg_white"
+    android:background="@mipmap/store_bg_common"
+    android:id="@+id/llRootLayout"
     android:orientation="vertical">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="14dp"
+            android:src="@mipmap/white_left_arrow" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:lines="1"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:text="标题"
+            android:gravity="center"
+            android:textColor="@color/t_white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
 
     <com.lzy.widget.HeaderViewPager
         android:id="@+id/scrollableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_margin="5dp"
         app:hvp_topOffset="81dp">
 
         <LinearLayout
@@ -21,7 +50,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp">
+                android:layout_height="100dp"
+                android:background="@drawable/bg_round_white">
 
                 <ImageView
                     android:id="@+id/imgShow"
@@ -31,29 +61,38 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:padding="4dp"
+                    android:visibility="gone"
                     android:src="@mipmap/gray_down" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgHead"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
                 <TextView
                     android:id="@+id/tvShopName"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="28dp"
                     android:layout_toLeftOf="@id/imgShow"
                     android:layout_toRightOf="@id/imgHead"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    tools:text="店铺名"
                     android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    android:textSize="@dimen/sp_mid"
+                    tools:text="店铺名" />
+                <ImageView
+                    android:id="@+id/ivShopLevel"
+                    android:layout_alignBottom="@+id/tvShopName"
+                    android:layout_toRightOf="@id/tvShopName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:src="@mipmap/store_common"/>
 
                 <TextView
                     android:id="@+id/tvShopTips"
@@ -72,15 +111,12 @@
                     android:textSize="@dimen/sp_small" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/line" />
 
             <RelativeLayout
                 android:id="@+id/rlShopDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:visibility="gone">
@@ -129,13 +165,115 @@
                     android:textSize="@dimen/sp_small" />
             </RelativeLayout>
 
-            <View
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/bg_gray" />
+                android:layout_height="50dp"
+                android:background="@drawable/bg_round_white"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
-            <include layout="@layout/goods_view_choice_data"/>
+                <RelativeLayout
+                    android:id="@+id/rlBrand"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
+                    <TextView
+                        android:id="@+id/tvBrand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="3dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:drawableRight="@mipmap/choice_arrow"
+                        android:text="品牌"
+                        android:textColor="@color/t_gray"
+                        android:textSize="@dimen/sp_small" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlArea"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvArea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="3dp"
+                        android:drawableRight="@mipmap/choice_arrow"
+                        android:text="产地"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/t_gray"
+                        android:textSize="@dimen/sp_small" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlIncense"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tvIncense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="3dp"
+                        android:drawableRight="@mipmap/choice_arrow"
+                        android:text="类型"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/t_gray"
+                        android:textSize="@dimen/sp_small" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlAlc"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2">
+
+                    <TextView
+                        android:id="@+id/tvAlc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="3dp"
+                        android:drawableRight="@mipmap/choice_arrow"
+                        android:text="酒精度"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/t_gray"
+                        android:textSize="@dimen/sp_small" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2">
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="3dp"
+                        android:drawableRight="@mipmap/choice_arrow"
+                        android:text="价格区间"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/t_gray"
+                        android:textSize="@dimen/sp_small" />
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -152,8 +290,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/bg_white"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:layout_margin="5dp"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 

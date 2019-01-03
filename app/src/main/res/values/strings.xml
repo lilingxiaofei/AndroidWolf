@@ -11,7 +11,7 @@
     <string name="fans_name">粉丝名称</string>
     <string name="fans_contact_way">联系方式</string>
     <string name="fans_register_money">注册金额</string>
-    <string name="fans_total_commission">累计佣金(%￥)</string>
+    <string name="fans_total_commission">累计佣金(￥)</string>
     <string name="fans_not_user">未认证用户</string>
     <string name="fans_your_invite_code">您的邀请码：</string>
     <string name="fans_invite_person">您的邀请人：</string>
@@ -40,5 +40,6 @@
     <string name="into_seller_center">进入卖家中心</string>
     <string name="into_buyer_center">进入买家中心</string>
     <string name="find_all_order">查看全部订单</string>
+    <string name="my_recommend">我的推荐</string>
 
 </resources>

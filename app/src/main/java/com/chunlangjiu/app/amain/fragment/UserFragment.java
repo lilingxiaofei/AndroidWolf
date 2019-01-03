@@ -1046,6 +1046,7 @@ public class UserFragment extends BaseFragment {
     };
 
     private void authSuccess(String eventTag) {
+
         if (eventTag.equals(ConstantMsg.PERSON_COMPANY_AUTH_SUCCESS)) {
             Observable<ResultBean<AuthStatusBean>> personAuthStatus = ApiUtils.getInstance().getPersonAuthStatus();
             Observable<ResultBean<AuthStatusBean>> companyAuthStatus = ApiUtils.getInstance().getCompanyAuthStatus();

@@ -3,6 +3,8 @@ package com.chunlangjiu.app.fans.activity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.fans.adapter.FansAdapter;
@@ -77,6 +79,21 @@ public class FansListActivity extends BaseActivity {
             list.add(bean);
         }
     };
+
+
+    public class FansListAdapter extends BaseQuickAdapter<FansItemBean, BaseViewHolder> {
+        public FansListAdapter(int layoutResId, List<FansItemBean> data) {
+            super(layoutResId, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, FansItemBean item) {
+            helper.setText(R.id.tv_fans_name,item.getFansName());
+            helper.setText(R.id.tv_fans_phone,item.getPhone());
+            helper.setText(R.id.tv_register_time,item.getRegisterTime());
+            helper.setText(R.id.tv_money,item.getTotalMoney());
+        }
+    }
 
     @Override
     protected void onDestroy() {
