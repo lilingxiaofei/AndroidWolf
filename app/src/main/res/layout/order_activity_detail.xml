@@ -8,7 +8,7 @@
     <include
         android:id="@+id/rlLoading"
         layout="@layout/abase_activity_loading_view"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <ScrollView
         android:layout_width="match_parent"
