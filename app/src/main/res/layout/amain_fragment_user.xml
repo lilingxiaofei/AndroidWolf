@@ -195,7 +195,7 @@
                 android:id="@+id/llBuyOrder"
                 android:layout_width="match_parent"
                 android:layout_height="81dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:background="@drawable/bg_round_white_bottom"
                 android:orientation="horizontal">
 

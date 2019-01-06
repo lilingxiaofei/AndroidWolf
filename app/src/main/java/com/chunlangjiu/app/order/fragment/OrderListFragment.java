@@ -26,7 +26,7 @@ import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderDetailActivity;
 import com.chunlangjiu.app.order.activity.OrderEvaluationDetailActivity;
-import com.chunlangjiu.app.order.activity.OrderMainActivity;
+import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
 import com.chunlangjiu.app.order.adapter.OrderListAdapter;
 import com.chunlangjiu.app.order.bean.AuctionOrderListBean;
 import com.chunlangjiu.app.order.bean.CancelReasonBean;
@@ -62,7 +62,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class OrderListFragment extends BaseFragment {
-    private OrderMainActivity activity;
+    private OrderMainNewActivity activity;
     private SmartRefreshLayout refreshLayout;
     private RecyclerView listView;
     private View rlLoading;
@@ -109,7 +109,7 @@ public class OrderListFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity = (OrderMainActivity) context;
+        activity = (OrderMainNewActivity) context;
         wxapi = WXAPIFactory.createWXAPI(activity, null);
         wxapi.registerApp("wx0e1869b241d7234f");
     }
@@ -138,7 +138,7 @@ public class OrderListFragment extends BaseFragment {
             }
         });
         listView = rootView.findViewById(R.id.listView);
-        listView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        listView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
         rlLoading = rootView.findViewById(R.id.rlLoading);
         rlEmptyView = rootView.findViewById(R.id.rlEmptyView);
 
@@ -149,7 +149,7 @@ public class OrderListFragment extends BaseFragment {
     @Override
     public void initData() {
         listBeans = new ArrayList<>();
-        orderListAdapter = new OrderListAdapter(getActivity(), R.layout.order_adapter_list_item, listBeans);
+        orderListAdapter = new OrderListAdapter(activity, R.layout.order_adapter_list_item, listBeans);
         orderListAdapter.setOnClickListener(onClickListener);
         listView.setAdapter(orderListAdapter);
 
@@ -183,21 +183,47 @@ public class OrderListFragment extends BaseFragment {
                 switch (target) {
                     case 0:
                         status = "";
+                        getNormalOrderList();
                         break;
                     case 1:
                         status = OrderParams.WAIT_BUYER_PAY;
+                        getNormalOrderList();
                         break;
                     case 2:
                         status = OrderParams.WAIT_SELLER_SEND_GOODS;
+                        getNormalOrderList();
                         break;
                     case 3:
                         status = OrderParams.WAIT_BUYER_CONFIRM_GOODS;
+                        getNormalOrderList();
                         break;
                     case 4:
                         status = OrderParams.TRADE_FINISHED;
+                        getNormalOrderList();
                         break;
+                    case 5:
+                        status = OrderParams.AUCTION_WAIT_PAY;
+                        getAuctionOrderLists();
+                     break;
+                    case 6:
+                        status = OrderParams.AUCTION_BIDDING;
+                        getAuctionOrderLists();
+                        break;
+                    case 7:
+                        status = OrderParams.AUCTION_WON_BID;
+                        getAuctionOrderLists();
+                        break;
+                    case 8:
+                        status = OrderParams.AUCTION_DELIVERY;
+                        getAuctionOrderLists();
+                        break;
+                    case 9:
+                        status = OrderParams.AUCTION_OUTBID;
+                        getAuctionOrderLists();
+                        break;
+
                 }
-                getNormalOrderList();
+
                 break;
             case 1:
                 switch (target) {
@@ -671,7 +697,7 @@ public class OrderListFragment extends BaseFragment {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.llStore:
-                    ShopMainActivity.startShopMainActivity(getActivity(), String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getShop_id()));
+                    ShopMainActivity.startShopMainActivity(activity, String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getShop_id()));
                     break;
                 case R.id.llProducts:
                 case R.id.llBottom:
@@ -795,7 +821,7 @@ public class OrderListFragment extends BaseFragment {
                                     break;
                                 case OrderParams.TRADE_FINISHED:
                                     OrderListBean.ListBean listBean = listBeans.get(Integer.parseInt(view.getTag().toString()));
-                                    Intent intent = new Intent(getActivity(), OrderEvaluationDetailActivity.class);
+                                    Intent intent = new Intent(activity, OrderEvaluationDetailActivity.class);
                                     intent.putExtra(OrderParams.PRODUCTS, listBean);
                                     startActivity(intent);
                                     break;
@@ -1318,7 +1344,7 @@ public class OrderListFragment extends BaseFragment {
     }
 
     private void toOrderDetailActivity(View view) {
-        Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+        Intent intent = new Intent(activity, OrderDetailActivity.class);
         int position = Integer.parseInt(view.getTag().toString());
         intent.putExtra(OrderParams.ORDERID, listBeans.get(position).getTid());
         if (null != listBeans.get(position).getSku()) {

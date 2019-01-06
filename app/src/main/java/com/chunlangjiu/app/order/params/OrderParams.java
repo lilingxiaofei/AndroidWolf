@@ -17,6 +17,13 @@ public class OrderParams {
     public static final String TRADE_FINISHED = "TRADE_FINISHED";//已完成
     public static final String TRADE_CLOSED_BY_SYSTEM = "TRADE_CLOSED_BY_SYSTEM";//已关闭
 
+    //竞拍订单状态 0待付定金，1竞拍中，2已中标，3.待收货，4.落标
+    public static final String AUCTION_WAIT_PAY = "0";
+    public static final String AUCTION_BIDDING = "1";
+    public static final String AUCTION_WON_BID = "2";
+    public static final String AUCTION_DELIVERY = "3";
+    public static final String AUCTION_OUTBID = "4";
+
     public static final String REFRESH_ORDER_LIST = "REFRESH_ORDER_LIST";//刷新订单列表
     public static final String REFRESH_ORDER_DETAIL = "REFRESH_ORDER_DETAIL";//刷新订单详情
 }

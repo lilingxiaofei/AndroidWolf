@@ -7,52 +7,74 @@
     android:orientation="vertical"
     android:background="@color/bg_gray"
     tools:context="com.chunlangjiu.app.fans.activity.FansHomeActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/bg_round_white"
-        android:layout_margin="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_round_white">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1">
-            <TextView android:id="@+id/tvFansNum"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvFansNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_12sp"
-                android:text="22"
-                android:textColor="@color/t_red"/>
-            <TextView android:id="@+id/tvFansNumLabel"
+                android:text="0"
+                android:textColor="@color/t_red"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <TextView
+                android:id="@+id/tvFansNumLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:text="粉丝数量"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/t_black"/>
+                android:text="粉丝数量"
+                android:textColor="@color/t_black"
+                android:textSize="13sp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1">
-            <TextView android:id="@+id/tvTotalPrice"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTotalPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_12sp"
-                android:text="22"
-                android:textColor="@color/t_red"/>
+                android:text="0"
+                android:textColor="@color/t_red"
+                android:textSize="@dimen/text_size_12sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:text="累计总佣金"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/t_black"/>
+                android:text="累计总佣金"
+                android:textColor="@color/t_black"
+                android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="佣金直接进入您的账户余额"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="4dp"
+        android:layout_gravity="right"
+        android:textSize="10sp"
+        android:layout_marginRight="30dp"
+        android:textColor="@color/t_grey"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -96,4 +118,4 @@
             android:text="@string/fans_total_commission"
             />
     </LinearLayout>
-</>
+</LinearLayout>

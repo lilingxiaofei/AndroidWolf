@@ -2,12 +2,12 @@ package com.chunlangjiu.app.fans.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.fans.adapter.FansAdapter;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -23,11 +23,12 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FansListActivity extends BaseActivity {
 
+    private View llHead ;
     @BindView(R.id.rv_fans_list)
     RecyclerView rvFansList;
 
     private List<FansItemBean> list ;
-    private FansAdapter fansAdapter  ;
+    private FansListAdapter fansAdapter  ;
 
     private CompositeDisposable disposable;
     @Override
@@ -38,8 +39,11 @@ public class FansListActivity extends BaseActivity {
         initData();
     }
     private void initView(){
+        disposable = new CompositeDisposable();
+        llHead = getLayoutInflater().inflate(R.layout.fans_list_head,null);
         list = new ArrayList<>();
-        fansAdapter = new FansAdapter(this,R.layout.fans_list_item,list);
+        fansAdapter = new FansListAdapter(R.layout.fans_list_item,list);
+        fansAdapter.setHeaderView(llHead);
         rvFansList.setAdapter(fansAdapter);
     }
 
@@ -81,7 +85,7 @@ public class FansListActivity extends BaseActivity {
     };
 
 
-    public class FansListAdapter extends BaseQuickAdapter<FansItemBean, BaseViewHolder> {
+    class FansListAdapter extends BaseQuickAdapter<FansItemBean, BaseViewHolder> {
         public FansListAdapter(int layoutResId, List<FansItemBean> data) {
             super(layoutResId, data);
         }

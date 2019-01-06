@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +26,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class FansHomeActivity extends BaseActivity {
-    RelativeLayout rl_fans_list;
-    TextView tv_fans_num;
-    RelativeLayout rl_invite_code;
-    TextView tv_invite_code;
-    RelativeLayout rl_invite_fans;
 
 
     private ImageView ivQrCode ;
@@ -54,7 +48,6 @@ public class FansHomeActivity extends BaseActivity {
         tvMyCode = findViewById(R.id.tvMyCode) ;
         tvShare  = findViewById(R.id.tvShare) ;
         tvShare.setOnClickListener(onClickListener);
-        createEnglishQRCodeWithLogo("bingoogolapple");
     }
 
     private void createEnglishQRCodeWithLogo(final String qrCode) {
@@ -113,8 +106,7 @@ public class FansHomeActivity extends BaseActivity {
 
     private void setFansCode(){
         if(fansBean!=null){
-            tv_fans_num.setText(getString(R.string.fans_num,fansBean.getFansNum()));
-            tv_invite_code.setText(fansBean.getInviteCode());
+            createEnglishQRCodeWithLogo(fansBean.getInviteCode());
         }
     }
     View.OnClickListener onClickListener = new View.OnClickListener() {
