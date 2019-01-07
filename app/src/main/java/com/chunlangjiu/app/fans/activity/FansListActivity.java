@@ -15,7 +15,6 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -24,8 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 public class FansListActivity extends BaseActivity {
 
     private View llHead ;
-    @BindView(R.id.rv_fans_list)
-    RecyclerView rvFansList;
+    private RecyclerView rvFansList;
 
     private List<FansItemBean> list ;
     private FansListAdapter fansAdapter  ;
@@ -41,9 +39,10 @@ public class FansListActivity extends BaseActivity {
     private void initView(){
         disposable = new CompositeDisposable();
         llHead = getLayoutInflater().inflate(R.layout.fans_list_head,null);
+        rvFansList = findViewById(R.id.rv_fans_list);
         list = new ArrayList<>();
         fansAdapter = new FansListAdapter(R.layout.fans_list_item,list);
-        fansAdapter.setHeaderView(llHead);
+        fansAdapter.addHeaderView(llHead);
         rvFansList.setAdapter(fansAdapter);
     }
 
@@ -62,6 +61,7 @@ public class FansListActivity extends BaseActivity {
                         if(result!=null && result.getData()!=null){
                             list.clear();
                             list.addAll(result.getData());
+                            fansAdapter.setNewData(list);
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -82,6 +82,7 @@ public class FansListActivity extends BaseActivity {
             bean.setTotalMoney("88"+i);
             list.add(bean);
         }
+        fansAdapter.setNewData(list);
     };
 
 
@@ -99,6 +100,16 @@ public class FansListActivity extends BaseActivity {
         }
     }
 
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int resId = view.getId();
+            if(resId == R.id.img_title_left){
+                finish();
+            }
+        }
+    };
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -107,6 +118,7 @@ public class FansListActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
-        hideTitleView();
+        titleImgLeft.setOnClickListener(onClickListener);
+        titleName.setText(R.string.fans_list);
     }
 }

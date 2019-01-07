@@ -365,6 +365,7 @@ public class UserFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        StatusBarUtil.setColor(activity, ContextCompat.getColor(activity, R.color.bg_black),0);
     }
 
     @Override

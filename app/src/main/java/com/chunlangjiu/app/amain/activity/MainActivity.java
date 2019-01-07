@@ -220,6 +220,14 @@ public class MainActivity extends BaseActivity {
         setPageFragment(0);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        if(viewPager.getCurrentItem() == ){
+//
+//        }
+    }
+
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
