@@ -617,7 +617,9 @@ public class UserFragment extends BaseFragment {
             rlGoodsManager.setVisibility(View.VISIBLE);
             llGoodsContent.setVisibility(View.VISIBLE);
 
-            rlCollect.setVisibility(View.GONE);
+            rlCollect.setVisibility(View.VISIBLE);
+            rlMyEvaluate.setVisibility(View.VISIBLE);
+
             rlBankCard.setVisibility(View.VISIBLE);
             llMyManagerSecond.setVisibility(View.VISIBLE);
         }

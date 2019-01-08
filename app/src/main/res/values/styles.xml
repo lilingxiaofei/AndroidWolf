@@ -49,4 +49,24 @@
         <item name="android:textColor">@color/t_black</item>
         <item name="android:textSize">15sp</item>
     </style>
+
+    <style name="add_goods_label">
+        <item name="android:layout_width">82dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/t_black</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="add_goods_value">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/t_black</item>
+        <item name="android:textColorHint">@color/t_gray</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:hint">请选择</item>
+    </style>
 </resources>
