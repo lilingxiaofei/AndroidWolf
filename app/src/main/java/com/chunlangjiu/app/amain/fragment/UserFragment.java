@@ -67,7 +67,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
- * @CreatedbBy: liucun on 2018/6/16.
+ * @CreatedbBy: liucun on 2018/6/16. 13824404512
  * @Describe: 我的
  */
 public class UserFragment extends BaseFragment {
@@ -667,6 +667,7 @@ public class UserFragment extends BaseFragment {
                         companyName = userInfoBeanResultBean.getData().getCompany_name();
                         shopName = userInfoBeanResultBean.getData().getShop_name();
                         tvName.setText(loginAccount);
+                        SPUtils.put("account",loginAccount);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

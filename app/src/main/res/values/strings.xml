@@ -33,6 +33,7 @@
     <string name="my_data">我的资料</string>
     <string name="my_authentication">我的认证</string>
     <string name="login_pwd">登录密码</string>
+    <string name="pay_pwd">支付密码</string>
     <string name="address_manager">地址管理</string>
     <string name="bank_manager">银行卡管理</string>
 
@@ -41,5 +42,12 @@
     <string name="into_buyer_center">进入买家中心</string>
     <string name="find_all_order">查看全部订单</string>
     <string name="my_recommend">我的推荐</string>
+    <string name="pay_phone">验证码将会发送到%s手机上</string>
+    <string name="getVerifyCode">获取验证码</string>
+    <string name="submit">提交</string>
+    <string name="reset_send">重新发送</string>
+    <string name="edit_pwd">修改密码</string>
+    <string name="commit">提交</string>
+    <string name="edit_pay_pwd">修改支付密码</string>
 
 </resources>
