@@ -44,11 +44,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }else if(resId == R.id.tvMyData){
 
         }else if(resId == R.id.tvMyAttestation){
+            startActivity(new Intent(this,VerifiedActivity.class));
 
         }else if(resId == R.id.tvAddressManager){
 
         }else if(resId == R.id.tvBankManager){
-
+            startActivity(new Intent(this,BankCardActivity.class));
         }else if(resId == R.id.tvAbout){
 
         }else if(resId == R.id.tvUseAgreement){

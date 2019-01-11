@@ -10,16 +10,16 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
 
-        <!--渠道-->
+        <!-- 渠道 -->
         <meta-data
             android:name="WOLF_CHANNEL"
             android:value="${WOLF_CHANNEL}" />
 
-        <!--高德地图key-->
+        <!-- 高德地图key -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="d06f204a3a8f591c3447119cdca1d35e" />
-        <!--高德地图定位服务-->
+        <!-- 高德地图定位服务 -->
         <service android:name="com.amap.api.location.APSService" />
 
         <!-- 配置个推SDK核心服务 -->
@@ -28,9 +28,8 @@
             android:exported="true"
             android:label="PushService"
             android:process=":pushservice" />
-        <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复-->
+        <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复 -->
         <service android:name=".util.GeTuiIntentService" />
-
 
         <activity
             android:name=".amain.activity.SplashActivity"
@@ -43,7 +42,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".amain.activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -70,7 +68,6 @@
             android:name=".amain.activity.CityListActvity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
         <activity
             android:name=".cart.CartActivity"
             android:screenOrientation="portrait"
@@ -119,7 +116,6 @@
             android:name=".goods.activity.ValuationSuccessActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
         <activity
             android:name=".user.activity.AddressListActivity"
             android:screenOrientation="portrait"
@@ -192,7 +188,7 @@
             android:name=".order.activity.OrderApplyForAfterSaleActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <!--微博分享回调-->
+        <!-- 微博分享回调 -->
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -209,12 +205,14 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--微博分享回调-->
+        <!-- 微博分享回调 -->
 
-        <!--微信分享回调-->
+
+        <!-- 微信分享回调 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -225,9 +223,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!--微信分享回调-->
+        <!-- 微信分享回调 -->
 
-        <!--QQ分享回调-->
+
+        <!-- QQ分享回调 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -245,40 +244,45 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!--QQ分享回调-->
+        <!-- QQ分享回调 -->
 
-        <!--支付宝支付-->
+
+        <!-- 支付宝支付 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
-        <!--支付宝支付-->
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- 支付宝支付 -->
 
         <activity android:name=".money.activity.MoneyManagerActivity" />
         <activity android:name=".money.activity.SecurityDepositManagerActivity" />
         <activity android:name=".money.activity.ReChargeActivity" />
         <activity android:name=".money.activity.WithDrawActivity" />
         <activity android:name=".money.activity.FundDetailsListActivity" />
-        <activity android:name=".money.activity.BillDetailActivity"></activity>
-        <activity android:name=".fans.activity.FansHomeActivity"
+        <activity android:name=".money.activity.BillDetailActivity" />
+        <activity
+            android:name=".fans.activity.FansHomeActivity"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
-        <activity android:name=".fans.activity.FansListActivity"
+            android:screenOrientation="behind" />
+        <activity
+            android:name=".fans.activity.FansListActivity"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
-        <activity android:name=".fans.activity.FansInfoActivity"
+            android:screenOrientation="behind" />
+        <activity
+            android:name=".fans.activity.FansInfoActivity"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
+        <activity android:name=".user.activity.VerifiedActivity" />
+        <activity android:name=".user.activity.BankCardActivity" />
+        <activity android:name=".user.activity.AddBankCardActivity"></activity>
     </application>
 
 </manifest>
