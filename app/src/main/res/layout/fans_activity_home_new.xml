@@ -46,7 +46,7 @@
         android:text="一键分享"
         android:textColor="@color/t_white"
         android:gravity="center"
-        android:background="@drawable/round_red_bg"
+        android:background="@drawable/bg_round_red"
         android:drawablePadding="@dimen/dp_10"/>
 
 </LinearLayout>

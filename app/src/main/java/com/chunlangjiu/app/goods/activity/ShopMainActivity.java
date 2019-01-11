@@ -3,6 +3,7 @@ package com.chunlangjiu.app.goods.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +40,7 @@ import com.chunlangjiu.app.user.dialog.ChoiceAreaPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoicePricePopWindow;
+import com.jaeger.library.StatusBarUtil;
 import com.lzy.widget.HeaderViewPager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -112,12 +114,17 @@ public class ShopMainActivity extends BaseActivity {
     private List<PriceBean> priceLists;
     private String priceId = "";
 
+
     @BindView(R.id.imgShow)
     ImageView imgShow;
     @BindView(R.id.imgHead)
     CircleImageView imgHead;
     @BindView(R.id.tvShopName)
     TextView tvShopName;
+    @BindView(R.id.ivShopLevel)
+    ImageView ivShopLevel;
+    @BindView(R.id.llRootLayout)
+    android.widget.LinearLayout llRootLayout;
     @BindView(R.id.tvShopTips)
     TextView tvShopTips;
     @BindView(R.id.rlShopDetail)
@@ -460,6 +467,21 @@ public class ShopMainActivity extends BaseActivity {
         tvShopTips.setText(data.getShopInfo().getShop_descript());
         tvShopPhone.setText(data.getShopInfo().getMobile());
         tvDesc.setText(data.getShopInfo().getShop_descript());
+        String shopType = data.getShopInfo().getShop_type();
+        if("1".equals(shopType)){
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_black),0);
+            llRootLayout.setBackgroundResource(R.mipmap.store_bg_star);
+            ivShopLevel.setImageResource(R.mipmap.store_partner);
+        }else if("1".equals(shopType)){
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_yellow),0);
+            llRootLayout.setBackgroundResource(R.mipmap.store_bg_star);
+            ivShopLevel.setImageResource(R.mipmap.store_star);
+        }else{
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.t_blue),0);
+            llRootLayout.setBackgroundResource(R.mipmap.store_bg_common);
+            ivShopLevel.setImageResource(R.mipmap.store_common);
+        }
+
     }
 
     private void getGoodsList(int pageNum, final boolean isRefresh) {

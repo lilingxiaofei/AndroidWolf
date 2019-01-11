@@ -66,7 +66,7 @@
                 android:layout_height="15dp"
                 android:layout_alignBottom="@+id/imgHead"
                 android:layout_alignLeft="@+id/tvName"
-                android:background="@drawable/bg_round_red"
+                android:background="@drawable/bg_round_red_8dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingLeft="3dp"
@@ -195,7 +195,7 @@
                 android:id="@+id/llBuyOrder"
                 android:layout_width="match_parent"
                 android:layout_height="81dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:background="@drawable/bg_round_white_bottom"
                 android:orientation="horizontal">
 
@@ -1348,7 +1348,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg_white"
-                android:weightSum="3"
                 android:orientation="horizontal">
 
                 <RelativeLayout

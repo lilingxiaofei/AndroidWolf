@@ -22,7 +22,7 @@ import com.chunlangjiu.app.fans.activity.FansHomeActivity;
 import com.chunlangjiu.app.goods.dialog.EditAccountNameDialog;
 import com.chunlangjiu.app.money.activity.MoneyManagerActivity;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.order.activity.OrderMainActivity;
+import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
@@ -67,7 +67,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
- * @CreatedbBy: liucun on 2018/6/16.
+ * @CreatedbBy: liucun on 2018/6/16. 13824404512
  * @Describe: 我的
  */
 public class UserFragment extends BaseFragment {
@@ -253,7 +253,7 @@ public class UserFragment extends BaseFragment {
                     toOrderMainActivity(0, 3);
                     break;
                 case R.id.rlOrderFour:// 买家售后订单
-                    toOrderMainActivity(2, 0);
+                    toOrderMainActivity(2, 4);
                     break;
                 case R.id.rlOrderFive:// 买家全部订单
                     toOrderMainActivity(0, 0);
@@ -365,6 +365,7 @@ public class UserFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        StatusBarUtil.setColor(activity, ContextCompat.getColor(activity, R.color.bg_black),0);
     }
 
     @Override
@@ -616,7 +617,9 @@ public class UserFragment extends BaseFragment {
             rlGoodsManager.setVisibility(View.VISIBLE);
             llGoodsContent.setVisibility(View.VISIBLE);
 
-            rlCollect.setVisibility(View.GONE);
+            rlCollect.setVisibility(View.VISIBLE);
+            rlMyEvaluate.setVisibility(View.VISIBLE);
+
             rlBankCard.setVisibility(View.VISIBLE);
             llMyManagerSecond.setVisibility(View.VISIBLE);
         }
@@ -664,6 +667,7 @@ public class UserFragment extends BaseFragment {
                         companyName = userInfoBeanResultBean.getData().getCompany_name();
                         shopName = userInfoBeanResultBean.getData().getShop_name();
                         tvName.setText(loginAccount);
+                        SPUtils.put("account",loginAccount);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -1046,6 +1050,7 @@ public class UserFragment extends BaseFragment {
     };
 
     private void authSuccess(String eventTag) {
+
         if (eventTag.equals(ConstantMsg.PERSON_COMPANY_AUTH_SUCCESS)) {
             Observable<ResultBean<AuthStatusBean>> personAuthStatus = ApiUtils.getInstance().getPersonAuthStatus();
             Observable<ResultBean<AuthStatusBean>> companyAuthStatus = ApiUtils.getInstance().getCompanyAuthStatus();
@@ -1114,7 +1119,7 @@ public class UserFragment extends BaseFragment {
     }
 
     private void toOrderMainActivity(int type, int target) {
-        Intent intent = new Intent(getActivity(), OrderMainActivity.class);
+        Intent intent = new Intent(getActivity(), OrderMainNewActivity.class);
         intent.putExtra(OrderParams.TYPE, type);
         intent.putExtra(OrderParams.TARGET, target);
         startActivity(intent);

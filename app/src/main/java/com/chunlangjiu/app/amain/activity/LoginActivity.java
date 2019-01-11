@@ -13,7 +13,6 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.bean.LoginBean;
-import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.web.WebViewActivity;
@@ -173,6 +172,7 @@ public class LoginActivity extends BaseActivity {
                         hideLoadingDialog();
                         ToastUtils.showShort("登录成功");
                         SPUtils.put("token", loginBeanResultBean.getData().getAccessToken());
+                        SPUtils.put("account", etPhone.getText().toString());
                         BaseApplication.setToken(loginBeanResultBean.getData().getAccessToken());
                         BaseApplication.initToken();
                         EventManager.getInstance().notify(null, ConstantMsg.LOGIN_SUCCESS);

@@ -41,19 +41,24 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             finish();
         }else if(resId == R.id.tvLoginPwd){
             SetAccountPasswordActivity.startActivity(SettingActivity.this);
+        }else if(resId == R.id.tvPayPwd){
+            SetPayPasswordActivity.startActivity(SettingActivity.this);
         }else if(resId == R.id.tvMyData){
 
         }else if(resId == R.id.tvMyAttestation){
             startActivity(new Intent(this,VerifiedActivity.class));
 
         }else if(resId == R.id.tvAddressManager){
-
+            startActivity(new Intent(SettingActivity.this, AddressListActivity.class));
         }else if(resId == R.id.tvBankManager){
             startActivity(new Intent(this,BankCardActivity.class));
         }else if(resId == R.id.tvAbout){
 
         }else if(resId == R.id.tvUseAgreement){
 
+        }else if(resId == R.id.tvLoginOut){
+            EventManager.getInstance().notify(null, ConstantMsg.LOGOUT_SUCCESS);
+            finish();
         }
     }
 }
