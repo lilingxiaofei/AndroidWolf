@@ -13,8 +13,9 @@
         android:background="@color/white"
         android:divider="@drawable/line_vertical"
         android:dividerPadding="@dimen/dp_10"
+        android:showDividers="middle"
         android:orientation="horizontal"
-        android:showDividers="middle">
+        >
         <TextView
             android:layout_weight="1"
             android:layout_width="0dp"

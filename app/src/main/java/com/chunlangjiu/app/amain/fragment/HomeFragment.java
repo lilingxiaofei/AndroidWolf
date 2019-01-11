@@ -26,8 +26,8 @@ import com.chunlangjiu.app.amain.bean.HomeAuctionBean;
 import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
-import com.chunlangjiu.app.goods.activity.AuctionDetailActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
+import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
@@ -225,6 +225,8 @@ public class HomeFragment extends BaseFragment {
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         recyclerView = rootView.findViewById(R.id.listView);
 
+
+
         rlLoading.setVisibility(View.VISIBLE);
         refreshLayout.setVisibility(View.GONE);
         bannerUrls = new ArrayList<>();
@@ -363,6 +365,7 @@ public class HomeFragment extends BaseFragment {
     private void initBrandRecycleView() {
         brandAdapter = new BrandAdapter(getActivity(), R.layout.amain_itme_brand, brandLists);
         recyclerViewBrand.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        recyclerViewBrand.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(getActivity(), 8), false));
         recyclerViewBrand.setAdapter(brandAdapter);
         recyclerViewBrand.setHasFixedSize(true);
         recyclerViewBrand.setNestedScrollingEnabled(false);
@@ -408,7 +411,6 @@ public class HomeFragment extends BaseFragment {
         recyclerView.setAdapter(homeAdapter);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(getActivity(), 5), false));
         recyclerView.setLayoutManager(gridLayoutManager);
-
         refreshLayout.setEnableAutoLoadMore(true);//开启滑到底部自动加载
         refreshLayout.setFooterHeight(30);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -428,12 +430,19 @@ public class HomeFragment extends BaseFragment {
         homeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                int resId = view.getId();
+
                 HomeBean homeBean = lists.get(position);
-                if (homeBean.getItemType() == HomeBean.ITEM_GOODS) {
-                    if (homeBean.isAuction()) {
-                        AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
-                    } else {
-                        GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), homeBean.getItem_id());
+                if (homeBean.getItemType() == HomeBean.ITEM_GOODS || homeBean.getItemType() == HomeBean.ITEM_GRID_GOODS) {
+                    if(resId == R.id.ll_store_name){
+                        ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getStoreId());
+                    }
+//                    else if (homeBean.isAuction()) {
+//                        AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
+//                    }
+                    else {
+                        GoodsDetailslNewActivity.startActivity(getActivity(), homeBean.getItem_id());
+//                        GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), homeBean.getItem_id());
                         if (auction_list != null && auction_list.size() > 0) {
                             if (position > 1 + auction_list.size() && position < 2 + auction_list.size() + 6) {
                                 UmengEventUtil.recommendEvent(getActivity(), position - 1 - auction_list.size() + "");
@@ -446,16 +455,6 @@ public class HomeFragment extends BaseFragment {
                     }
                 } else if (homeBean.getItemType() == HomeBean.ITEM_TUIJIAN) {
 
-                }
-            }
-        });
-        homeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                int resId = view.getId();
-                HomeBean homeBean = lists.get(position);
-                if (resId == R.id.ll_store_name) {
-                    ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getStoreId());
                 }
             }
         });
