@@ -720,10 +720,10 @@
 
                 <ImageView
                     android:id="@+id/imgCart"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:src="@mipmap/goods_details_cart" />
+                    android:src="@mipmap/tab_cart_normal" />
 
                 <TextView
                     android:id="@+id/tvCartNum"

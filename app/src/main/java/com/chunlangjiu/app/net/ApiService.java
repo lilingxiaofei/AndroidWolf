@@ -585,11 +585,19 @@ public interface ApiService {
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<List<FansItemBean>>> getFansList(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<List<FansItemBean>>>  getFansList(@Field("method") String method, @Field("v") String v);
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<FansBean>> getFansInfo(@Field("method") String method, @Field("v") String v);
+
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FansBean>> getMyInvitationCode(@Field("method") String method, @Field("v") String v);
+
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FansBean>> setInvitationCode(@Field("method") String method, @Field("v") String v,@Field("inviteCode") String inviteCode);
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded

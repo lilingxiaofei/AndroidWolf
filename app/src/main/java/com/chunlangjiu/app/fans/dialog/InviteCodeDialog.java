@@ -12,13 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
-import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.dialog.CommonLoadingDialog;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
-
-import org.w3c.dom.Text;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -95,7 +92,7 @@ public class InviteCodeDialog extends Dialog {
 
     private void submitInviteCode(String inviteCode) {
         loadingDialog.show();
-        ApiUtils.getInstance().submitInviteCode(inviteCode)
+        ApiUtils.getInstance().setInvitationCode(inviteCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {

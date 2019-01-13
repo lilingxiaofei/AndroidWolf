@@ -502,10 +502,17 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<List<FansItemBean>>> getFansList() {
-        return apiService.getFansList("user.update.shop", "v1");
+        return apiService.getFansList("number.fans.list", "v1");
     }
     public Flowable<ResultBean<FansBean>> getFansInfo() {
-        return apiService.getFansInfo("user.update.shop", "v1");
+        return apiService.getFansInfo("number.fans.sum", "v1");
+    }
+
+    public Flowable<ResultBean<FansBean>> getMyInvitationCode() {
+        return apiService.getMyInvitationCode("number.code.get", "v1");
+    }
+    public Flowable<ResultBean<FansBean>> setInvitationCode(String inviteCode) {
+        return apiService.setInvitationCode("number.code.set", "v1",inviteCode);
     }
     public Flowable<ResultBean> submitInviteCode(String inviteCode) {
         return apiService.submitInviteCode("user.update.shop", "v1",inviteCode);
