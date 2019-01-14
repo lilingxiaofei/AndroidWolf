@@ -66,25 +66,14 @@
 
                 <TextView
                     android:id="@+id/tvPlateClassStr"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    style="@style/add_goods_label"
                     android:text="选择分类"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                     />
 
                 <TextView
                     android:id="@+id/tvPlateClass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/tvPlateClassStr"
-                    android:hint="请选择"
-                    android:textColor="@color/t_black"
-                    android:textColorHint="@color/t_gray"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_value"
+                    android:layout_toRightOf="@id/tvPlateClassStr"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -108,25 +97,13 @@
 
                 <TextView
                     android:id="@+id/tvBrandStr"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
                     android:text="选择品牌"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_label" />
 
                 <TextView
                     android:id="@+id/tvBrand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/tvBrandStr"
-                    android:hint="请选择"
-                    android:textColor="@color/t_black"
-                    android:textColorHint="@color/t_gray"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_value" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -150,25 +127,13 @@
 
                 <TextView
                     android:id="@+id/tvAreaStr"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
                     android:text="选择产地"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_label" />
 
                 <TextView
                     android:id="@+id/tvChoiceArea"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/tvAreaStr"
-                    android:hint="请选择"
-                    android:textColor="@color/t_black"
-                    android:textColorHint="@color/t_gray"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_value" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -192,25 +157,13 @@
 
                 <TextView
                     android:id="@+id/tvIncenseStr"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
                     android:text="选择类型"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_label" />
 
                 <TextView
                     android:id="@+id/tvIncense"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/tvIncenseStr"
-                    android:hint="请选择"
-                    android:textColor="@color/t_black"
-                    android:textColorHint="@color/t_gray"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_value"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -234,25 +187,13 @@
 
                 <TextView
                     android:id="@+id/tvDegreeStr"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
                     android:text="选择酒精度"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_label" />
 
                 <TextView
                     android:id="@+id/tvDegree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/tvDegreeStr"
-                    android:hint="请选择"
-                    android:textColor="@color/t_black"
-                    android:textColorHint="@color/t_gray"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_value" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -280,27 +221,16 @@
 
                 <TextView
                     android:id="@+id/tvTitleStr"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
                     android:text="商品标题"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_label" />
 
                 <EditText
                     android:id="@+id/etTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
+                    style="@style/add_goods_value"
                     android:layout_toRightOf="@id/tvTitleStr"
                     android:background="@null"
                     android:hint="请填写"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textColor="@color/t_black"
-                    android:textColorHint="@color/t_gray"
-                    android:textSize="@dimen/sp_mid" />
+                    android:singleLine="true"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -315,13 +245,8 @@
 
                 <TextView
                     android:id="@+id/tvSecondNameStr"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
                     android:text="商品副标题"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_label"/>
 
                 <EditText
                     android:id="@+id/etSecondName"
@@ -335,7 +260,7 @@
                     android:singleLine="true"
                     android:textColor="@color/t_black"
                     android:textColorHint="@color/t_gray"
-                    android:textSize="@dimen/sp_mid" />
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -351,13 +276,8 @@
 
                 <TextView
                     android:id="@+id/tvTag"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
                     android:text="商品标签"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_label" />
 
                 <EditText
                     android:id="@+id/etTag"
@@ -371,7 +291,7 @@
                     android:singleLine="true"
                     android:textColor="@color/t_black"
                     android:textColorHint="@color/t_gray"
-                    android:textSize="@dimen/sp_mid" />
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -391,13 +311,8 @@
 
                 <TextView
                     android:id="@+id/tvPriceStr"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
                     android:text="一口价"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_label" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -421,7 +336,7 @@
                     android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -436,13 +351,8 @@
 
                 <TextView
                     android:id="@+id/tvCountStr"
-                    android:layout_width="82dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
                     android:text="商品总库存"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
+                    style="@style/add_goods_label"/>
 
                 <EditText
                     android:id="@+id/etCount"
@@ -457,7 +367,7 @@
                     android:singleLine="true"
                     android:textColor="@color/t_black"
                     android:textColorHint="@color/t_gray"
-                    android:textSize="@dimen/sp_mid" />
+                    android:textSize="12sp" />
 
                 <View
                     android:layout_width="match_parent"

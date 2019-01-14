@@ -467,7 +467,6 @@
                 android:id="@+id/rlAuctionExplain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -510,7 +509,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:drawablePadding="10dp"
-                        android:drawableTop="@mipmap/order_pay"
+                        android:drawableTop="@mipmap/auction_icon_one"
                         android:gravity="center"
                         android:text="参与出价"
                         android:textColor="@color/t_black"
@@ -528,7 +527,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:drawablePadding="10dp"
-                        android:drawableTop="@mipmap/order_pay"
+                        android:drawableTop="@mipmap/auction_icon_two"
                         android:gravity="center"
                         android:text="价高者得"
                         android:textColor="@color/t_black"
@@ -546,7 +545,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:drawablePadding="10dp"
-                        android:drawableTop="@mipmap/order_pay"
+                        android:drawableTop="@mipmap/auction_icon_three"
                         android:gravity="center"
                         android:text="支付贷款"
                         android:textColor="@color/t_black"
@@ -564,7 +563,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:drawablePadding="10dp"
-                        android:drawableTop="@mipmap/order_pay"
+                        android:drawableTop="@mipmap/auction_icon_four"
                         android:gravity="center"
                         android:text="获得拍品"
                         android:textColor="@color/t_black"
@@ -721,10 +720,10 @@
 
                 <ImageView
                     android:id="@+id/imgCart"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:src="@mipmap/goods_details_cart" />
+                    android:src="@mipmap/tab_cart_normal" />
 
                 <TextView
                     android:id="@+id/tvCartNum"

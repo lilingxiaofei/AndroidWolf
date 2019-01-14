@@ -69,6 +69,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <ImageView
@@ -101,7 +102,7 @@
                     android:id="@+id/imgIconThree"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/home_sell"
+                    android:background="@mipmap/home_sell_goods"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -127,7 +128,7 @@
                     android:id="@+id/imgIconFour"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/home_search_chateau"
+                    android:background="@mipmap/home_manor"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -153,7 +154,7 @@
                     android:id="@+id/imgIconFive"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/home_evaluate"
+                    android:background="@mipmap/home_valuation"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -162,6 +163,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="名酒估价"
+                    android:textColor="@color/t_black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llPartner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgPartner"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@mipmap/home_partner"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/tvPartner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="城市合伙人"
                     android:textColor="@color/t_black"
                     android:textSize="12sp" />
 

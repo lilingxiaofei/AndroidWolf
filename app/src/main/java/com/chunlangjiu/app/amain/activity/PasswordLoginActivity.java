@@ -125,6 +125,7 @@ public class PasswordLoginActivity extends BaseActivity {
                         hideLoadingDialog();
                         ToastUtils.showShort("登录成功");
                         SPUtils.put("token", loginBeanResultBean.getData().getAccessToken());
+                        SPUtils.put("account", etPhone.getText().toString());
                         BaseApplication.setToken(loginBeanResultBean.getData().getAccessToken());
                         BaseApplication.initToken();
                         EventManager.getInstance().notify(null, ConstantMsg.LOGIN_SUCCESS);

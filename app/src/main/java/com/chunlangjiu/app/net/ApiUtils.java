@@ -106,6 +106,19 @@ public class ApiUtils {
         return apiService.setPsd("user.forgot.resetpassword", "v2", account, vcode, psd);
     }
 
+    public Flowable<ResultBean> updateLoginPassword (String newPwd, String confirmPwd, String pwd) {
+        return apiService.updateLoginPassword("member.security.updateLoginPassword", "v1", newPwd,confirmPwd, pwd);
+    }
+    public Flowable<ResultBean> updatePayPassword (String newPwd, String confirmPwd, String pwd) {
+        return apiService.setPayPwd("member.security.updatePayPassword", "v1", newPwd,confirmPwd, pwd);
+    }
+
+    public Flowable<ResultBean> sendSmsCode (String pwd, String confirmPwd, String code) {
+        return apiService.sendSmsCode("user.resetSendSms", "v1", pwd,confirmPwd, code);
+    }
+
+
+
     public Flowable<ResultBean> logout() {
         return apiService.logout("user.logout", "v1");
     }
@@ -489,10 +502,17 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<List<FansItemBean>>> getFansList() {
-        return apiService.getFansList("user.update.shop", "v1");
+        return apiService.getFansList("number.fans.list", "v1");
     }
     public Flowable<ResultBean<FansBean>> getFansInfo() {
-        return apiService.getFansInfo("user.update.shop", "v1");
+        return apiService.getFansInfo("number.fans.sum", "v1");
+    }
+
+    public Flowable<ResultBean<FansBean>> getMyInvitationCode() {
+        return apiService.getMyInvitationCode("number.code.get", "v1");
+    }
+    public Flowable<ResultBean<FansBean>> setInvitationCode(String inviteCode) {
+        return apiService.setInvitationCode("number.code.set", "v1",inviteCode);
     }
     public Flowable<ResultBean> submitInviteCode(String inviteCode) {
         return apiService.submitInviteCode("user.update.shop", "v1",inviteCode);

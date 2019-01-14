@@ -26,6 +26,7 @@ import com.chunlangjiu.app.amain.bean.HomeAuctionBean;
 import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.fans.dialog.InviteCodeDialog;
 import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
@@ -48,6 +49,7 @@ import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.BannerGlideLoader;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.AppUtils;
 import com.pkqup.commonlibrary.util.PermissionUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -198,20 +200,21 @@ public class HomeFragment extends BaseFragment {
         indicator = headerView.findViewById(R.id.indicator);
 
         llIconOne = headerView.findViewById(R.id.llAuction);
-        llIconTwo = headerView.findViewById(R.id.llBuy);
-        llIconThree = headerView.findViewById(R.id.llSell);
-        llIconFour = headerView.findViewById(R.id.llSearch);
-        llIconFive = headerView.findViewById(R.id.llEvaluate);
+        llIconTwo = headerView.findViewById(R.id.llSell);
+        llIconThree = headerView.findViewById(R.id.llSearch);
+        llIconFour = headerView.findViewById(R.id.llEvaluate);
+        llIconFive = headerView.findViewById(R.id.llPartner);
+
         imgIconOne = headerView.findViewById(R.id.imgIconOne);
         tvStrOne = headerView.findViewById(R.id.tvStrOne);
-        imgIconTwo = headerView.findViewById(R.id.imgIconTwo);
-        tvStrTwo = headerView.findViewById(R.id.tvStrTwo);
-        imgIconThree = headerView.findViewById(R.id.imgIconThree);
-        tvStrThree = headerView.findViewById(R.id.tvStrThree);
-        imgIconFour = headerView.findViewById(R.id.imgIconFour);
-        tvStrFour = headerView.findViewById(R.id.tvStrFour);
-        imgIconFive = headerView.findViewById(R.id.imgIconFive);
-        tvStrFive = headerView.findViewById(R.id.tvStrFive);
+        imgIconTwo = headerView.findViewById(R.id.imgIconThree);
+        tvStrTwo = headerView.findViewById(R.id.tvStrThree);
+        imgIconThree = headerView.findViewById(R.id.imgIconFour);
+        tvStrThree = headerView.findViewById(R.id.tvStrFour);
+        imgIconFour = headerView.findViewById(R.id.imgIconFive);
+        tvStrFour = headerView.findViewById(R.id.tvStrFive);
+        imgIconFive = headerView.findViewById(R.id.imgPartner);
+        tvStrFive = headerView.findViewById(R.id.tvPartner);
         llIconOne.setOnClickListener(onClickListener);
         llIconTwo.setOnClickListener(onClickListener);
         llIconThree.setOnClickListener(onClickListener);
@@ -753,15 +756,22 @@ public class HomeFragment extends BaseFragment {
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
-            homeCountEnd(eventTag);
+            if(null != eventTag){
+                switch (eventTag){
+                    case ConstantMsg.HOME_COUNT_END:
+                        getHomeList(1, true);
+                        break;
+                    case ConstantMsg.SET_INVITATION_CODE:
+                        InviteCodeDialog inviteCodeDialog = new InviteCodeDialog(AppUtils.getContext());
+                        inviteCodeDialog.show();
+                        break;
+                }
+            }
+
         }
     };
 
-    private void homeCountEnd(String eventTag) {
-        if (eventTag.equals(ConstantMsg.HOME_COUNT_END)) {
-            getHomeList(1, true);
-        }
-    }
+
 
     @Override
     public void onStart() {

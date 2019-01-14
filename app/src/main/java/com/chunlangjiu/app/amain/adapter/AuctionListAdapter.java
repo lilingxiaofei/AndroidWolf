@@ -1,7 +1,6 @@
 package com.chunlangjiu.app.amain.adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,7 +33,7 @@ public class AuctionListAdapter extends BaseQuickAdapter<AuctionListBean.Auction
 
     @Override
     protected void convert(BaseViewHolder helper, AuctionListBean.AuctionBean item) {
-        ImageView imageView = helper.getView(R.id.img_pic);
+        ImageView imageView = helper.getView(R.id.imgPic);
         LinearLayout llHighPrice = helper.getView(R.id.llHighPrice);
         TextView tvAnPaiStr = helper.getView(R.id.tvAnPaiStr);
         TextView tvStartPrice = helper.getView(R.id.tvStartPrice);

@@ -53,6 +53,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
+
+
     @BindView(R.id.view_pager)
     MyViewPager viewPager;
 
@@ -216,6 +218,14 @@ public class MainActivity extends BaseActivity {
         myFragmentAdapter.setLists(fragments);
         viewPager.setAdapter(myFragmentAdapter);
         setPageFragment(0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        if(viewPager.getCurrentItem() == ){
+//
+//        }
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {

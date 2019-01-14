@@ -42,7 +42,6 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.FileUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function3;
 import io.reactivex.functions.Function5;
 import io.reactivex.functions.Function6;
 import io.reactivex.schedulers.Schedulers;
@@ -314,7 +312,7 @@ public class AddGoodsActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
-        titleName.setText("商品添加");
+        titleName.setText("上传商品");
         titleImgLeft.setOnClickListener(onClickListener);
     }
 

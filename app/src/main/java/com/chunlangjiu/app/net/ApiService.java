@@ -53,10 +53,8 @@ import java.util.List;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-import retrofit2.http.Url;
 
 /**
  * @CreatedbBy: liucun on 2018/7/6
@@ -89,6 +87,18 @@ public interface ApiService {
     @FormUrlEncoded
     Flowable<ResultBean> setPsd(@Field("method") String method, @Field("v") String v, @Field("mobile") String mobile, @Field("vcode") String vcode,
                                 @Field("password") String password);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> updateLoginPassword(@Field("method") String method, @Field("v") String v, @Field("password") String password,@Field("password_confirmation") String password_confirmation, @Field("login_password") String loginPassword );
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> setPayPwd(@Field("method") String method, @Field("v") String v, @Field("password") String password,@Field("password_confirmation") String password_confirmation, @Field("verifycode") String vCode );
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> sendSmsCode(@Field("method") String method, @Field("v") String v, @Field("password") String password,@Field("password_confirmation") String password_confirmation, @Field("verifycode") String vCode );
 
     @POST("index.php/topapi")
     @FormUrlEncoded
@@ -575,11 +585,19 @@ public interface ApiService {
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<List<FansItemBean>>> getFansList(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<List<FansItemBean>>>  getFansList(@Field("method") String method, @Field("v") String v);
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<FansBean>> getFansInfo(@Field("method") String method, @Field("v") String v);
+
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FansBean>> getMyInvitationCode(@Field("method") String method, @Field("v") String v);
+
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FansBean>> setInvitationCode(@Field("method") String method, @Field("v") String v,@Field("inviteCode") String inviteCode);
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded

@@ -2,10 +2,12 @@ package com.chunlangjiu.app.fans.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.fans.adapter.FansAdapter;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -13,7 +15,6 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -21,11 +22,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FansListActivity extends BaseActivity {
 
-    @BindView(R.id.rv_fans_list)
-    RecyclerView rvFansList;
+    private View llHead ;
+    private RecyclerView rvFansList;
 
     private List<FansItemBean> list ;
-    private FansAdapter fansAdapter  ;
+    private FansListAdapter fansAdapter  ;
 
     private CompositeDisposable disposable;
     @Override
@@ -36,8 +37,12 @@ public class FansListActivity extends BaseActivity {
         initData();
     }
     private void initView(){
+        disposable = new CompositeDisposable();
+        llHead = getLayoutInflater().inflate(R.layout.fans_list_head,null);
+        rvFansList = findViewById(R.id.rv_fans_list);
         list = new ArrayList<>();
-        fansAdapter = new FansAdapter(this,R.layout.fans_list_item,list);
+        fansAdapter = new FansListAdapter(R.layout.fans_list_item,list);
+        fansAdapter.addHeaderView(llHead);
         rvFansList.setAdapter(fansAdapter);
     }
 
@@ -56,6 +61,7 @@ public class FansListActivity extends BaseActivity {
                         if(result!=null && result.getData()!=null){
                             list.clear();
                             list.addAll(result.getData());
+                            fansAdapter.setNewData(list);
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -76,6 +82,32 @@ public class FansListActivity extends BaseActivity {
             bean.setTotalMoney("88"+i);
             list.add(bean);
         }
+        fansAdapter.setNewData(list);
+    };
+
+
+    class FansListAdapter extends BaseQuickAdapter<FansItemBean, BaseViewHolder> {
+        public FansListAdapter(int layoutResId, List<FansItemBean> data) {
+            super(layoutResId, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, FansItemBean item) {
+            helper.setText(R.id.tv_fans_name,item.getFansName());
+            helper.setText(R.id.tv_fans_phone,item.getPhone());
+            helper.setText(R.id.tv_register_time,item.getRegisterTime());
+            helper.setText(R.id.tv_money,item.getTotalMoney());
+        }
+    }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int resId = view.getId();
+            if(resId == R.id.img_title_left){
+                finish();
+            }
+        }
     };
 
     @Override
@@ -86,6 +118,7 @@ public class FansListActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
-        hideTitleView();
+        titleImgLeft.setOnClickListener(onClickListener);
+        titleName.setText(R.string.fans_list);
     }
 }

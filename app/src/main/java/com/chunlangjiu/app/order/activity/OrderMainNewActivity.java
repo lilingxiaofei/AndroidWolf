@@ -5,6 +5,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
@@ -12,12 +14,19 @@ import com.chunlangjiu.app.abase.BaseFragmentAdapter;
 import com.chunlangjiu.app.order.fragment.OrderListFragment;
 import com.chunlangjiu.app.order.params.OrderParams;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
 public class OrderMainNewActivity extends BaseActivity {
+    @BindView(R.id.rgOrderTab)
+    RadioGroup rgOrderTab;
+    @BindView(R.id.rbOrderGoods)
+    RadioButton rbOrderGoods;
+    @BindView(R.id.rbOrderAction)
+    RadioButton rbOrderAction;
     @BindView(R.id.tabTitle)
     TabLayout tabLayout;
     @BindView(R.id.vpContent)
@@ -25,6 +34,7 @@ public class OrderMainNewActivity extends BaseActivity {
 
     private List<Fragment> fragments;
     private BaseFragmentAdapter myFragmentAdapter;
+    private int selectedPosition ;
 
     private int type;
 
@@ -32,7 +42,6 @@ public class OrderMainNewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_activity_main);
-
         initView();
         initData();
     }
@@ -46,21 +55,35 @@ public class OrderMainNewActivity extends BaseActivity {
         type = getIntent().getIntExtra(OrderParams.TYPE, 0);
         int target = getIntent().getIntExtra(OrderParams.TARGET, 0);
 
+
+        rgOrderTab.setVisibility(View.GONE);
         fragments = new ArrayList<>();
         fragments.add(new OrderListFragment());
         fragments.add(new OrderListFragment());
         fragments.add(new OrderListFragment());
         fragments.add(new OrderListFragment());
         fragments.add(new OrderListFragment());
+        if(type ==0){
+            rgOrderTab.setVisibility(View.VISIBLE);
+            fragments.add(new OrderListFragment());
+            fragments.add(new OrderListFragment());
+            fragments.add(new OrderListFragment());
+            fragments.add(new OrderListFragment());
+            fragments.add(new OrderListFragment());
+        }
+
         myFragmentAdapter = new BaseFragmentAdapter(getSupportFragmentManager());
         myFragmentAdapter.setLists(fragments);
         vpContent.setAdapter(myFragmentAdapter);
         vpContent.addOnPageChangeListener(onPageChangeListener);
-
         tabLayout.addOnTabSelectedListener(onTabSelectedListener);
+        rbOrderGoods.setOnClickListener(onClickListener);
+        rbOrderAction.setOnClickListener(onClickListener);
         fillTab(type, target);
 
     }
+
+
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -69,10 +92,7 @@ public class OrderMainNewActivity extends BaseActivity {
 
         @Override
         public void onPageSelected(int position) {
-            TabLayout.Tab tabAt = tabLayout.getTabAt(position);
-            if (null != tabAt) {
-                tabAt.select();
-            }
+            setSelectItem(position);
         }
 
         @Override
@@ -85,6 +105,13 @@ public class OrderMainNewActivity extends BaseActivity {
         public void onTabSelected(TabLayout.Tab tab) {
             int position = tab.getPosition();
             Bundle bundle = new Bundle();
+            if(position<5){
+                rbOrderGoods.setChecked(true);
+                rbOrderGoods.setTag(R.id.position,position);
+            }else{
+                rbOrderAction.setChecked(true);
+                rbOrderAction.setTag(R.id.position,position);
+            }
             bundle.putInt(OrderParams.TYPE, type);
             bundle.putInt(OrderParams.TARGET, position);
             fragments.get(position).setArguments(bundle);
@@ -109,6 +136,11 @@ public class OrderMainNewActivity extends BaseActivity {
                 tabLayout.addTab(tabLayout.newTab().setText("待发货"));
                 tabLayout.addTab(tabLayout.newTab().setText("待收货"));
                 tabLayout.addTab(tabLayout.newTab().setText("已完成"));
+                tabLayout.addTab(tabLayout.newTab().setText("待付定金"));
+                tabLayout.addTab(tabLayout.newTab().setText("竞拍中"));
+                tabLayout.addTab(tabLayout.newTab().setText("已中标"));
+                tabLayout.addTab(tabLayout.newTab().setText("落标"));
+                tabLayout.addTab(tabLayout.newTab().setText("待收货"));
                 break;
             case 1:
                 titleName.setText("竞拍订单管理");
@@ -148,10 +180,7 @@ public class OrderMainNewActivity extends BaseActivity {
                 tabLayout.setVisibility(View.GONE);
                 break;
         }
-        TabLayout.Tab tabAt = tabLayout.getTabAt(target);
-        if (null != tabAt) {
-            tabAt.select();
-        }
+        setSelectItem(target);
     }
 
     private void initData() {
@@ -161,8 +190,61 @@ public class OrderMainNewActivity extends BaseActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            finish();
+            int resId = view.getId();
+            if(resId == R.id.img_title_left){
+                finish();
+            }else if(resId == R.id.rbOrderGoods){
+                Object posTag = rbOrderGoods.getTag(R.id.position);
+                int position = posTag == null ?0:(int)posTag;
+                setSelectItem(position);
+            }else if(resId == R.id.rbOrderAction){
+                Object posTag = rbOrderAction.getTag(R.id.position);
+                int position = posTag == null ?5:(int)posTag;
+                setSelectItem(position);
+            }
         }
     };
+
+    private void setSelectItem(int position){
+        int size = tabLayout.getTabCount();
+        for (int i=0;i<size;i++){
+            View view = getTabView(i);
+            if(position<5){
+                if(i<5){
+                    view.setVisibility(View.VISIBLE);
+                }else{
+                    view.setVisibility(View.GONE);
+                }
+            }else{
+                if(i<5){
+                    view.setVisibility(View.GONE);
+                }else{
+                    view.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+        TabLayout.Tab tabAt = tabLayout.getTabAt(position);
+        if (null != tabAt) {
+            tabAt.select();
+        }
+    }
+
+    public View getTabView(int index){
+        View tabView = null;
+        TabLayout.Tab tab = tabLayout.getTabAt(index);
+        Field view = null;
+        try {
+            view = TabLayout.Tab.class.getDeclaredField("mView");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        view.setAccessible(true);
+        try {
+            tabView = (View) view.get(tab);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return tabView;
+    }
 
 }

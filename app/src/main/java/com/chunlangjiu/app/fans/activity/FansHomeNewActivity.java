@@ -1,11 +1,16 @@
 package com.chunlangjiu.app.fans.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
@@ -14,6 +19,8 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
+import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
+import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -43,15 +50,32 @@ public class FansHomeNewActivity extends BaseActivity {
     private void initView() {
         disposable = new CompositeDisposable();
 
-        rl_fans_list = findViewById(R.id.rl_fans_list);
-        tv_fans_num = findViewById(R.id.tv_fans_num);
-        rl_invite_code = findViewById(R.id.rl_invite_code);
-        tv_invite_code = findViewById(R.id.tv_invite_code);
-        rl_invite_fans = findViewById(R.id.rl_invite_fans);
+        ivQrCode = findViewById(R.id.ivQrCode) ;
+        tvMyCode = findViewById(R.id.tvMyCode) ;
+        tvShare  = findViewById(R.id.tvShare) ;
+        tvShare.setOnClickListener(onClickListener);
+        createEnglishQRCodeWithLogo("bingoogolapple");
+    }
 
-        rl_fans_list.setOnClickListener(onClickListener);
-        rl_invite_code.setOnClickListener(onClickListener);
-        rl_invite_fans.setOnClickListener(onClickListener);
+    private void createEnglishQRCodeWithLogo(final String qrCode) {
+        tvMyCode.setText(qrCode);
+        new AsyncTask<Void, Void, Bitmap>() {
+            @Override
+            protected Bitmap doInBackground(Void... params) {
+                Bitmap logoBitmap = BitmapFactory.decodeResource(FansHomeNewActivity.this.getResources(), R.mipmap.launcher);
+                return QRCodeEncoder.syncEncodeQRCode(qrCode, BGAQRCodeUtil.dp2px(FansHomeNewActivity.this, 150), Color.BLACK, Color.WHITE,
+                        logoBitmap);
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                if (bitmap != null) {
+                    ivQrCode.setImageBitmap(bitmap);
+                } else {
+                    Toast.makeText(FansHomeNewActivity.this, "生成带logo的英文二维码失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute();
     }
 
     private void initData() {
@@ -99,9 +123,7 @@ public class FansHomeNewActivity extends BaseActivity {
             int resId = v.getId();
             if(resId == R.id.rl_fans_list){
                 startFansListActivity();
-            }else if(resId == R.id.rl_invite_code){
-                startInviteCodeActivity();
-            }else if(resId == R.id.rl_invite_fans){
+            }else if(resId == R.id.tv_right){
                 startFansInviteActivity();
             }
         }
@@ -126,7 +148,10 @@ public class FansHomeNewActivity extends BaseActivity {
     }
     @Override
     public void setTitleView() {
-        hideTitleView();
+        titleName.setText(R.string.my_recommend);
+        tvRight.setText(R.string.fans_list);
+        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setOnClickListener(onClickListener);
     }
 
     @Override

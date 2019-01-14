@@ -39,6 +39,9 @@
             android:layout_height="48dp"
             android:minWidth="48dp"
             android:textSize="15sp"
+            android:paddingLeft="5dp"
+            android:paddingRight="12dp"
+            android:gravity="center"
             android:visibility="gone"
             android:textColor="@color/t_white"/>
     </LinearLayout>
