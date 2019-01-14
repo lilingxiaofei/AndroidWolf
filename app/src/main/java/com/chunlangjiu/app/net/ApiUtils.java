@@ -8,8 +8,10 @@ import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
+import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
+import com.chunlangjiu.app.fans.bean.FansNumBean;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
@@ -22,6 +24,7 @@ import com.chunlangjiu.app.goods.bean.GivePriceBean;
 import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.GoodsListBean;
 import com.chunlangjiu.app.goods.bean.OrdoListBean;
+import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
@@ -501,18 +504,22 @@ public class ApiUtils {
         return apiService.editShopName("user.update.shop", "v1", token, name);
     }
 
-    public Flowable<ResultBean<List<FansItemBean>>> getFansList() {
-        return apiService.getFansList("number.fans.list", "v1");
-    }
-    public Flowable<ResultBean<FansBean>> getFansInfo() {
-        return apiService.getFansInfo("number.fans.sum", "v1");
+    public Flowable<ResultBean<List<PartnerBean>>> getPartnerList() {
+        return apiService.getPartnerList("member.fans.list", "v1");
     }
 
-    public Flowable<ResultBean<FansBean>> getMyInvitationCode() {
-        return apiService.getMyInvitationCode("number.code.get", "v1");
+    public Flowable<ResultBean<List<FansItemBean>>> getFansList() {
+        return apiService.getFansList("member.fans.list", "v1");
+    }
+    public Flowable<ResultBean<FansNumBean>> getFansInfo() {
+        return apiService.getFansInfo("member.fans.sum", "v1");
+    }
+
+    public Flowable<ResultBean<FansCodeBean>> getMyInvitationCode() {
+        return apiService.getMyInvitationCode("member.code.get", "v1");
     }
     public Flowable<ResultBean<FansBean>> setInvitationCode(String inviteCode) {
-        return apiService.setInvitationCode("number.code.set", "v1",inviteCode);
+        return apiService.setInvitationCode("member.code.set", "v1",inviteCode);
     }
     public Flowable<ResultBean> submitInviteCode(String inviteCode) {
         return apiService.submitInviteCode("user.update.shop", "v1",inviteCode);

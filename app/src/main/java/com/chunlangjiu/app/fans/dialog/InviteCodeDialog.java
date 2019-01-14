@@ -38,6 +38,7 @@ public class InviteCodeDialog extends Dialog {
     public InviteCodeDialog(Context context) {
         super(context, R.style.dialog_transparent);
         this.context = context;
+//        getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         initView();
@@ -77,6 +78,12 @@ public class InviteCodeDialog extends Dialog {
             }
         }
     };
+
+
+    @Override
+    public void show() {
+        super.show();
+    }
 
     /**
      * 提交邀请码到后台服务器

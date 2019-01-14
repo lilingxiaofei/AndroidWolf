@@ -1,6 +1,8 @@
 package com.chunlangjiu.app.amain.fragment;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +51,6 @@ import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.BannerGlideLoader;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
-import com.pkqup.commonlibrary.util.AppUtils;
 import com.pkqup.commonlibrary.util.PermissionUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -762,8 +763,7 @@ public class HomeFragment extends BaseFragment {
                         getHomeList(1, true);
                         break;
                     case ConstantMsg.SET_INVITATION_CODE:
-                        InviteCodeDialog inviteCodeDialog = new InviteCodeDialog(AppUtils.getContext());
-                        inviteCodeDialog.show();
+                        handler.sendEmptyMessageDelayed(0,1000);
                         break;
                 }
             }
@@ -771,6 +771,15 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            InviteCodeDialog inviteCodeDialog = new InviteCodeDialog(getActivity());
+            inviteCodeDialog.show();
+        }
+    };
 
 
     @Override

@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.fans.bean.FansItemBean;
+import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
@@ -24,8 +24,8 @@ public class PartnerListActivity extends BaseActivity {
 
     private RecyclerView rvFansList;
 
-    private List<FansItemBean> list ;
-    private FansListAdapter fansAdapter  ;
+    private List<PartnerBean> list ;
+    private PartnerListAdapter fansAdapter  ;
 
     private CompositeDisposable disposable;
     @Override
@@ -39,7 +39,7 @@ public class PartnerListActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         rvFansList = findViewById(R.id.rv_fans_list);
         list = new ArrayList<>();
-        fansAdapter = new FansListAdapter(R.layout.fans_list_item,list);
+        fansAdapter = new PartnerListAdapter(R.layout.partner_list_item,list);
         rvFansList.setAdapter(fansAdapter);
     }
 
@@ -49,12 +49,12 @@ public class PartnerListActivity extends BaseActivity {
 
     private void loadFansList() {
         //获取粉丝信息
-        disposable.add(ApiUtils.getInstance().getFansList()
+        disposable.add(ApiUtils.getInstance().getPartnerList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<List<FansItemBean>>>() {
+                .subscribe(new Consumer<ResultBean<List<PartnerBean>>>() {
                     @Override
-                    public void accept(ResultBean<List<FansItemBean>> result) throws Exception {
+                    public void accept(ResultBean<List<PartnerBean>> result) throws Exception {
                         if(result!=null && result.getData()!=null){
                             list.clear();
                             list.addAll(result.getData());
@@ -67,33 +67,22 @@ public class PartnerListActivity extends BaseActivity {
 
                     }
                 }));
-        testData();
     }
 
-    private void testData(){
-        for (int i = 0; i < 7; i++) {
-            FansItemBean bean = new FansItemBean();
-            bean.setFansName("李伟"+i);
-            bean.setPhone("1234567899"+i);
-            bean.setRegisterTime("2018-12-0"+i);
-            bean.setTotalMoney("88"+i);
-            list.add(bean);
-        }
-        fansAdapter.setNewData(list);
-    };
 
 
-    class FansListAdapter extends BaseQuickAdapter<FansItemBean, BaseViewHolder> {
-        public FansListAdapter(int layoutResId, List<FansItemBean> data) {
+
+    class PartnerListAdapter extends BaseQuickAdapter<PartnerBean, BaseViewHolder> {
+        public PartnerListAdapter(int layoutResId, List<PartnerBean> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, FansItemBean item) {
-            helper.setText(R.id.tv_fans_name,item.getFansName());
-            helper.setText(R.id.tv_fans_phone,item.getPhone());
-            helper.setText(R.id.tv_register_time,item.getRegisterTime());
-            helper.setText(R.id.tv_money,item.getTotalMoney());
+        protected void convert(BaseViewHolder helper, PartnerBean item) {
+//            helper.setText(R.id.tv_fans_name,item.getFansName());
+//            helper.setText(R.id.tv_fans_phone,item.getPhone());
+//            helper.setText(R.id.tv_register_time,item.getRegisterTime());
+//            helper.setText(R.id.tv_money,item.getTotalMoney());
         }
     }
 

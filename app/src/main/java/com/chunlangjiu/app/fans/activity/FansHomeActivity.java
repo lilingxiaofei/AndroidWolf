@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.fans.bean.FansBean;
+import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -31,7 +31,7 @@ public class FansHomeActivity extends BaseActivity {
     private ImageView ivQrCode ;
     private TextView  tvMyCode;
     private TextView tvShare ;
-    private FansBean fansBean ;
+    private FansCodeBean fansBean ;
     private CompositeDisposable disposable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +78,14 @@ public class FansHomeActivity extends BaseActivity {
 
     private void getFansInfo() {
         //获取粉丝信息
-        disposable.add(ApiUtils.getInstance().getFansInfo()
+        disposable.add(ApiUtils.getInstance().getMyInvitationCode()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<FansBean>>() {
+                .subscribe(new Consumer<ResultBean<FansCodeBean>>() {
                     @Override
-                    public void accept(ResultBean<FansBean> mainClassBeanResultBean) throws Exception {
+                    public void accept(ResultBean<FansCodeBean> mainClassBeanResultBean) throws Exception {
                         fansBean = mainClassBeanResultBean.getData();
-                        setFansCode();
+                        createEnglishQRCodeWithLogo(fansBean.getCode());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -93,22 +93,8 @@ public class FansHomeActivity extends BaseActivity {
 
                     }
                 }));
-        testData();
     }
 
-    private void testData(){
-        fansBean= new FansBean();
-        fansBean.setFansNum("23");
-        fansBean.setInviteCode("34837487384");
-        fansBean.setInvitePerson("恁大哥");
-        setFansCode();
-    };
-
-    private void setFansCode(){
-        if(fansBean!=null){
-            createEnglishQRCodeWithLogo(fansBean.getInviteCode());
-        }
-    }
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

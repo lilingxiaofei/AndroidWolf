@@ -25,7 +25,6 @@ import com.chunlangjiu.app.amain.fragment.ClassifyFragment;
 import com.chunlangjiu.app.amain.fragment.HomeFragment;
 import com.chunlangjiu.app.amain.fragment.UserFragment;
 import com.chunlangjiu.app.dialog.AppUpdateDialog;
-import com.chunlangjiu.app.fans.dialog.InviteCodeDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GeTuiIntentService;
@@ -119,7 +118,6 @@ public class MainActivity extends BaseActivity {
         initView();
         initData();
         checkUpdate();
-        checkFastLogin();
     }
 
     private void initGeTuiPush() {
@@ -381,13 +379,6 @@ public class MainActivity extends BaseActivity {
                     public void accept(Throwable throwable) throws Exception {
                     }
                 }));
-    }
-
-    private void checkFastLogin(){
-        if(BaseApplication.isLogin()){
-            InviteCodeDialog inviteCodeDialog = new InviteCodeDialog(this);
-            inviteCodeDialog.show();;
-        }
     }
 
     /**

@@ -8,8 +8,10 @@ import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
+import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
+import com.chunlangjiu.app.fans.bean.FansNumBean;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
@@ -22,6 +24,7 @@ import com.chunlangjiu.app.goods.bean.GivePriceBean;
 import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.GoodsListBean;
 import com.chunlangjiu.app.goods.bean.OrdoListBean;
+import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
@@ -583,23 +586,28 @@ public interface ApiService {
     Flowable<ResultBean> editShopName(@Field("method") String method, @Field("v") String v,
                                       @Field("accessToken") String accessToken, @Field("company_name") String company_name);
 
-    @POST("index.php/shop/topapi")
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<List<PartnerBean>>>  getPartnerList(@Field("method") String method, @Field("v") String v);
+
+    @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<List<FansItemBean>>>  getFansList(@Field("method") String method, @Field("v") String v);
 
-    @POST("index.php/shop/topapi")
-    @FormUrlEncoded
-    Flowable<ResultBean<FansBean>> getFansInfo(@Field("method") String method, @Field("v") String v);
 
-    @POST("index.php/shop/topapi")
+    @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<FansBean>> getMyInvitationCode(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<FansNumBean>> getFansInfo(@Field("method") String method, @Field("v") String v);
 
-    @POST("index.php/shop/topapi")
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FansCodeBean>> getMyInvitationCode(@Field("method") String method, @Field("v") String v);
+
+    @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<FansBean>> setInvitationCode(@Field("method") String method, @Field("v") String v,@Field("inviteCode") String inviteCode);
 
-    @POST("index.php/shop/topapi")
+    @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> submitInviteCode(@Field("method") String method, @Field("v") String v,@Field("inviteCode") String inviteCode);
 }
