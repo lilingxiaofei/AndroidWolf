@@ -100,6 +100,8 @@ public class SetPayPasswordActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean resultBean) throws Exception {
                         tvCommit.setEnabled(true);
+                        ToastUtils.showShort("修改成功");
+                        finish();
                         hideLoadingDialog();
                     }
                 }, new Consumer<Throwable>() {
@@ -117,6 +119,7 @@ public class SetPayPasswordActivity extends BaseActivity {
      */
     private void sendVerifyCode() {
         countDownTime();
+        tvSendCode.setEnabled(false);
         disposable.add(ApiUtils.getInstance().sendSmsCode(etPwd.getText().toString(), etConfirmPwd.getText().toString(),etVerifyCode.getText().toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -2,8 +2,13 @@ package com.chunlangjiu.app.goods.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
@@ -44,11 +49,10 @@ public class PartnerListActivity extends BaseActivity {
     }
 
     private void initData(){
-        loadFansList();
+        loadPartnerList();
     }
 
-    private void loadFansList() {
-        //获取粉丝信息
+    private void loadPartnerList() {
         disposable.add(ApiUtils.getInstance().getPartnerList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -79,10 +83,19 @@ public class PartnerListActivity extends BaseActivity {
 
         @Override
         protected void convert(BaseViewHolder helper, PartnerBean item) {
-//            helper.setText(R.id.tv_fans_name,item.getFansName());
-//            helper.setText(R.id.tv_fans_phone,item.getPhone());
-//            helper.setText(R.id.tv_register_time,item.getRegisterTime());
-//            helper.setText(R.id.tv_money,item.getTotalMoney());
+            ImageView iv = helper.getView(R.id.ivStoreLogo);
+            Glide.with(PartnerListActivity.this).load("").into(iv);
+
+            helper.setText(R.id.tv_store_name,"");
+            helper.setText(R.id.tvAddress,"");
+            String sellGoods = getString(R.string.sell_goods,"90");
+            helper.setText(R.id.tvSellGoods,sellGoods);
+            LinearLayout ll_store_label = helper.getView(R.id.ll_store_label);
+            for (int i = 0; i < 3; i++) {
+                TextView storeLabel = (TextView) LayoutInflater.from(PartnerListActivity.this).inflate(R.layout.partner_list_label_item,null);
+                storeLabel.setText("标签"+1);
+                ll_store_label.addView(storeLabel);
+            }
         }
     }
 

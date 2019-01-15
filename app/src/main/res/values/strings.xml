@@ -49,5 +49,6 @@
     <string name="edit_pwd">修改密码</string>
     <string name="commit">提交</string>
     <string name="edit_pay_pwd">修改支付密码</string>
+    <string name="sell_goods">该店家有%s款商品正在销售</string>
 
 </resources>

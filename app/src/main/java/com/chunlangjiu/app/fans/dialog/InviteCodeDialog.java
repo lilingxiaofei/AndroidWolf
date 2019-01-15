@@ -105,7 +105,7 @@ public class InviteCodeDialog extends Dialog {
                 .subscribe(new Consumer<ResultBean>() {
                     @Override
                     public void accept(ResultBean mainClassBeanResultBean) throws Exception {
-                        ToastUtils.showShort("邀请码上传成功");
+                        ToastUtils.showShort("邀请人设置成功");
                         loadingDialog.dismiss();
                         dismiss();
                     }
@@ -113,6 +113,7 @@ public class InviteCodeDialog extends Dialog {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         loadingDialog.dismiss();
+                        ToastUtils.showShort("邀请人设置失败");
                     }
                 });
     }

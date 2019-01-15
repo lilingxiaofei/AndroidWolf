@@ -605,7 +605,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<FansBean>> setInvitationCode(@Field("method") String method, @Field("v") String v,@Field("inviteCode") String inviteCode);
+    Flowable<ResultBean<FansBean>> setInvitationCode(@Field("method") String method, @Field("v") String v,@Field("referrer") String inviteCode);
 
     @POST("index.php/topapi")
     @FormUrlEncoded

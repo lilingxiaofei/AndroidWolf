@@ -32,6 +32,7 @@ import com.chunlangjiu.app.fans.dialog.InviteCodeDialog;
 import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
+import com.chunlangjiu.app.goods.activity.PartnerListActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.activity.ValuationActivity;
@@ -49,7 +50,6 @@ import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.BannerGlideLoader;
-import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.PermissionUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -550,33 +550,34 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void updateIconData(HomeModulesBean.Params params) {
-        iconPicLists = params.getPic();
-        if (iconPicLists != null && iconPicLists.size() > 0) {
-            for (int i = 0; i < iconPicLists.size(); i++) {
-                switch (i) {
-                    case 0:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconOne);
-                        setIconText(tvStrOne, i);
-                        break;
-                    case 1:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconTwo);
-                        setIconText(tvStrTwo, i);
-                        break;
-                    case 2:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconThree);
-                        setIconText(tvStrThree, i);
-                        break;
-                    case 3:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFour);
-                        setIconText(tvStrFour, i);
-                        break;
-                    case 4:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFive);
-                        setIconText(tvStrFive, i);
-                        break;
-                }
-            }
-        }
+//
+//        iconPicLists = params.getPic();
+//        if (iconPicLists != null && iconPicLists.size() > 0) {
+//            for (int i = 0; i < iconPicLists.size(); i++) {
+//                switch (i) {
+//                    case 0:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconOne);
+//                        setIconText(tvStrOne, i);
+//                        break;
+//                    case 1:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconTwo);
+//                        setIconText(tvStrTwo, i);
+//                        break;
+//                    case 2:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconThree);
+//                        setIconText(tvStrThree, i);
+//                        break;
+//                    case 3:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFour);
+//                        setIconText(tvStrFour, i);
+//                        break;
+//                    case 4:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFive);
+//                        setIconText(tvStrFive, i);
+//                        break;
+//                }
+//            }
+//        }
     }
 
     /**
@@ -810,25 +811,29 @@ public class HomeFragment extends BaseFragment {
                     EventManager.getInstance().notify(null, BaseApplication.HIDE_AUCTION ? ConstantMsg.MSG_PAGE_CLASS : ConstantMsg.MSG_PAGE_AUCTION);
                     UmengEventUtil.iconEvent(getActivity(), "竞拍专区");
                     break;
+//                case 1:
+//                    EventManager.getInstance().notify(null, ConstantMsg.MSG_PAGE_CLASS);
+//                    UmengEventUtil.iconEvent(getActivity(), "我要买酒");
+//                    break;
                 case 1:
-                    EventManager.getInstance().notify(null, ConstantMsg.MSG_PAGE_CLASS);
-                    UmengEventUtil.iconEvent(getActivity(), "我要买酒");
-                    break;
-                case 2:
                     checkStatus();
                     UmengEventUtil.iconEvent(getActivity(), "我要卖酒");
                     break;
-                case 3:
+                case 2:
                     startActivity(new Intent(getActivity(), StoreListActivity.class));
                     UmengEventUtil.iconEvent(getActivity(), "名庄查询");
                     break;
-                case 4:
+                case 3:
                     if (BaseApplication.isLogin()) {
                         startActivity(new Intent(getActivity(), ValuationActivity.class));
                     } else {
                         startActivity(new Intent(getActivity(), LoginActivity.class));
                     }
                     UmengEventUtil.iconEvent(getActivity(), "名酒估价");
+                    break;
+                case 4:
+                    startActivity(new Intent(getActivity(), PartnerListActivity.class));
+                    UmengEventUtil.iconEvent(getActivity(), "城市合伙人");
                     break;
             }
         }

@@ -99,7 +99,9 @@ public class FansHomeActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             int resId = v.getId();
-            if(resId == R.id.tv_right){
+            if(resId == R.id.img_title_left){
+                finish();
+            }else if(resId == R.id.tv_right){
                 startFansListActivity();
             }else if(resId == R.id.tvShare){
                 startFansInviteActivity();
@@ -123,6 +125,7 @@ public class FansHomeActivity extends BaseActivity {
         titleName.setText(R.string.my_recommend);
         tvRight.setText(R.string.fans_list);
         tvRight.setVisibility(View.VISIBLE);
+        titleImgLeft.setOnClickListener(onClickListener);
         tvRight.setOnClickListener(onClickListener);
     }
 
