@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tvLabel1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginRight="12dp"
-    android:background="@drawable/bg_white_blue_stroke"
-    android:paddingBottom="1dp"
-    android:paddingLeft="6dp"
-    android:paddingRight="6dp"
-    android:paddingTop="1dp"
-    android:text="同城鉴定"
-    android:textColor="@color/t_grey"
-    android:textSize="11sp" />
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tvLabel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/bg_white_blue_stroke"
+        android:paddingBottom="1dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="1dp"
+        android:text="同城鉴定"
+        android:textColor="@color/t_grey"
+        android:textSize="11sp" />
+</LinearLayout>
+

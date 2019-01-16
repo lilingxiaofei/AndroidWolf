@@ -168,12 +168,15 @@ public class HomeFragment extends BaseFragment {
                     iconFunctionClick(1);
                     break;
                 case R.id.llSell://我要卖酒
-                    iconFunctionClick(2);
+                    iconFunctionClick(1);
                     break;
                 case R.id.llSearch://名庄查询
-                    iconFunctionClick(3);
+                    iconFunctionClick(2);
                     break;
                 case R.id.llEvaluate://名酒估价
+                    iconFunctionClick(3);
+                    break;
+                case R.id.llPartner://名酒估价
                     iconFunctionClick(4);
                     break;
             }

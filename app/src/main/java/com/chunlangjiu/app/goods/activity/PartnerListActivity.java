@@ -1,7 +1,9 @@
 package com.chunlangjiu.app.goods.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +17,8 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.lzy.imagepicker.util.Utils;
+import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
 import java.util.ArrayList;
@@ -27,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PartnerListActivity extends BaseActivity {
 
-    private RecyclerView rvFansList;
+    private RecyclerView rvOartnerList;
 
     private List<PartnerBean> list ;
     private PartnerListAdapter fansAdapter  ;
@@ -42,10 +46,12 @@ public class PartnerListActivity extends BaseActivity {
     }
     private void initView(){
         disposable = new CompositeDisposable();
-        rvFansList = findViewById(R.id.rv_fans_list);
+        rvOartnerList = findViewById(R.id.rv_partner_list);
+        rvOartnerList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvOartnerList.addItemDecoration(new GridSpacingItemDecoration(1, Utils.dp2px(this, 5), false));
         list = new ArrayList<>();
         fansAdapter = new PartnerListAdapter(R.layout.partner_list_item,list);
-        rvFansList.setAdapter(fansAdapter);
+        rvOartnerList.setAdapter(fansAdapter);
     }
 
     private void initData(){
@@ -62,7 +68,7 @@ public class PartnerListActivity extends BaseActivity {
                         if(result!=null && result.getData()!=null){
                             list.clear();
                             list.addAll(result.getData());
-                            fansAdapter.setNewData(list);
+                            updateListView();
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -73,6 +79,14 @@ public class PartnerListActivity extends BaseActivity {
                 }));
     }
 
+    private  void updateListView(){
+        if(list== null || list.size() ==0 ){
+            showEmptyView();
+        }else{
+            showContentView();
+            fansAdapter.setNewData(list);
+        }
+    }
 
 
 
@@ -84,16 +98,23 @@ public class PartnerListActivity extends BaseActivity {
         @Override
         protected void convert(BaseViewHolder helper, PartnerBean item) {
             ImageView iv = helper.getView(R.id.ivStoreLogo);
-            Glide.with(PartnerListActivity.this).load("").into(iv);
+            Glide.with(PartnerListActivity.this).load(item.getShop_logo()).into(iv);
 
-            helper.setText(R.id.tv_store_name,"");
-            helper.setText(R.id.tvAddress,"");
-            String sellGoods = getString(R.string.sell_goods,"90");
-            helper.setText(R.id.tvSellGoods,sellGoods);
+            helper.setText(R.id.tv_store_name,item.getShopname());
+            helper.setText(R.id.tvAddress,item.getShop_addr());
+
+            String num = item.getGrade();
+            if(TextUtils.isEmpty(num)){
+                helper.setText(R.id.tvSellGoods,"暂无可售商品");
+            }else{
+                String sellGoods = getString(R.string.sell_goods,num);
+                helper.setText(R.id.tvSellGoods,sellGoods);
+            }
             LinearLayout ll_store_label = helper.getView(R.id.ll_store_label);
             for (int i = 0; i < 3; i++) {
-                TextView storeLabel = (TextView) LayoutInflater.from(PartnerListActivity.this).inflate(R.layout.partner_list_label_item,null);
-                storeLabel.setText("标签"+1);
+                View view =  LayoutInflater.from(PartnerListActivity.this).inflate(R.layout.partner_list_label_item,null);
+                TextView storeLabel = view.findViewById(R.id.tvLabel1);
+                storeLabel.setText("标签"+i);
                 ll_store_label.addView(storeLabel);
             }
         }

@@ -505,7 +505,7 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<List<PartnerBean>>> getPartnerList() {
-        return apiService.getPartnerList("member.fans.list", "v1");
+        return apiService.getPartnerList("shop.featured", "v1");
     }
 
     public Flowable<ResultBean<List<FansItemBean>>> getFansList() {

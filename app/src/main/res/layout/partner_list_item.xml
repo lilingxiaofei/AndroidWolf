@@ -58,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_store_name"
             android:layout_marginTop="5dp"
+            android:orientation="horizontal"
             android:layout_toRightOf="@+id/ivStoreLogo">
         </LinearLayout>
         <TextView android:id="@+id/tvAddress"
