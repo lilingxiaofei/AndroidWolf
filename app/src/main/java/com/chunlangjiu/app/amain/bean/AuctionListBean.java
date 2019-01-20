@@ -22,7 +22,6 @@ public class AuctionListBean implements Serializable {
     public class AuctionBean implements Serializable{
 
         private String item_id;
-        private String shop_id;
         private String cat_id;
         private String brand_id;
         private String shop_cat_id;
@@ -46,6 +45,15 @@ public class AuctionListBean implements Serializable {
         private String auction_end_time;
         private String auction_number;
         private String max_price;
+
+
+        private String view_count;//关注人数
+        private String rate_count;//评价条数
+        private String rate ;//好评率
+
+        private String shop_id ;//店铺id
+        private String shop_name ;//店铺id
+        private String grade ;//店铺等级 0普通店铺，1,星级卖家，2城市合伙人
 
         public String getMax_price() {
             return max_price;
@@ -238,7 +246,48 @@ public class AuctionListBean implements Serializable {
         public void setList_image(String list_image) {
             this.list_image = list_image;
         }
+
+        public String getView_count() {
+            return view_count;
+        }
+
+        public void setView_count(String view_count) {
+            this.view_count = view_count;
+        }
+
+        public String getRate_count() {
+            return rate_count;
+        }
+
+        public void setRate_count(String rate_count) {
+            this.rate_count = rate_count;
+        }
+
+        public String getRate() {
+            return rate;
+        }
+
+        public void setRate(String rate) {
+            this.rate = rate;
+        }
+
+        public String getShop_name() {
+            return shop_name;
+        }
+
+        public void setShop_name(String shop_name) {
+            this.shop_name = shop_name;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
     }
+
 
 
 }

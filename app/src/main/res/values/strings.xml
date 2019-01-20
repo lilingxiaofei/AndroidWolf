@@ -38,6 +38,7 @@
     <string name="bank_manager">银行卡管理</string>
 
 
+    <string name="into_store">进店</string>
     <string name="into_seller_center">进入卖家中心</string>
     <string name="into_buyer_center">进入买家中心</string>
     <string name="find_all_order">查看全部订单</string>
@@ -50,5 +51,8 @@
     <string name="commit">提交</string>
     <string name="edit_pay_pwd">修改支付密码</string>
     <string name="sell_goods">该店家有%s款商品正在销售</string>
+    <string name="action_number">%s次出价</string>
+    <string name="openPicStr">%ss | 完成</string>
+    <string name="store_home">店铺首页</string>
 
 </resources>

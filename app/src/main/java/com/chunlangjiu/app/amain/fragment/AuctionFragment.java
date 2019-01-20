@@ -24,6 +24,7 @@ import com.chunlangjiu.app.amain.bean.SecondClassBean;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
 import com.chunlangjiu.app.goods.activity.AuctionDetailActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
+import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
@@ -164,6 +165,14 @@ public class AuctionFragment extends BaseFragment {
                     AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
+                }
+            }
+        });
+        linearAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(view.getId() == R.id.tv_store_into){
+                    ShopMainActivity.startShopMainActivity(getActivity(),lists.get(position).getShop_id());
                 }
             }
         });

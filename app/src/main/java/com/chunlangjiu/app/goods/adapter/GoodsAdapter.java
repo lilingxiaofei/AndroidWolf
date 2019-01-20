@@ -141,11 +141,11 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             helper.setGone(R.id.rl_store_layout,isShowStoreView);
             if(isShowStoreView){
                 helper.addOnClickListener(R.id.rl_store_layout);
-                helper.setText(R.id.tv_store_name,item.getStoreName());
-                String level = item.getStoreLevel();
-                if("1".equals(level)){
+                helper.setText(R.id.tv_store_name,item.getShop_name());
+                String level = item.getGrade();
+                if("2".equals(level)){
                     helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_partner);
-                }else if("2".equals(level)){
+                }else if("1".equals(level)){
                     helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_star);
                 }else{
                     helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_common);

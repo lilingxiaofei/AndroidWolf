@@ -52,6 +52,7 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import org.json.JSONArray;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -318,6 +319,11 @@ public interface ApiService {
                                                                @Field("auctionitem_id") String auctionitem_id, @Field("addr_id") String addr_id,
                                                                @Field("price") String price);
 
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<Map>> appOpenAd(@Field("method") String method, @Field("v") String v);
+
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> auctionAddPrice(@Field("method") String method, @Field("v") String v,
@@ -348,6 +354,11 @@ public interface ApiService {
                                                             @Field("upload_type") String upload_type, @Field("image") String image,
                                                             @Field("image_input_title") String image_input_title,
                                                             @Field("image_type") String image_type, @Field("image_cat_id") String image_cat_id);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<Map>> checkUploadGoods(@Field("method") String method, @Field("v") String v);
+
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded

@@ -53,6 +53,7 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import org.json.JSONArray;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -302,6 +303,9 @@ public class ApiUtils {
         return apiService.auctionAddPrice("item.auction.userAdd", "v1", auctionitem_id, price);
     }
 
+    public Flowable<ResultBean<Map>> appOpenAd() {
+        return apiService.appOpenAd("app.open.img", "v1");
+    }
 
     public Flowable<ResultBean<HomeModulesBean>> getHomeModules() {
         return apiService.getHomeModules("theme.modules", "v1", "index");
@@ -322,6 +326,10 @@ public class ApiUtils {
 
     public Flowable<ResultBean<ShopClassList>> getShopClassList() {
         return apiService.getShopClassList("category.platform.get", "v1");
+    }
+
+    public Flowable<ResultBean<Map>> checkUploadGoods() {
+        return apiService.checkUploadGoods("item.check", "v1");
     }
 
     public Flowable<ResultBean<ShopCatIdList>> getStoreClassList() {

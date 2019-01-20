@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,9 +20,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
-import com.chunlangjiu.app.amain.bean.FirstClassBean;
-import com.chunlangjiu.app.amain.bean.MainClassBean;
-import com.chunlangjiu.app.amain.bean.SecondClassBean;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
 import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
@@ -35,6 +31,7 @@ import com.chunlangjiu.app.goods.bean.OrdoListBean;
 import com.chunlangjiu.app.goods.bean.PriceBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.dialog.ChoiceAlcPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceAreaPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
@@ -80,9 +77,9 @@ public class ShopMainActivity extends BaseActivity {
     private TextView tvPrice;
 
     //分类列表
-    private RecyclerView recyclerViewClass;
-    private ClassAdapter classAdapter;
-    private List<ThirdClassBean> classLists;
+//    private RecyclerView recyclerViewClass;
+//    private ClassAdapter classAdapter;
+//    private List<ThirdClassBean> classLists;
     private String selectClassId = "";
 
     private String brandId = "";
@@ -114,6 +111,8 @@ public class ShopMainActivity extends BaseActivity {
     private List<PriceBean> priceLists;
     private String priceId = "";
 
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
     @BindView(R.id.imgShow)
     ImageView imgShow;
@@ -133,6 +132,10 @@ public class ShopMainActivity extends BaseActivity {
     TextView tvShopPhone;
     @BindView(R.id.tvDesc)
     TextView tvDesc;
+
+    @BindView(R.id.tvCompanyStatus)
+    TextView tvCompanyStatus;
+
 
     @BindView(R.id.scrollableLayout)
     HeaderViewPager scrollableLayout;
@@ -201,13 +204,15 @@ public class ShopMainActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
-        titleImgLeft.setOnClickListener(onClickListener);
-        titleImgRightOne.setVisibility(View.VISIBLE);
-        titleImgRightOne.setImageResource(R.mipmap.icon_list);
-        titleImgRightOne.setOnClickListener(onClickListener);
-        titleName.setVisibility(View.GONE);
-        titleSearchView.setVisibility(View.VISIBLE);
-        titleSearchEdit.setOnEditorActionListener(onEditorActionListener);
+//        titleImgLeft.setOnClickListener(onClickListener);
+//        titleImgRightOne.setVisibility(View.VISIBLE);
+//        titleImgRightOne.setImageResource(R.mipmap.icon_list);
+//        titleImgRightOne.setOnClickListener(onClickListener);
+//        titleName.setVisibility(View.GONE);
+//        titleSearchView.setVisibility(View.VISIBLE);
+//        titleSearchEdit.setOnEditorActionListener(onEditorActionListener);
+        hideTitleView();
+        tv_title.setText(R.string.store_home);
     }
 
     private TextView.OnEditorActionListener onEditorActionListener = new
@@ -246,30 +251,31 @@ public class ShopMainActivity extends BaseActivity {
         tvAlc = findViewById(R.id.tvAlc);
         rlPrice = findViewById(R.id.rlPrice);
         tvPrice = findViewById(R.id.tvPrice);
+        findViewById(R.id.ivBack).setOnClickListener(onClickListener);
         rlBrand.setOnClickListener(onClickListener);
         rlArea.setOnClickListener(onClickListener);
         rlIncense.setOnClickListener(onClickListener);
         rlAlc.setOnClickListener(onClickListener);
         rlPrice.setOnClickListener(onClickListener);
 
-        recyclerViewClass = findViewById(R.id.recyclerViewClass);
-        classLists = new ArrayList<>();
-        ThirdClassBean thirdClassBean = new ThirdClassBean();
-        thirdClassBean.setCat_id("");
-        thirdClassBean.setCat_name("全部");
-        classLists.add(thirdClassBean);
-        classAdapter = new ClassAdapter(R.layout.amain_item_class, classLists);
-        recyclerViewClass.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewClass.setAdapter(classAdapter);
-        classAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                selectClassId = classLists.get(position).getCat_id();
-                classAdapter.notifyDataSetChanged();
-                clearSelectFilterData();
-                getGoodsList(1, true);
-            }
-        });
+//        recyclerViewClass = findViewById(R.id.recyclerViewClass);
+//        classLists = new ArrayList<>();
+//        ThirdClassBean thirdClassBean = new ThirdClassBean();
+//        thirdClassBean.setCat_id("");
+//        thirdClassBean.setCat_name("全部");
+//        classLists.add(thirdClassBean);
+//        classAdapter = new ClassAdapter(R.layout.amain_item_class, classLists);
+//        recyclerViewClass.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        recyclerViewClass.setAdapter(classAdapter);
+//        classAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                selectClassId = classLists.get(position).getCat_id();
+//                classAdapter.notifyDataSetChanged();
+//                clearSelectFilterData();
+//                getGoodsList(1, true);
+//            }
+//        });
     }
 
 
@@ -416,33 +422,33 @@ public class ShopMainActivity extends BaseActivity {
     }
 
     private void getClassData() {
-        disposable.add(ApiUtils.getInstance().getMainClass()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<MainClassBean>>() {
-                    @Override
-                    public void accept(ResultBean<MainClassBean> mainClassBean) throws Exception {
-                        classLists.clear();
-                        ThirdClassBean thirdClassBean = new ThirdClassBean();
-                        thirdClassBean.setCat_id("");
-                        thirdClassBean.setCat_name("全部");
-                        classLists.add(thirdClassBean);
-                        List<FirstClassBean> categorys = mainClassBean.getData().getCategorys();
-                        for (int i = 0; i < categorys.size(); i++) {
-                            List<SecondClassBean> lv2 = categorys.get(i).getLv2();
-                            for (int j = 0; j < lv2.size(); j++) {
-                                List<ThirdClassBean> lv3 = lv2.get(j).getLv3();
-                                classLists.addAll(lv3);
-                            }
-                        }
-                        classAdapter.setNewData(classLists);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-
-                    }
-                }));
+//        disposable.add(ApiUtils.getInstance().getMainClass()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<ResultBean<MainClassBean>>() {
+//                    @Override
+//                    public void accept(ResultBean<MainClassBean> mainClassBean) throws Exception {
+//                        classLists.clear();
+//                        ThirdClassBean thirdClassBean = new ThirdClassBean();
+//                        thirdClassBean.setCat_id("");
+//                        thirdClassBean.setCat_name("全部");
+//                        classLists.add(thirdClassBean);
+//                        List<FirstClassBean> categorys = mainClassBean.getData().getCategorys();
+//                        for (int i = 0; i < categorys.size(); i++) {
+//                            List<SecondClassBean> lv2 = categorys.get(i).getLv2();
+//                            for (int j = 0; j < lv2.size(); j++) {
+//                                List<ThirdClassBean> lv3 = lv2.get(j).getLv3();
+//                                classLists.addAll(lv3);
+//                            }
+//                        }
+//                        classAdapter.setNewData(classLists);
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) throws Exception {
+//
+//                    }
+//                }));
     }
 
     private void getShopInfo() {
@@ -468,20 +474,28 @@ public class ShopMainActivity extends BaseActivity {
         tvShopPhone.setText(data.getShopInfo().getMobile());
         tvDesc.setText(data.getShopInfo().getShop_descript());
         String shopType = data.getShopInfo().getShop_type();
-        if("1".equals(shopType)){
-            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_black),0);
+
+        String companyStatus = data.getShopInfo().getStatus();
+        if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+            tvCompanyStatus.setText("企业认证");
+        } else {
+            tvCompanyStatus.setText("个人认证");
+        }
+
+        if ("2".equals(shopType)) {
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_yellow), 0);
             llRootLayout.setBackgroundResource(R.mipmap.store_bg_star);
             ivShopLevel.setImageResource(R.mipmap.store_partner);
-        }else if("1".equals(shopType)){
-            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_yellow),0);
+        } else if ("1".equals(shopType)) {
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_yellow), 0);
             llRootLayout.setBackgroundResource(R.mipmap.store_bg_star);
             ivShopLevel.setImageResource(R.mipmap.store_star);
-        }else{
-            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.t_blue),0);
+        } else {
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.t_blue), 0);
             llRootLayout.setBackgroundResource(R.mipmap.store_bg_common);
             ivShopLevel.setImageResource(R.mipmap.store_common);
         }
-
+        StatusBarUtil.setTransparent(this);
     }
 
     private void getGoodsList(int pageNum, final boolean isRefresh) {

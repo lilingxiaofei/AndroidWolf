@@ -33,10 +33,11 @@ public class PartnerListActivity extends BaseActivity {
 
     private RecyclerView rvOartnerList;
 
-    private List<PartnerBean> list ;
-    private PartnerListAdapter fansAdapter  ;
+    private List<PartnerBean> list;
+    private PartnerListAdapter fansAdapter;
 
     private CompositeDisposable disposable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,19 +45,30 @@ public class PartnerListActivity extends BaseActivity {
         initView();
         initData();
     }
-    private void initView(){
+
+    private void initView() {
         disposable = new CompositeDisposable();
         rvOartnerList = findViewById(R.id.rv_partner_list);
         rvOartnerList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvOartnerList.addItemDecoration(new GridSpacingItemDecoration(1, Utils.dp2px(this, 5), false));
         list = new ArrayList<>();
-        fansAdapter = new PartnerListAdapter(R.layout.partner_list_item,list);
+        fansAdapter = new PartnerListAdapter(R.layout.partner_list_item, list);
+        fansAdapter.setOnItemClickListener(onItemChildClickListener);
         rvOartnerList.setAdapter(fansAdapter);
     }
 
-    private void initData(){
+    private void initData() {
         loadPartnerList();
     }
+
+
+    BaseQuickAdapter.OnItemClickListener onItemChildClickListener = new BaseQuickAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            String shopId = list.get(position).getShop_id();
+            ShopMainActivity.startShopMainActivity(PartnerListActivity.this, shopId);
+        }
+    };
 
     private void loadPartnerList() {
         disposable.add(ApiUtils.getInstance().getPartnerList()
@@ -65,7 +77,7 @@ public class PartnerListActivity extends BaseActivity {
                 .subscribe(new Consumer<ResultBean<List<PartnerBean>>>() {
                     @Override
                     public void accept(ResultBean<List<PartnerBean>> result) throws Exception {
-                        if(result!=null && result.getData()!=null){
+                        if (result != null && result.getData() != null) {
                             list.clear();
                             list.addAll(result.getData());
                             updateListView();
@@ -79,15 +91,14 @@ public class PartnerListActivity extends BaseActivity {
                 }));
     }
 
-    private  void updateListView(){
-        if(list== null || list.size() ==0 ){
+    private void updateListView() {
+        if (list == null || list.size() == 0) {
             showEmptyView();
-        }else{
+        } else {
             showContentView();
             fansAdapter.setNewData(list);
         }
     }
-
 
 
     class PartnerListAdapter extends BaseQuickAdapter<PartnerBean, BaseViewHolder> {
@@ -100,22 +111,22 @@ public class PartnerListActivity extends BaseActivity {
             ImageView iv = helper.getView(R.id.ivStoreLogo);
             Glide.with(PartnerListActivity.this).load(item.getShop_logo()).into(iv);
 
-            helper.setText(R.id.tv_store_name,item.getShopname());
-            helper.setText(R.id.tvAddress,item.getShop_addr());
+            helper.setText(R.id.tv_store_name, item.getShopname());
+            helper.setText(R.id.tvAddress, item.getShop_addr());
 
             String num = item.getGrade();
-            if(TextUtils.isEmpty(num)){
-                helper.setText(R.id.tvSellGoods,"暂无可售商品");
-            }else{
-                String sellGoods = getString(R.string.sell_goods,num);
-                helper.setText(R.id.tvSellGoods,sellGoods);
+            if (TextUtils.isEmpty(num)) {
+                helper.setText(R.id.tvSellGoods, "暂无可售商品");
+            } else {
+                String sellGoods = getString(R.string.sell_goods, num);
+                helper.setText(R.id.tvSellGoods, sellGoods);
             }
             LinearLayout ll_store_label = helper.getView(R.id.ll_store_label);
             for (int i = 0; i < 3; i++) {
-                View view =  LayoutInflater.from(PartnerListActivity.this).inflate(R.layout.partner_list_label_item,null);
+                View view = LayoutInflater.from(PartnerListActivity.this).inflate(R.layout.partner_list_label_item, null);
                 TextView storeLabel = view.findViewById(R.id.tvLabel1);
-                storeLabel.setText("标签"+i);
-                ll_store_label.addView(storeLabel);
+                storeLabel.setText("标签" + i);
+                ll_store_label.addView(view);
             }
         }
     }
@@ -124,7 +135,7 @@ public class PartnerListActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             int resId = view.getId();
-            if(resId == R.id.img_title_left){
+            if (resId == R.id.img_title_left) {
                 finish();
             }
         }

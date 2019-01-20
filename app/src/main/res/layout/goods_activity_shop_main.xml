@@ -41,12 +41,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="5dp"
-        app:hvp_topOffset="81dp">
+        app:hvp_topOffset="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="5dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -71,15 +72,18 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp" />
 
+                <RelativeLayout
+                    android:layout_toRightOf="@id/imgHead"
+                    android:layout_toLeftOf="@id/imgShow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
                 <TextView
                     android:id="@+id/tvShopName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="28dp"
-                    android:layout_toLeftOf="@id/imgShow"
-                    android:layout_toRightOf="@id/imgHead"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/t_black"
@@ -95,20 +99,37 @@
                     android:src="@mipmap/store_common"/>
 
                 <TextView
+                    android:id="@+id/tvCompanyStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="15dp"
+                    android:layout_below="@+id/tvShopName"
+                    android:layout_alignLeft="@+id/tvShopName"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_white_blue_stroke_8dp"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/t_black"
+                    android:textSize="11sp"
+                    tools:text="店铺名" />
+                <TextView
                     android:id="@+id/tvShopTips"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvShopName"
+                    android:layout_below="@id/tvCompanyStatus"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="2dp"
-                    android:layout_toLeftOf="@id/imgShow"
-                    android:layout_toRightOf="@id/imgHead"
                     android:ellipsize="end"
                     android:singleLine="true"
                     tools:text="店铺名"
                     android:textColor="@color/t_gray"
                     android:textSize="@dimen/sp_small" />
+                </RelativeLayout>
             </RelativeLayout>
 
 
@@ -288,9 +309,7 @@
             <com.pkqup.commonlibrary.view.MyHeaderRecycleView
                 android:id="@+id/recycle_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/bg_white"
-                android:layout_margin="5dp"/>
+                android:layout_height="match_parent"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 

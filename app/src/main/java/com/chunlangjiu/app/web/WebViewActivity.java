@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.util.ConstantMsg;
+import com.jaeger.library.StatusBarUtil;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
@@ -73,6 +75,7 @@ public class WebViewActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_activity_webview);
         EventManager.getInstance().registerListener(onNotifyListener);
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_red),0);
         ButterKnife.bind(this);
         initView();
         initData();

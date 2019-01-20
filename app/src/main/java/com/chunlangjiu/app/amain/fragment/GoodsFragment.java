@@ -294,7 +294,7 @@ public class GoodsFragment extends BaseFragment {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 GoodsListDetailBean details= lists.get(position);
                 if(view.getId() == R.id.rl_store_layout){
-                    ShopMainActivity.startShopMainActivity(activity, details.getStoreId());
+                    ShopMainActivity.startShopMainActivity(activity, details.getShop_id());
                 }else{
                     if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
                         GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), details.getItem_id());
