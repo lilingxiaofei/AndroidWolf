@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.awen.photo.photopick.controller.PhotoPagerConfig;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
@@ -111,6 +112,8 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private TextView tvAuStorage;//储存条件
     private TextView tvAuResources;//来源
 
+    private ImageView ivSafeguard ;
+
     private LinearLayout llSeeMore;
     private RecyclerView recyclerView;//推荐商品列表
 
@@ -193,6 +196,9 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     break;
                 case R.id.llSeeMore://查看更多
                     GoodsListNewActivity.startGoodsListNewActivity(GoodsDetailslNewActivity.this, "", "", "");
+                    break;
+                case R.id.tvMoreExplain:
+                    AuctionExplainActivity.startActivity(GoodsDetailslNewActivity.this);
                     break;
             }
         }
@@ -298,6 +304,8 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         tvAuStorage = findViewById(R.id.tvAuStorage);//储存条件
         tvAuResources = findViewById(R.id.tvAuResources);//来源
 
+        ivSafeguard = findViewById(R.id.ivSafeguard);
+
         //底部栏代码
         rlBottom = findViewById(R.id.rlBottom);
         ivService= findViewById(R.id.ivService);
@@ -323,6 +331,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         tvPayMoney = findViewById(R.id.tvPayMoney);
 
 
+        tvMoreExplain.setOnClickListener(onClickListener);
         tvBuy.setOnClickListener(onClickListenerLogin);
         tvAddCart.setOnClickListener(onClickListenerLogin);
         ivService.setOnClickListener(onClickListenerLogin);
@@ -422,6 +431,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         } else {
             tvGoodsNameSecond.setVisibility(View.VISIBLE);
         }
+        Glide.with(this).load(goodsDetailBean.getItem().getService_url()).into(ivSafeguard);
         tvCountry.setText(goodsDetailBean.getItem().getLabel());
         tvDesc.setText(goodsDetailBean.getItem().getExplain());
         GlideUtils.loadImageShop(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_logo(), imgStore);

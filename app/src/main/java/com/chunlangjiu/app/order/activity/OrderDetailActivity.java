@@ -24,7 +24,6 @@ import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.order.bean.CancelOrderResultBean;
 import com.chunlangjiu.app.order.bean.CancelReasonBean;
 import com.chunlangjiu.app.order.bean.LogisticsBean;
 import com.chunlangjiu.app.order.bean.OrderDetailBean;
@@ -50,9 +49,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -100,6 +97,17 @@ public class OrderDetailActivity extends BaseActivity {
     TextView tvAddress;
     @BindView(R.id.tvTotalPrice)
     TextView tvTotalPrice;
+
+    @BindView(R.id.llCommission)
+    LinearLayout llCommission;
+    @BindView(R.id.tvCommission)
+    TextView tvCommission;
+
+    @BindView(R.id.llShopPayment)
+    LinearLayout llShopPayment;
+    @BindView(R.id.tvShopPayment)
+    TextView tvShopPayment;
+
     @BindView(R.id.tvSendPrice)
     TextView tvSendPrice;
     @BindView(R.id.tvPayment)
@@ -603,6 +611,11 @@ public class OrderDetailActivity extends BaseActivity {
                 tvPayment.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 tvPaymentTips.setText("实付金额：");
 
+
+
+
+
+
                 OrderDetailBean.LogiBean logi = orderDetailBean.getLogi();
                 if (null != logi) {
                     tvLogiName.setText(logi.getLogi_name());
@@ -615,6 +628,21 @@ public class OrderDetailActivity extends BaseActivity {
                 tvAddress.setText(String.format("%s%s%s%s", orderDetailBean.getReceiver_state(), orderDetailBean.getReceiver_city(), orderDetailBean.getReceiver_district(), orderDetailBean.getReceiver_address()));
                 tvTotalPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getTotal_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 tvSendPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getPost_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+
+                if(new BigDecimal(orderDetailBean.getCommission()).doubleValue()>0){
+                    llCommission.setVisibility(View.VISIBLE);
+                    tvCommission.setText(new BigDecimal(orderDetailBean.getTotal_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                }else{
+                    llCommission.setVisibility(View.GONE);
+                }
+
+                if(new BigDecimal(orderDetailBean.getShop_payment()).doubleValue()>0){
+                    llShopPayment.setVisibility(View.VISIBLE);
+                    tvShopPayment.setText(new BigDecimal(orderDetailBean.getShop_payment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                }else{
+                    llShopPayment.setVisibility(View.GONE);
+                }
+
 
                 tvOrderStatus.setText(orderDetailBean.getStatus_desc());
                 tvOrderId.setText(String.valueOf(orderDetailBean.getTid()));
@@ -723,6 +751,21 @@ public class OrderDetailActivity extends BaseActivity {
                 } else {
                     llTotalPrice.setVisibility(View.GONE);
                 }
+
+                if(new BigDecimal(orderDetailBean.getCommission()).doubleValue()>0){
+                    llCommission.setVisibility(View.VISIBLE);
+                    tvCommission.setText(new BigDecimal(orderDetailBean.getTotal_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                }else{
+                    llCommission.setVisibility(View.GONE);
+                }
+
+                if(new BigDecimal(orderDetailBean.getShop_payment()).doubleValue()>0){
+                    llShopPayment.setVisibility(View.VISIBLE);
+                    tvShopPayment.setText(new BigDecimal(orderDetailBean.getShop_payment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                }else{
+                    llShopPayment.setVisibility(View.GONE);
+                }
+
                 if (!TextUtils.isEmpty(orderDetailBean.getPost_fee())) {
                     tvSendPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getPost_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                     llSendPrice.setVisibility(View.VISIBLE);
@@ -845,9 +888,26 @@ public class OrderDetailActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(orderDetailBean.getAuction().getStarting_price())) {
                     tvTotalPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getAuction().getStarting_price()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 }
+
+                if(new BigDecimal(orderDetailBean.getCommission()).doubleValue()>0){
+                    llCommission.setVisibility(View.VISIBLE);
+                    tvCommission.setText(new BigDecimal(orderDetailBean.getTotal_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                }else{
+                    llCommission.setVisibility(View.GONE);
+                }
+
+                if(new BigDecimal(orderDetailBean.getShop_payment()).doubleValue()>0){
+                    llShopPayment.setVisibility(View.VISIBLE);
+                    tvShopPayment.setText(new BigDecimal(orderDetailBean.getShop_payment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                }else{
+                    llShopPayment.setVisibility(View.GONE);
+                }
+
                 if (!TextUtils.isEmpty(orderDetailBean.getAuction().getMax_price())) {
                     tvSendPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getAuction().getMax_price()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 }
+
+
                 LinearLayout llTips3 = findViewById(R.id.llTips3);
                 llTips3.setVisibility(View.VISIBLE);
                 TextView tvContent3 = findViewById(R.id.tvContent3);

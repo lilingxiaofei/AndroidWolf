@@ -380,14 +380,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
-                    android:paddingLeft="@dimen/order_details_padding"
-                    android:paddingRight="@dimen/order_details_padding"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/order_details_padding"
+                    android:paddingRight="@dimen/order_details_padding">
 
                     <TextView
                         android:id="@+id/tvUserInfo"
-                        style="@style/order_left_label"/>
+                        style="@style/order_left_label" />
 
                 </LinearLayout>
 
@@ -487,6 +487,50 @@
 
                 <TextView
                     android:id="@+id/tvTotalPrice"
+                    style="@style/order_left_value"
+                    android:gravity="center_vertical|end" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llCommission"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:paddingLeft="@dimen/order_details_padding"
+                android:paddingRight="@dimen/order_details_padding"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvCommissionLabel"
+                    style="@style/order_left_label"
+                    android:text="平台佣金：" />
+
+                <TextView
+                    android:id="@+id/tvCommission"
+                    style="@style/order_left_value"
+                    android:gravity="center_vertical|end" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llShopPayment"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:paddingLeft="@dimen/order_details_padding"
+                android:paddingRight="@dimen/order_details_padding"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvShopPaymentLabel"
+                    style="@style/order_left_label"
+                    android:text="店铺实收：" />
+
+                <TextView
+                    android:id="@+id/tvShopPayment"
                     style="@style/order_left_value"
                     android:gravity="center_vertical|end" />
 

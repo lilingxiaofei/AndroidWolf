@@ -243,9 +243,9 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                     }
                 }
                 if (3 == type) {
-                    tvTotalNum.setText(String.format("共%s件商品;合计：¥%s", new BigDecimal(item.getItemnum()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+                    tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getItemnum()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 } else {
-                    tvTotalNum.setText(String.format("共%s件商品;合计：¥%s", new BigDecimal(item.getTotalItem()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+                    tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getTotalItem()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 }
                 break;
             case 1:
@@ -274,9 +274,9 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                     }
                 }
                 if (3 == type) {
-                    tvTotalNum.setText(String.format("共%s件商品;合计：¥%s", new BigDecimal(item.getItemnum()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+                    tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getItemnum()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 } else {
-                    tvTotalNum.setText(String.format("共%s件商品;合计：¥%s", new BigDecimal(item.getTotalItem()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+                    tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getTotalItem()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 }
                 break;
             case 2:
@@ -297,7 +297,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                 llProducts.addView(inflate);
                 View view_line = inflate.findViewById(R.id.view_line);
                 view_line.setVisibility(View.GONE);
-                tvTotalNum.setText(String.format("共%s件商品;合计：¥%s", new BigDecimal(item.getTotalItem()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getSku().getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+                tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getTotalItem()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getSku().getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 break;
         }
     }

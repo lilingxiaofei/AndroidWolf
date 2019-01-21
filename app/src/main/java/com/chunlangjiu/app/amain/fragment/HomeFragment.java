@@ -441,6 +441,8 @@ public class HomeFragment extends BaseFragment {
                 HomeBean homeBean = lists.get(position);
                 if(view.getId() == R.id.tv_store_into){
                     ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getShop_id());
+                }else if(view.getId() == R.id.tvMoreAuction){
+                    EventManager.getInstance().notify(null, BaseApplication.HIDE_AUCTION ? ConstantMsg.MSG_PAGE_CLASS : ConstantMsg.MSG_PAGE_AUCTION);
                 }
             }
         });

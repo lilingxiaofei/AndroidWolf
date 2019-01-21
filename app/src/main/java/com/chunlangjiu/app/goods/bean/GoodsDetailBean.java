@@ -179,6 +179,7 @@ public class GoodsDetailBean implements Serializable{
         private String label;//标签
         private String explain;//商品说明
         private Auction auction;
+        private String service_url ;
 
         public String getIs_collect() {
             return is_collect;
@@ -498,6 +499,14 @@ public class GoodsDetailBean implements Serializable{
 
         public void setStore(String store) {
             this.store = store;
+        }
+
+        public String getService_url() {
+            return service_url;
+        }
+
+        public void setService_url(String service_url) {
+            this.service_url = service_url;
         }
     }
 

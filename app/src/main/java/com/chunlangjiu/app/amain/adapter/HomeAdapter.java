@@ -91,6 +91,9 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
             case HomeBean.ITEM_TUIJIAN:
                 gridHead = viewHolder.getLayoutPosition();
                 break;
+            case HomeBean.ITEM_JINGPAI:
+                viewHolder.addOnClickListener(R.id.tvMoreAuction);
+                break;
         }
     }
 

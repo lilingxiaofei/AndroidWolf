@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    android:padding="20dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:layout_centerVertical="true"
+        android:text="*如何参与竞拍？"
+        android:typeface="sans"
+        android:gravity="center_vertical"
+        android:textColor="@color/t_black"
+        android:textStyle="bold"
+        android:textSize="15sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.点击“出价”参与竞拍，价高者得；"
+        android:textColor="@color/t_grey"
+        android:textSize="14sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2.竞拍成功，支付货款；"
+        android:textColor="@color/t_grey"
+        android:textSize="14sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.点击“出价”参与竞拍，价高者得；"
+        android:textColor="@color/t_grey"
+        android:textSize="14sp" />
+
+
+
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="22dp"
+        android:layout_centerVertical="true"
+        android:text="*商品是否支持鉴定？"
+        android:typeface="sans"
+        android:gravity="center_vertical"
+        android:textColor="@color/t_black"
+        android:textStyle="bold"
+        android:textSize="15sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="竞拍商品有权威专家进行鉴定，并出有鉴定书。"
+        android:textColor="@color/t_grey"
+        android:textSize="14sp" />
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="22dp"
+        android:layout_centerVertical="true"
+        android:text="*如何保证钱款安全？"
+        android:typeface="sans"
+        android:gravity="center_vertical"
+        android:textColor="@color/t_black"
+        android:textStyle="bold"
+        android:textSize="15sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="支付的货款有平台担保，确认收货后，货款才打给商家。"
+        android:textColor="@color/t_grey"
+        android:textSize="14sp" />
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="22dp"
+        android:layout_centerVertical="true"
+        android:text="*收到商品不满意，可以售后吗？"
+        android:typeface="sans"
+        android:gravity="center_vertical"
+        android:textColor="@color/t_black"
+        android:textStyle="bold"
+        android:textSize="15sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.竞拍成功后，若卖家72小时内未发货，可申请退款；"
+        android:textColor="@color/t_grey"
+        android:textSize="14sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2.竞拍商品不满意可与商家协商售后。"
+        android:textColor="@color/t_grey"
+        android:textSize="14sp" />
+
+</LinearLayout>
