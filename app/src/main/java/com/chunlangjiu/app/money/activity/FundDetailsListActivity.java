@@ -6,15 +6,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.money.fragment.FundDetailListFragment;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class FundDetailsListActivity extends BaseActivity {
 
@@ -40,7 +44,14 @@ public class FundDetailsListActivity extends BaseActivity {
         titleName.setText("资金明细");
     }
 
-
+    @OnClick({R.id.img_title_left})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.img_title_left:
+                finish();
+                break;
+        }
+    }
     private void initView(){
         fundDetailViewPageAdapter = new FundDetailViewPageAdapter(getSupportFragmentManager());
         vpFundDetail.setAdapter(fundDetailViewPageAdapter);

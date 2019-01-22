@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:text="请输入姓名"
+            android:hint="请输入姓名"
             android:textColorHint="#999999"
             android:textSize="@dimen/sp_12" />
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:text="请输入身份证号"
+            android:hint="请输入身份证号"
             android:textColorHint="#999999"
             android:textSize="@dimen/sp_12" />
 
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:text="请输入银行卡号"
+            android:hint="请输入银行卡号"
             android:textColorHint="#999999"
             android:textSize="@dimen/sp_12" />
 
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:text="请选择开户行"
+            android:hint="请选择开户行"
             android:textColorHint="#999999"
             android:textSize="@dimen/sp_12" />
         <ImageView
@@ -204,7 +204,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:text="请输入支行"
+            android:hint="请输入支行"
             android:textColorHint="#999999"
             android:textSize="@dimen/sp_12" />
 
@@ -232,7 +232,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:text="请输入银行预留手机号"
+            android:hint="请输入银行预留手机号"
             android:textColorHint="#999999"
             android:textSize="@dimen/sp_12" />
 
@@ -260,7 +260,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:text="请输入验证码"
+            android:hint="请输入验证码"
             android:textColorHint="#999999"
             android:textSize="@dimen/sp_12" />
         <Button

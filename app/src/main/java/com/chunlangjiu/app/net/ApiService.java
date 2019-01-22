@@ -1,5 +1,7 @@
 package com.chunlangjiu.app.net;
 
+import android.support.annotation.StringDef;
+
 import com.chunlangjiu.app.amain.bean.AuctionListBean;
 import com.chunlangjiu.app.amain.bean.CartCountBean;
 import com.chunlangjiu.app.amain.bean.CartListBean;
@@ -25,6 +27,9 @@ import com.chunlangjiu.app.goods.bean.OrdoListBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
+import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
+import com.chunlangjiu.app.money.bean.FundDetailListBean;
+import com.chunlangjiu.app.money.bean.UserMoneyBean;
 import com.chunlangjiu.app.order.bean.AuctionOrderListBean;
 import com.chunlangjiu.app.order.bean.CancelOrderResultBean;
 import com.chunlangjiu.app.order.bean.CancelReasonBean;
@@ -38,12 +43,14 @@ import com.chunlangjiu.app.store.bean.StoreDetailBean;
 import com.chunlangjiu.app.store.bean.StoreListBean;
 import com.chunlangjiu.app.user.bean.AddressListBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
+import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.user.bean.EditGoodsDetailBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.user.bean.ShopCatIdList;
 import com.chunlangjiu.app.user.bean.ShopClassList;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
+import com.facebook.cache.disk.DefaultDiskStorage;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
 import org.json.JSONArray;
@@ -594,4 +601,51 @@ public interface ApiService {
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> submitInviteCode(@Field("method") String method, @Field("v") String v,@Field("inviteCode") String inviteCode);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<BankCardListBean>> getBankCardList(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> addBankCardList(@Field("method")String method,@Field("v")String v,@Field("accessToken")String token,@Field("name")String name,@Field("bank")String bank,@Field("card")String card
+    ,@Field("bank_branch")String bank_branch,@Field("idcard")String idcard,@Field("mobile")String mobile,@Field("verifycode") String verifycode);
+
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> deleteBankCard(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("bank_id")String bankId);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> depositCash(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("bank_id")String bankId ,@Field("amount")String amount);
+
+   @POST("index.php/topapi")
+   @FormUrlEncoded
+   Flowable<ResultBean<UserMoneyBean>> getUserMoney(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FundDetailListBean>> getFundDetails(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> sendSms(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<CreateRechargeOrderBean>> reCharge(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("money")String money);
+
+    @POST("index.php/api")//payment.stored.pay
+    @FormUrlEncoded
+    Flowable<ResultBean> storedPay(@Field("method")String method, @Field("v")String v,@Field("payment_id")String payment_id,@Field("pay_app_id")String pay_app_id ,@Field("platform")String platform,@Field("money")String money,@Field("type")String type);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<CreateRechargeOrderBean>> depositCreate(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> depositPay(@Field("method")String method, @Field("v")String v,@Field("payment_id")String payment_id,@Field("pay_app_id")String pay_app_id ,@Field("platform")String platform,@Field("money")String money,@Field("type")String type);
 }

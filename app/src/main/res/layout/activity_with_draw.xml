@@ -8,6 +8,7 @@
     tools:context=".money.activity.WithDrawActivity">
 
     <RelativeLayout
+        android:id="@+id/reBankCard"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
@@ -48,6 +49,7 @@
             android:textSize="@dimen/text_size_15sp" />
 
         <EditText
+            android:id="@+id/edtAmount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"

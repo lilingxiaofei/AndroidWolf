@@ -8,6 +8,7 @@
     android:background="#f8f8f8"
     tools:context=".user.activity.BankCardActivity">
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleBankCardList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

@@ -86,6 +86,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/tvAvailableBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/layout_margin_8dp"
@@ -110,6 +111,7 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/tvFreezeBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/layout_margin_8dp"
