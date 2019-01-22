@@ -212,7 +212,6 @@ public class ShopMainActivity extends BaseActivity {
 //        titleSearchView.setVisibility(View.VISIBLE);
 //        titleSearchEdit.setOnEditorActionListener(onEditorActionListener);
         hideTitleView();
-        tv_title.setText(R.string.store_home);
     }
 
     private TextView.OnEditorActionListener onEditorActionListener = new
@@ -280,6 +279,7 @@ public class ShopMainActivity extends BaseActivity {
 
 
     private void initView() {
+        tv_title.setText(R.string.store_home);
         imgShow.setOnClickListener(onClickListener);
         scrollableLayout.setCurrentScrollableContainer(recycleView);
 
