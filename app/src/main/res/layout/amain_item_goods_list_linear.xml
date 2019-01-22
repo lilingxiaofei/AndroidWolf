@@ -68,7 +68,7 @@
             android:textColor="@color/t_black"
             android:textSize="12sp"
             android:visibility="gone" />
-        <TextView
+        <TextView android:id="@+id/tvActionNum"
             android:layout_width="wrap_content"
             android:layout_height="15dp"
             android:text="50000"
@@ -87,7 +87,6 @@
         android:layout_below="@+id/llTime"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:src="@mipmap/home_evaluate"
         android:scaleType="centerCrop"/>
 
     <ImageView
@@ -210,6 +209,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¥5000.00"
+                android:visibility="gone"
                 android:textColor="@color/t_red"
                 android:textSize="18sp" />
 
@@ -292,18 +292,19 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/t_gray"
                 android:textSize="10sp"
-                tools:text="30条评价" />
+                tools:text="店铺名称" />
             <TextView
                 android:id="@+id/tv_store_into"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:textColor="@color/t_black"
                 android:textSize="10sp"
                 android:layout_alignParentRight="true"
                 android:drawablePadding="4dp"
+                android:paddingTop="4dp"
+                android:paddingLeft="10dp"
                 android:drawableRight="@mipmap/black_right_arrow_two"
-                tools:text="30条评价" />
+                tools:text="进店" />
         </RelativeLayout>
     </LinearLayout>
     <!--<View-->

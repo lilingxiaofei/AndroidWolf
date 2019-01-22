@@ -37,9 +37,9 @@ public class AuctionListAdapter extends BaseQuickAdapter<AuctionListBean.Auction
         LinearLayout llHighPrice = helper.getView(R.id.llHighPrice);
         TextView tvAnPaiStr = helper.getView(R.id.tvAnPaiStr);
         TextView tvStartPrice = helper.getView(R.id.tvStartPrice);
-        TextView tv_give_price_num = helper.getView(R.id.tv_give_price_num);
-        tv_give_price_num.setVisibility(View.VISIBLE);
-        tv_give_price_num.setText("人数："+ item.getAuction_number());
+        String actionNum = item.getAuction_number();
+        String actionNumStr = context.getString(R.string.action_number,actionNum);
+        helper.setText(R.id.tvActionNum,actionNumStr);
         GlideUtils.loadImage(context, item.getImage_default_id(), imageView);
         helper.setText(R.id.tv_name, item.getTitle());
         helper.setText(R.id.tvStartPrice, "¥" + item.getAuction_starting_price());
@@ -85,6 +85,18 @@ public class AuctionListAdapter extends BaseQuickAdapter<AuctionListBean.Auction
                 });
                 dealWithLifeCycle(helper, helper.getAdapterPosition(), item);
             }
+
+            helper.setText(R.id.tv_store_into,R.string.into_store);
+            helper.addOnClickListener(R.id.tv_store_into);
+            TextView tv_attention = helper.getView(R.id.tvAttention);
+            TextView tv_evaluate = helper.getView(R.id.tvEvaluate);
+            TextView tv_good_evaluate  = helper.getView(R.id.tv_good_evaluate);
+            String viewCount = item.getView_count() ;
+            String  rateCount =  item.getRate_count() ;
+            String  rate =  item.getRate() ;
+            tv_attention.setText((TextUtils.isEmpty(viewCount) ? "0" :viewCount ) + "人关注");
+            tv_evaluate.setText((TextUtils.isEmpty(rateCount) ? "0" :rateCount) + "条评价");
+            tv_good_evaluate.setText((TextUtils.isEmpty(rate) ? "0%" :rate+"%") + "好评");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -21,9 +21,11 @@ public class GoodsListDetailBean {
     private GiftDetail gift;
     private Auction auction;
 
-    private String storeId ;//店铺id
-    private String storeName ;//店铺id
-    private String storeLevel ;//店铺等级
+    private String shop_id ;//店铺id
+    private String shop_name ;//店铺名称
+    private String grade ;//店铺等级 0普通店铺，1,星级卖家，2城市合伙人
+
+    private String rate ;//好评率
 
 
 
@@ -244,27 +246,92 @@ public class GoodsListDetailBean {
         }
     }
 
-    public String getStoreId() {
-        return storeId;
+
+    public String getShop_id() {
+        return shop_id;
     }
 
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
+    public void setShop_id(String shop_id) {
+        this.shop_id = shop_id;
     }
 
-    public String getStoreName() {
-        return storeName;
+    public String getShop_name() {
+        return shop_name;
     }
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
+    public void setShop_name(String shop_name) {
+        this.shop_name = shop_name;
     }
 
-    public String getStoreLevel() {
-        return storeLevel;
+    public String getGrade() {
+        return grade;
     }
 
-    public void setStoreLevel(String storeLevel) {
-        this.storeLevel = storeLevel;
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getImgsrc() {
+        return imgsrc;
+    }
+
+    public void setImgsrc(String imgsrc) {
+        this.imgsrc = imgsrc;
+    }
+
+    public boolean isAuction() {
+        return isAuction;
+    }
+
+    public void setAuction(boolean auction) {
+        isAuction = auction;
+    }
+
+    public String getAuction_starting_price() {
+        return auction_starting_price;
+    }
+
+    public void setAuction_starting_price(String auction_starting_price) {
+        this.auction_starting_price = auction_starting_price;
+    }
+
+    public String getMax_price() {
+        return max_price;
+    }
+
+    public void setMax_price(String max_price) {
+        this.max_price = max_price;
+    }
+
+    public String getAuction_end_time() {
+        return auction_end_time;
+    }
+
+    public void setAuction_end_time(String auction_end_time) {
+        this.auction_end_time = auction_end_time;
+    }
+
+    public String getAuction_status() {
+        return auction_status;
+    }
+
+    public void setAuction_status(String auction_status) {
+        this.auction_status = auction_status;
+    }
+
+    public String getAuction_number() {
+        return auction_number;
+    }
+
+    public void setAuction_number(String auction_number) {
+        this.auction_number = auction_number;
     }
 }

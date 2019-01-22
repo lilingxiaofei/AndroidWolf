@@ -24,6 +24,7 @@ public class ConstantMsg {
     public static final String AUCTION_SLIDE_CHANGE = "auction_slide_change";//竞拍商品详情滑动变化
     public static final String GOODS_SLIDE_CHANGE = "goods_slide_change";//普通商品详情滑动变化
 
+    public static final String SET_INVITATION_CODE = "setInvitationCode";//设置邀请码
     public static final String HOME_COUNT_END = "home_count_end";//首页倒计时完成
     public static final String AUCTION_COUNT_END = "auction_count_end";//竞拍倒计时完成
     public static final String DETAIL_COUNT_END = "detail_count_end";//详情倒计时完成

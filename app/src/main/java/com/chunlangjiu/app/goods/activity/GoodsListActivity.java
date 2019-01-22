@@ -314,7 +314,7 @@ public class GoodsListActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 GoodsListDetailBean details = lists.get(position);
                 if(view.getId() == R.id.rl_store_layout){
-                    ShopMainActivity.startShopMainActivity(GoodsListActivity.this, details.getStoreId());
+                    ShopMainActivity.startShopMainActivity(GoodsListActivity.this, details.getShop_id());
                 }else{
                     GoodsDetailsActivity.startGoodsDetailsActivity(GoodsListActivity.this, details.getItem_id());
                 }

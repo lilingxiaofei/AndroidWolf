@@ -10,8 +10,10 @@ import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
+import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
+import com.chunlangjiu.app.fans.bean.FansNumBean;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
@@ -24,6 +26,7 @@ import com.chunlangjiu.app.goods.bean.GivePriceBean;
 import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.GoodsListBean;
 import com.chunlangjiu.app.goods.bean.OrdoListBean;
+import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
@@ -56,6 +59,7 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import org.json.JSONArray;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -322,6 +326,11 @@ public interface ApiService {
                                                                @Field("auctionitem_id") String auctionitem_id, @Field("addr_id") String addr_id,
                                                                @Field("price") String price);
 
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<Map>> appOpenAd(@Field("method") String method, @Field("v") String v);
+
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> auctionAddPrice(@Field("method") String method, @Field("v") String v,
@@ -352,6 +361,11 @@ public interface ApiService {
                                                             @Field("upload_type") String upload_type, @Field("image") String image,
                                                             @Field("image_input_title") String image_input_title,
                                                             @Field("image_type") String image_type, @Field("image_cat_id") String image_cat_id);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<Map>> checkUploadGoods(@Field("method") String method, @Field("v") String v);
+
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
@@ -590,15 +604,28 @@ public interface ApiService {
     Flowable<ResultBean> editShopName(@Field("method") String method, @Field("v") String v,
                                       @Field("accessToken") String accessToken, @Field("company_name") String company_name);
 
-    @POST("index.php/shop/topapi")
+    @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<List<FansItemBean>>> getFansList(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<List<PartnerBean>>>  getPartnerList(@Field("method") String method, @Field("v") String v);
 
-    @POST("index.php/shop/topapi")
+    @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<FansBean>> getFansInfo(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<List<FansItemBean>>>  getFansList(@Field("method") String method, @Field("v") String v);
 
-    @POST("index.php/shop/topapi")
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FansNumBean>> getFansInfo(@Field("method") String method, @Field("v") String v);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FansCodeBean>> getMyInvitationCode(@Field("method") String method, @Field("v") String v);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FansBean>> setInvitationCode(@Field("method") String method, @Field("v") String v,@Field("referrer") String inviteCode);
+
+    @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> submitInviteCode(@Field("method") String method, @Field("v") String v,@Field("inviteCode") String inviteCode);
 

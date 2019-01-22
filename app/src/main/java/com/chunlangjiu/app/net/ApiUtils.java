@@ -8,8 +8,10 @@ import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
+import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
+import com.chunlangjiu.app.fans.bean.FansNumBean;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
@@ -22,6 +24,7 @@ import com.chunlangjiu.app.goods.bean.GivePriceBean;
 import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.GoodsListBean;
 import com.chunlangjiu.app.goods.bean.OrdoListBean;
+import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
@@ -54,6 +57,7 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import org.json.JSONArray;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -91,7 +95,7 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<CheckUpdateBean>> checkUpdate() {
-        return apiService.checkUpdate("app.versions", "v1", "android", "chunlang");
+        return apiService.checkUpdate("app.versions", "v1", "android","chunlang");
     }
 
 
@@ -111,17 +115,17 @@ public class ApiUtils {
         return apiService.setPsd("user.forgot.resetpassword", "v2", account, vcode, psd);
     }
 
-    public Flowable<ResultBean> updateLoginPassword(String newPwd, String confirmPwd, String pwd) {
-        return apiService.updateLoginPassword("member.security.updateLoginPassword", "v1", newPwd, confirmPwd, pwd);
+    public Flowable<ResultBean> updateLoginPassword (String newPwd, String confirmPwd, String pwd) {
+        return apiService.updateLoginPassword("member.security.updateLoginPassword", "v1", newPwd,confirmPwd, pwd);
+    }
+    public Flowable<ResultBean> updatePayPassword (String newPwd, String confirmPwd, String pwd) {
+        return apiService.setPayPwd("member.security.updatePayPassword", "v1", newPwd,confirmPwd, pwd);
     }
 
-    public Flowable<ResultBean> updatePayPassword(String newPwd, String confirmPwd, String pwd) {
-        return apiService.setPayPwd("member.security.updatePayPassword", "v1", newPwd, confirmPwd, pwd);
+    public Flowable<ResultBean> sendSmsCode (String pwd, String confirmPwd, String code) {
+        return apiService.sendSmsCode("user.resetSendSms", "v1", pwd,confirmPwd, code);
     }
 
-    public Flowable<ResultBean> sendSmsCode(String pwd, String confirmPwd, String code) {
-        return apiService.sendSmsCode("user.resetSendSms", "v1", pwd, confirmPwd, code);
-    }
 
 
     public Flowable<ResultBean> logout() {
@@ -147,7 +151,7 @@ public class ApiUtils {
     public Flowable<ResultBean> companyAuth(String company_name, String representative, String license_num, String establish_date, String area,
                                             String address, String company_phone, String license_img, String shopuser_identity_img_z, String food_or_wine_img) {
         return apiService.companyAuth("member.enterprise", "v1", company_name, representative, license_num, establish_date, area,
-                address, company_phone, license_img, shopuser_identity_img_z, food_or_wine_img);
+                address, company_phone, license_img, shopuser_identity_img_z,food_or_wine_img);
     }
 
     public Observable<ResultBean<AuthStatusBean>> getPersonAuthStatus() {
@@ -233,7 +237,7 @@ public class ApiUtils {
 
     //获取我的模块的数量上标
     public Flowable<ResultBean<MyNumBean>> getMyNumFlag(String type) {
-        return apiService.getMyNumFlag("member.index", "v1", type);
+        return apiService.getMyNumFlag("member.index", "v1",type);
     }
 
     public Flowable<ResultBean<StoreClassListBean>> getStoreClass() {
@@ -304,6 +308,9 @@ public class ApiUtils {
         return apiService.auctionAddPrice("item.auction.userAdd", "v1", auctionitem_id, price);
     }
 
+    public Flowable<ResultBean<Map>> appOpenAd() {
+        return apiService.appOpenAd("app.open.img", "v1");
+    }
 
     public Flowable<ResultBean<HomeModulesBean>> getHomeModules() {
         return apiService.getHomeModules("theme.modules", "v1", "index");
@@ -324,6 +331,10 @@ public class ApiUtils {
 
     public Flowable<ResultBean<ShopClassList>> getShopClassList() {
         return apiService.getShopClassList("category.platform.get", "v1");
+    }
+
+    public Flowable<ResultBean<Map>> checkUploadGoods() {
+        return apiService.checkUploadGoods("item.check", "v1");
     }
 
     public Flowable<ResultBean<ShopCatIdList>> getStoreClassList() {
@@ -506,16 +517,26 @@ public class ApiUtils {
         return apiService.editShopName("user.update.shop", "v1", token, name);
     }
 
-    public Flowable<ResultBean<List<FansItemBean>>> getFansList() {
-        return apiService.getFansList("user.update.shop", "v1");
+    public Flowable<ResultBean<List<PartnerBean>>> getPartnerList() {
+        return apiService.getPartnerList("shop.featured", "v1");
     }
 
-    public Flowable<ResultBean<FansBean>> getFansInfo() {
-        return apiService.getFansInfo("user.update.shop", "v1");
+    public Flowable<ResultBean<List<FansItemBean>>> getFansList() {
+        return apiService.getFansList("member.fans.list", "v1");
+    }
+    public Flowable<ResultBean<FansNumBean>> getFansInfo() {
+        return apiService.getFansInfo("member.fans.sum", "v1");
+    }
+
+    public Flowable<ResultBean<FansCodeBean>> getMyInvitationCode() {
+        return apiService.getMyInvitationCode("member.code.get", "v1");
+    }
+    public Flowable<ResultBean<FansBean>> setInvitationCode(String inviteCode) {
+        return apiService.setInvitationCode("member.code.set", "v1",inviteCode);
     }
 
     public Flowable<ResultBean> submitInviteCode(String inviteCode) {
-        return apiService.submitInviteCode("user.update.shop", "v1", inviteCode);
+        return apiService.submitInviteCode("user.update.shop", "v1",inviteCode);
     }
 
     public Flowable<ResultBean<BankCardListBean>> getBankCardList(String token) {

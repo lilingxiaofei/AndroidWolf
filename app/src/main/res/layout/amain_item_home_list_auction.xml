@@ -30,10 +30,10 @@
         android:text="更多竞拍"
         android:layout_marginTop="17dp"
         android:drawablePadding="5dp"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
+        android:paddingTop="11dp"
+        android:paddingBottom="5dp"
         android:paddingRight="11dp"
-        android:drawableRight="@mipmap/black_right_arrow"
+        android:drawableRight="@mipmap/black_right_arrow_two"
         android:textColor="@color/t_grey"
         android:textSize="@dimen/text_size_12sp"
         android:visibility="visible" />

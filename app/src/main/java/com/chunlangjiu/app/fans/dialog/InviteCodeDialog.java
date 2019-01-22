@@ -12,13 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
-import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.dialog.CommonLoadingDialog;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
-
-import org.w3c.dom.Text;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -41,6 +38,7 @@ public class InviteCodeDialog extends Dialog {
     public InviteCodeDialog(Context context) {
         super(context, R.style.dialog_transparent);
         this.context = context;
+//        getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         initView();
@@ -81,6 +79,12 @@ public class InviteCodeDialog extends Dialog {
         }
     };
 
+
+    @Override
+    public void show() {
+        super.show();
+    }
+
     /**
      * 提交邀请码到后台服务器
      */
@@ -95,13 +99,13 @@ public class InviteCodeDialog extends Dialog {
 
     private void submitInviteCode(String inviteCode) {
         loadingDialog.show();
-        ApiUtils.getInstance().submitInviteCode(inviteCode)
+        ApiUtils.getInstance().setInvitationCode(inviteCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {
                     @Override
                     public void accept(ResultBean mainClassBeanResultBean) throws Exception {
-                        ToastUtils.showShort("邀请码上传成功");
+                        ToastUtils.showShort("邀请人设置成功");
                         loadingDialog.dismiss();
                         dismiss();
                     }
@@ -109,6 +113,7 @@ public class InviteCodeDialog extends Dialog {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         loadingDialog.dismiss();
+                        ToastUtils.showShort("邀请人设置失败");
                     }
                 });
     }

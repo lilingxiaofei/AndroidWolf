@@ -28,6 +28,7 @@ import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.activity.CompanyAuthActivity;
 import com.chunlangjiu.app.user.activity.PersonAuthActivity;
+import com.chunlangjiu.app.user.activity.ServiceActivity;
 import com.chunlangjiu.app.user.activity.SettingActivity;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
@@ -184,6 +185,7 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlMyEvaluate;
     private RelativeLayout rlFansManage ;
     private RelativeLayout rlSetting;
+    private RelativeLayout rlService;
     /*我的管理*/
 
     private static final int TYPE_BUYER = 0;//买家中心
@@ -346,6 +348,10 @@ public class UserFragment extends BaseFragment {
                 case R.id.rl_fans_manage:// 粉丝管理
                     startActivity(new Intent(getActivity(), FansHomeActivity.class));
                     break;
+                case R.id.rl_service:// 粉丝管理
+                    ServiceActivity.startActivity(activity);
+                    break;
+
             }
         }
     };
@@ -515,9 +521,11 @@ public class UserFragment extends BaseFragment {
         rlMyEvaluate = rootView.findViewById(R.id.rlMyEvaluate);
         rlFansManage = rootView.findViewById(R.id.rl_fans_manage);
         rlSetting = rootView.findViewById(R.id.rl_setting);
+        rlService = rootView.findViewById(R.id.rl_service);
         rlMyEvaluate.setOnClickListener(onClickListener);
         rlFansManage.setOnClickListener(onClickListener);
         rlSetting.setOnClickListener(onClickListener);
+        rlService.setOnClickListener(onClickListener);
 
 
         //切换用户布局

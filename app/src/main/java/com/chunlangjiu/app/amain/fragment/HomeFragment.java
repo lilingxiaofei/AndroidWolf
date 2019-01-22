@@ -1,6 +1,8 @@
 package com.chunlangjiu.app.amain.fragment;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,9 +28,11 @@ import com.chunlangjiu.app.amain.bean.HomeAuctionBean;
 import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.fans.dialog.InviteCodeDialog;
 import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
+import com.chunlangjiu.app.goods.activity.PartnerListActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.activity.ValuationActivity;
@@ -46,7 +50,6 @@ import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.BannerGlideLoader;
-import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.PermissionUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -165,12 +168,15 @@ public class HomeFragment extends BaseFragment {
                     iconFunctionClick(1);
                     break;
                 case R.id.llSell://我要卖酒
-                    iconFunctionClick(2);
+                    iconFunctionClick(1);
                     break;
                 case R.id.llSearch://名庄查询
-                    iconFunctionClick(3);
+                    iconFunctionClick(2);
                     break;
                 case R.id.llEvaluate://名酒估价
+                    iconFunctionClick(3);
+                    break;
+                case R.id.llPartner://名酒估价
                     iconFunctionClick(4);
                     break;
             }
@@ -198,20 +204,21 @@ public class HomeFragment extends BaseFragment {
         indicator = headerView.findViewById(R.id.indicator);
 
         llIconOne = headerView.findViewById(R.id.llAuction);
-        llIconTwo = headerView.findViewById(R.id.llBuy);
-        llIconThree = headerView.findViewById(R.id.llSell);
-        llIconFour = headerView.findViewById(R.id.llSearch);
-        llIconFive = headerView.findViewById(R.id.llEvaluate);
+        llIconTwo = headerView.findViewById(R.id.llSell);
+        llIconThree = headerView.findViewById(R.id.llSearch);
+        llIconFour = headerView.findViewById(R.id.llEvaluate);
+        llIconFive = headerView.findViewById(R.id.llPartner);
+
         imgIconOne = headerView.findViewById(R.id.imgIconOne);
         tvStrOne = headerView.findViewById(R.id.tvStrOne);
-        imgIconTwo = headerView.findViewById(R.id.imgIconTwo);
-        tvStrTwo = headerView.findViewById(R.id.tvStrTwo);
-        imgIconThree = headerView.findViewById(R.id.imgIconThree);
-        tvStrThree = headerView.findViewById(R.id.tvStrThree);
-        imgIconFour = headerView.findViewById(R.id.imgIconFour);
-        tvStrFour = headerView.findViewById(R.id.tvStrFour);
-        imgIconFive = headerView.findViewById(R.id.imgIconFive);
-        tvStrFive = headerView.findViewById(R.id.tvStrFive);
+        imgIconTwo = headerView.findViewById(R.id.imgIconThree);
+        tvStrTwo = headerView.findViewById(R.id.tvStrThree);
+        imgIconThree = headerView.findViewById(R.id.imgIconFour);
+        tvStrThree = headerView.findViewById(R.id.tvStrFour);
+        imgIconFour = headerView.findViewById(R.id.imgIconFive);
+        tvStrFour = headerView.findViewById(R.id.tvStrFive);
+        imgIconFive = headerView.findViewById(R.id.imgPartner);
+        tvStrFive = headerView.findViewById(R.id.tvPartner);
         llIconOne.setOnClickListener(onClickListener);
         llIconTwo.setOnClickListener(onClickListener);
         llIconThree.setOnClickListener(onClickListener);
@@ -428,6 +435,18 @@ public class HomeFragment extends BaseFragment {
                 getHomeList(pageNo + 1, false);
             }
         });
+        homeAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                HomeBean homeBean = lists.get(position);
+                if(view.getId() == R.id.tv_store_into){
+                    ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getShop_id());
+                }else if(view.getId() == R.id.tvMoreAuction){
+                    EventManager.getInstance().notify(null, BaseApplication.HIDE_AUCTION ? ConstantMsg.MSG_PAGE_CLASS : ConstantMsg.MSG_PAGE_AUCTION);
+                }
+            }
+        });
+
         homeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -435,13 +454,6 @@ public class HomeFragment extends BaseFragment {
 
                 HomeBean homeBean = lists.get(position);
                 if (homeBean.getItemType() == HomeBean.ITEM_GOODS || homeBean.getItemType() == HomeBean.ITEM_GRID_GOODS) {
-                    if(resId == R.id.ll_store_name){
-                        ShopMainActivity.startShopMainActivity(getActivity(), homeBean.getStoreId());
-                    }
-//                    else if (homeBean.isAuction()) {
-//                        AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
-//                    }
-                    else {
                         GoodsDetailslNewActivity.startActivity(getActivity(), homeBean.getItem_id());
 //                        GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), homeBean.getItem_id());
                         if (auction_list != null && auction_list.size() > 0) {
@@ -453,7 +465,6 @@ public class HomeFragment extends BaseFragment {
                                 UmengEventUtil.recommendEvent(getActivity(), position + "");
                             }
                         }
-                    }
                 } else if (homeBean.getItemType() == HomeBean.ITEM_TUIJIAN) {
 
                 }
@@ -546,33 +557,34 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void updateIconData(HomeModulesBean.Params params) {
-        iconPicLists = params.getPic();
-        if (iconPicLists != null && iconPicLists.size() > 0) {
-            for (int i = 0; i < iconPicLists.size(); i++) {
-                switch (i) {
-                    case 0:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconOne);
-                        setIconText(tvStrOne, i);
-                        break;
-                    case 1:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconTwo);
-                        setIconText(tvStrTwo, i);
-                        break;
-                    case 2:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconThree);
-                        setIconText(tvStrThree, i);
-                        break;
-                    case 3:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFour);
-                        setIconText(tvStrFour, i);
-                        break;
-                    case 4:
-                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFive);
-                        setIconText(tvStrFive, i);
-                        break;
-                }
-            }
-        }
+//
+//        iconPicLists = params.getPic();
+//        if (iconPicLists != null && iconPicLists.size() > 0) {
+//            for (int i = 0; i < iconPicLists.size(); i++) {
+//                switch (i) {
+//                    case 0:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconOne);
+//                        setIconText(tvStrOne, i);
+//                        break;
+//                    case 1:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconTwo);
+//                        setIconText(tvStrTwo, i);
+//                        break;
+//                    case 2:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconThree);
+//                        setIconText(tvStrThree, i);
+//                        break;
+//                    case 3:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFour);
+//                        setIconText(tvStrFour, i);
+//                        break;
+//                    case 4:
+//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFive);
+//                        setIconText(tvStrFive, i);
+//                        break;
+//                }
+//            }
+//        }
     }
 
     /**
@@ -652,7 +664,8 @@ public class HomeFragment extends BaseFragment {
                     jingpaiFlag.setItemType(HomeBean.ITEM_JINGPAI);
                     lists.add(jingpaiFlag);
                     for (int i = 0; i < auction_list.size(); i++) {
-                        String end_time = auction_list.get(i).getAuction_end_time();
+                        HomeAuctionBean auctionBean = auction_list.get(i);
+                        String end_time = auctionBean.getAuction_end_time();
                         long endTime = 0;
                         if (!TextUtils.isEmpty(end_time)) {
                             endTime = Long.parseLong(end_time);
@@ -661,15 +674,22 @@ public class HomeFragment extends BaseFragment {
                             HomeBean homeBean = new HomeBean();
                             homeBean.setItemType(HomeBean.ITEM_GOODS);
                             homeBean.setAuction(true);
-                            homeBean.setItem_id(auction_list.get(i).getItem_id());
-                            homeBean.setTitle(auction_list.get(i).getTitle());
-                            homeBean.setImage_default_id(auction_list.get(i).getImage_default_id());
-                            homeBean.setLabel(auction_list.get(i).getLabel());
-                            homeBean.setAuction_starting_price(auction_list.get(i).getAuction_starting_price());
-                            homeBean.setAuction_end_time(auction_list.get(i).getAuction_end_time());
-                            homeBean.setMax_price(auction_list.get(i).getMax_price());
-                            homeBean.setAuction_status(auction_list.get(i).getAuction_status());
-                            homeBean.setAuction_number(auction_list.get(i).getAuction_number());
+                            homeBean.setItem_id(auctionBean.getItem_id());
+                            homeBean.setTitle(auctionBean.getTitle());
+                            homeBean.setImage_default_id(auctionBean.getImage_default_id());
+                            homeBean.setLabel(auctionBean.getLabel());
+                            homeBean.setAuction_starting_price(auctionBean.getAuction_starting_price());
+                            homeBean.setAuction_end_time(auctionBean.getAuction_end_time());
+                            homeBean.setMax_price(auctionBean.getMax_price());
+                            homeBean.setAuction_status(auctionBean.getAuction_status());
+                            homeBean.setAuction_number(auctionBean.getAuction_number());
+
+                            homeBean.setShop_id(auctionBean.getShop_id());
+                            homeBean.setShop_name(auctionBean.getShop_name());
+                            homeBean.setGrade(auctionBean.getGrade());
+                            homeBean.setView_count(auctionBean.getView_count());
+                            homeBean.setRate_count(auctionBean.getRate_count());
+                            homeBean.setRate(auctionBean.getRate());
                             lists.add(homeBean);
                         }
                     }
@@ -753,15 +773,30 @@ public class HomeFragment extends BaseFragment {
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
-            homeCountEnd(eventTag);
+            if(null != eventTag){
+                switch (eventTag){
+                    case ConstantMsg.HOME_COUNT_END:
+                        getHomeList(1, true);
+                        break;
+                    case ConstantMsg.SET_INVITATION_CODE:
+                        handler.sendEmptyMessageDelayed(0,1000);
+                        break;
+                }
+            }
+
         }
     };
 
-    private void homeCountEnd(String eventTag) {
-        if (eventTag.equals(ConstantMsg.HOME_COUNT_END)) {
-            getHomeList(1, true);
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            InviteCodeDialog inviteCodeDialog = new InviteCodeDialog(getActivity());
+            inviteCodeDialog.show();
         }
-    }
+    };
+
 
     @Override
     public void onStart() {
@@ -791,25 +826,29 @@ public class HomeFragment extends BaseFragment {
                     EventManager.getInstance().notify(null, BaseApplication.HIDE_AUCTION ? ConstantMsg.MSG_PAGE_CLASS : ConstantMsg.MSG_PAGE_AUCTION);
                     UmengEventUtil.iconEvent(getActivity(), "竞拍专区");
                     break;
+//                case 1:
+//                    EventManager.getInstance().notify(null, ConstantMsg.MSG_PAGE_CLASS);
+//                    UmengEventUtil.iconEvent(getActivity(), "我要买酒");
+//                    break;
                 case 1:
-                    EventManager.getInstance().notify(null, ConstantMsg.MSG_PAGE_CLASS);
-                    UmengEventUtil.iconEvent(getActivity(), "我要买酒");
-                    break;
-                case 2:
                     checkStatus();
                     UmengEventUtil.iconEvent(getActivity(), "我要卖酒");
                     break;
-                case 3:
+                case 2:
                     startActivity(new Intent(getActivity(), StoreListActivity.class));
                     UmengEventUtil.iconEvent(getActivity(), "名庄查询");
                     break;
-                case 4:
+                case 3:
                     if (BaseApplication.isLogin()) {
                         startActivity(new Intent(getActivity(), ValuationActivity.class));
                     } else {
                         startActivity(new Intent(getActivity(), LoginActivity.class));
                     }
                     UmengEventUtil.iconEvent(getActivity(), "名酒估价");
+                    break;
+                case 4:
+                    startActivity(new Intent(getActivity(), PartnerListActivity.class));
+                    UmengEventUtil.iconEvent(getActivity(), "城市合伙人");
                     break;
             }
         }

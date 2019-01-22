@@ -6,48 +6,40 @@ package com.chunlangjiu.app.fans.bean;
 
 public class FansItemBean {
     private String id ;
-    private String fansName;//粉丝名称
-    private String phone ;//粉丝电话
-    private String registerTime ;//注册时间
-    private String totalMoney;//累计佣金
+    private String name;//粉丝名称
+    private String mobile ;//粉丝电话
+    private String createtime ;//注册时间
+    private String commission;//累计佣金
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFansName() {
-        return fansName;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setFansName(String fansName) {
-        this.fansName = fansName;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getCreatetime() {
+        return createtime;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
     }
 
-    public String getRegisterTime() {
-        return registerTime;
+    public String getCommission() {
+        return commission;
     }
 
-    public void setRegisterTime(String registerTime) {
-        this.registerTime = registerTime;
-    }
-
-    public String getTotalMoney() {
-        return totalMoney;
-    }
-
-    public void setTotalMoney(String totalMoney) {
-        this.totalMoney = totalMoney;
+    public void setCommission(String commission) {
+        this.commission = commission;
     }
 }

@@ -45,6 +45,7 @@ import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -384,6 +385,31 @@ public class AddGoodsActivity extends BaseActivity {
 
 
     private void initData() {
+
+        showLoadingView();
+        //获取平台分类
+        disposable.add(ApiUtils.getInstance().checkUploadGoods()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<Map>>() {
+                    @Override
+                    public void accept(ResultBean<Map> mainClassBeanResultBean) throws Exception {
+                        Map map = mainClassBeanResultBean.getData() ;
+                        if(null != null && map.containsKey("status")){
+                            if("true".equals(map.get("status"))){
+                                showContentView();
+                            }else{
+                                finish();
+                            }
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        finish();
+                    }
+                }));
+
         //获取平台分类
         disposable.add(ApiUtils.getInstance().getShopClassList()
                 .subscribeOn(Schedulers.io())

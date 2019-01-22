@@ -5,26 +5,20 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
-import com.pkqup.commonlibrary.util.SPUtils;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-
 
 public class GuideActivity extends AppCompatActivity {
-    @BindView(R.id.tvSkip)
-    EditText tvSkip;
-    @BindView(R.id.vpGuide)
+    TextView tvSkip;
     ViewPager vpGuide;
 
 
@@ -35,18 +29,19 @@ public class GuideActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SPUtils.put("firstStart", true);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.gride_activity);
-        initImages();
+        tvSkip = findViewById(R.id.tvSkip);
+        vpGuide = findViewById(R.id.vpGuide);
         tvSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startMainActivity();
             }
         });
+        initImages();
     }
 
     private void startMainActivity() {
@@ -68,13 +63,12 @@ public class GuideActivity extends AppCompatActivity {
             imageViews.add(iv);
             if (i == imgs.length - 1) {
                 //为最后一张图片添加点击事件
-                iv.setOnTouchListener(new View.OnTouchListener() {
+                iv.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        Intent toMainActivity = new Intent(GuideActivity.this, MainActivity.class);//跳转到主界面
-                        startActivity(toMainActivity);
-                        return true;
-
+                    public void onClick(View view) {
+                        Intent intent = new Intent(GuideActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                 });
             }

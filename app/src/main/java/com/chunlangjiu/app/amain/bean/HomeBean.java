@@ -22,10 +22,12 @@ public class HomeBean {
     private String imgsrc;
     private String view_count;//关注人数
     private String rate_count;//评价条数
+    private String rate ;//好评率
 
-    private String storeId ;//店铺id
-    private String storeName ;//店铺id
-    private String storeLevel ;//店铺等级
+    private String shop_id ;//店铺id
+    private String shop_name ;//店铺id
+    private String grade ;//店铺等级 0普通店铺，1,星级卖家，2城市合伙人
+
 
     private boolean isAuction;
     private String auction_starting_price;
@@ -162,27 +164,35 @@ public class HomeBean {
         this.imgsrc = imgsrc;
     }
 
-    public String getStoreId() {
-        return storeId;
+    public String getShop_id() {
+        return shop_id;
     }
 
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
+    public void setShop_id(String shop_id) {
+        this.shop_id = shop_id;
     }
 
-    public String getStoreName() {
-        return storeName;
+    public String getShop_name() {
+        return shop_name;
     }
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
+    public void setShop_name(String shop_name) {
+        this.shop_name = shop_name;
     }
 
-    public String getStoreLevel() {
-        return storeLevel;
+    public String getRate() {
+        return rate;
     }
 
-    public void setStoreLevel(String storeLevel) {
-        this.storeLevel = storeLevel;
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 }

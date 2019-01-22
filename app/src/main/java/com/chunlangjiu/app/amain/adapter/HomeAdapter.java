@@ -91,6 +91,9 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
             case HomeBean.ITEM_TUIJIAN:
                 gridHead = viewHolder.getLayoutPosition();
                 break;
+            case HomeBean.ITEM_JINGPAI:
+                viewHolder.addOnClickListener(R.id.tvMoreAuction);
+                break;
         }
     }
 
@@ -98,7 +101,6 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
         CountdownView countdownView = viewHolder.getView(R.id.countdownView);
         ImageView imgPic = viewHolder.getView(R.id.imgPic);
         TextView tvStartPrice = viewHolder.getView(R.id.tvStartPrice);
-        TextView tv_give_price_num = viewHolder.getView(R.id.tv_give_price_num);
         LinearLayout llStartPrice = viewHolder.getView(R.id.llStartPrice);
         RelativeLayout llTime = viewHolder.getView(R.id.llTime);
         TextView tvStartPriceStr = viewHolder.getView(R.id.tvStartPriceStr);
@@ -107,14 +109,12 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
         TextView tvSellPriceStr = viewHolder.getView(R.id.tvSellPriceStr);
         TextView tvSellPrice = viewHolder.getView(R.id.tvSellPrice);
 
-        TextView tv_attention = viewHolder.getView(R.id.tvAttention);
-        TextView tv_evaluate = viewHolder.getView(R.id.tvEvaluate);
-
 
         viewHolder.addOnClickListener(R.id.rl_store_layout);
-        viewHolder.setText(R.id.tv_store_name, item.getStoreName());
+        viewHolder.setText(R.id.tv_store_name, item.getShop_name());
         viewHolder.setText(R.id.tv_store_into,"进店");
-        String level = item.getStoreLevel();
+        viewHolder.addOnClickListener(R.id.tv_store_into);
+        String level = item.getGrade();
         if ("1".equals(level)) {
             viewHolder.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_partner);
         } else if ("2".equals(level)) {
@@ -125,6 +125,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
 
         GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
         viewHolder.setText(R.id.tv_name, item.getTitle());
+        viewHolder.setText(R.id.tv_store_name,item.getShop_name());
 //                tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         //设置标签显示
         String label = item.getLabel();
@@ -136,12 +137,13 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
 
         if (item.isAuction()) {
             llStartPrice.setVisibility(View.VISIBLE);
-            tv_give_price_num.setVisibility(View.VISIBLE);
-            tv_give_price_num.setText("人数：" + item.getAuction_number());
             tvStartPriceStr.setText("起拍价：");
             tvStartPrice.setText("¥" + item.getAuction_starting_price());
             viewHolder.setText(R.id.tvGoodsPrice,"");
             llTime.setVisibility(View.VISIBLE);
+            String actionNum = item.getAuction_number();
+            String actionNumStr = context.getString(R.string.action_number,actionNum);
+            viewHolder.setText(R.id.tvActionNum,actionNumStr);
             if ("true".equals(item.getAuction_status())) {
                 //明拍
                 llHighPrice.setVisibility(View.VISIBLE);
@@ -174,11 +176,8 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 });
                 dealWithLifeCycle(viewHolder, viewHolder.getAdapterPosition(), item);
             }
-            tv_attention.setVisibility(View.GONE);
-            tv_evaluate.setVisibility(View.GONE);
         } else {
             llStartPrice.setVisibility(View.GONE);
-            tv_give_price_num.setVisibility(View.GONE);
             tvSellPriceStr.setVisibility(View.GONE);
             llHighPrice.setVisibility(View.VISIBLE);
             tvAnPaiStr.setVisibility(View.GONE);
@@ -187,13 +186,17 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
             viewHolder.setText(R.id.tvSellPriceStr, "");
             viewHolder.setText(R.id.tvSellPrice, "");
             viewHolder.setText(R.id.tvGoodsPrice,"¥" +item.getPrice());
-
-            tv_attention.setVisibility(View.VISIBLE);
-            tv_evaluate.setVisibility(View.VISIBLE);
-            tv_attention.setText((TextUtils.isEmpty(item.getView_count()) ? "0" : item.getView_count()) + "人关注");
-            tv_evaluate.setText((TextUtils.isEmpty(item.getRate_count()) ? "0" : item.getRate_count()) + "条评价");
-            viewHolder.setText(R.id.tv_good_evaluate, item.getRate_count() + "好评");
         }
+
+        TextView tv_attention = viewHolder.getView(R.id.tvAttention);
+        TextView tv_evaluate = viewHolder.getView(R.id.tvEvaluate);
+        TextView tv_good_evaluate  = viewHolder.getView(R.id.tv_good_evaluate);
+        String viewCount = item.getView_count() ;
+        String  rateCount =  item.getRate_count() ;
+        String  rate =  item.getRate() ;
+        tv_attention.setText((TextUtils.isEmpty(viewCount) ? "0" :viewCount ) + "人关注");
+        tv_evaluate.setText((TextUtils.isEmpty(rateCount) ? "0" :rateCount) + "条评价");
+        tv_good_evaluate.setText((TextUtils.isEmpty(rate) ? "0%" :rate+"%") + "好评");
     }
 
     /**
