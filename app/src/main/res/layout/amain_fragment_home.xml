@@ -10,13 +10,13 @@
         android:id="@+id/headLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/titleBar"
+        android:minHeight="@dimen/title_bar_height"
         android:background="@color/bg_red">
 
         <TextView
             android:id="@+id/tvCity"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/titleBar"
+            android:layout_height="@dimen/title_bar_height"
             android:layout_marginLeft="10dp"
             android:drawablePadding="4dp"
             android:drawableRight="@mipmap/white_down_arrow"
@@ -60,7 +60,7 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/titleBar">
+            android:layout_height="@dimen/title_bar_height">
         <ImageView
             android:id="@+id/imgMsg"
             android:layout_width="24dp"

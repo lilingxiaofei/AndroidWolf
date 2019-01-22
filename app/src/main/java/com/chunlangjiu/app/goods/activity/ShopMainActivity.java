@@ -38,7 +38,8 @@ import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoicePricePopWindow;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
-import com.jaeger.library.StatusBarUtil;
+import com.lzy.imagepicker.util.Utils;
+import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.lzy.widget.HeaderViewPager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -302,6 +303,8 @@ public class ShopMainActivity extends BaseActivity {
         });
 
         recycleView.setLayoutManager(new GridLayoutManager(this, 2));
+        GridSpacingItemDecoration decoration2 = new GridSpacingItemDecoration(2, Utils.dp2px(this, 5), false);
+        recycleView.addItemDecoration(decoration2);
         recycleView.setAdapter(goodsAdapter);
 
         refreshLayout.setEnableAutoLoadMore(false);//关闭自动加载更多

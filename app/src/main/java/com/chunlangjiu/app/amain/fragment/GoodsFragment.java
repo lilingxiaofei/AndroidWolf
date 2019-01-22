@@ -88,6 +88,8 @@ public class GoodsFragment extends BaseFragment {
     //商品列表
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
+    private GridSpacingItemDecoration decoration1;
+    private GridSpacingItemDecoration decoration2;
     private List<GoodsListDetailBean> lists;
 //    private LinearAdapter linearAdapter;
 //    private GridAdapter gridAdapter;
@@ -306,7 +308,10 @@ public class GoodsFragment extends BaseFragment {
         });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(activity, 5), false));
+
+        decoration1 = new GridSpacingItemDecoration(1, Utils.dp2px(activity, 5), false);
+        decoration2 = new GridSpacingItemDecoration(2, Utils.dp2px(activity, 5), false);
+        recyclerView.addItemDecoration(decoration2);
 //        // 设置运营位置一行有多少个Item
 //        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
 //            @Override
@@ -545,11 +550,13 @@ public class GoodsFragment extends BaseFragment {
         goodsAdapter.switchListType();
         if(goodsAdapter.isGridLayout()){
             imgTitleRightTwoF.setImageResource(R.mipmap.icon_list);
-            recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(activity, 5), false));
+            recyclerView.removeItemDecoration(decoration1);
+            recyclerView.addItemDecoration(decoration2);
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }else{
             imgTitleRightTwoF.setImageResource(R.mipmap.icon_grid);
-            recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, Utils.dp2px(activity, 5), false));
+            recyclerView.removeItemDecoration(decoration2);
+            recyclerView.addItemDecoration(decoration1);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
     }

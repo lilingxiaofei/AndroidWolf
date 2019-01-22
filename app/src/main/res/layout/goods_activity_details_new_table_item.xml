@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/auctionLayout">
+    <TextView android:id="@+id/tvLabel"
+        style="@style/auctionLabel"
+        android:text="商品名：" />
+
+    <TextView
+        android:id="@+id/tvValue"
+        style="@style/auctionValue" />
+</LinearLayout>

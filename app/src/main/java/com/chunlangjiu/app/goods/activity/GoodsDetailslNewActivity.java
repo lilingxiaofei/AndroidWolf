@@ -104,13 +104,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private LinearLayout llEvaluate;
 
     private LinearLayout llAuctionInfo;//拍品详情
-    private TextView tvAuName;//名称
-    private TextView tvAuYear;//年份
-    private TextView tvAuChateau;//酒庄
-    private TextView tvAuVolume;//容量
-    private TextView tvAuMaterial;//原料
-    private TextView tvAuStorage;//储存条件
-    private TextView tvAuResources;//来源
+    private LinearLayout llInfoList ;
 
     private ImageView ivSafeguard ;
 
@@ -296,13 +290,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
 
         llAuctionInfo = findViewById(R.id.llAuctionInfo);//拍品详情
-        tvAuName = findViewById(R.id.tvAuName);//名称
-        tvAuYear = findViewById(R.id.tvAuYear);//年份
-        tvAuChateau = findViewById(R.id.tvAuChateau);//酒庄
-        tvAuVolume = findViewById(R.id.tvAuVolume);//容量
-        tvAuMaterial = findViewById(R.id.tvAuMaterial);//原料
-        tvAuStorage = findViewById(R.id.tvAuStorage);//储存条件
-        tvAuResources = findViewById(R.id.tvAuResources);//来源
+        llInfoList = findViewById(R.id.llInfoList);
 
         ivSafeguard = findViewById(R.id.ivSafeguard);
 
@@ -437,6 +425,23 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         GlideUtils.loadImageShop(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_logo(), imgStore);
         tvStoreName.setText(goodsDetailBean.getShop().getShop_name());
         tvStoreDesc.setText(goodsDetailBean.getShop().getShop_descript());
+
+        List<GoodsDetailBean.ParameterBean> infoList = goodsDetailBean.getItem().getParameter();
+        if(infoList!=null && infoList.size()>0){
+            for (int i = 0; i < infoList.size(); i++) {
+                GoodsDetailBean.ParameterBean parameterBean = infoList.get(i);
+                View infoView = getLayoutInflater().inflate(R.layout.goods_activity_details_new_table_item,null);
+                TextView tvLabel = infoView.findViewById(R.id.tvLabel);
+                TextView tvValue = infoView.findViewById(R.id.tvValue);
+                tvLabel.setText(parameterBean.getTitle());
+                tvValue.setText(parameterBean.getValue());
+                llInfoList.addView(infoView);
+            }
+            llAuctionInfo.setVisibility(View.VISIBLE);
+        }else{
+            llAuctionInfo.setVisibility(View.GONE);
+        }
+
         if (TextUtils.isEmpty(goodsDetailBean.getItem().getLabel())) {
             tvCountry.setVisibility(View.GONE);
         } else {

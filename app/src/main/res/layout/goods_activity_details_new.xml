@@ -367,7 +367,7 @@
                     android:layout_height="1dp"
                     android:background="@color/bg_gray" />
 
-                <LinearLayout
+                <LinearLayout android:id="@+id/llInfoList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -376,83 +376,6 @@
                     android:orientation="vertical"
                     android:padding="1dp"
                     android:showDividers="middle">
-
-                    <LinearLayout style="@style/auctionLayout">
-
-                        <TextView
-                            style="@style/auctionLabel"
-                            android:text="商品名：" />
-
-                        <TextView
-                            android:id="@+id/tvAuName"
-                            style="@style/auctionValue" />
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/auctionLayout">
-
-                        <TextView
-                            style="@style/auctionLabel"
-                            android:text="年份：" />
-
-                        <TextView
-                            android:id="@+id/tvAuYear"
-                            style="@style/auctionValue" />
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/auctionLayout">
-
-                        <TextView
-                            style="@style/auctionLabel"
-                            android:text="酒庄：" />
-
-                        <TextView
-                            android:id="@+id/tvAuChateau"
-                            style="@style/auctionValue" />
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/auctionLayout">
-
-                        <TextView
-                            style="@style/auctionLabel"
-                            android:text="容量：" />
-
-                        <TextView
-                            android:id="@+id/tvAuVolume"
-                            style="@style/auctionValue" />
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/auctionLayout">
-
-                        <TextView
-                            style="@style/auctionLabel"
-                            android:text="原料：" />
-
-                        <TextView
-                            android:id="@+id/tvAuMaterial"
-                            style="@style/auctionValue" />
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/auctionLayout">
-
-                        <TextView
-                            style="@style/auctionLabel"
-                            android:text="储存条件：" />
-
-                        <TextView
-                            android:id="@+id/tvAuStorage"
-                            style="@style/auctionValue" />
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/auctionLayout">
-
-                        <TextView
-                            style="@style/auctionLabel"
-                            android:text="商品来源：" />
-
-                        <TextView
-                            android:id="@+id/tvAuResources"
-                            style="@style/auctionValue" />
-                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -480,20 +403,22 @@
                 <ImageView android:id="@+id/ivSafeguard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="fitCenter"/>
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/bg_gray" />
+
             <RelativeLayout
                 android:id="@+id/rlAuctionExplain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
+                android:orientation="vertical"
+                android:visibility="gone">
+                <View android:id="@+id/lineAuctionHead"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/bg_gray" />
                 <TextView
                     android:id="@+id/tvAuctionExplainTitle"
+                    android:layout_below="@+id/lineAuctionHead"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center"
@@ -505,6 +430,7 @@
                     android:id="@+id/tvMoreExplain"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_alignBottom="@+id/tvAuctionExplainTitle"
                     android:layout_alignParentRight="true"
                     android:gravity="center"
                     android:paddingRight="32dp"

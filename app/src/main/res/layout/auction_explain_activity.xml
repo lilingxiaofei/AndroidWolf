@@ -21,19 +21,19 @@
         android:layout_height="wrap_content"
         android:text="1.点击“出价”参与竞拍，价高者得；"
         android:textColor="@color/t_grey"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="2.竞拍成功，支付货款；"
         android:textColor="@color/t_grey"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1.点击“出价”参与竞拍，价高者得；"
+        android:text="3.等待卖家发货。"
         android:textColor="@color/t_grey"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
 
 
 
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:text="竞拍商品有权威专家进行鉴定，并出有鉴定书。"
         android:textColor="@color/t_grey"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
 
 
 
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:text="支付的货款有平台担保，确认收货后，货款才打给商家。"
         android:textColor="@color/t_grey"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
 
 
 
@@ -99,12 +99,12 @@
         android:layout_height="wrap_content"
         android:text="1.竞拍成功后，若卖家72小时内未发货，可申请退款；"
         android:textColor="@color/t_grey"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="2.竞拍商品不满意可与商家协商售后。"
         android:textColor="@color/t_grey"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
 
 </LinearLayout>

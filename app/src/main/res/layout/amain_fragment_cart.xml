@@ -12,12 +12,12 @@
         android:layout_toEndOf="@+id/rlLogin"
         android:layout_toRightOf="@+id/rlLogin"
         android:background="@color/bg_red"
-        android:minHeight="@dimen/titleBar">
+        android:minHeight="@dimen/title_bar_height">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="@dimen/titleBar"
-            android:layout_height="@dimen/titleBar"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
             android:padding="12dp"
             android:src="@mipmap/white_left_arrow" />
 
@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/titleBar"
+            android:layout_height="@dimen/title_bar_height"
             android:layout_centerHorizontal="true"
             android:text="购物车"
             android:gravity="center"
@@ -34,8 +34,8 @@
 
         <ImageView
             android:id="@+id/imgEdit"
-            android:layout_width="@dimen/titleBar"
-            android:layout_height="@dimen/titleBar"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
             android:layout_alignParentRight="true"
             android:padding="13dp"
             android:src="@mipmap/white_edit"
@@ -43,8 +43,8 @@
 
         <TextView
             android:id="@+id/tvEditFinish"
-            android:layout_width="@dimen/titleBar"
-            android:layout_height="@dimen/titleBar"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:text="完成"
