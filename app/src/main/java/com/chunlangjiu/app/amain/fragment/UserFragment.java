@@ -36,6 +36,7 @@ import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.ShareUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.jaeger.library.StatusBarUtil;
@@ -382,7 +383,7 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(getActivity(),rootView.findViewById(R.id.headLayout));
+        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.rlUserHead));
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
         tvToLogin.setOnClickListener(onClickListener);

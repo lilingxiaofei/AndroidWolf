@@ -44,6 +44,7 @@ import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.util.AreaUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.LocationUtils;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.jaeger.library.StatusBarUtil;
@@ -194,7 +195,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(getActivity(),rootView.findViewById(R.id.headLayout));
+        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.headLayout));
         disposable = new CompositeDisposable();
         tvCity = rootView.findViewById(R.id.tvCity);
         tvCity.setOnClickListener(onClickListener);

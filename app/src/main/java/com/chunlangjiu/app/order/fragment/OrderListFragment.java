@@ -40,6 +40,8 @@ import com.chunlangjiu.app.order.dialog.SellerCancelOrderDialog;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
+import com.lzy.imagepicker.util.Utils;
+import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -139,6 +141,7 @@ public class OrderListFragment extends BaseFragment {
         });
         listView = rootView.findViewById(R.id.listView);
         listView.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
+        listView.addItemDecoration(new GridSpacingItemDecoration(1, Utils.dp2px(activity, 5), false));
         rlLoading = rootView.findViewById(R.id.rlLoading);
         rlEmptyView = rootView.findViewById(R.id.rlEmptyView);
 

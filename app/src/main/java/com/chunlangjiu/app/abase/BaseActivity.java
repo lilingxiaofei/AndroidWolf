@@ -1,9 +1,15 @@
 package com.chunlangjiu.app.abase;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -11,6 +17,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.dialog.CommonLoadingDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -97,7 +104,7 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     private void setStatusBarColor() {
-//        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_red),0);
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_red),0);
     }
 
     public abstract void setTitleView();

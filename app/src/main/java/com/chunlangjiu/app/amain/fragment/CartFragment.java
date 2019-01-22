@@ -25,6 +25,7 @@ import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.bean.ConfirmOrderBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.google.gson.Gson;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -142,7 +143,7 @@ public class CartFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        Sofia.with(getActivity()).fitsNavigationBarView(rootView.findViewById(R.id.title_view));
+        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.rlCartTitle));
         EventManager.getInstance().registerListener(onNotifyListener);
         disposable = new CompositeDisposable();
 

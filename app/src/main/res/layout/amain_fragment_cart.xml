@@ -5,15 +5,19 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/title_view"
+        android:id="@+id/rlCartTitle"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/bg_red">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/rlLogin"
+        android:layout_toRightOf="@+id/rlLogin"
+        android:background="@color/bg_red"
+        android:minHeight="@dimen/titleBar">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="48dp"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/titleBar"
+            android:layout_height="@dimen/titleBar"
             android:padding="12dp"
             android:src="@mipmap/white_left_arrow" />
 
@@ -21,16 +25,17 @@
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_height="@dimen/titleBar"
+            android:layout_centerHorizontal="true"
             android:text="购物车"
+            android:gravity="center"
             android:textColor="@color/t_white"
             android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/imgEdit"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/titleBar"
+            android:layout_height="@dimen/titleBar"
             android:layout_alignParentRight="true"
             android:padding="13dp"
             android:src="@mipmap/white_edit"
@@ -38,8 +43,8 @@
 
         <TextView
             android:id="@+id/tvEditFinish"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/titleBar"
+            android:layout_height="@dimen/titleBar"
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:text="完成"
@@ -147,7 +152,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/rl_bottom"
-        android:layout_below="@id/title_view">
+        android:layout_below="@id/rlCartTitle">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"

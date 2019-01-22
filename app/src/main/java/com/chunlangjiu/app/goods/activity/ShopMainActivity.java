@@ -37,6 +37,7 @@ import com.chunlangjiu.app.user.dialog.ChoiceAreaPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoicePricePopWindow;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.widget.HeaderViewPager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
@@ -279,6 +280,8 @@ public class ShopMainActivity extends BaseActivity {
 
 
     private void initView() {
+        MyStatusBarUtils.setStatusBar(this,ContextCompat.getColor(this, R.color.bg_red));
+        MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlShopTitle),true);
         tv_title.setText(R.string.store_home);
         imgShow.setOnClickListener(onClickListener);
         scrollableLayout.setCurrentScrollableContainer(recycleView);
@@ -483,19 +486,15 @@ public class ShopMainActivity extends BaseActivity {
         }
 
         if ("2".equals(shopType)) {
-            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_yellow), 0);
             llRootLayout.setBackgroundResource(R.mipmap.store_bg_star);
             ivShopLevel.setImageResource(R.mipmap.store_partner);
         } else if ("1".equals(shopType)) {
-            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_yellow), 0);
             llRootLayout.setBackgroundResource(R.mipmap.store_bg_star);
             ivShopLevel.setImageResource(R.mipmap.store_star);
         } else {
-            StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.t_blue), 0);
             llRootLayout.setBackgroundResource(R.mipmap.store_bg_common);
             ivShopLevel.setImageResource(R.mipmap.store_common);
         }
-        StatusBarUtil.setTransparent(this);
     }
 
     private void getGoodsList(int pageNum, final boolean isRefresh) {

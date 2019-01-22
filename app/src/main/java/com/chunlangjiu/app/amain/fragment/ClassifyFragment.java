@@ -20,6 +20,7 @@ import com.chunlangjiu.app.amain.bean.SecondClassBean;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.lzy.imagepicker.util.Utils;
@@ -81,7 +82,7 @@ public class ClassifyFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        StatusBarUtil.setTranslucentForImageViewInFragment(getActivity(),rootView.findViewById(R.id.title_view));
+        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.title_view));
         initTitleView();
 
         disposable = new CompositeDisposable();

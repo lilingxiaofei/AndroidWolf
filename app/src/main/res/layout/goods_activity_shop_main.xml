@@ -8,25 +8,26 @@
     android:id="@+id/llRootLayout"
     android:orientation="vertical">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/title_view"
+        android:id="@+id/rlShopTitle"
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:minHeight="@dimen/titleBar"
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/ivBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/titleBar"
+            android:layout_height="@dimen/titleBar"
             android:padding="14dp"
             android:src="@mipmap/white_left_arrow" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/titleBar"
             android:layout_centerInParent="true"
             android:lines="1"
-            android:layout_marginLeft="48dp"
-            android:layout_marginRight="48dp"
+            android:layout_marginLeft="@dimen/titleBar"
+            android:layout_marginRight="@dimen/titleBar"
             android:text="标题"
             android:gravity="center"
             android:textColor="@color/t_white"
