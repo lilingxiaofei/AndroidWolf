@@ -39,6 +39,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -141,6 +142,7 @@ public class CartFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        Sofia.with(getActivity()).fitsNavigationBarView(rootView.findViewById(R.id.title_view));
         EventManager.getInstance().registerListener(onNotifyListener);
         disposable = new CompositeDisposable();
 

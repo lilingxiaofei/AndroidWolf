@@ -54,6 +54,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -371,18 +372,17 @@ public class UserFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        StatusBarUtil.setColor(activity, ContextCompat.getColor(activity, R.color.bg_black),0);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        StatusBarUtil.setColor(activity, ContextCompat.getColor(activity, R.color.bg_red),0);
     }
 
 
     @Override
     public void initView() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(getActivity(),rootView.findViewById(R.id.headLayout));
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
         tvToLogin.setOnClickListener(onClickListener);

@@ -46,6 +46,7 @@ import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.LocationUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.chunlangjiu.app.web.WebViewActivity;
+import com.jaeger.library.StatusBarUtil;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -57,6 +58,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yanzhenjie.sofia.Sofia;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -192,6 +194,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(getActivity(),rootView.findViewById(R.id.headLayout));
         disposable = new CompositeDisposable();
         tvCity = rootView.findViewById(R.id.tvCity);
         tvCity.setOnClickListener(onClickListener);

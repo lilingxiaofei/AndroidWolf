@@ -231,23 +231,18 @@ public class MainActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tab_one:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(0);
                     break;
                 case R.id.tab_two:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(1);
                     break;
                 case R.id.tab_three:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(2);
                     break;
                 case R.id.tab_four:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(3);
                     break;
                 case R.id.tab_five:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_black),0);
                     setPageFragment(4);
                     break;
             }
