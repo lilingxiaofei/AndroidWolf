@@ -3,15 +3,18 @@ package com.chunlangjiu.app.user.activity;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.LocalAreaBean;
 import com.chunlangjiu.app.util.AreaUtils;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -34,6 +37,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.chunlangjiu.app.util.ConstantMsg.BANKCARD_CHANGE;
+
 public class AddBankCardActivity extends BaseActivity {
     @BindView(R.id.edtName)
     EditText edtName;
@@ -49,6 +54,12 @@ public class AddBankCardActivity extends BaseActivity {
     EditText edtCode;
     @BindView(R.id.btnGetCode)
     Button btnGetCode;
+    @BindView(R.id.edtBankName)
+    EditText edtBankName;
+    @BindView(R.id.tvProvince)
+    TextView tvProvince;
+    @BindView(R.id.tvCity)
+    TextView tvCity;
 
     private CompositeDisposable disposable;
     private List<LocalAreaBean.ProvinceData> areaLists;
@@ -179,12 +190,42 @@ public class AddBankCardActivity extends BaseActivity {
 
     private void addBankCardList() {
         String name = edtName.getText().toString().trim();
-        String bank ="建设银行" ;
+        String bank =edtBankName.getText().toString().trim();
         String card = edtBankCard.getText().toString().trim();
         String bank_branch =edtBranch.getText().toString().trim();
         String idcard = edtIdCard.getText().toString().trim();
         String mobile = edtPhone.getText().toString().trim();
         String verifycode = edtCode.getText().toString().trim();
+        if (TextUtils.isEmpty(name)){
+            ToastUtils.showShort("请输入姓名");
+            return;
+        }
+        if (TextUtils.isEmpty(idcard)){
+            ToastUtils.showShort("请输入身份证");
+            return;
+        }
+        if (TextUtils.isEmpty(card)){
+            ToastUtils.showShort("请输入银行卡号");
+            return;
+        }
+        if (TextUtils.isEmpty(bank)){
+            ToastUtils.showShort("请输入银行卡开户行");
+            return;
+        }
+
+        if (TextUtils.isEmpty(bank_branch)){
+            ToastUtils.showShort("请输入支行");
+            return;
+        }
+
+        if (TextUtils.isEmpty(mobile)){
+            ToastUtils.showShort("请输入手机号");
+            return;
+        }
+        if (TextUtils.isEmpty(verifycode)){
+            ToastUtils.showShort("请输入验证码");
+            return;
+        }
         disposable.add(ApiUtils.getInstance().addBankCardList((String) SPUtils.get("token", ""), name, bank, card
                 , bank_branch, idcard, mobile, verifycode)
                 .subscribeOn(Schedulers.io())
@@ -192,6 +233,9 @@ public class AddBankCardActivity extends BaseActivity {
                 .subscribe(new Consumer<ResultBean>() {
                     @Override
                     public void accept(ResultBean loginBeanResultBean) throws Exception {
+                        ToastUtils.showShort("添加成功");
+                        EventManager.getInstance().notify(null,BANKCARD_CHANGE);
+                        finish();
 
                     }
                 }, new Consumer<Throwable>() {
@@ -228,6 +272,8 @@ public class AddBankCardActivity extends BaseActivity {
                 } else {
                     areaName = selectAbles.get(0).getName() + " " + selectAbles.get(1).getName() + " " + selectAbles.get(2).getName();
                 }
+                tvProvince.setText(((LocalAreaBean.ProvinceData) (selectAbles.get(0).getArg())).getValue());
+                tvCity.setText(((LocalAreaBean.ProvinceData.City) (selectAbles.get(1).getArg())).getValue());
                 provinceId = ((LocalAreaBean.ProvinceData) (selectAbles.get(0).getArg())).getId();
                 cityId = ((LocalAreaBean.ProvinceData.City) (selectAbles.get(1).getArg())).getId();
                 districtId = ((LocalAreaBean.ProvinceData.City.District) (selectAbles.get(2).getArg())).getId();

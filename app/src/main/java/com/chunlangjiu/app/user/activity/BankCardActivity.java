@@ -16,6 +16,8 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.money.activity.WithDrawActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.BankCardListBean;
+import com.chunlangjiu.app.util.ConstantMsg;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -42,6 +44,7 @@ public class BankCardActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_card);
         disposable = new CompositeDisposable();
+        initEvent();
         initView();
         initData();
     }
@@ -93,23 +96,41 @@ public class BankCardActivity extends BaseActivity {
             disposable.dispose();
     }
 
+    private void initEvent() {
+        EventManager.getInstance().registerListener(onNotifyListener);
+
+    }
+
+    private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
+        @Override
+        public void onNotify(Object object, String eventTag) {
+            switch (eventTag) {
+                case ConstantMsg.BANKCARD_CHANGE:
+                    getBankCardList();
+                    break;
+
+            }
+
+        }
+    };
+
     private String formateBankCard(String bankCard) {
         if (TextUtils.isEmpty(bankCard)) {
             return "";
         }
         //6214 8378 0811 7523
-        String end = bankCard.substring(bankCard.length()-4,bankCard.length());
-        String newStr = bankCard.replace(bankCard.substring(bankCard.length()-4,bankCard.length()),"");
+        String end = bankCard.substring(bankCard.length() - 4, bankCard.length());
+        String newStr = bankCard.replace(bankCard.substring(bankCard.length() - 4, bankCard.length()), "");
         char[] bankCardChar = newStr.toCharArray();
         String bankCardData = "";
         for (int i = 0; i < bankCardChar.length; i++) {
             if (i % 4 == 0 && i > 0) {
                 bankCardData += "\u3000";
             }
-            bankCardData+="*";
+            bankCardData += "*";
 
         }
-        return String.format("%s\u3000%s",bankCardData,end);
+        return String.format("%s\u3000%s", bankCardData, end);
 
     }
 

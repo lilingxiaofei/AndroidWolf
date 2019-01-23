@@ -33,6 +33,7 @@ public class ConstantMsg {
     public static final String DEPOSIT_CREATE="deposit_create";//交纳保证金变化
     public static final String WITHDRAW_DEPOSIT_CASH="withdraw_deposit_cash";//提现
     public static final String WITHDRAW_DEPOSIT_REFUND="withdraw_deposit_refund";//撤销保证金
+    public static final String BANKCARD_CHANGE="bank_card_change";//撤销保证金
 
     public static final String WEB_URL_MESSAGE = HttpUtils.BASE_URL+ "index.php/wap/app-information.html?apitoken=";//消息
     public static final String WEB_URL_SETTING = HttpUtils.BASE_URL+ "index.php/wap/app-setting.html?apitoken=";//设置
