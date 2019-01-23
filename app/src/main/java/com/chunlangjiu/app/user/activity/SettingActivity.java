@@ -7,9 +7,7 @@ import android.view.View;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.util.ConstantMsg;
-import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 
 import butterknife.OnClick;
@@ -37,7 +35,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_setting);
     }
-    @OnClick({R.id.img_title_left,R.id.tvLoginPwd,R.id.tvPayPwd,R.id.tvMyData,R.id.tvMyAttestation,R.id.tvAddressManager,R.id.tvBankManager,R.id.tvAbout,R.id.tvUseAgreement,R.id.tvLoginOut})
+    @OnClick({R.id.img_title_left,R.id.tvLoginPwd,R.id.tvMyData,R.id.tvMyAttestation,R.id.tvAddressManager,R.id.tvBankManager,R.id.tvAbout,R.id.tvUseAgreement,R.id.tvLoginOut})
     @Override
     public void onClick(View view) {
         int resId = view.getId();
@@ -50,11 +48,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }else if(resId == R.id.tvMyData){
 
         }else if(resId == R.id.tvMyAttestation){
+            startActivity(new Intent(this,VerifiedActivity.class));
 
         }else if(resId == R.id.tvAddressManager){
             startActivity(new Intent(SettingActivity.this, AddressListActivity.class));
         }else if(resId == R.id.tvBankManager){
-            WebViewActivity.startWebViewActivity(SettingActivity.this, ConstantMsg.WEB_URL_BANK_CARD + BaseApplication.getToken(), "银行卡管理");
+            startActivity(new Intent(this,BankCardActivity.class));
         }else if(resId == R.id.tvAbout){
 
         }else if(resId == R.id.tvUseAgreement){

@@ -2,9 +2,12 @@ package com.chunlangjiu.app.money.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
+
+import butterknife.OnClick;
 
 public class BillDetailActivity extends BaseActivity {
 
@@ -17,5 +20,13 @@ public class BillDetailActivity extends BaseActivity {
     @Override
     public void setTitleView() {
         titleName.setText("账单详情");
+    }
+    @OnClick({R.id.img_title_left})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.img_title_left:
+                finish();
+                break;
+        }
     }
 }

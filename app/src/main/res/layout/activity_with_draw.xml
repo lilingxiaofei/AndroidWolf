@@ -8,6 +8,7 @@
     tools:context=".money.activity.WithDrawActivity">
 
     <RelativeLayout
+        android:id="@+id/reBankCard"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
@@ -15,6 +16,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tvLeftTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
@@ -28,6 +30,13 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_10"
             android:src="@mipmap/black_right_arrow" />
+        <TextView
+            android:layout_toRightOf="@+id/tvLeftTitle"
+            android:layout_marginLeft="50dp"
+            android:id="@+id/tvBankCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"/>
 
     </RelativeLayout>
 
@@ -48,6 +57,7 @@
             android:textSize="@dimen/text_size_15sp" />
 
         <EditText
+            android:id="@+id/edtAmount"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"

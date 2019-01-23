@@ -28,6 +28,11 @@ import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
+import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
+import com.chunlangjiu.app.money.bean.DepositBean;
+import com.chunlangjiu.app.money.bean.DepositCashBean;
+import com.chunlangjiu.app.money.bean.FundDetailListBean;
+import com.chunlangjiu.app.money.bean.UserMoneyBean;
 import com.chunlangjiu.app.order.bean.AuctionOrderListBean;
 import com.chunlangjiu.app.order.bean.CancelOrderResultBean;
 import com.chunlangjiu.app.order.bean.CancelReasonBean;
@@ -41,6 +46,7 @@ import com.chunlangjiu.app.store.bean.StoreDetailBean;
 import com.chunlangjiu.app.store.bean.StoreListBean;
 import com.chunlangjiu.app.user.bean.AddressListBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
+import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.user.bean.EditGoodsDetailBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.user.bean.ShopCatIdList;
@@ -57,6 +63,7 @@ import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import retrofit2.http.Field;
 
 /**
  * @CreatedbBy: liucun on 2018/7/6
@@ -529,7 +536,53 @@ public class ApiUtils {
     public Flowable<ResultBean<FansBean>> setInvitationCode(String inviteCode) {
         return apiService.setInvitationCode("member.code.set", "v1",inviteCode);
     }
+
     public Flowable<ResultBean> submitInviteCode(String inviteCode) {
         return apiService.submitInviteCode("user.update.shop", "v1",inviteCode);
     }
+
+    public Flowable<ResultBean<BankCardListBean>> getBankCardList(String token) {
+        return apiService.getBankCardList("member.bank.list", "v1", token);
+    }
+
+    public Flowable<ResultBean> addBankCardList(String token, String name, String bank, String card
+            , String bank_branch, String idcard, String mobile, String verifycode) {
+        return apiService.addBankCardList("member.bank.add", "v1", token, name, bank, card
+                , bank_branch, idcard, mobile, verifycode);
+    }
+    public Flowable<ResultBean> deleteBankCard(String token, String bankCardId){
+        return apiService.deleteBankCard("member.bank.delete","v1",token,bankCardId);
+    }
+    public Flowable<ResultBean<DepositCashBean>> depositCash(String token, String bankCardId, String amount){
+        return apiService.depositCash("member.deposit.cash","v1",token,bankCardId,amount);
+    }
+    public Flowable<ResultBean<UserMoneyBean>> getUserMoney(String token){
+        return apiService.getUserMoney("member.money","v1",token);
+    }
+    public Flowable<ResultBean<FundDetailListBean>> getFundDetails(String token){
+        return apiService.getFundDetails("member.fund","v1",token);
+    }
+    public Flowable<ResultBean> sendSms(String token){
+        return apiService.sendSms("user.resetSendSms","v1",token);
+    }
+    public Flowable<ResultBean<CreateRechargeOrderBean>> reCharge(String token, String money){
+        return apiService.reCharge("payment.pay.storedCreate","v1",token,money);
+    }
+//    public Flowable<ResultBean> storedPay(String payment_id,String pay_app_id ,String platform,String money,String type){
+//        return apiService.storedPay("payment.stored.pay","v1",payment_id,pay_app_id,platform,money,type);
+//    }
+    public Flowable<ResultBean<CreateRechargeOrderBean>> depositCreate(String token){
+        return apiService.depositCreate("payment.pay.depositCreate","v1",token);
+    }
+    public Flowable<ResultBean<DepositBean>> getDeposit(String token){
+        return apiService.getDeposit("member.deposit.get","v1",token);
+
+    }
+    public Flowable<ResultBean<DepositCashBean>> depositRefund(String token,String bank_id){
+        return apiService.depositRefund("member.deposit.refund","v1",token,bank_id);
+    }
+//    public Flowable<ResultBean> depositPay(String payment_id,String pay_app_id ,String platform,String money,String type){
+//        return apiService.depositPay("payment.deposit.pay","v1",payment_id,pay_app_id,platform,money,type);
+//    }
+
 }

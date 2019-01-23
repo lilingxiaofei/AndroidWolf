@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -53,32 +54,38 @@ public class PersonAuthActivity extends BaseActivity {
 
     @BindView(R.id.etName)
     EditText etName;
-    @BindView(R.id.rlChoiceClass)
-    RelativeLayout rlChoiceClass;
-    @BindView(R.id.tvClass)
-    TextView tvClass;
+    //    @BindView(R.id.rlChoiceClass)
+//    RelativeLayout rlChoiceClass;
+//    @BindView(R.id.tvClass)
+//    TextView tvClass;
     @BindView(R.id.etCardNum)
     EditText etCardNum;
 
-    @BindView(R.id.llPicOne)
-    LinearLayout llPicOne;
-    @BindView(R.id.llPicTwo)
-    LinearLayout llPicTwo;
+//    @BindView(R.id.llPicOne)
+//    LinearLayout llPicOne;
+//    @BindView(R.id.llPicTwo)
+//    LinearLayout llPicTwo;
 
-    @BindView(R.id.rlFront)
-    RelativeLayout rlFront;
-    @BindView(R.id.rlBehind)
-    RelativeLayout rlBehind;
-    @BindView(R.id.rlPerson)
-    RelativeLayout rlPerson;
-    @BindView(R.id.rlFour)
-    RelativeLayout rlFour;
-    @BindView(R.id.imgFrontPic)
-    ImageView imgFrontPic;
-    @BindView(R.id.imgBehindPic)
-    ImageView imgBehindPic;
-    @BindView(R.id.imgCardPic)
-    ImageView imgCardPic;
+//    @BindView(R.id.rlFront)
+//    RelativeLayout rlFront;
+//    @BindView(R.id.rlBehind)
+//    RelativeLayout rlBehind;
+//    @BindView(R.id.rlPerson)
+//    RelativeLayout rlPerson;
+//    @BindView(R.id.rlFour)
+//    RelativeLayout rlFour;
+//    @BindView(R.id.imgFrontPic)
+//    ImageView imgFrontPic;
+//    @BindView(R.id.imgBehindPic)
+//    ImageView imgBehindPic;
+//    @BindView(R.id.imgCardPic)
+//    ImageView imgCardPic;
+    @BindView(R.id.imgFront)
+    ImageView imgFront;
+    @BindView(R.id.imgBehind)
+    ImageView imgBehind;
+    @BindView(R.id.imgPerson)
+    ImageView imgPerson;
 
     @BindView(R.id.tvCommit)
     TextView tvCommit;
@@ -95,34 +102,56 @@ public class PersonAuthActivity extends BaseActivity {
     private String base64Front;
     private String base64Reverse;
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.img_title_left:
-                    finish();
-                    break;
-                case R.id.rlFront:
-                    showFrontDialog();
-                    break;
-                case R.id.rlBehind:
-                    showBehindDialog();
-                    break;
-                case R.id.rlPerson:
-                    showPersonDialog();
-                    break;
-                case R.id.tvCommit:
-                    checkData();
-                    break;
-            }
+//    private View.OnClickListener onClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            switch (view.getId()) {
+//                case R.id.img_title_left:
+//                    finish();
+//                    break;
+//                case R.id.rlFront:
+//                    showFrontDialog();
+//                    break;
+//                case R.id.rlBehind:
+//                    showBehindDialog();
+//                    break;
+//                case R.id.rlPerson:
+//                    showPersonDialog();
+//                    break;
+//                case R.id.tvCommit:
+//                    checkData();
+//                    break;
+//            }
+//        }
+//    };
+
+    @OnClick({R.id.img_title_left, R.id.btnFront, R.id.btnBehind, R.id.btnPerson,R.id.tvCommit})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_title_left:
+                finish();
+                break;
+            case R.id.btnFront:
+                showFrontDialog();
+                break;
+            case R.id.btnBehind:
+                showBehindDialog();
+                break;
+            case R.id.btnPerson:
+                showPersonDialog();
+                break;
+            case R.id.tvCommit:
+                checkData();
+                break;
         }
-    };
+    }
 
 
     @Override
     public void setTitleView() {
-        titleName.setText("实名认证");
-        titleImgLeft.setOnClickListener(onClickListener);
+//        titleName.setText("实名认证");
+        titleName.setText("个人认证信息");
+//        titleImgLeft.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -135,27 +164,27 @@ public class PersonAuthActivity extends BaseActivity {
     }
 
     private void initImagePicker() {
-        int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(30)) / 2;
-        int picHeight = (picWidth / 8) * 5;
-        ViewGroup.LayoutParams layoutParamsOne = rlFront.getLayoutParams();
-        layoutParamsOne.width = picWidth;
-        layoutParamsOne.height = picHeight;
-        rlFront.setLayoutParams(layoutParamsOne);
-
-        ViewGroup.LayoutParams layoutParamsTwo = rlBehind.getLayoutParams();
-        layoutParamsTwo.width = picWidth;
-        layoutParamsTwo.height = picHeight;
-        rlBehind.setLayoutParams(layoutParamsTwo);
-
-        ViewGroup.LayoutParams layoutParamsThree = rlPerson.getLayoutParams();
-        layoutParamsThree.width = picWidth;
-        layoutParamsThree.height = picHeight;
-        rlPerson.setLayoutParams(layoutParamsThree);
-
-        ViewGroup.LayoutParams layoutParamsFour = rlFour.getLayoutParams();
-        layoutParamsFour.width = picWidth;
-        layoutParamsFour.height = picHeight;
-        rlFour.setLayoutParams(layoutParamsFour);
+//        int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(30)) / 2;
+//        int picHeight = (picWidth / 8) * 5;
+//        ViewGroup.LayoutParams layoutParamsOne = rlFront.getLayoutParams();
+//        layoutParamsOne.width = picWidth;
+//        layoutParamsOne.height = picHeight;
+//        rlFront.setLayoutParams(layoutParamsOne);
+//
+//        ViewGroup.LayoutParams layoutParamsTwo = rlBehind.getLayoutParams();
+//        layoutParamsTwo.width = picWidth;
+//        layoutParamsTwo.height = picHeight;
+//        rlBehind.setLayoutParams(layoutParamsTwo);
+//
+//        ViewGroup.LayoutParams layoutParamsThree = rlPerson.getLayoutParams();
+//        layoutParamsThree.width = picWidth;
+//        layoutParamsThree.height = picHeight;
+//        rlPerson.setLayoutParams(layoutParamsThree);
+//
+//        ViewGroup.LayoutParams layoutParamsFour = rlFour.getLayoutParams();
+//        layoutParamsFour.width = picWidth;
+//        layoutParamsFour.height = picHeight;
+//        rlFour.setLayoutParams(layoutParamsFour);
 
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
@@ -173,10 +202,10 @@ public class PersonAuthActivity extends BaseActivity {
 
     private void initView() {
         disposable = new CompositeDisposable();
-        rlFront.setOnClickListener(onClickListener);
-        rlBehind.setOnClickListener(onClickListener);
-        rlPerson.setOnClickListener(onClickListener);
-        tvCommit.setOnClickListener(onClickListener);
+//        rlFront.setOnClickListener(onClickListener);
+//        rlBehind.setOnClickListener(onClickListener);
+//        rlPerson.setOnClickListener(onClickListener);
+//        tvCommit.setOnClickListener(onClickListener);
     }
 
     private void initData() {
@@ -303,21 +332,24 @@ public class PersonAuthActivity extends BaseActivity {
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64Front = FileUtils.imgToBase64(frontLists.get(0).path);
-                    GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgFrontPic);
+//                    GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgFrontPic);
+                    GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgFront);
                 } else if (requestCode == REQUEST_CODE_SELECT_BEHIND) {
                     behindLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                     ImageItem imageItem = behindLists.get(0);
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64Reverse = FileUtils.imgToBase64(behindLists.get(0).path);
-                    GlideUtils.loadImage(PersonAuthActivity.this, behindLists.get(0).path, imgBehindPic);
+//                    GlideUtils.loadImage(PersonAuthActivity.this, behindLists.get(0).path, imgBehindPic);
+                    GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgBehind);
                 } else if (requestCode == REQUEST_CODE_SELECT_PERSON) {
                     personLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                     ImageItem imageItem = personLists.get(0);
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64HandCard = FileUtils.imgToBase64(personLists.get(0).path);
-                    GlideUtils.loadImage(PersonAuthActivity.this, personLists.get(0).path, imgCardPic);
+//                    GlideUtils.loadImage(PersonAuthActivity.this, personLists.get(0).path, imgCardPic);
+                    GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgPerson);
                 }
 
             }

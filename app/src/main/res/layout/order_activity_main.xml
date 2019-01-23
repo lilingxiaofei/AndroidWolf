@@ -19,7 +19,6 @@
             android:button="@null"
             android:checked="true"
             android:textSize="@dimen/text_size_15sp"
-            android:drawableBottom="@drawable/line_tab"
             android:text="商品订单"/>
         <RadioButton android:id="@+id/rbOrderAction"
             android:layout_width="match_parent"
@@ -29,8 +28,8 @@
             android:gravity="center"
             android:button="@null"
             android:textSize="@dimen/text_size_15sp"
-            android:drawableBottom="@drawable/line_tab"
             android:text="竞拍订单"/>
+        android:drawableBottom="@drawable/line_tab"
     </RadioGroup>
     <android.support.design.widget.TabLayout
         android:id="@+id/tabTitle"
