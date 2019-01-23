@@ -187,6 +187,7 @@ public class BankCardActivity extends BaseActivity {
         @Override
         protected void convert(BaseViewHolder helper, BankCardListBean.BankCardDetailBean item) {
             helper.setText(R.id.tvBankName, item.getName());
+            helper.setText(R.id.tvCardType,item.getBank());
             helper.setText(R.id.tvBankCardNumber, formateBankCard(item.getCard()));
 
         }
