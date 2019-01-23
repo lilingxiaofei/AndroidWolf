@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -88,18 +89,24 @@ public class CompanyAuthActivity extends BaseActivity {
     @BindView(R.id.etPhone)
     EditText etPhone;
 
-    @BindView(R.id.rlOne)
-    RelativeLayout rlOne;
-    @BindView(R.id.rlTwo)
-    RelativeLayout rlTwo;
-    @BindView(R.id.rlAllowCard)
-    RelativeLayout rlAllowCard;
-    @BindView(R.id.imgSellCard)
-    ImageView imgSellCard;
-    @BindView(R.id.imgIDCard)
-    ImageView imgIDCard;
-    @BindView(R.id.imgAllowCard)
-    ImageView imgAllowCard;
+    //    @BindView(R.id.rlOne)
+//    RelativeLayout rlOne;
+//    @BindView(R.id.rlTwo)
+//    RelativeLayout rlTwo;
+//    @BindView(R.id.rlAllowCard)
+//    RelativeLayout rlAllowCard;
+//    @BindView(R.id.imgSellCard)
+//    ImageView imgSellCard;
+//    @BindView(R.id.imgIDCard)
+//    ImageView imgIDCard;
+//    @BindView(R.id.imgAllowCard)
+//    ImageView imgAllowCard;
+    @BindView(R.id.imgLicense)
+    ImageView imgLicense;
+    @BindView(R.id.imgIdCardFront)
+    ImageView imgIdCardFront;
+    @BindView(R.id.imgIdCardBehind)
+    ImageView imgIdCardBehind;
 
     @BindView(R.id.tvCommit)
     TextView tvCommit;
@@ -125,40 +132,40 @@ public class CompanyAuthActivity extends BaseActivity {
     private String base64IdCard;
     private String base64Allow;
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.img_title_left:
-                    finish();
-                    break;
-                case R.id.rlCreateTime:
-                    showTimeDialog();
-                    break;
-                case R.id.rlSellArea:
-                    showAreaDialog();
-                    break;
-                case R.id.rlOne:
-                    showPhotoDialog(REQUEST_CODE_SELECT_ONE);
-                    break;
-                case R.id.rlTwo:
-                    showPhotoDialog(REQUEST_CODE_SELECT_TWO);
-                    break;
-                case R.id.rlAllowCard:
-                    showPhotoDialog(REQUEST_CODE_SELECT_ALLOW_CARD);
-                    break;
-                case R.id.tvCommit:
-                    checkData();
-                    break;
-            }
-        }
-    };
+//    private View.OnClickListener onClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            switch (view.getId()) {
+//                case R.id.img_title_left:
+//                    finish();
+//                    break;
+//                case R.id.rlCreateTime:
+//                    showTimeDialog();
+//                    break;
+//                case R.id.rlSellArea:
+//                    showAreaDialog();
+//                    break;
+//                case R.id.rlOne:
+//                    showPhotoDialog(REQUEST_CODE_SELECT_ONE);
+//                    break;
+//                case R.id.rlTwo:
+//                    showPhotoDialog(REQUEST_CODE_SELECT_TWO);
+//                    break;
+//                case R.id.rlAllowCard:
+//                    showPhotoDialog(REQUEST_CODE_SELECT_ALLOW_CARD);
+//                    break;
+//                case R.id.tvCommit:
+//                    checkData();
+//                    break;
+//            }
+//        }
+//    };
 
 
     @Override
     public void setTitleView() {
         titleName.setText("企业认证");
-        titleImgLeft.setOnClickListener(onClickListener);
+//        titleImgLeft.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -171,22 +178,22 @@ public class CompanyAuthActivity extends BaseActivity {
     }
 
     private void initImagePicker() {
-        int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(30)) / 2;
-        int picHeight = (picWidth / 8) * 5;
-        ViewGroup.LayoutParams layoutParamsOne = rlOne.getLayoutParams();
-        layoutParamsOne.width = picWidth;
-        layoutParamsOne.height = picHeight;
-        rlOne.setLayoutParams(layoutParamsOne);
-
-        ViewGroup.LayoutParams layoutParamsTwo = rlTwo.getLayoutParams();
-        layoutParamsTwo.width = picWidth;
-        layoutParamsTwo.height = picHeight;
-        rlTwo.setLayoutParams(layoutParamsTwo);
-
-        ViewGroup.LayoutParams layoutParamsAllow = rlAllowCard.getLayoutParams();
-        layoutParamsAllow.width = picWidth;
-        layoutParamsAllow.height = picHeight;
-        rlAllowCard.setLayoutParams(layoutParamsAllow);
+//        int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(30)) / 2;
+//        int picHeight = (picWidth / 8) * 5;
+//        ViewGroup.LayoutParams layoutParamsOne = rlOne.getLayoutParams();
+//        layoutParamsOne.width = picWidth;
+//        layoutParamsOne.height = picHeight;
+//        rlOne.setLayoutParams(layoutParamsOne);
+//
+//        ViewGroup.LayoutParams layoutParamsTwo = rlTwo.getLayoutParams();
+//        layoutParamsTwo.width = picWidth;
+//        layoutParamsTwo.height = picHeight;
+//        rlTwo.setLayoutParams(layoutParamsTwo);
+//
+//        ViewGroup.LayoutParams layoutParamsAllow = rlAllowCard.getLayoutParams();
+//        layoutParamsAllow.width = picWidth;
+//        layoutParamsAllow.height = picHeight;
+//        rlAllowCard.setLayoutParams(layoutParamsAllow);
 
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
@@ -204,12 +211,41 @@ public class CompanyAuthActivity extends BaseActivity {
 
     private void initView() {
         disposable = new CompositeDisposable();
-        rlOne.setOnClickListener(onClickListener);
-        rlTwo.setOnClickListener(onClickListener);
-        rlAllowCard.setOnClickListener(onClickListener);
-        rlCreateTime.setOnClickListener(onClickListener);
-        rlSellArea.setOnClickListener(onClickListener);
-        tvCommit.setOnClickListener(onClickListener);
+//        rlOne.setOnClickListener(onClickListener);
+//        rlTwo.setOnClickListener(onClickListener);
+//        rlAllowCard.setOnClickListener(onClickListener);
+//        rlCreateTime.setOnClickListener(onClickListener);
+//        rlSellArea.setOnClickListener(onClickListener);
+//        tvCommit.setOnClickListener(onClickListener);
+    }
+
+    @OnClick({R.id.img_title_left,R.id.btnLicense, R.id.btnIdCardFront, R.id.btnIdCardBehind, R.id.tvCommit, R.id.rlCreateTime, R.id.rlSellArea})
+    public void Onclick(View view) {
+        switch (view.getId()) {
+            case R.id.img_title_left:
+                finish();
+                break;
+            case R.id.btnLicense:
+                showPhotoDialog(REQUEST_CODE_SELECT_ONE);
+                break;
+            case R.id.btnIdCardFront:
+                showPhotoDialog(REQUEST_CODE_SELECT_TWO);
+                break;
+            case R.id.btnIdCardBehind:
+                showPhotoDialog(REQUEST_CODE_SELECT_ALLOW_CARD);
+                break;
+            case R.id.tvCommit:
+                checkData();
+                break;
+            case R.id.rlCreateTime:
+                showTimeDialog();
+                break;
+            case R.id.rlSellArea:
+                showAreaDialog();
+                break;
+
+        }
+
     }
 
 
@@ -469,21 +505,24 @@ public class CompanyAuthActivity extends BaseActivity {
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64ZhiZhao = FileUtils.imgToBase64(ZhiZhaoLists.get(0).path);
-                    GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgSellCard);
+//                    GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgSellCard);
+                    GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgLicense);
                 } else if (requestCode == REQUEST_CODE_SELECT_TWO) {
                     cardLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                     ImageItem imageItem = cardLists.get(0);
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64IdCard = FileUtils.imgToBase64(cardLists.get(0).path);
-                    GlideUtils.loadImage(CompanyAuthActivity.this, cardLists.get(0).path, imgIDCard);
-                }else if (requestCode == REQUEST_CODE_SELECT_ALLOW_CARD) {
+//                    GlideUtils.loadImage(CompanyAuthActivity.this, cardLists.get(0).path, imgIDCard);
+                    GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgIdCardFront);
+                } else if (requestCode == REQUEST_CODE_SELECT_ALLOW_CARD) {
                     allowLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                     ImageItem imageItem = allowLists.get(0);
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64Allow = FileUtils.imgToBase64(allowLists.get(0).path);
-                    GlideUtils.loadImage(CompanyAuthActivity.this, allowLists.get(0).path, imgAllowCard);
+//                    GlideUtils.loadImage(CompanyAuthActivity.this, allowLists.get(0).path, imgAllowCard);
+                    GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgIdCardBehind);
                 }
             }
         }
@@ -520,7 +559,7 @@ public class CompanyAuthActivity extends BaseActivity {
         Observable<ResultBean<UploadImageBean>> front = ApiUtils.getInstance().userUploadImage(base64ZhiZhao, ZhiZhaoLists.get(0).name, "rate");
         Observable<ResultBean<UploadImageBean>> behind = ApiUtils.getInstance().userUploadImage(base64IdCard, cardLists.get(0).name, "rate");
         Observable<ResultBean<UploadImageBean>> allow = ApiUtils.getInstance().userUploadImage(base64Allow, allowLists.get(0).name, "rate");
-        disposable.add(Observable.zip(front, behind,allow, new Function3<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, List<String>>() {
+        disposable.add(Observable.zip(front, behind, allow, new Function3<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, List<String>>() {
             @Override
             public List<String> apply(ResultBean<UploadImageBean> uploadImageBeanResultBean, ResultBean<UploadImageBean> uploadImageBeanResultBean2, ResultBean<UploadImageBean> uploadImageBeanResultBean3) throws Exception {
                 List<String> imageLists = new ArrayList<>();

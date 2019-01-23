@@ -299,8 +299,9 @@
             android:screenOrientation="behind"></activity>
         <activity android:name=".fans.activity.FansInfoActivity"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
-
-.    </application>
-
+            android:screenOrientation="behind" />
+        <activity android:name=".user.activity.VerifiedActivity" />
+        <activity android:name=".user.activity.BankCardActivity" />
+        <activity android:name=".user.activity.AddBankCardActivity"></activity>
+    </application>
 </manifest>
