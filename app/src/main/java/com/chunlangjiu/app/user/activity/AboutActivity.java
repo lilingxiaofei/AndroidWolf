@@ -19,7 +19,7 @@ import butterknife.OnClick;
  */
 public class AboutActivity extends BaseActivity implements View.OnClickListener{
     @BindView(R.id.tvVersionName)
-     TextView tvVersionName;
+    private TextView tvVersionName;
     @Override
     public void setTitleView() {
         titleName.setText("关于");
@@ -37,7 +37,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.service_activity_setting);
+        setContentView(R.layout.about_activity);
 
         tvVersionName.setText("醇狼"+AppUtils.getAppName());
     }
