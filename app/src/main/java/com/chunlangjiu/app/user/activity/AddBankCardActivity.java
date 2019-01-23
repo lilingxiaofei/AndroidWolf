@@ -127,6 +127,11 @@ public class AddBankCardActivity extends BaseActivity {
                 }));
     }
     private void sendCode(){
+        String mobile = edtPhone.getText().toString().trim();
+        if (TextUtils.isEmpty(mobile)){
+            ToastUtils.showShort("请输入手机号");
+            return;
+        }
         //sendSmsCode
         disposable.add(ApiUtils.getInstance().sendSms((String) SPUtils.get("token",""))
                 .subscribeOn(Schedulers.io())
