@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -52,7 +54,7 @@ public class BankCardActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
-                intent.putExtra(WithDrawActivity.BankCardData,bankCard.get(position));
+                intent.putExtra(WithDrawActivity.BankCardData, bankCard.get(position));
                 setResult(WithDrawActivity.BankCardResultCode, intent);
                 finish();
 //                deleteBankCard(String.valueOf(bankCard.get(position).getBank_id()));
@@ -70,7 +72,7 @@ public class BankCardActivity extends BaseActivity {
         titleName.setText("银行卡");
     }
 
-    @OnClick({R.id.btnAddBankCard,R.id.img_title_left})
+    @OnClick({R.id.btnAddBankCard, R.id.img_title_left})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnAddBankCard:
@@ -89,6 +91,26 @@ public class BankCardActivity extends BaseActivity {
         super.onDestroy();
         if (disposable != null)
             disposable.dispose();
+    }
+
+    private String formateBankCard(String bankCard) {
+        if (TextUtils.isEmpty(bankCard)) {
+            return "";
+        }
+        //6214 8378 0811 7523
+        String end = bankCard.substring(bankCard.length()-4,bankCard.length());
+        String newStr = bankCard.replace(bankCard.substring(bankCard.length()-4,bankCard.length()),"");
+        char[] bankCardChar = newStr.toCharArray();
+        String bankCardData = "";
+        for (int i = 0; i < bankCardChar.length; i++) {
+            if (i % 4 == 0 && i > 0) {
+                bankCardData += "\u3000";
+            }
+            bankCardData+="*";
+
+        }
+        return String.format("%s\u3000%s",bankCardData,end);
+
     }
 
     public void getBankCardList() {
@@ -143,8 +165,8 @@ public class BankCardActivity extends BaseActivity {
 
         @Override
         protected void convert(BaseViewHolder helper, BankCardListBean.BankCardDetailBean item) {
-            helper.setText(R.id.tvBankName,item.getName());
-            helper.setText(R.id.tvBankCardNumber,item.getCard());
+            helper.setText(R.id.tvBankName, item.getName());
+            helper.setText(R.id.tvBankCardNumber, formateBankCard(item.getCard()));
 
         }
     }

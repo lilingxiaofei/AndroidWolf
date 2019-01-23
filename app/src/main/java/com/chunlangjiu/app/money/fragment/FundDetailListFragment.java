@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,9 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,7 +38,7 @@ public class FundDetailListFragment extends BaseFragment {
 
     @BindView(R.id.fundDetail)
     RecyclerView fundDetail;
-    private List<FundDetailListBean> fundDetailBeans = new ArrayList<>();
+    private List<FundDetailListBean.FundDetailBean> fundDetailBeans = new ArrayList<>();
     private FundDetailAdapter fundDetailAdapter;
     private CompositeDisposable disposable;
 
@@ -65,10 +68,10 @@ public class FundDetailListFragment extends BaseFragment {
     @Override
     public void initData() {
         disposable = new CompositeDisposable();
-        for (int i = 0; i < 10; i++) {
-            fundDetailBeans.add(new FundDetailListBean());
-        }
+//        for (int i = 0; i < 10; i++) {
+//            fundDetailBeans.add(new FundDetailListBean());
         getFundDetails();
+//        }
     }
 
 
@@ -79,15 +82,19 @@ public class FundDetailListFragment extends BaseFragment {
             disposable.dispose();
         }
     }
-
     private void getFundDetails() {
-        disposable.add(ApiUtils.getInstance().getFundDetails((String) SPUtils.get("token",""))
+        disposable.add(ApiUtils.getInstance().getFundDetails((String) SPUtils.get("token", ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<FundDetailListBean>>() {
                     @Override
                     public void accept(ResultBean<FundDetailListBean> resultBean) throws Exception {
-                        String message = resultBean.getData().getList().get(0).getMessage();
+                        fundDetailBeans.clear();
+                        List<FundDetailListBean.FundDetailBean> fundDetailBeanList = resultBean.getData().getList();
+                        if (null != fundDetailBeanList) {
+                            fundDetailBeans.addAll(fundDetailBeanList);
+                            fundDetailAdapter.notifyDataSetChanged();
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -97,14 +104,18 @@ public class FundDetailListFragment extends BaseFragment {
 
     }
 
-    public class FundDetailAdapter extends BaseQuickAdapter<FundDetailListBean, BaseViewHolder> {
+    public class FundDetailAdapter extends BaseQuickAdapter<FundDetailListBean.FundDetailBean, BaseViewHolder> {
 
-        public FundDetailAdapter(int layoutResId, @Nullable List<FundDetailListBean> data) {
+        public FundDetailAdapter(int layoutResId, @Nullable List<FundDetailListBean.FundDetailBean> data) {
             super(layoutResId, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, FundDetailListBean item) {
+        protected void convert(BaseViewHolder helper, FundDetailListBean.FundDetailBean item) {
+            helper.setText(R.id.tvFundType,item.getMessage());
+            helper.setText(R.id.tvCount,String.format("¥ %s",item.getFee()));
+            helper.setText(R.id.tvTime,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(item.getLogtime()*1000)));
+            helper.setText(R.id.tvStatus,""+item.getLogtime());
 
         }
     }

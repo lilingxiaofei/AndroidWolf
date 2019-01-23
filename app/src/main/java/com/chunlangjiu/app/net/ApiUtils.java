@@ -29,6 +29,8 @@ import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
+import com.chunlangjiu.app.money.bean.DepositBean;
+import com.chunlangjiu.app.money.bean.DepositCashBean;
 import com.chunlangjiu.app.money.bean.FundDetailListBean;
 import com.chunlangjiu.app.money.bean.UserMoneyBean;
 import com.chunlangjiu.app.order.bean.AuctionOrderListBean;
@@ -551,7 +553,7 @@ public class ApiUtils {
     public Flowable<ResultBean> deleteBankCard(String token, String bankCardId){
         return apiService.deleteBankCard("member.bank.delete","v1",token,bankCardId);
     }
-    public Flowable<ResultBean> depositCash(String token, String bankCardId,String amount){
+    public Flowable<ResultBean<DepositCashBean>> depositCash(String token, String bankCardId, String amount){
         return apiService.depositCash("member.deposit.cash","v1",token,bankCardId,amount);
     }
     public Flowable<ResultBean<UserMoneyBean>> getUserMoney(String token){
@@ -571,6 +573,13 @@ public class ApiUtils {
 //    }
     public Flowable<ResultBean<CreateRechargeOrderBean>> depositCreate(String token){
         return apiService.depositCreate("payment.pay.depositCreate","v1",token);
+    }
+    public Flowable<ResultBean<DepositBean>> getDeposit(String token){
+        return apiService.getDeposit("member.deposit.get","v1",token);
+
+    }
+    public Flowable<ResultBean<DepositCashBean>> depositRefund(String token,String bank_id){
+        return apiService.depositRefund("member.deposit.refund","v1",token,bank_id);
     }
 //    public Flowable<ResultBean> depositPay(String payment_id,String pay_app_id ,String platform,String money,String type){
 //        return apiService.depositPay("payment.deposit.pay","v1",payment_id,pay_app_id,platform,money,type);

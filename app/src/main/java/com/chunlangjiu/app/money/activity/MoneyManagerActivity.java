@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
+import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.money.bean.UserMoneyBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.ConstantMsg;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -40,9 +44,14 @@ public class MoneyManagerActivity extends BaseActivity {
     TextView tvAvailableBalance;
     @BindView(R.id.tvFreezeBalance)
     TextView tvFreezeBalance;
+    @BindView(R.id.tvDepositCount)
+    TextView tvDepositCount;
+    @BindView(R.id.btnPaySecurityDeposit)
+    Button btnPaySecurityDeposit;
 
     private CompositeDisposable disposable;
     private UserMoneyBean userMoneyBean;
+    private DepositBean depositBean;
 
 
     public enum MoneyType {
@@ -56,16 +65,46 @@ public class MoneyManagerActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         setViewByType(MoneyType.Balance);
         initData();
+        initEvent();
     }
+
+    private void initEvent() {
+        EventManager.getInstance().registerListener(onNotifyListener);
+
+    }
+
+    private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
+        @Override
+        public void onNotify(Object object, String eventTag) {
+            switch (eventTag) {
+                case ConstantMsg.RECHARGE:
+                case ConstantMsg.WITHDRAW_DEPOSIT_CASH:
+                    getUserMoney();
+                    break;
+                case ConstantMsg.DEPOSIT_CREATE:
+                case ConstantMsg.WITHDRAW_DEPOSIT_REFUND:
+                    getDepositMoney();
+                    break;
+            }
+
+        }
+    };
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (disposable != null)
             disposable.dispose();
+        EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
 
     private void initData() {
+        getUserMoney();
+        getDepositMoney();
+
+    }
+
+    private void getUserMoney() {
         disposable.add(ApiUtils.getInstance().getUserMoney((String) SPUtils.get("token", ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,6 +125,30 @@ public class MoneyManagerActivity extends BaseActivity {
 
     }
 
+    private void getDepositMoney() {
+        disposable.add(ApiUtils.getInstance().getDeposit((String) SPUtils.get("token", ""))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<DepositBean>>() {
+                    @Override
+                    public void accept(ResultBean<DepositBean> resultBean) throws Exception {
+                        depositBean = resultBean.getData();
+                        if (null != depositBean) {
+                            tvDepositCount.setText(depositBean.getDeposit() == null ? "" : depositBean.getDeposit());
+                            if ("1".equals(depositBean.getDeposit_status())) {
+                                btnPaySecurityDeposit.setText("撤销保证金");
+                                btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
+                            }
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                }));
+    }
+
     @Override
     public void setTitleView() {
         titleName.setText("资金管理");
@@ -104,16 +167,26 @@ public class MoneyManagerActivity extends BaseActivity {
             case R.id.relSelectSecurityDeposit:
                 setViewByType(MoneyType.SecurityDeposit);
                 break;
-            case R.id.btnWithdraw:
-                startActivity(new Intent(this, WithDrawActivity.class));
-                break;
+            case R.id.btnWithdraw: {
+                Intent intent = new Intent(this, WithDrawActivity.class);
+                intent.putExtra(WithDrawActivity.WithDrawType, WithDrawActivity.DepositCash);
+                startActivity(intent);
+            }
+            break;
             case R.id.btnRecharge:
                 startActivity(new Intent(this, ReChargeActivity.class));
                 break;
             case R.id.btnPaySecurityDeposit:
-                Intent intent = new Intent(this, ReChargeActivity.class);
-                intent.putExtra(ReChargeActivity.ReChargeType,ReChargeActivity.RechargeType.SecurityDeposit);
-                startActivity(intent);
+                String status = depositBean.getDeposit_status();
+                if ("1".equals(status)) {
+                    Intent intent = new Intent(this, WithDrawActivity.class);
+                    intent.putExtra(WithDrawActivity.WithDrawType, WithDrawActivity.DepositRefund);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(this, ReChargeActivity.class);
+                    intent.putExtra(ReChargeActivity.ReChargeType, ReChargeActivity.RechargeType.SecurityDeposit);
+                    startActivity(intent);
+                }
                 break;
 
         }

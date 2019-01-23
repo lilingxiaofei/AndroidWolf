@@ -29,6 +29,11 @@ public class ConstantMsg {
     public static final String AUCTION_COUNT_END = "auction_count_end";//竞拍倒计时完成
     public static final String DETAIL_COUNT_END = "detail_count_end";//详情倒计时完成
 
+    public static final String RECHARGE ="recharge_success";//充值变化
+    public static final String DEPOSIT_CREATE="deposit_create";//交纳保证金变化
+    public static final String WITHDRAW_DEPOSIT_CASH="withdraw_deposit_cash";//提现
+    public static final String WITHDRAW_DEPOSIT_REFUND="withdraw_deposit_refund";//撤销保证金
+
     public static final String WEB_URL_MESSAGE = HttpUtils.BASE_URL+ "index.php/wap/app-information.html?apitoken=";//消息
     public static final String WEB_URL_SETTING = HttpUtils.BASE_URL+ "index.php/wap/app-setting.html?apitoken=";//设置
     public static final String WEB_URL_LICENSE = HttpUtils.BASE_URL+ "index.php/wap/app-license.html";//协议

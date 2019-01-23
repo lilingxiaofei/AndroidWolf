@@ -31,6 +31,8 @@ import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
+import com.chunlangjiu.app.money.bean.DepositBean;
+import com.chunlangjiu.app.money.bean.DepositCashBean;
 import com.chunlangjiu.app.money.bean.FundDetailListBean;
 import com.chunlangjiu.app.money.bean.UserMoneyBean;
 import com.chunlangjiu.app.order.bean.AuctionOrderListBean;
@@ -645,7 +647,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> depositCash(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("bank_id")String bankId ,@Field("amount")String amount);
+    Flowable<ResultBean<DepositCashBean>> depositCash(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("bank_id")String bankId , @Field("amount")String amount);
 
    @POST("index.php/topapi")
    @FormUrlEncoded
@@ -671,6 +673,14 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<CreateRechargeOrderBean>> depositCreate(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<DepositBean>> getDeposit(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<DepositCashBean>> depositRefund(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token,@Field("bank_id")String bank_id);
 
     @POST("index.php/topapi")
     @FormUrlEncoded

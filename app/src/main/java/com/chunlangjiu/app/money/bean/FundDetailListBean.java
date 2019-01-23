@@ -31,7 +31,7 @@ public class FundDetailListBean {
         private String operator;
         private String fee;
         private String message;
-        private int logtime;
+        private long logtime;
 
         public int getLog_id() {
             return log_id;
@@ -81,11 +81,11 @@ public class FundDetailListBean {
             this.message = message;
         }
 
-        public int getLogtime() {
+        public long getLogtime() {
             return logtime;
         }
 
-        public void setLogtime(int logtime) {
+        public void setLogtime(long logtime) {
             this.logtime = logtime;
         }
     }
