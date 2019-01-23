@@ -19,7 +19,7 @@ import butterknife.OnClick;
  */
 public class AboutActivity extends BaseActivity implements View.OnClickListener{
     @BindView(R.id.tvVersionName)
-    private TextView tvVersionName;
+     TextView tvVersionName;
     @Override
     public void setTitleView() {
         titleName.setText("关于");
