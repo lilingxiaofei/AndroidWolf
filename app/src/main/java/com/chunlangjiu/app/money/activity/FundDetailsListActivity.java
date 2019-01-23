@@ -41,6 +41,7 @@ public class FundDetailsListActivity extends BaseActivity {
     private List<FundDetailListBean.FundDetailBean> fundDetailBeans = new ArrayList<>();
 
     private final String[] mTitles = {"销售记录", "充值", "提现"};
+    private final String[] types = {"sell", "add", "expense"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class FundDetailsListActivity extends BaseActivity {
     }
 
     private void initData() {
-        getFundDetails();
+//        getFundDetails();
     }
 
     @Override
@@ -73,7 +74,11 @@ public class FundDetailsListActivity extends BaseActivity {
         fundDetailViewPageAdapter = new FundDetailViewPageAdapter(getSupportFragmentManager());
         vpFundDetail.setAdapter(fundDetailViewPageAdapter);
         for (int i = 0; i < mTitles.length; i++) {
-            fragmentList.add(new FundDetailListFragment());
+            FundDetailListFragment fundDetailListFragment = new FundDetailListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("type",types[i]);
+            fundDetailListFragment.setArguments(bundle);
+            fragmentList.add(fundDetailListFragment);
         }
         fundDetailViewPageAdapter.notifyDataSetChanged();
         titleTabLayout.setViewPager(vpFundDetail, mTitles);
@@ -82,23 +87,23 @@ public class FundDetailsListActivity extends BaseActivity {
     ;
 
     private void getFundDetails() {
-        disposable.add(ApiUtils.getInstance().getFundDetails((String) SPUtils.get("token", ""))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<FundDetailListBean>>() {
-                    @Override
-                    public void accept(ResultBean<FundDetailListBean> resultBean) throws Exception {
-                        fundDetailBeans.clear();
-                        List<FundDetailListBean.FundDetailBean> fundDetailBeanList = resultBean.getData().getList();
-                        if (null != fundDetailBeanList) {
-                            fundDetailBeans.addAll(fundDetailBeanList);
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                    }
-                }));
+//        disposable.add(ApiUtils.getInstance().getFundDetails((String) SPUtils.get("token", ""))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<ResultBean<FundDetailListBean>>() {
+//                    @Override
+//                    public void accept(ResultBean<FundDetailListBean> resultBean) throws Exception {
+//                        fundDetailBeans.clear();
+//                        List<FundDetailListBean.FundDetailBean> fundDetailBeanList = resultBean.getData().getList();
+//                        if (null != fundDetailBeanList) {
+//                            fundDetailBeans.addAll(fundDetailBeanList);
+//                        }
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) throws Exception {
+//                    }
+//                }));
 
     }
 

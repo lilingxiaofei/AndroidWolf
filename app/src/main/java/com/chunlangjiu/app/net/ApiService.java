@@ -655,7 +655,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<FundDetailListBean>> getFundDetails(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+    Flowable<ResultBean<FundDetailListBean>> getFundDetails(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token,@Field("type")String type);
 
 
     @POST("index.php/topapi")

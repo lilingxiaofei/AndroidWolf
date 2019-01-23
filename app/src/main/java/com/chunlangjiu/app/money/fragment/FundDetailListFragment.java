@@ -41,13 +41,16 @@ public class FundDetailListFragment extends BaseFragment {
     private List<FundDetailListBean.FundDetailBean> fundDetailBeans = new ArrayList<>();
     private FundDetailAdapter fundDetailAdapter;
     private CompositeDisposable disposable;
+    private String types="";
 
     public FundDetailListFragment() {
+
     }
 
     @Override
     public void getContentView(LayoutInflater inflater, ViewGroup container) {
         inflater.inflate(R.layout.fund_detail_list_fragment, container, true);
+        types =getArguments().getString("type");
         ButterKnife.bind(this, contentView);
 
     }
@@ -83,7 +86,7 @@ public class FundDetailListFragment extends BaseFragment {
         }
     }
     private void getFundDetails() {
-        disposable.add(ApiUtils.getInstance().getFundDetails((String) SPUtils.get("token", ""))
+        disposable.add(ApiUtils.getInstance().getFundDetails((String) SPUtils.get("token", ""),types)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<FundDetailListBean>>() {

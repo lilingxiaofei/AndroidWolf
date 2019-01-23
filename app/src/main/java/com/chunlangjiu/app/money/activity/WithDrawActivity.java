@@ -65,7 +65,9 @@ public class WithDrawActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.reBankCard:
-                startActivityForResult(new Intent(this, BankCardActivity.class), BankCardRequestCode);
+                Intent intent =new Intent(this, BankCardActivity.class);
+                intent.putExtra(BankCardActivity.FromType,BankCardActivity.ClassWithDrawActivity);
+                startActivityForResult(intent, BankCardRequestCode);
                 break;
             case R.id.btnOk:
                 String amount = edtAmount.getText().toString().trim();
