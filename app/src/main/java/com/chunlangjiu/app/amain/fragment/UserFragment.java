@@ -181,8 +181,6 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlCollect;
     private RelativeLayout rlShare;
     private RelativeLayout rlVip;
-    private RelativeLayout rlAddress;
-    private RelativeLayout rlBankCard;
     private LinearLayout llMyManagerSecond;
     private RelativeLayout rlMyEvaluate;
     private RelativeLayout rlFansManage ;
@@ -338,12 +336,9 @@ public class UserFragment extends BaseFragment {
                         WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SHOP_INFO + BaseApplication.getToken(), "店铺资料");
                     }
                     break;
-                case R.id.rlAddress:// 地址管理
-                    startActivity(new Intent(getActivity(), AddressListActivity.class));
-                    break;
-                case R.id.rlBankCard:// 银行卡管理
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_BANK_CARD + BaseApplication.getToken(), "银行卡管理");
-                    break;
+//                case R.id.rlBankCard:// 银行卡管理
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_BANK_CARD + BaseApplication.getToken(), "银行卡管理");
+//                    break;
                 case R.id.rlMyEvaluate:// 我的估价
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_EVALUATE + BaseApplication.getToken(), "我的估价");
                     break;
@@ -509,14 +504,10 @@ public class UserFragment extends BaseFragment {
         rlCollect = rootView.findViewById(R.id.rlCollect);
         rlShare = rootView.findViewById(R.id.rlShare);
         rlVip = rootView.findViewById(R.id.rlVip);
-        rlAddress = rootView.findViewById(R.id.rlAddress);
-        rlBankCard = rootView.findViewById(R.id.rlBankCard);
         rlMoneyManager.setOnClickListener(onClickListener);
         rlCollect.setOnClickListener(onClickListener);
         rlShare.setOnClickListener(onClickListener);
         rlVip.setOnClickListener(onClickListener);
-        rlAddress.setOnClickListener(onClickListener);
-        rlBankCard.setOnClickListener(onClickListener);
 
         llMyManagerSecond = rootView.findViewById(R.id.llMyManagerSecond);
         rlMyEvaluate = rootView.findViewById(R.id.rlMyEvaluate);
@@ -588,7 +579,6 @@ public class UserFragment extends BaseFragment {
             llGoodsContent.setVisibility(View.GONE);
 
             rlCollect.setVisibility(View.VISIBLE);
-            rlBankCard.setVisibility(View.GONE);
             llMyManagerSecond.setVisibility(View.VISIBLE);
         } else {
             //卖家中心
@@ -629,7 +619,6 @@ public class UserFragment extends BaseFragment {
             rlCollect.setVisibility(View.VISIBLE);
             rlMyEvaluate.setVisibility(View.VISIBLE);
 
-            rlBankCard.setVisibility(View.VISIBLE);
             llMyManagerSecond.setVisibility(View.VISIBLE);
         }
     }

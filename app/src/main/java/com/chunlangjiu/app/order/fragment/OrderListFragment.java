@@ -153,6 +153,9 @@ public class OrderListFragment extends BaseFragment {
     public void initData() {
         listBeans = new ArrayList<>();
         orderListAdapter = new OrderListAdapter(activity, R.layout.order_adapter_list_item, listBeans);
+
+        GridSpacingItemDecoration decoration2 = new GridSpacingItemDecoration(1, Utils.dp2px(activity, 5), false);
+        listView.addItemDecoration(decoration2);
         orderListAdapter.setOnClickListener(onClickListener);
         listView.setAdapter(orderListAdapter);
 

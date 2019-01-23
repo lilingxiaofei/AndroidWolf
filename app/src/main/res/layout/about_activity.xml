@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/bg_gray">
+
+    <ImageView
+        android:layout_width="92dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="38dp"
+        android:src="@mipmap/launcher"/>
+    <TextView android:id="@+id/tvVersionName"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="7dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/t_black"
+        android:textSize="@dimen/sp_mid" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_white"
+            android:layout_centerVertical="true"
+            android:text="平台定位"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:textSize="@dimen/sp_mid" />
+        <TextView android:id="@+id/tvServicePhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:background="@color/bg_white"
+            android:layout_centerVertical="true"
+            android:text="二手高端酒综合服务平台"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_white"
+            android:layout_centerVertical="true"
+            android:text="访问醇狼官网"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:textSize="@dimen/sp_mid" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:background="@color/bg_white"
+            android:layout_centerVertical="true"
+            android:text="www.chunlangjiu.com"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_white"
+            android:layout_centerVertical="true"
+            android:text="醇狼官方邮箱"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:textSize="@dimen/sp_mid" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:background="@color/bg_white"
+            android:layout_centerVertical="true"
+            android:text="chunlang2018@sina.com"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_white"
+            android:layout_centerVertical="true"
+            android:text="全国热线"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:textSize="@dimen/sp_mid" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:background="@color/bg_white"
+            android:layout_centerVertical="true"
+            android:text="400-788-9550"
+            android:gravity="center_vertical"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>
