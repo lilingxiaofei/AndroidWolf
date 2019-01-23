@@ -237,10 +237,10 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                     TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
                     tvProductNum.setText(String.format("x%d", orderBean.getNum()));
                     llProducts.addView(inflate);
-                    if (llProducts.getChildCount() == item.getOrder().size()) {
-                        View view_line = inflate.findViewById(R.id.view_line);
-                        view_line.setVisibility(View.GONE);
-                    }
+//                    if (llProducts.getChildCount() == item.getOrder().size()) {
+//                        View view_line = inflate.findViewById(R.id.view_line);
+//                        view_line.setVisibility(View.GONE);
+//                    }
                 }
                 if (3 == type) {
                     tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getItemnum()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
@@ -268,10 +268,10 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         tvProductNum.setText(String.format("最高出价：%s", orderBean.getSpec_nature_info()));
                     }
                     llProducts.addView(inflate);
-                    if (llProducts.getChildCount() == item.getOrder().size()) {
-                        View view_line = inflate.findViewById(R.id.view_line);
-                        view_line.setVisibility(View.GONE);
-                    }
+//                    if (llProducts.getChildCount() == item.getOrder().size()) {
+//                        View view_line = inflate.findViewById(R.id.view_line);
+//                        view_line.setVisibility(View.GONE);
+//                    }
                 }
                 if (3 == type) {
                     tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getItemnum()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
@@ -295,8 +295,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                 TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
                 tvProductNum.setText(String.format("x%d", item.getNum()));
                 llProducts.addView(inflate);
-                View view_line = inflate.findViewById(R.id.view_line);
-                view_line.setVisibility(View.GONE);
+//                View view_line = inflate.findViewById(R.id.view_line);
+//                view_line.setVisibility(View.GONE);
                 tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getTotalItem()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getSku().getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 break;
         }

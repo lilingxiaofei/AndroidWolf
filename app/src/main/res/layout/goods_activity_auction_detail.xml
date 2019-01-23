@@ -8,20 +8,20 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/title_bar_height"
         android:background="@color/bg_red">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
             android:padding="14dp"
             android:src="@mipmap/white_left_arrow" />
 
         <ImageView
             android:id="@+id/img_share"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
             android:layout_alignParentRight="true"
             android:padding="14dp"
             android:src="@mipmap/white_share" />

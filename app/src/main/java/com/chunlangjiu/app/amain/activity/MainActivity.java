@@ -29,6 +29,7 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GeTuiIntentService;
 import com.chunlangjiu.app.util.GeTuiPushService;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.igexin.sdk.PushManager;
 import com.jaeger.library.StatusBarUtil;
@@ -171,8 +172,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
+        MyStatusBarUtils.setStatusBar(this,R.color.bg_red);
         disposable = new CompositeDisposable();
-
         tabOne.setOnClickListener(onClickListener);
         tabTwo.setOnClickListener(onClickListener);
         tabThree.setOnClickListener(onClickListener);
@@ -231,23 +232,18 @@ public class MainActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tab_one:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(0);
                     break;
                 case R.id.tab_two:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(1);
                     break;
                 case R.id.tab_three:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(2);
                     break;
                 case R.id.tab_four:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_red),0);
                     setPageFragment(3);
                     break;
                 case R.id.tab_five:
-                    StatusBarUtil.setColor(MainActivity.this, ContextCompat.getColor(MainActivity.this, R.color.bg_black),0);
                     setPageFragment(4);
                     break;
             }

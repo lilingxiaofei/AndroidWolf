@@ -111,7 +111,7 @@ public class PartnerListActivity extends BaseActivity {
             ImageView iv = helper.getView(R.id.ivStoreLogo);
             Glide.with(PartnerListActivity.this).load(item.getShop_logo()).into(iv);
 
-            helper.setText(R.id.tv_store_name, item.getShopname());
+            helper.setText(R.id.tv_store_name, item.getShop_name());
             helper.setText(R.id.tvAddress, item.getShop_addr());
 
             String num = item.getGrade();

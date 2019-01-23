@@ -111,4 +111,7 @@ dependencies {
     //微信支付
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
     implementation 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
+
+    implementation 'com.yanzhenjie:sofia:1.0.5'
+
 }

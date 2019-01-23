@@ -20,13 +20,16 @@ import com.chunlangjiu.app.amain.bean.SecondClassBean;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
+import com.jaeger.library.StatusBarUtil;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.view.RoundedImageView;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +82,7 @@ public class ClassifyFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.title_view));
         initTitleView();
 
         disposable = new CompositeDisposable();

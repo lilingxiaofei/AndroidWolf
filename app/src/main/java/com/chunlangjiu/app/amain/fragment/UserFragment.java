@@ -36,6 +36,7 @@ import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.ShareUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.jaeger.library.StatusBarUtil;
@@ -54,6 +55,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -371,18 +373,17 @@ public class UserFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        StatusBarUtil.setColor(activity, ContextCompat.getColor(activity, R.color.bg_black),0);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        StatusBarUtil.setColor(activity, ContextCompat.getColor(activity, R.color.bg_red),0);
     }
 
 
     @Override
     public void initView() {
+        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.rlUserHead));
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
         tvToLogin.setOnClickListener(onClickListener);

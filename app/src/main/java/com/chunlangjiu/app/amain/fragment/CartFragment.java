@@ -25,6 +25,7 @@ import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.bean.ConfirmOrderBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.google.gson.Gson;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -39,6 +40,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -141,6 +143,7 @@ public class CartFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.rlCartTitle));
         EventManager.getInstance().registerListener(onNotifyListener);
         disposable = new CompositeDisposable();
 

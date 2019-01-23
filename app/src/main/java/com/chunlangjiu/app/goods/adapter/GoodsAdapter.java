@@ -74,7 +74,6 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             TextView tvStartPrice = helper.getView(R.id.tvStartPrice);
             TextView tvAnPaiStr = helper.getView(R.id.tvAnPaiStr);
 
-
             //网格布局的时候设置图片大小
             ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
             if(itemType == LIST_GRID && layoutParams.width == layoutParams.height && layoutParams.width>0){
@@ -97,7 +96,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 helper.setText(R.id.tvSellPriceStr, "");
                 helper.setText(R.id.tvSellPrice, "");
                 helper.setText(R.id.tvGoodsPrice,"¥" +item.getPrice());
-
+                helper.setVisible(R.id.tvGoodsPrice,true);
                 helper.setText(R.id.tvStartPriceStr, "原价：");
                 tvStartPrice.setText(item.getMkt_price());
                 tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
@@ -136,7 +135,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
             helper.setText(R.id.tv_good_evaluate, item.getRate_count() + "好评");
 
-
+            helper.setText(R.id.tv_store_into,R.string.into_store);
 
             helper.setGone(R.id.rl_store_layout,isShowStoreView);
             if(isShowStoreView){

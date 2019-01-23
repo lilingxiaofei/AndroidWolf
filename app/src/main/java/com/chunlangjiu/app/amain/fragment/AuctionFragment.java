@@ -37,12 +37,15 @@ import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoicePricePopWindow;
 import com.chunlangjiu.app.util.ConstantMsg;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
+import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +149,7 @@ public class AuctionFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.title_view));
         disposable = new CompositeDisposable();
         titleView.setVisibility(View.VISIBLE);
         tvTitleF.setText("竞拍专区");

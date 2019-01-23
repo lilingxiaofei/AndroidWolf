@@ -67,6 +67,28 @@ public class GoodsDetailBean implements Serializable{
         }
     }
 
+    public class ParameterBean implements Serializable{
+        private String title;
+        private String value;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+    }
+
+
     public class ShopBean implements Serializable{
         private String shop_id;
         private String shop_name;
@@ -180,6 +202,7 @@ public class GoodsDetailBean implements Serializable{
         private String explain;//商品说明
         private Auction auction;
         private String service_url ;
+        private List<ParameterBean> parameter ;
 
         public String getIs_collect() {
             return is_collect;
@@ -191,6 +214,14 @@ public class GoodsDetailBean implements Serializable{
 
         public Auction getAuction() {
             return auction;
+        }
+
+        public List<ParameterBean> getParameter() {
+            return parameter;
+        }
+
+        public void setParameter(List<ParameterBean> parameter) {
+            this.parameter = parameter;
         }
 
         public void setAuction(Auction auction) {

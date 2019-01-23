@@ -7,14 +7,16 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/headLayout"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/title_bar_height"
         android:background="@color/bg_red">
 
         <TextView
             android:id="@+id/tvCity"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/title_bar_height"
             android:layout_marginLeft="10dp"
             android:drawablePadding="4dp"
             android:drawableRight="@mipmap/white_down_arrow"
@@ -27,8 +29,9 @@
         <RelativeLayout
             android:id="@+id/rlTitleSearch"
             android:layout_width="160dp"
-            android:layout_height="27dp"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="9dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/search_bg">
 
             <ImageView
@@ -55,6 +58,9 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/title_bar_height">
         <ImageView
             android:id="@+id/imgMsg"
             android:layout_width="24dp"
@@ -77,6 +83,7 @@
             android:textColor="@color/white"
             android:textSize="10sp"
             android:visibility="gone" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
