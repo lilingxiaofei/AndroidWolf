@@ -1631,10 +1631,8 @@
                 android:id="@+id/tvAccountType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@id/tvName"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="4dp"
-                android:layout_toRightOf="@id/tvName"
                 android:background="@drawable/bg_white_solid"
                 android:paddingBottom="1dp"
                 android:paddingLeft="5dp"
@@ -1648,11 +1646,9 @@
                 android:id="@+id/llAuth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvName"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/imgHead"
                 android:orientation="horizontal">
 
                 <TextView

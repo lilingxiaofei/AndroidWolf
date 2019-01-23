@@ -55,7 +55,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }else if(resId == R.id.tvBankManager){
             startActivity(new Intent(this,BankCardActivity.class));
         }else if(resId == R.id.tvAbout){
-
+            AboutActivity.startActivity(SettingActivity.this);
         }else if(resId == R.id.tvUseAgreement){
 
         }else if(resId == R.id.tvLoginOut){
