@@ -291,6 +291,8 @@
         <activity android:name=".money.activity.WithDrawActivity" />
         <activity android:name=".money.activity.FundDetailsListActivity" />
         <activity android:name=".money.activity.BillDetailActivity"></activity>
+        <activity android:name=".user.activity.ServiceActivity"></activity>
+
         <activity android:name=".fans.activity.FansHomeActivity"
             android:exported="false"
             android:screenOrientation="behind"></activity>
