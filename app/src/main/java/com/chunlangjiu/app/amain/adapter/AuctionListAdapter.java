@@ -86,6 +86,17 @@ public class AuctionListAdapter extends BaseQuickAdapter<AuctionListBean.Auction
                 dealWithLifeCycle(helper, helper.getAdapterPosition(), item);
             }
 
+
+                helper.setText(R.id.tv_store_name,item.getShop_name());
+                String level = item.getGrade();
+                if("2".equals(level)){
+                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_partner);
+                }else if("1".equals(level)){
+                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_star);
+                }else{
+                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_common);
+                }
+
             helper.setText(R.id.tv_store_into,R.string.into_store);
             helper.addOnClickListener(R.id.tv_store_into);
             TextView tv_attention = helper.getView(R.id.tvAttention);

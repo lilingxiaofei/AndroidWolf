@@ -202,7 +202,7 @@ public class GoodsDetailBean implements Serializable{
         private String explain;//商品说明
         private Auction auction;
         private String service_url ;
-        private List<ParameterBean> parameter ;
+        private Object parameter ;
 
         public String getIs_collect() {
             return is_collect;
@@ -216,13 +216,22 @@ public class GoodsDetailBean implements Serializable{
             return auction;
         }
 
-        public List<ParameterBean> getParameter() {
+        public Object getParameter() {
             return parameter;
         }
 
-        public void setParameter(List<ParameterBean> parameter) {
+        public void setParameter(Object parameter) {
             this.parameter = parameter;
         }
+
+
+        //        public List<ParameterBean> getParameter() {
+//            return parameter;
+//        }
+//
+//        public void setParameter(List<ParameterBean> parameter) {
+//            this.parameter = parameter;
+//        }
 
         public void setAuction(Auction auction) {
             this.auction = auction;
