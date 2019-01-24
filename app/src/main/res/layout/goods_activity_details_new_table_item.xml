@@ -8,5 +8,6 @@
 
     <TextView
         android:id="@+id/tvValue"
+        android:text="dfdfdfdfd"
         style="@style/auctionValue" />
 </LinearLayout>

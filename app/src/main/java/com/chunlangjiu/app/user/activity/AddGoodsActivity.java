@@ -395,7 +395,7 @@ public class AddGoodsActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean<Map> mainClassBeanResultBean) throws Exception {
                         Map map = mainClassBeanResultBean.getData() ;
-                        if(null != null && map.containsKey("status")){
+                        if(null != map && map.containsKey("status")){
                             if("true".equals(map.get("status"))){
                                 showContentView();
                             }else{

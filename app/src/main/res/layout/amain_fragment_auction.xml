@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_white"
+    android:background="@color/bg_gray"
     android:orientation="vertical">
     <include layout="@layout/goods_view_choice_data"/>
 
@@ -19,9 +19,7 @@
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_white"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:layout_margin="10dp"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

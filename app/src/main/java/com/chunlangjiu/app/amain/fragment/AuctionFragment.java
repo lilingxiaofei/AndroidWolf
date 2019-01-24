@@ -22,7 +22,7 @@ import com.chunlangjiu.app.amain.bean.FirstClassBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.amain.bean.SecondClassBean;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
-import com.chunlangjiu.app.goods.activity.AuctionDetailActivity;
+import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
@@ -38,14 +38,14 @@ import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoicePricePopWindow;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
-import com.jaeger.library.StatusBarUtil;
+import com.lzy.imagepicker.util.Utils;
+import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,7 +166,8 @@ public class AuctionFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (BaseApplication.isLogin()) {
-                    AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
+//                    AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
+                    GoodsDetailslNewActivity.startActivity(getActivity(),lists.get(position).getItem_id());
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
@@ -181,6 +182,7 @@ public class AuctionFragment extends BaseFragment {
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, Utils.dp2px(getActivity(), 5), false));
         recyclerView.setAdapter(linearAdapter);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

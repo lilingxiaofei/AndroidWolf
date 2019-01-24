@@ -69,6 +69,9 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.AccordionTransformer;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -104,9 +107,9 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private LinearLayout llEvaluate;
 
     private LinearLayout llAuctionInfo;//拍品详情
-    private LinearLayout llInfoList ;
+    private LinearLayout llInfoList;
 
-    private ImageView ivSafeguard ;
+    private ImageView ivSafeguard;
 
     private LinearLayout llSeeMore;
     private RecyclerView recyclerView;//推荐商品列表
@@ -138,10 +141,9 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private TextView tvPayMoney;
 
 
-
     private CompositeDisposable disposable;
     private GoodsDetailBean goodsDetailBean;//商品详情数据
-    private GoodsDetailBean.Auction auction ;//竞拍信息
+    private GoodsDetailBean.Auction auction;//竞拍信息
     private String itemId;
     private String skuId;
     private int cartCount;//购物车数量
@@ -162,8 +164,6 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private List<PaymentBean.PaymentInfo> payList;
     private InputPriceDialog inputPriceDialog;
     private PayDialog payDialog;
-
-
 
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -296,7 +296,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
         //底部栏代码
         rlBottom = findViewById(R.id.rlBottom);
-        ivService= findViewById(R.id.ivService);
+        ivService = findViewById(R.id.ivService);
         ivCollect = findViewById(R.id.ivCollect);
         rlBottom.setVisibility(View.GONE);
 
@@ -411,41 +411,47 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     }
 
     private void initCommonView() {
-        tvPrice.setText("¥" + goodsDetailBean.getItem().getPrice());
-        tvGoodsName.setText(goodsDetailBean.getItem().getTitle());
-        tvGoodsNameSecond.setText(goodsDetailBean.getItem().getSub_title());
-        if (TextUtils.isEmpty(goodsDetailBean.getItem().getSub_title())) {
-            tvGoodsNameSecond.setVisibility(View.GONE);
-        } else {
-            tvGoodsNameSecond.setVisibility(View.VISIBLE);
-        }
-        Glide.with(this).load(goodsDetailBean.getItem().getService_url()).into(ivSafeguard);
-        tvCountry.setText(goodsDetailBean.getItem().getLabel());
-        tvDesc.setText(goodsDetailBean.getItem().getExplain());
-        GlideUtils.loadImageShop(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_logo(), imgStore);
-        tvStoreName.setText(goodsDetailBean.getShop().getShop_name());
-        tvStoreDesc.setText(goodsDetailBean.getShop().getShop_descript());
-
-        List<GoodsDetailBean.ParameterBean> infoList = goodsDetailBean.getItem().getParameter();
-        if(infoList!=null && infoList.size()>0){
-            for (int i = 0; i < infoList.size(); i++) {
-                GoodsDetailBean.ParameterBean parameterBean = infoList.get(i);
-                View infoView = getLayoutInflater().inflate(R.layout.goods_activity_details_new_table_item,null);
-                TextView tvLabel = infoView.findViewById(R.id.tvLabel);
-                TextView tvValue = infoView.findViewById(R.id.tvValue);
-                tvLabel.setText(parameterBean.getTitle());
-                tvValue.setText(parameterBean.getValue());
-                llInfoList.addView(infoView);
+        try {
+            tvPrice.setText("¥" + goodsDetailBean.getItem().getPrice());
+            tvGoodsName.setText(goodsDetailBean.getItem().getTitle());
+            tvGoodsNameSecond.setText(goodsDetailBean.getItem().getSub_title());
+            if (TextUtils.isEmpty(goodsDetailBean.getItem().getSub_title())) {
+                tvGoodsNameSecond.setVisibility(View.GONE);
+            } else {
+                tvGoodsNameSecond.setVisibility(View.VISIBLE);
             }
-            llAuctionInfo.setVisibility(View.VISIBLE);
-        }else{
-            llAuctionInfo.setVisibility(View.GONE);
-        }
+            Glide.with(this).load(goodsDetailBean.getItem().getService_url()).into(ivSafeguard);
+            tvCountry.setText(goodsDetailBean.getItem().getLabel());
+            tvDesc.setText(goodsDetailBean.getItem().getExplain());
+            GlideUtils.loadImageShop(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_logo(), imgStore);
+            tvStoreName.setText(goodsDetailBean.getShop().getShop_name());
+            tvStoreDesc.setText(goodsDetailBean.getShop().getShop_descript());
 
-        if (TextUtils.isEmpty(goodsDetailBean.getItem().getLabel())) {
-            tvCountry.setVisibility(View.GONE);
-        } else {
-            tvCountry.setVisibility(View.VISIBLE);
+            Object parameter = goodsDetailBean.getItem().getParameter();
+            String arrayStr = parameter == null?"":parameter.toString();
+            JSONArray jsonArray = new JSONArray(arrayStr);
+            if (jsonArray != null && jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject objItem = jsonArray.getJSONObject(i);
+                    View infoView = getLayoutInflater().inflate(R.layout.goods_activity_details_new_table_item, null);
+                    TextView tvLabel = infoView.findViewById(R.id.tvLabel);
+                    TextView tvValue = infoView.findViewById(R.id.tvValue);
+                    tvLabel.setText(objItem.optString("title"));
+                    tvValue.setText(objItem.optString("value"));
+                    llInfoList.addView(infoView);
+                }
+                llAuctionInfo.setVisibility(View.VISIBLE);
+            } else {
+                llAuctionInfo.setVisibility(View.GONE);
+            }
+
+            if (TextUtils.isEmpty(goodsDetailBean.getItem().getLabel())) {
+                tvCountry.setVisibility(View.GONE);
+            } else {
+                tvCountry.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -553,7 +559,6 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     }
 
 
-
     private void getCartNum() {
         disposable.add(ApiUtils.getInstance().getCartCount()
                 .subscribeOn(Schedulers.io())
@@ -619,8 +624,8 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         setAuctionView();
     }
 
-    private void setAuctionView(){
-        if(auction!=null && !TextUtils.isEmpty(auction.getAuctionitem_id())){
+    private void setAuctionView() {
+        if (auction != null && !TextUtils.isEmpty(auction.getAuctionitem_id())) {
             getPaymentList();
             getPriceList();
             String check = goodsDetailBean.getItem().getAuction().getCheck();
@@ -634,7 +639,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     //已经出过价但是未支付
                     tvBuy.setText("去支付");
                     tvPayMoney.setText("应付定金:¥" + goodsDetailBean.getItem().getAuction().getPledge());
-                    payment_id= auction.getPayment_id();
+                    payment_id = auction.getPayment_id();
                 }
             } else {
                 tvAuctionBuy.setText("立即出价");
@@ -858,7 +863,6 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     }
 
 
-
     private void toConfirmOrder() {
         String check = goodsDetailBean.getItem().getAuction().getCheck();
         String isPay = goodsDetailBean.getItem().getAuction().getIs_pay();
@@ -949,7 +953,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean resultBean) throws Exception {
                         hideLoadingDialog();
-                        invokePay(payMethod,resultBean);
+                        invokePay(payMethod, resultBean);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -961,7 +965,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     }
 
 
-    private void invokePay(int payMethod,ResultBean data) {
+    private void invokePay(int payMethod, ResultBean data) {
         switch (payMethod) {
             case 0:
                 invokeWeixinPay(data);
@@ -1115,7 +1119,9 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     }
                 }));
     }
+
     private PriceListDialog priceListDialog;
+
     private void showPriceListDialog() {
         if (priceList == null || priceList.size() == 0) {
             ToastUtils.showShort("暂无出价");
