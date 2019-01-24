@@ -100,6 +100,11 @@ public class AddBankCardActivity extends BaseActivity {
                 showAreaDialog();
                 break;
             case R.id.btnGetCode:
+                String mobile = edtPhone.getText().toString().trim();
+                if (TextUtils.isEmpty(mobile)){
+                    ToastUtils.showShort("请输入手机号");
+                    return;
+                }
                 countDownTime();
                 sendCode();
                 break;
@@ -127,11 +132,6 @@ public class AddBankCardActivity extends BaseActivity {
                 }));
     }
     private void sendCode(){
-        String mobile = edtPhone.getText().toString().trim();
-        if (TextUtils.isEmpty(mobile)){
-            ToastUtils.showShort("请输入手机号");
-            return;
-        }
         //sendSmsCode
         disposable.add(ApiUtils.getInstance().sendSms((String) SPUtils.get("token",""))
                 .subscribeOn(Schedulers.io())
@@ -231,6 +231,7 @@ public class AddBankCardActivity extends BaseActivity {
             ToastUtils.showShort("请输入验证码");
             return;
         }
+        showLoadingDialog();
         disposable.add(ApiUtils.getInstance().addBankCardList((String) SPUtils.get("token", ""), name, bank, card
                 , bank_branch, idcard, mobile, verifycode)
                 .subscribeOn(Schedulers.io())
@@ -238,6 +239,7 @@ public class AddBankCardActivity extends BaseActivity {
                 .subscribe(new Consumer<ResultBean>() {
                     @Override
                     public void accept(ResultBean loginBeanResultBean) throws Exception {
+                        hideLoadingDialog();
                         ToastUtils.showShort("添加成功");
                         EventManager.getInstance().notify(null,BANKCARD_CHANGE);
                         finish();
@@ -246,6 +248,7 @@ public class AddBankCardActivity extends BaseActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
                         ToastUtils.showErrorMsg(throwable);
                     }
                 }));

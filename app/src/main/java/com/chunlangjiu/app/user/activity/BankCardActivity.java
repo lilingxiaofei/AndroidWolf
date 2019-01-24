@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -33,8 +34,12 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class BankCardActivity extends BaseActivity {
+
     @BindView(R.id.recycleBankCardList)
     RecyclerView recycleBankCardList;
+
+    public static final String FromType = "FromType";
+    public static final String ClassWithDrawActivity = "ClassWithDrawActivity";
     private CompositeDisposable disposable;
     private List<BankCardListBean.BankCardDetailBean> bankCard = new ArrayList<>();
     private BankCardAdapter bankCardAdapter;
@@ -56,10 +61,12 @@ public class BankCardActivity extends BaseActivity {
         bankCardAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent();
-                intent.putExtra(WithDrawActivity.BankCardData, bankCard.get(position));
-                setResult(WithDrawActivity.BankCardResultCode, intent);
-                finish();
+                if (ClassWithDrawActivity.equals(getIntent().getStringExtra(FromType))) {
+                    Intent intent = new Intent();
+                    intent.putExtra(WithDrawActivity.BankCardData, bankCard.get(position));
+                    setResult(WithDrawActivity.BankCardResultCode, intent);
+                    finish();
+                }
 //                deleteBankCard(String.valueOf(bankCard.get(position).getBank_id()));
             }
         });
@@ -157,7 +164,7 @@ public class BankCardActivity extends BaseActivity {
                 }));
     }
 
-    public void deleteBankCard(String id) {
+    public void deleteBankCard(final String id) {
         showLoadingDialog();
         disposable.add(ApiUtils.getInstance().deleteBankCard((String) SPUtils.get("token", ""), id)
                 .subscribeOn(Schedulers.io())
@@ -166,6 +173,7 @@ public class BankCardActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean loginBeanResultBean) throws Exception {
                         hideLoadingDialog();
+                        removeLocalData(id);
 
                     }
                 }, new Consumer<Throwable>() {
@@ -178,6 +186,17 @@ public class BankCardActivity extends BaseActivity {
 
     }
 
+    private void removeLocalData(String id) {
+        for (BankCardListBean.BankCardDetailBean bankCardDetailBean : bankCard) {
+            if (id.equals(String.valueOf(bankCardDetailBean.getBank_id()))){
+                bankCard.remove(bankCardDetailBean);
+                break;
+            }
+        }
+        bankCardAdapter.notifyDataSetChanged();
+
+    }
+
     public class BankCardAdapter extends BaseQuickAdapter<BankCardListBean.BankCardDetailBean, BaseViewHolder> {
 
         public BankCardAdapter(int layoutResId, @Nullable List<BankCardListBean.BankCardDetailBean> data) {
@@ -185,10 +204,17 @@ public class BankCardActivity extends BaseActivity {
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, BankCardListBean.BankCardDetailBean item) {
+        protected void convert(BaseViewHolder helper, final BankCardListBean.BankCardDetailBean item) {
             helper.setText(R.id.tvBankName, item.getName());
-            helper.setText(R.id.tvCardType,item.getBank());
+            helper.setText(R.id.tvCardType, item.getBank());
             helper.setText(R.id.tvBankCardNumber, formateBankCard(item.getCard()));
+            helper.setOnClickListener(R.id.tvDelete, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteBankCard(String.valueOf(item.getBank_id()));
+
+                }
+            });
 
         }
     }

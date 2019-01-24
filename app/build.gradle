@@ -113,5 +113,6 @@ dependencies {
     implementation 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
 
     implementation 'com.yanzhenjie:sofia:1.0.5'
+    compile "com.daimajia.swipelayout:library:1.2.0@aar"
 
 }
