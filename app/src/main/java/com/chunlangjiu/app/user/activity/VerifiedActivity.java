@@ -3,18 +3,24 @@ package com.chunlangjiu.app.user.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
+import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,6 +30,10 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class VerifiedActivity extends BaseActivity {
+    @BindView(R.id.imgHead)
+    ImageView imgHead;
+    @BindView(R.id.tvAccount)
+    TextView tvAccount;
 
     private CompositeDisposable disposable;
     private String personStatus;
@@ -34,14 +44,25 @@ public class VerifiedActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verified);
         disposable = new CompositeDisposable();
+        initView();
     }
+
+    private void initView() {
+        String headUrl = (String) SPUtils.get("avator", "");
+        if (!TextUtils.isEmpty(headUrl)) {
+            GlideUtils.loadImageHead(this, headUrl, imgHead);
+        }
+        tvAccount.setText((String)SPUtils.get("account",""));
+    }
+
     @Override
     public void setTitleView() {
-      titleName.setText("实名认证");
+        titleName.setText("实名认证");
     }
-    @OnClick({R.id.btnPerson,R.id.btnCompany})
-    public void onClick(View view){
-        switch (view.getId()){
+
+    @OnClick({R.id.btnPerson, R.id.btnCompany})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.btnPerson:
                 checkPersonStatus();
 //                startActivity(new Intent(this,PersonAuthActivity.class));
@@ -171,9 +192,11 @@ public class VerifiedActivity extends BaseActivity {
                     }
                 }));
     }
+
     private void toAuthActivity() {
         startActivity(new Intent(this, PersonAuthActivity.class));
     }
+
     private void toAuthCompanyActivity() {
         startActivity(new Intent(this, CompanyAuthActivity.class));
     }
