@@ -10,9 +10,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
+import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.fans.bean.FansNumBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.order.bean.OrderListBean;
+import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
 import java.util.ArrayList;
@@ -29,6 +32,7 @@ public class FansListActivity extends BaseActivity {
     private TextView tvFansNum ;
     private TextView tvTotalPrice ;
     private RecyclerView rvFansList;
+    private TextView tvShare ;
 
     private List<FansItemBean> list ;
     private FansListAdapter fansAdapter  ;
@@ -49,6 +53,8 @@ public class FansListActivity extends BaseActivity {
         tvFansNum = llHead.findViewById(R.id.tvFansNum);
         tvTotalPrice = llHead.findViewById(R.id.tvTotalPrice);
         rvFansList = findViewById(R.id.rv_fans_list);
+        tvShare = findViewById(R.id.tvShare);
+        tvShare.setOnClickListener(onClickListener);
         rvFansList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         list = new ArrayList<>();
         fansAdapter = new FansListAdapter(R.layout.fans_list_item,list);
@@ -66,12 +72,12 @@ public class FansListActivity extends BaseActivity {
         disposable.add(ApiUtils.getInstance().getFansList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<List<FansItemBean>>>() {
+                .subscribe(new Consumer<ResultBean<ListBean<FansItemBean>>>() {
                     @Override
-                    public void accept(ResultBean<List<FansItemBean>> result) throws Exception {
-                        if(result!=null && result.getData()!=null){
+                    public void accept(ResultBean<ListBean<FansItemBean>> result) throws Exception {
+                        if(result!=null && result.getData()!=null && null != result.getData().getList()){
                             list.clear();
-                            list.addAll(result.getData());
+                            list.addAll(result.getData().getList());
                             fansAdapter.setNewData(list);
                         }
                     }
@@ -126,9 +132,17 @@ public class FansListActivity extends BaseActivity {
             int resId = view.getId();
             if(resId == R.id.img_title_left){
                 finish();
+            }else if(resId == R.id.tvShare){
+                startFansInviteActivity();
             }
         }
     };
+
+    private void startFansInviteActivity(){
+            String url = getIntent().getStringExtra("shareUrl");
+            String title = getString(R.string.fans_register_app);
+            WebViewActivity.startWebViewActivity(this,url,title);
+    }
 
     @Override
     protected void onDestroy() {

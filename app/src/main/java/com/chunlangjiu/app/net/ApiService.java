@@ -8,6 +8,7 @@ import com.chunlangjiu.app.amain.bean.CartListBean;
 import com.chunlangjiu.app.amain.bean.CheckUpdateBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.fans.bean.FansCodeBean;
@@ -612,7 +613,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<List<FansItemBean>>>  getFansList(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<ListBean<FansItemBean>>>  getFansList(@Field("method") String method, @Field("v") String v);
 
 
     @POST("index.php/topapi")

@@ -213,6 +213,9 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     case R.id.ivService://聊天
                         showCallDialog();
                         break;
+                    case R.id.tvAuctionBuy:
+                        toConfirmOrder();
+                        break;
                     case R.id.ivCollect://收藏
                         changeCollectStatus();
                         break;
@@ -321,11 +324,12 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
         tvMoreExplain.setOnClickListener(onClickListener);
         tvBuy.setOnClickListener(onClickListenerLogin);
+        tvPriceList.setOnClickListener(onClickListener);
         tvAddCart.setOnClickListener(onClickListenerLogin);
         ivService.setOnClickListener(onClickListenerLogin);
         ivCollect.setOnClickListener(onClickListenerLogin);
         rlCart.setOnClickListener(onClickListenerLogin);
-
+        tvAuctionBuy.setOnClickListener(onClickListenerLogin);
         itemId = getIntent().getStringExtra("goodsId");
         disposable = new CompositeDisposable();
     }
@@ -637,7 +641,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     tvPayMoney.setText("已付定金:¥" + goodsDetailBean.getItem().getAuction().getPledge());
                 } else {
                     //已经出过价但是未支付
-                    tvBuy.setText("去支付");
+                    tvAuctionBuy.setText("去支付");
                     tvPayMoney.setText("应付定金:¥" + goodsDetailBean.getItem().getAuction().getPledge());
                     payment_id = auction.getPayment_id();
                 }
