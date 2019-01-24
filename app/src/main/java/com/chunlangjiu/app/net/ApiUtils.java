@@ -559,8 +559,8 @@ public class ApiUtils {
     public Flowable<ResultBean<UserMoneyBean>> getUserMoney(String token){
         return apiService.getUserMoney("member.money","v1",token);
     }
-    public Flowable<ResultBean<FundDetailListBean>> getFundDetails(String token){
-        return apiService.getFundDetails("member.fund","v1",token);
+    public Flowable<ResultBean<FundDetailListBean>> getFundDetails(String token,String type){
+        return apiService.getFundDetails("member.fund","v1",token,type);
     }
     public Flowable<ResultBean> sendSms(String token){
         return apiService.sendSms("user.resetSendSms","v1",token);
