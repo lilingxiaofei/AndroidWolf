@@ -114,9 +114,9 @@ public class PartnerListActivity extends BaseActivity {
             helper.setText(R.id.tv_store_name, item.getShop_name());
             helper.setText(R.id.tvAddress, item.getShop_addr());
 
-            String num = item.getGrade();
+            String num = item.getNum();
             if (TextUtils.isEmpty(num)) {
-                helper.setText(R.id.tvSellGoods, "暂无可售商品");
+                helper.setText(R.id.tvSellGoods, "暂无销售");
             } else {
                 String sellGoods = getString(R.string.sell_goods, num);
                 helper.setText(R.id.tvSellGoods, sellGoods);

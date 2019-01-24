@@ -99,6 +99,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
     private CircleImageView imgStore;
     private TextView tvStoreName;
+    private ImageView ivStoreLevel ;
     private TextView tvStoreDesc;
     private TextView tvLookAll;
 
@@ -279,6 +280,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
         imgStore = findViewById(R.id.imgStore);
         tvStoreName = findViewById(R.id.tvStoreName);
+        ivStoreLevel = findViewById(R.id.ivStoreLevel);
         tvStoreDesc = findViewById(R.id.tvStoreDesc);
         tvLookAll = findViewById(R.id.tvLookAll);
         tvLookAll.setOnClickListener(onClickListener);
@@ -431,6 +433,15 @@ public class GoodsDetailslNewActivity extends BaseActivity {
             tvStoreName.setText(goodsDetailBean.getShop().getShop_name());
             tvStoreDesc.setText(goodsDetailBean.getShop().getShop_descript());
 
+            String level = goodsDetailBean.getShop().getGrade();
+            if("2".equals(level)){
+                ivStoreLevel.setImageResource(R.mipmap.store_partner);
+            }else if("1".equals(level)){
+                ivStoreLevel.setImageResource(R.mipmap.store_star);
+            }else{
+                ivStoreLevel.setImageResource(R.mipmap.store_common);
+            }
+
             Object parameter = goodsDetailBean.getItem().getParameter();
             String arrayStr = parameter == null?"":parameter.toString();
             JSONArray jsonArray = new JSONArray(arrayStr);
@@ -530,7 +541,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     AuctionDetailActivity.startAuctionDetailsActivity(GoodsDetailsNewActivity.this, recommendLists.get(position).getGoodsDetailslNewActivity     } else {
                     GoodsDetailsActivity.startGoodsDetailsActivity(GoodsDetailslNewActivity.this, recommendLists.get(position).getItem_id());
                 }*/
-                GoodsDetailsActivity.startGoodsDetailsActivity(GoodsDetailslNewActivity.this, recommendLists.get(position).getItem_id());
+                GoodsDetailslNewActivity.startActivity(GoodsDetailslNewActivity.this, recommendLists.get(position).getItem_id());
             }
         });
     }

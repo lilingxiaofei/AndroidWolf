@@ -25,8 +25,7 @@ import com.chunlangjiu.app.amain.bean.FirstClassBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.amain.bean.SecondClassBean;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
-import com.chunlangjiu.app.goods.activity.AuctionDetailActivity;
-import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
+import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
@@ -297,13 +296,14 @@ public class GoodsFragment extends BaseFragment {
                 GoodsListDetailBean details= lists.get(position);
                 if(view.getId() == R.id.rl_store_layout){
                     ShopMainActivity.startShopMainActivity(activity, details.getShop_id());
-                }else{
-                    if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
-                        GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), details.getItem_id());
-                    } else {
-                        AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), details.getItem_id());
-                    }
                 }
+            }
+        });
+        goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                GoodsListDetailBean details= lists.get(position);
+                GoodsDetailslNewActivity.startActivity(activity,details.getItem_id());
             }
         });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);

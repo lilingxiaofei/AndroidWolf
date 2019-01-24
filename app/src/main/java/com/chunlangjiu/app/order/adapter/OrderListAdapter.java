@@ -90,8 +90,9 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         break;
                 }
                 break;
-            case 1:
+            case 1://竞拍订单
                 tv1.setVisibility(View.GONE);
+                helper.setVisible(R.id.ivAuctionBid,false );
                 switch (item.getStatus()) {
                     case "0":
                         tv2.setText("去付定金");
@@ -101,15 +102,19 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         tv2.setText("修改出价");
                         tv2.setVisibility(View.VISIBLE);
                         break;
-//                    case "2":
+                    case "2":
+                        helper.setVisible(R.id.ivAuctionBid,true );
+                        helper.setImageResource(R.id.ivAuctionBid,R.mipmap.bid_already );
 //                        tv2.setText("去支付");
 //                        tv2.setVisibility(View.VISIBLE);
 //                        break;
-//                    case "3":
+                    case "3":
 //                        tv2.setText("删除订单");
 //                        tv2.setVisibility(View.VISIBLE);
 //                        break;
                     default:
+                        helper.setVisible(R.id.ivAuctionBid,true );
+                        helper.setImageResource(R.id.ivAuctionBid,R.mipmap.bid_not);
                         tv2.setVisibility(View.GONE);
                         break;
                 }

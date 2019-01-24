@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.webkit.JavascriptInterface;
 
 import com.chunlangjiu.app.amain.activity.LoginActivity;
-import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
+import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.activity.EditGoodsActivity;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -64,7 +64,7 @@ public class JsUtil {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                GoodsDetailsActivity.startGoodsDetailsActivity(activity, item_id);
+                GoodsDetailslNewActivity.startActivity(activity, item_id);
             }
         });
     }
