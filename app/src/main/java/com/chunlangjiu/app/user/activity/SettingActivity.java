@@ -35,7 +35,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_setting);
     }
-    @OnClick({R.id.img_title_left,R.id.tvLoginPwd,R.id.tvMyData,R.id.tvMyAttestation,R.id.tvAddressManager,R.id.tvBankManager,R.id.tvAbout,R.id.tvUseAgreement,R.id.tvLoginOut})
+    @OnClick({R.id.img_title_left,R.id.tvLoginPwd,R.id.tvPayPwd,R.id.tvMyData,R.id.tvMyAttestation,R.id.tvAddressManager,R.id.tvBankManager,R.id.tvAbout,R.id.tvUseAgreement,R.id.tvLoginOut})
     @Override
     public void onClick(View view) {
         int resId = view.getId();
