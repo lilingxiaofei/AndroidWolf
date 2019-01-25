@@ -10,8 +10,9 @@
     <android.support.v7.widget.RecyclerView android:id="@+id/rv_fans_list"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:layout_height="wrap_content"/>
-    <TextView android:id="@+id/rShare"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="65dp"/>
+    <TextView android:id="@+id/tvShare"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="10dp"

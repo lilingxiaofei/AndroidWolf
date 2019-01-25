@@ -290,15 +290,11 @@ public class ShopMainActivity extends BaseActivity {
         lists = new ArrayList<>();
         goodsAdapter = new GoodsAdapter(this, lists);
         goodsAdapter.setShowStoreView(false);
-        goodsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 GoodsListDetailBean details = lists.get(position);
-                if (TextUtils.isEmpty(lists.get(position).getAuction().getAuctionitem_id())) {
-                    GoodsDetailsActivity.startGoodsDetailsActivity(ShopMainActivity.this, lists.get(position).getItem_id());
-                } else {
-                    AuctionDetailActivity.startAuctionDetailsActivity(ShopMainActivity.this, lists.get(position).getItem_id());
-                }
+                GoodsDetailslNewActivity.startActivity(ShopMainActivity.this,details.getItem_id());
             }
         });
 
@@ -479,7 +475,7 @@ public class ShopMainActivity extends BaseActivity {
         tvShopTips.setText(data.getShopInfo().getShop_descript());
         tvShopPhone.setText(data.getShopInfo().getMobile());
         tvDesc.setText(data.getShopInfo().getShop_descript());
-        String shopType = data.getShopInfo().getShop_type();
+        String shopType = data.getShopInfo().getGrade();
 
         String companyStatus = data.getShopInfo().getStatus();
         if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {

@@ -25,6 +25,7 @@ public class ShopInfoBean {
         private String shop_logo;
         private String mobile;
         private String shopname;
+        private String grade ;//店铺等级 0普通店铺，1,星级卖家，2城市合伙人
 
         public String getShopname() {
             return shopname;
@@ -88,6 +89,14 @@ public class ShopInfoBean {
 
         public void setMobile(String mobile) {
             this.mobile = mobile;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
         }
     }
 

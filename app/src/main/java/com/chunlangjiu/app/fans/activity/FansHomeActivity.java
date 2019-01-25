@@ -113,12 +113,16 @@ public class FansHomeActivity extends BaseActivity {
     private void startFansListActivity(){
         Intent intent = new Intent();
         intent.setClass(this,FansListActivity.class);
+        String url = fansBean!=null?fansBean.getUrl():"";
+        intent.putExtra("shareUrl",url);
         startActivity(intent);
     }
     private void startFansInviteActivity(){
-        String url = "http://www.baidu.com";
-        String title = getString(R.string.fans_register_app);
-        WebViewActivity.startWebViewActivity(this,url,title);
+        if(null != fansBean){
+            String url = fansBean.getUrl();
+            String title = getString(R.string.fans_register_app);
+            WebViewActivity.startWebViewActivity(this,url,title);
+        }
     }
     @Override
     public void setTitleView() {

@@ -97,6 +97,7 @@ public class GoodsDetailBean implements Serializable{
         private String shop_type;
         private String shopname;
         private String mobile;
+        private String grade;
 
         public String getShopname() {
             return shopname;
@@ -124,6 +125,14 @@ public class GoodsDetailBean implements Serializable{
 
         public String getShop_name() {
             return shop_name;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
         }
 
         public void setShop_name(String shop_name) {

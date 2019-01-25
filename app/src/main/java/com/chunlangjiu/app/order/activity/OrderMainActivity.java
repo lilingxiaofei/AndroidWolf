@@ -85,8 +85,18 @@ public class OrderMainActivity extends BaseActivity {
         public void onTabSelected(TabLayout.Tab tab) {
             int position = tab.getPosition();
             Bundle bundle = new Bundle();
-            bundle.putInt(OrderParams.TYPE, type);
-            bundle.putInt(OrderParams.TARGET, position);
+            //由于竞拍订单在现在排在了6到10 ；了所以修改逻辑
+            int tempType = 0 ;
+            int temPosition = 0 ;
+            if(type == 0 && position>4){
+                tempType = 1 ;
+                temPosition = position -5 ;
+            }else{
+                tempType = type ;
+                temPosition = position ;
+            }
+            bundle.putInt(OrderParams.TYPE, tempType);
+            bundle.putInt(OrderParams.TARGET, temPosition);
             fragments.get(position).setArguments(bundle);
             vpContent.setCurrentItem(position);
         }

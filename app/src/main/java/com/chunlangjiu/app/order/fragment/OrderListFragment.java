@@ -108,6 +108,19 @@ public class OrderListFragment extends BaseFragment {
 
     private int position;
 
+    /**
+     *  静态工厂方法需要一个int型的值来初始化fragment的参数，
+     *  然后返回新的fragment到调用者
+     */
+    public static OrderListFragment newInstance(int type,int position) {
+        OrderListFragment f = new OrderListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(OrderParams.TYPE, type);
+        bundle.putInt(OrderParams.TARGET, position);
+        f.setArguments(bundle);
+        return f;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -210,7 +223,7 @@ public class OrderListFragment extends BaseFragment {
                     case 5:
                         status = OrderParams.AUCTION_WAIT_PAY;
                         getAuctionOrderLists();
-                     break;
+                        break;
                     case 6:
                         status = OrderParams.AUCTION_BIDDING;
                         getAuctionOrderLists();
@@ -234,19 +247,25 @@ public class OrderListFragment extends BaseFragment {
             case 1:
                 switch (target) {
                     case 0:
-                        status = "";
+                        status = OrderParams.AUCTION_WAIT_PAY;
+                        getAuctionOrderLists();
                         break;
                     case 1:
-                        status = "0";
+                        status = OrderParams.AUCTION_BIDDING;
+                        getAuctionOrderLists();
                         break;
                     case 2:
-                        status = "1";
+                        status = OrderParams.AUCTION_WON_BID;
+                        getAuctionOrderLists();
                         break;
                     case 3:
-                        status = "2";
+                        status = OrderParams.AUCTION_OUTBID;
+                        getAuctionOrderLists();
                         break;
                     case 4:
-                        status = "3";
+
+                        status = OrderParams.AUCTION_DELIVERY;
+                        getAuctionOrderLists();
                         break;
                 }
                 getAuctionOrderLists();

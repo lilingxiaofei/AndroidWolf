@@ -29,7 +29,6 @@ import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.fans.dialog.InviteCodeDialog;
-import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.PartnerListActivity;
@@ -47,7 +46,6 @@ import com.chunlangjiu.app.util.LocationUtils;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.chunlangjiu.app.web.WebViewActivity;
-import com.jaeger.library.StatusBarUtil;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -59,7 +57,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.yanzhenjie.sofia.Sofia;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -861,7 +858,7 @@ public class HomeFragment extends BaseFragment {
     private void functionJump(HomeModulesBean.Pic function, String type) {
         switch (function.getLinktype()) {
             case HomeModulesBean.ITEM_GOODS:
-                GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), function.getLinktarget());
+                GoodsDetailslNewActivity.startActivity(getActivity(), function.getLinktarget());
                 if ("banner".equals(type)) {
                     UmengEventUtil.bannerEvent(getActivity(), "商品");
                 } else {

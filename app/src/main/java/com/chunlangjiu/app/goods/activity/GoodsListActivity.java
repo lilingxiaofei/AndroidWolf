@@ -315,9 +315,14 @@ public class GoodsListActivity extends BaseActivity {
                 GoodsListDetailBean details = lists.get(position);
                 if(view.getId() == R.id.rl_store_layout){
                     ShopMainActivity.startShopMainActivity(GoodsListActivity.this, details.getShop_id());
-                }else{
-                    GoodsDetailsActivity.startGoodsDetailsActivity(GoodsListActivity.this, details.getItem_id());
                 }
+            }
+        });
+        goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                GoodsListDetailBean details = lists.get(position);
+                GoodsDetailslNewActivity.startActivity(GoodsListActivity.this, details.getItem_id());
             }
         });
 

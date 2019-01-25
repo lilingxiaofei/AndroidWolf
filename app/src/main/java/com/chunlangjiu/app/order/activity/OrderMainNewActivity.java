@@ -58,18 +58,18 @@ public class OrderMainNewActivity extends BaseActivity {
 
         rgOrderTab.setVisibility(View.GONE);
         fragments = new ArrayList<>();
-        fragments.add(new OrderListFragment());
-        fragments.add(new OrderListFragment());
-        fragments.add(new OrderListFragment());
-        fragments.add(new OrderListFragment());
-        fragments.add(new OrderListFragment());
+        fragments.add(OrderListFragment.newInstance(type,0));
+        fragments.add(OrderListFragment.newInstance(type,1));
+        fragments.add(OrderListFragment.newInstance(type,2));
+        fragments.add(OrderListFragment.newInstance(type,3));
+        fragments.add(OrderListFragment.newInstance(type,4));
         if(type ==0){
             rgOrderTab.setVisibility(View.VISIBLE);
-            fragments.add(new OrderListFragment());
-            fragments.add(new OrderListFragment());
-            fragments.add(new OrderListFragment());
-            fragments.add(new OrderListFragment());
-            fragments.add(new OrderListFragment());
+            fragments.add(OrderListFragment.newInstance(1,0));
+            fragments.add(OrderListFragment.newInstance(1,1));
+            fragments.add(OrderListFragment.newInstance(1,2));
+            fragments.add(OrderListFragment.newInstance(1,3));
+            fragments.add(OrderListFragment.newInstance(1,4));
         }
 
         myFragmentAdapter = new BaseFragmentAdapter(getSupportFragmentManager());
@@ -104,7 +104,6 @@ public class OrderMainNewActivity extends BaseActivity {
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
             int position = tab.getPosition();
-            Bundle bundle = new Bundle();
             if(position<5){
                 rbOrderGoods.setChecked(true);
                 rbOrderGoods.setTag(R.id.position,position);
@@ -112,9 +111,6 @@ public class OrderMainNewActivity extends BaseActivity {
                 rbOrderAction.setChecked(true);
                 rbOrderAction.setTag(R.id.position,position);
             }
-            bundle.putInt(OrderParams.TYPE, type);
-            bundle.putInt(OrderParams.TARGET, position);
-            fragments.get(position).setArguments(bundle);
             vpContent.setCurrentItem(position);
         }
 

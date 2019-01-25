@@ -18,6 +18,7 @@ public class PartnerBean {
     private String grade;
     private String shopname;
     private String shoptype;
+    private String num ;
 
     public String getShop_id() {
         return shop_id;
@@ -113,5 +114,13 @@ public class PartnerBean {
 
     public void setShoptype(String shoptype) {
         this.shoptype = shoptype;
+    }
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
     }
 }

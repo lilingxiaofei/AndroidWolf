@@ -6,6 +6,7 @@ import com.chunlangjiu.app.amain.bean.CartListBean;
 import com.chunlangjiu.app.amain.bean.CheckUpdateBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.fans.bean.FansCodeBean;
@@ -523,7 +524,7 @@ public class ApiUtils {
         return apiService.getPartnerList("shop.featured", "v1");
     }
 
-    public Flowable<ResultBean<List<FansItemBean>>> getFansList() {
+    public Flowable<ResultBean<ListBean<FansItemBean>>> getFansList() {
         return apiService.getFansList("member.fans.list", "v1");
     }
     public Flowable<ResultBean<FansNumBean>> getFansInfo() {

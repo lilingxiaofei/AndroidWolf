@@ -558,10 +558,11 @@ public class UserFragment extends BaseFragment {
             tvName.setText(loginAccount);
 
             tvMyTitle.setText("买家中心");
+            ivSwitchIcon.setImageResource(R.mipmap.center_seller);
+            tvSwitchText.setText("进入卖家中心");
 //            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
 ////                tvMyTitle.setText("企业买家");
 //                tvMyTitle.setText("卖家中心");
-//                tvSwitchText.setText("进入买家中心");
 //                ivSwitchIcon.setImageResource(R.mipmap.center_seller);
 //                imgMyTitleType.setImageResource(R.mipmap.my_company);
 //            } else {
@@ -596,8 +597,8 @@ public class UserFragment extends BaseFragment {
 
 
             tvMyTitle.setText("卖家中心");
-            tvSwitchText.setText("进入买家中心");
             ivSwitchIcon.setImageResource(R.mipmap.center_buyer);
+            tvSwitchText.setText("进入买家中心");
 
 //            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
 //                tvMyTitle.setText("企业卖家");
