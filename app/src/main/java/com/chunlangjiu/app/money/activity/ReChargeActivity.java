@@ -43,15 +43,16 @@ import io.reactivex.schedulers.Schedulers;
 public class ReChargeActivity extends BaseActivity {
     private static final int SDK_PAY_FLAG = 1;
     public static final String ReChargeType = "ReChargeType";
+    public static final String DepositMoney="DepositMoney";
 
-    @BindView(R.id.relBalance)
-    RelativeLayout relBalance;
-    @BindView(R.id.imgBalance)
-    ImageView imgBalance;
-    @BindView(R.id.relSecurityDeposit)
-    RelativeLayout relSecurityDeposit;
-    @BindView(R.id.imgSecurityDeposit)
-    ImageView imgSecurityDeposit;
+//    @BindView(R.id.relBalance)
+//    RelativeLayout relBalance;
+//    @BindView(R.id.imgBalance)
+//    ImageView imgBalance;
+//    @BindView(R.id.relSecurityDeposit)
+//    RelativeLayout relSecurityDeposit;
+//    @BindView(R.id.imgSecurityDeposit)
+//    ImageView imgSecurityDeposit;
     @BindView(R.id.relWx)
     RelativeLayout relWx;
     @BindView(R.id.imgWxCheck)
@@ -86,14 +87,17 @@ public class ReChargeActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         setContentView(R.layout.activity_re_charge);
         rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
-        if (null == rechargeType) {
-            toggleBalanceSecurityDeposit(RechargeType.Balance);
-        } else {
-            toggleBalanceSecurityDeposit(rechargeType);
-        }
         togglePayType(PayType.Wx);
         initPay();
+        initView();
         initData();
+    }
+
+    private void initView() {
+        if (rechargeType==RechargeType.SecurityDeposit){
+            edtMoney.setEnabled(false);
+            edtMoney.setText(getIntent().getStringExtra(DepositMoney));
+        }
     }
 
     private void initPay() {
@@ -291,10 +295,15 @@ public class ReChargeActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
-        titleName.setText("充值");
+        rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
+        if (rechargeType==RechargeType.SecurityDeposit){
+            titleName.setText("交纳保证金");
+        }else {
+            titleName.setText("充值");
+        }
     }
 
-    @OnClick({R.id.btnOk, R.id.relBalance, R.id.relSecurityDeposit, R.id.relWx, R.id.relZfb, R.id.img_title_left})
+    @OnClick({R.id.btnOk, R.id.relWx, R.id.relZfb, R.id.img_title_left})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnOk:
@@ -306,12 +315,12 @@ public class ReChargeActivity extends BaseActivity {
                     createDespositOrder();
                 }
                 break;
-            case R.id.relBalance:
-                toggleBalanceSecurityDeposit(RechargeType.Balance);
-                break;
-            case R.id.relSecurityDeposit:
-                toggleBalanceSecurityDeposit(RechargeType.SecurityDeposit);
-                break;
+//            case R.id.relBalance:
+//                toggleBalanceSecurityDeposit(RechargeType.Balance);
+//                break;
+//            case R.id.relSecurityDeposit:
+//                toggleBalanceSecurityDeposit(RechargeType.SecurityDeposit);
+//                break;
             case R.id.relWx:
                 togglePayType(PayType.Wx);
                 break;
@@ -324,21 +333,21 @@ public class ReChargeActivity extends BaseActivity {
         }
 
     }
-
-    public void toggleBalanceSecurityDeposit(RechargeType rechargeType) {
-        this.rechargeType = rechargeType;
-        switch (rechargeType) {
-            case Balance:
-                imgBalance.setSelected(true);
-                imgSecurityDeposit.setSelected(false);
-                break;
-            case SecurityDeposit:
-                imgBalance.setSelected(false);
-                imgSecurityDeposit.setSelected(true);
-                break;
-        }
-
-    }
+//
+//    public void toggleBalanceSecurityDeposit(RechargeType rechargeType) {
+//        this.rechargeType = rechargeType;
+//        switch (rechargeType) {
+//            case Balance:
+//                imgBalance.setSelected(true);
+//                imgSecurityDeposit.setSelected(false);
+//                break;
+//            case SecurityDeposit:
+//                imgBalance.setSelected(false);
+//                imgSecurityDeposit.setSelected(true);
+//                break;
+//        }
+//
+//    }
 
     public void togglePayType(PayType payType) {
         this.payType = payType;
