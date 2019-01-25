@@ -667,6 +667,7 @@ public class UserFragment extends BaseFragment {
                         shopName = userInfoBeanResultBean.getData().getShop_name();
                         tvName.setText(loginAccount);
                         SPUtils.put("account",loginAccount);
+                        SPUtils.put("avator",userInfoBeanResultBean.getData().getHead_portrait());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
