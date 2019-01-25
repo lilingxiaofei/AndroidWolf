@@ -188,9 +188,9 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlService;
     /*我的管理*/
 
-    private static final int TYPE_BUYER = 0;//买家中心
-    private static final int TYPE_SELLER = 1;//卖家中心
-    private int userType = TYPE_BUYER;
+    public static final int TYPE_BUYER = 0;//买家中心
+    public static final int TYPE_SELLER = 1;//卖家中心
+    public static int userType = TYPE_BUYER;
     private String companyStatus;
     private String personStatus;
 
