@@ -238,7 +238,7 @@
                         android:id="@+id/imgFront"
                         android:layout_width="200dp"
                         android:layout_height="110dp"
-                        android:background="@drawable/bg_round_blue"/>
+                        android:src="@mipmap/id_card_front"/>
                     <Button
                         android:id="@+id/btnFront"
                         android:layout_width="200dp"
@@ -294,7 +294,7 @@
                         android:id="@+id/imgBehind"
                         android:layout_width="200dp"
                         android:layout_height="110dp"
-                        android:background="@drawable/bg_round_blue"/>
+                        android:src="@mipmap/id_card_behind"/>
                     <Button
                         android:id="@+id/btnBehind"
                         android:layout_width="200dp"
@@ -350,7 +350,7 @@
                     android:id="@+id/imgPerson"
                     android:layout_width="200dp"
                     android:layout_height="110dp"
-                    android:background="@drawable/bg_round_blue"/>
+                    android:src="@mipmap/id_card_person"/>
                 <Button
                     android:id="@+id/btnPerson"
                     android:layout_width="200dp"

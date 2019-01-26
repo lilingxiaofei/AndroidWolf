@@ -184,9 +184,9 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlService;
     /*我的管理*/
 
-    private static final int TYPE_BUYER = 0;//买家中心
-    private static final int TYPE_SELLER = 1;//卖家中心
-    private int userType = TYPE_BUYER;
+    public static final int TYPE_BUYER = 0;//买家中心
+    public static final int TYPE_SELLER = 1;//卖家中心
+    public static int userType = TYPE_BUYER;
     private String companyStatus;
     private String personStatus;
 
@@ -663,6 +663,7 @@ public class UserFragment extends BaseFragment {
                         shopName = userInfoBeanResultBean.getData().getShop_name();
                         tvName.setText(loginAccount);
                         SPUtils.put("account",loginAccount);
+                        SPUtils.put("avator",userInfoBeanResultBean.getData().getHead_portrait());
                     }
                 }, new Consumer<Throwable>() {
                     @Override

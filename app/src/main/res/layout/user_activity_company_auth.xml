@@ -320,7 +320,7 @@
                         android:id="@+id/imgLicense"
                         android:layout_width="200dp"
                         android:layout_height="110dp"
-                        android:background="@drawable/bg_round_blue"/>
+                        android:src="@mipmap/business_license"/>
                     <Button
                         android:id="@+id/btnLicense"
                         android:layout_width="200dp"
@@ -368,7 +368,7 @@
                         android:id="@+id/imgIdCardFront"
                         android:layout_width="200dp"
                         android:layout_height="110dp"
-                        android:background="@drawable/bg_round_blue"/>
+                        android:src="@mipmap/id_card_front"/>
                     <Button
                         android:id="@+id/btnIdCardFront"
                         android:layout_width="200dp"
@@ -424,7 +424,7 @@
                         android:id="@+id/imgIdCardBehind"
                         android:layout_width="200dp"
                         android:layout_height="110dp"
-                        android:background="@drawable/bg_round_blue"/>
+                        android:src="@mipmap/id_card_behind"/>
                     <Button
                         android:id="@+id/btnIdCardBehind"
                         android:layout_width="200dp"
