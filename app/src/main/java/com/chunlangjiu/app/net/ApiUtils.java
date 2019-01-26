@@ -47,6 +47,7 @@ import com.chunlangjiu.app.store.bean.StoreDetailBean;
 import com.chunlangjiu.app.store.bean.StoreListBean;
 import com.chunlangjiu.app.user.bean.AddressListBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
+import com.chunlangjiu.app.user.bean.BankCardInfoBean;
 import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.user.bean.EditGoodsDetailBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
@@ -98,7 +99,7 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<CheckUpdateBean>> checkUpdate() {
-        return apiService.checkUpdate("app.versions", "v1", "android","chunlang");
+        return apiService.checkUpdate("app.versions", "v1", "android", "chunlang");
     }
 
 
@@ -118,17 +119,17 @@ public class ApiUtils {
         return apiService.setPsd("user.forgot.resetpassword", "v2", account, vcode, psd);
     }
 
-    public Flowable<ResultBean> updateLoginPassword (String newPwd, String confirmPwd, String pwd) {
-        return apiService.updateLoginPassword("member.security.updateLoginPassword", "v1", newPwd,confirmPwd, pwd);
-    }
-    public Flowable<ResultBean> updatePayPassword (String newPwd, String confirmPwd, String pwd) {
-        return apiService.setPayPwd("member.security.updatePayPassword", "v1", newPwd,confirmPwd, pwd);
+    public Flowable<ResultBean> updateLoginPassword(String newPwd, String confirmPwd, String pwd) {
+        return apiService.updateLoginPassword("member.security.updateLoginPassword", "v1", newPwd, confirmPwd, pwd);
     }
 
-    public Flowable<ResultBean> sendSmsCode (String pwd, String confirmPwd, String code) {
-        return apiService.sendSmsCode("user.resetSendSms", "v1", pwd,confirmPwd, code);
+    public Flowable<ResultBean> updatePayPassword(String newPwd, String confirmPwd, String pwd) {
+        return apiService.setPayPwd("member.security.updatePayPassword", "v1", newPwd, confirmPwd, pwd);
     }
 
+    public Flowable<ResultBean> sendSmsCode(String pwd, String confirmPwd, String code) {
+        return apiService.sendSmsCode("user.resetSendSms", "v1", pwd, confirmPwd, code);
+    }
 
 
     public Flowable<ResultBean> logout() {
@@ -154,7 +155,7 @@ public class ApiUtils {
     public Flowable<ResultBean> companyAuth(String company_name, String representative, String license_num, String establish_date, String area,
                                             String address, String company_phone, String license_img, String shopuser_identity_img_z, String food_or_wine_img) {
         return apiService.companyAuth("member.enterprise", "v1", company_name, representative, license_num, establish_date, area,
-                address, company_phone, license_img, shopuser_identity_img_z,food_or_wine_img);
+                address, company_phone, license_img, shopuser_identity_img_z, food_or_wine_img);
     }
 
     public Observable<ResultBean<AuthStatusBean>> getPersonAuthStatus() {
@@ -240,7 +241,7 @@ public class ApiUtils {
 
     //获取我的模块的数量上标
     public Flowable<ResultBean<MyNumBean>> getMyNumFlag(String type) {
-        return apiService.getMyNumFlag("member.index", "v1",type);
+        return apiService.getMyNumFlag("member.index", "v1", type);
     }
 
     public Flowable<ResultBean<StoreClassListBean>> getStoreClass() {
@@ -527,6 +528,7 @@ public class ApiUtils {
     public Flowable<ResultBean<ListBean<FansItemBean>>> getFansList() {
         return apiService.getFansList("member.fans.list", "v1");
     }
+
     public Flowable<ResultBean<FansNumBean>> getFansInfo() {
         return apiService.getFansInfo("member.fans.sum", "v1");
     }
@@ -534,12 +536,13 @@ public class ApiUtils {
     public Flowable<ResultBean<FansCodeBean>> getMyInvitationCode() {
         return apiService.getMyInvitationCode("member.code.get", "v1");
     }
+
     public Flowable<ResultBean<FansBean>> setInvitationCode(String inviteCode) {
-        return apiService.setInvitationCode("member.code.set", "v1",inviteCode);
+        return apiService.setInvitationCode("member.code.set", "v1", inviteCode);
     }
 
     public Flowable<ResultBean> submitInviteCode(String inviteCode) {
-        return apiService.submitInviteCode("user.update.shop", "v1",inviteCode);
+        return apiService.submitInviteCode("user.update.shop", "v1", inviteCode);
     }
 
     public Flowable<ResultBean<BankCardListBean>> getBankCardList(String token) {
@@ -551,39 +554,52 @@ public class ApiUtils {
         return apiService.addBankCardList("member.bank.add", "v1", token, name, bank, card
                 , bank_branch, idcard, mobile, verifycode);
     }
-    public Flowable<ResultBean> deleteBankCard(String token, String bankCardId){
-        return apiService.deleteBankCard("member.bank.delete","v1",token,bankCardId);
+
+    public Flowable<ResultBean> deleteBankCard(String token, String bankCardId) {
+        return apiService.deleteBankCard("member.bank.delete", "v1", token, bankCardId);
     }
-    public Flowable<ResultBean<DepositCashBean>> depositCash(String token, String bankCardId, String amount){
-        return apiService.depositCash("member.deposit.cash","v1",token,bankCardId,amount);
+
+    public Flowable<ResultBean<DepositCashBean>> depositCash(String token, String bankCardId, String amount) {
+        return apiService.depositCash("member.deposit.cash", "v1", token, bankCardId, amount);
     }
-    public Flowable<ResultBean<UserMoneyBean>> getUserMoney(String token){
-        return apiService.getUserMoney("member.money","v1",token);
+
+    public Flowable<ResultBean<UserMoneyBean>> getUserMoney(String token) {
+        return apiService.getUserMoney("member.money", "v1", token);
     }
-    public Flowable<ResultBean<FundDetailListBean>> getFundDetails(String token,String type){
-        return apiService.getFundDetails("member.fund","v1",token,type);
+
+    public Flowable<ResultBean<FundDetailListBean>> getFundDetails(String token, String type) {
+        return apiService.getFundDetails("member.fund", "v1", token, type);
     }
-    public Flowable<ResultBean> sendSms(String token){
-        return apiService.sendSms("user.resetSendSms","v1",token);
+
+    public Flowable<ResultBean> sendSms(String token) {
+        return apiService.sendSms("user.resetSendSms", "v1", token);
     }
-    public Flowable<ResultBean<CreateRechargeOrderBean>> reCharge(String token, String money){
-        return apiService.reCharge("payment.pay.storedCreate","v1",token,money);
+
+    public Flowable<ResultBean<CreateRechargeOrderBean>> reCharge(String token, String money) {
+        return apiService.reCharge("payment.pay.storedCreate", "v1", token, money);
     }
-//    public Flowable<ResultBean> storedPay(String payment_id,String pay_app_id ,String platform,String money,String type){
+
+    //    public Flowable<ResultBean> storedPay(String payment_id,String pay_app_id ,String platform,String money,String type){
 //        return apiService.storedPay("payment.stored.pay","v1",payment_id,pay_app_id,platform,money,type);
 //    }
-    public Flowable<ResultBean<CreateRechargeOrderBean>> depositCreate(String token){
-        return apiService.depositCreate("payment.pay.depositCreate","v1",token);
+    public Flowable<ResultBean<CreateRechargeOrderBean>> depositCreate(String token) {
+        return apiService.depositCreate("payment.pay.depositCreate", "v1", token);
     }
-    public Flowable<ResultBean<DepositBean>> getDeposit(String token){
-        return apiService.getDeposit("member.deposit.get","v1",token);
+
+    public Flowable<ResultBean<DepositBean>> getDeposit(String token) {
+        return apiService.getDeposit("member.deposit.get", "v1", token);
 
     }
-    public Flowable<ResultBean<DepositCashBean>> depositRefund(String token,String bank_id){
-        return apiService.depositRefund("member.deposit.refund","v1",token,bank_id);
+
+    public Flowable<ResultBean<DepositCashBean>> depositRefund(String token, String bank_id) {
+        return apiService.depositRefund("member.deposit.refund", "v1", token, bank_id);
     }
-//    public Flowable<ResultBean> depositPay(String payment_id,String pay_app_id ,String platform,String money,String type){
+
+    //    public Flowable<ResultBean> depositPay(String payment_id,String pay_app_id ,String platform,String money,String type){
 //        return apiService.depositPay("payment.deposit.pay","v1",payment_id,pay_app_id,platform,money,type);
 //    }
+    public Flowable<ResultBean<BankCardInfoBean>> getBankCardInfo(String token, String bank_id) {//member.bank.get
+        return apiService.bankCardGet("member.bank.get", "v1", token, bank_id);
+    }
 
 }

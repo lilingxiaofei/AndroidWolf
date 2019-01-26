@@ -36,11 +36,12 @@
             android:id="@+id/tvBankCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="--"/>
+            android:text="请选择银行卡"/>
 
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/lineMoney"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="@dimen/dp_10"
@@ -61,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:hint="最多可提（¥1250.00）"
+            android:hint=""
             android:paddingLeft="35dp"
             android:textColorHint="#999999"
             android:textSize="13sp" />
@@ -69,11 +70,12 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvTips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
-        android:text="单笔提现金额最大位50000.00元"
+        android:text=""
         android:textColorHint="#999999"
         android:textSize="12sp" />
 

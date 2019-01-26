@@ -49,6 +49,7 @@ import com.chunlangjiu.app.store.bean.StoreDetailBean;
 import com.chunlangjiu.app.store.bean.StoreListBean;
 import com.chunlangjiu.app.user.bean.AddressListBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
+import com.chunlangjiu.app.user.bean.BankCardInfoBean;
 import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.user.bean.EditGoodsDetailBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
@@ -686,4 +687,8 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> depositPay(@Field("method")String method, @Field("v")String v,@Field("payment_id")String payment_id,@Field("pay_app_id")String pay_app_id ,@Field("platform")String platform,@Field("money")String money,@Field("type")String type);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<BankCardInfoBean>> bankCardGet(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("card")String bank_id);
 }
