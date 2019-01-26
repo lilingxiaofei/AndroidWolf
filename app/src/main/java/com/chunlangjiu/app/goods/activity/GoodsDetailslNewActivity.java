@@ -183,7 +183,8 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     toConfirmOrder();
                     break;
                 case R.id.tvPriceList://查看出价
-                    showPriceListDialog();
+//                    showPriceListDialog();
+                    GoodsPriceListActivity.startActivity(GoodsDetailslNewActivity.this,goodsDetailBean.getItem().getAuction().getAuctionitem_id());
                     break;
                 case R.id.tvLookAll://查看店铺
                     ShopMainActivity.startShopMainActivity(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_id());

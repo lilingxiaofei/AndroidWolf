@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -14,9 +15,14 @@ import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.fans.bean.FansNumBean;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.order.bean.OrderListBean;
+import com.chunlangjiu.app.util.ShareUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.TimeUtils;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +66,7 @@ public class FansListActivity extends BaseActivity {
         fansAdapter = new FansListAdapter(R.layout.fans_list_item,list);
         fansAdapter.addHeaderView(llHead);
         rvFansList.setAdapter(fansAdapter);
+        fansAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) rvFansList.getParent(), false));
     }
 
     private void initData(){
@@ -121,7 +128,7 @@ public class FansListActivity extends BaseActivity {
         protected void convert(BaseViewHolder helper, FansItemBean item) {
             helper.setText(R.id.tv_fans_name,item.getName());
             helper.setText(R.id.tv_fans_phone,item.getMobile());
-            helper.setText(R.id.tv_register_time,item.getCreatetime());
+            helper.setText(R.id.tv_register_time, TimeUtils.millisToDate(item.getCreatetime() + "000"));
             helper.setText(R.id.tv_money,item.getCommission());
         }
     }
@@ -133,7 +140,7 @@ public class FansListActivity extends BaseActivity {
             if(resId == R.id.img_title_left){
                 finish();
             }else if(resId == R.id.tvShare){
-                startFansInviteActivity();
+                showShare();
             }
         }
     };
@@ -142,6 +149,33 @@ public class FansListActivity extends BaseActivity {
             String url = getIntent().getStringExtra("shareUrl");
             String title = getString(R.string.fans_register_app);
             WebViewActivity.startWebViewActivity(this,url,title);
+    }
+
+    private void showShare() {
+        String url = getIntent().getStringExtra("shareUrl");
+        UMImage thumb = new UMImage(this, R.mipmap.launcher);
+        UMWeb web = new UMWeb(url);
+        web.setTitle(getString(R.string.fans_register_app));//标题
+        web.setThumb(thumb);  //缩略图
+        web.setDescription(getString(R.string.fans_register_app));//描述
+
+        ShareUtils.shareLink(this, web, new UMShareListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+            }
+
+            @Override
+            public void onResult(SHARE_MEDIA share_media) {
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media) {
+            }
+        });
     }
 
     @Override

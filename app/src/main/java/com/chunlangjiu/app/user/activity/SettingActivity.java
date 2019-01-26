@@ -23,7 +23,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setTitleView() {
-
+        titleName.setText("设置");
     }
 
     public static void startActivity(Activity activity){

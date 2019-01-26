@@ -8,6 +8,7 @@ public class GivePriceBean {
 
     private String mobile;
     private String price;
+    private String time ;
 
     public String getMobile() {
         return mobile;
@@ -23,5 +24,13 @@ public class GivePriceBean {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

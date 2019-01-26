@@ -3,6 +3,7 @@ package com.chunlangjiu.app.goods.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.goods.bean.GivePriceBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.TimeUtils;
 
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class GoodsPriceListActivity extends BaseActivity {
 
     private void initView() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        priceAdapter = new PriceAdapter(R.layout.goods_item_auction_price, priceList);
+        priceAdapter = new PriceAdapter(R.layout.goods_item_auction_price_new, priceList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(priceAdapter);
     }
@@ -105,6 +107,14 @@ public class GoodsPriceListActivity extends BaseActivity {
         @Override
         protected void convert(BaseViewHolder helper, GivePriceBean item) {
             helper.setText(R.id.tvMobile, item.getMobile());
+            if(helper.getLayoutPosition() ==0 ){
+                helper.setText(R.id.tvMaxPrice,"领先");
+                helper.setTextColor(R.id.tvMaxPrice, ContextCompat.getColor(GoodsPriceListActivity.this,R.color.t_red));
+            }else{
+                helper.setTextColor(R.id.tvMaxPrice, ContextCompat.getColor(GoodsPriceListActivity.this,R.color.t_gray));
+                helper.setText(R.id.tvMaxPrice,"落后");
+            }
+            helper.setText(R.id.tvTime, TimeUtils.millisToDate(item.getTime()+"000"));
             helper.setText(R.id.tvPrice, "(" + "¥" + item.getPrice() + ")");
         }
     }

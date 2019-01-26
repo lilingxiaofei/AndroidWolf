@@ -22,7 +22,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener{
     TextView tvVersionName;
     @Override
     public void setTitleView() {
-        titleName.setText("关于");
+        titleName.setText("关于醇狼");
         titleImgLeft.setOnClickListener(this);
     }
 
@@ -39,7 +39,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_activity);
 
-        tvVersionName.setText("醇狼"+AppUtils.getAppName());
+        tvVersionName.setText("醇狼"+AppUtils.getVersionName());
     }
     @OnClick({R.id.img_title_left})
     @Override

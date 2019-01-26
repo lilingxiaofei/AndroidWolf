@@ -174,6 +174,7 @@ public class ShopMainActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
+                case R.id.ivBack:
                 case R.id.img_title_left:
                     finish();
                     break;

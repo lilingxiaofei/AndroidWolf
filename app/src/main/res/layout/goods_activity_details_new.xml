@@ -173,7 +173,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -672,7 +672,7 @@
 
                 <ImageView
                     android:id="@+id/imgCart"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:src="@mipmap/tab_cart_normal" />
@@ -682,14 +682,13 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_alignTop="@id/imgCart"
-                    android:layout_marginLeft="-10dp"
-                    android:layout_marginTop="-5dp"
+                    android:layout_marginLeft="-6dp"
+                    android:layout_marginTop="-6dp"
                     android:layout_toRightOf="@id/imgCart"
                     android:background="@drawable/cart_num_bg"
                     android:gravity="center"
                     android:textColor="@color/t_white"
                     android:textSize="8sp"
-                    android:visibility="gone"
                     tools:text="1" />
 
             </RelativeLayout>
