@@ -3,7 +3,10 @@ package com.chunlangjiu.app.user.activity;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.user.bean.BankCardInfoBean;
+import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.user.bean.LocalAreaBean;
 import com.chunlangjiu.app.util.AreaUtils;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -77,6 +82,30 @@ public class AddBankCardActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bank_card);
         initData();
+        initEvent();
+    }
+
+    private void initEvent() {
+        edtBankCard.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()>= 8){
+                    Log.i("bankCardId",s.toString());
+                    getBankCardInfo(s.toString());
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -191,6 +220,27 @@ public class AddBankCardActivity extends BaseActivity {
             });
         }
         return data;
+    }
+    private void getBankCardInfo(String cardId){
+        disposable.add(ApiUtils.getInstance().getBankCardInfo((String) SPUtils.get("token", ""), cardId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<BankCardInfoBean>>() {
+                    @Override
+                    public void accept(ResultBean<BankCardInfoBean> resultBean) throws Exception {
+                        if (null!=resultBean&&null!=resultBean.getData()){
+                            BankCardInfoBean bankCardInfoBean = resultBean.getData();
+                            edtBankName.setText(bankCardInfoBean.getBankname());
+                        }
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                }));
+
     }
 
     private void addBankCardList() {

@@ -7,54 +7,54 @@
     android:orientation="vertical"
     tools:context=".money.activity.ReChargeActivity">
 
-    <RelativeLayout
-        android:id="@+id/relBalance"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:gravity="center_vertical">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/relBalance"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:gravity="center_vertical">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="余额"
-            android:textColor="@color/black" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:text="余额"-->
+            <!--android:textColor="@color/black" />-->
 
-        <ImageView
-            android:id="@+id/imgBalance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/recharge_select" />
+        <!--<ImageView-->
+            <!--android:id="@+id/imgBalance"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:background="@drawable/recharge_select" />-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
-    <RelativeLayout
-        android:id="@+id/relSecurityDeposit"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/white"
-        android:gravity="center_vertical">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/relSecurityDeposit"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginTop="1dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:gravity="center_vertical">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="保证金"
-            android:textColor="@color/black" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:text="保证金"-->
+            <!--android:textColor="@color/black" />-->
 
-        <ImageView
-            android:id="@+id/imgSecurityDeposit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/recharge_select" />
+        <!--<ImageView-->
+            <!--android:id="@+id/imgSecurityDeposit"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:background="@drawable/recharge_select" />-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
