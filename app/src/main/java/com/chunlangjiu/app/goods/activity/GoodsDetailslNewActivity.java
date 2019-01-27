@@ -450,14 +450,24 @@ public class GoodsDetailslNewActivity extends BaseActivity {
             String arrayStr = parameter == null?"":parameter.toString();
             JSONArray jsonArray = new JSONArray(arrayStr);
             if (jsonArray != null && jsonArray.length() > 0) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject objItem = jsonArray.getJSONObject(i);
+                for (int i = -1; i < jsonArray.length(); i++) {
                     View infoView = getLayoutInflater().inflate(R.layout.goods_activity_details_new_table_item, null);
                     TextView tvLabel = infoView.findViewById(R.id.tvLabel);
                     TextView tvValue = infoView.findViewById(R.id.tvValue);
-                    tvLabel.setText(objItem.optString("title"));
-                    tvValue.setText(objItem.optString("value"));
-                    llInfoList.addView(infoView);
+
+                    if(i==-1){
+                        tvLabel.setText("商品名称：");
+                        tvValue.setText(goodsDetailBean.getItem().getTitle());
+                        llInfoList.addView(infoView);
+                    }else{
+                        JSONObject objItem = jsonArray.getJSONObject(i);
+                        if(!TextUtils.isEmpty(objItem.optString("value"))&& !TextUtils.isEmpty(objItem.optString("value"))){
+                            tvLabel.setText(objItem.optString("title")+"：");
+                            tvValue.setText(objItem.optString("value"));
+                            llInfoList.addView(infoView);
+                        }
+                    }
+
                 }
                 llAuctionInfo.setVisibility(View.VISIBLE);
             } else {

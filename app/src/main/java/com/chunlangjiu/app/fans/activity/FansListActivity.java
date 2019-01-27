@@ -128,7 +128,7 @@ public class FansListActivity extends BaseActivity {
         protected void convert(BaseViewHolder helper, FansItemBean item) {
             helper.setText(R.id.tv_fans_name,item.getName());
             helper.setText(R.id.tv_fans_phone,item.getMobile());
-            helper.setText(R.id.tv_register_time, TimeUtils.millisToDate(item.getCreatetime() + "000"));
+            helper.setText(R.id.tv_register_time, TimeUtils.millisToYearMD(item.getCreatetime() + "000"));
             helper.setText(R.id.tv_money,item.getCommission());
         }
     }

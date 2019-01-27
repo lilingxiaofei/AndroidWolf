@@ -115,7 +115,7 @@ public class GoodsPriceListActivity extends BaseActivity {
                 helper.setText(R.id.tvMaxPrice,"落后");
             }
             helper.setText(R.id.tvTime, TimeUtils.millisToDate(item.getTime()+"000"));
-            helper.setText(R.id.tvPrice, "(" + "¥" + item.getPrice() + ")");
+            helper.setText(R.id.tvPrice, "" + "¥" + item.getPrice() + "");
         }
     }
 

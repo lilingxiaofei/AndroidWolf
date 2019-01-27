@@ -520,9 +520,11 @@
                     android:scaleType="fitCenter"/>
             </LinearLayout>
 
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="50dp"
                 android:background="@color/bg_gray">
 
                 <TextView
@@ -535,15 +537,13 @@
                     android:textColor="@color/t_black"
                     android:textSize="@dimen/sp_small" />
             </RelativeLayout>
-
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/t_gray"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:background="@color/bg_gray"
                 android:layout_marginBottom="12dp"/>
             <LinearLayout
                 android:id="@+id/llSeeMore"
