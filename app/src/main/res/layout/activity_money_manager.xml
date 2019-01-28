@@ -22,8 +22,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="@color/top_tab_selector"
-                android:text="余额" />
+                android:text="余额"
+                android:textColor="@color/top_tab_selector" />
 
             <View
                 android:id="@+id/vLineBalance"
@@ -46,8 +46,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="@color/top_tab_selector"
-                android:text="保证金" />
+                android:text="保证金"
+                android:textColor="@color/top_tab_selector" />
 
             <View
                 android:id="@+id/vLineSecurityDeposit"
@@ -80,20 +80,23 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvAvailableBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="可用余额"
+                    android:text="--"
+
                     android:textColor="#B31F3F"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tvAvailableBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/layout_margin_8dp"
-                    android:text="--"
+                    android:text="可用余额"
                     android:textColor="#333333"
-                    android:textSize="12sp"/>
+
+                    android:textSize="12sp" />
+
 
             </LinearLayout>
 
@@ -105,20 +108,21 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvFreezeBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="冻结余额"
+                    android:text="--"
                     android:textColor="#B31F3F"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/tvFreezeBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/layout_margin_8dp"
-                    android:text="--"
+                    android:text="冻结余额"
                     android:textColor="#333333"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
+
 
             </LinearLayout>
         </LinearLayout>
@@ -152,6 +156,7 @@
         </LinearLayout>
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/relSecurityDeposit"
         android:layout_width="match_parent"
@@ -163,43 +168,46 @@
             android:layout_height="80dp"
             android:layout_margin="@dimen/dp_10"
             android:background="@drawable/bg_white_solid"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="保证金额"
-                android:textColor="#B31F3F"
-                android:textSize="12sp"
-                />
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvDepositCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/layout_margin_8dp"
+                android:textColor="#B31F3F"
                 android:text="--"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_8dp"
+                android:text="保证金额"
                 android:textColor="#333333"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
+
 
         </LinearLayout>
+
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lineDepositCount"
             android:layout_marginTop="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_below="@+id/lineDepositCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/deposit_security_desc"/>
+            android:text="@string/deposit_security_desc" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/bg_white"
             android:gravity="center"
-            android:padding="@dimen/dp_10"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_10">
+
             <Button
                 android:id="@+id/btnPaySecurityDeposit"
                 android:layout_width="match_parent"
@@ -210,7 +218,6 @@
                 android:textSize="@dimen/text_size_15sp" />
         </LinearLayout>
     </RelativeLayout>
-
 
 
     <!--<LinearLayout-->

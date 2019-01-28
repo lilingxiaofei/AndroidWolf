@@ -136,18 +136,27 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> personAuth(@Field("method") String method, @Field("v") String v,
-                                    @Field("name") String name, @Field("idcard") String idcard,
+                                    @Field("name") String name,@Field ("mobile")String mobile, @Field("idcard") String idcard,
                                     @Field("dentity") String dentity, @Field("dentity_front") String dentity_front,
                                     @Field("dentity_reverse") String dentity_reverse);
 
+//    @POST("index.php/topapi")
+//    @FormUrlEncoded
+//    Flowable<ResultBean> companyAuth(@Field("method") String method, @Field("v") String v,
+//                                     @Field("company_name") String company_name, @Field("representative") String representative,
+//                                     @Field("license_num") String license_num, @Field("establish_date") String establish_date,
+//                                     @Field("area") String area, @Field("address") String address,
+//                                     @Field("company_phone") String company_phone, @Field("license_img") String license_img,
+//                                     @Field("shopuser_identity_img_z") String shopuser_identity_img_z,
+//                                     @Field("food_or_wine_img") String food_or_wine_img);
+
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> companyAuth(@Field("method") String method, @Field("v") String v,
+    Flowable<ResultBean> companyAuth(@Field("method") String method, @Field("v") String v,@Field("accessToken") String token,
                                      @Field("company_name") String company_name, @Field("representative") String representative,
-                                     @Field("license_num") String license_num, @Field("establish_date") String establish_date,
-                                     @Field("area") String area, @Field("address") String address,
-                                     @Field("company_phone") String company_phone, @Field("license_img") String license_img,
+                                     @Field("idcard") String idCard, @Field("license_img") String license_img,
                                      @Field("shopuser_identity_img_z") String shopuser_identity_img_z,
+                                     @Field("shopuser_identity_img_f") String shopuser_identity_img_f,
                                      @Field("food_or_wine_img") String food_or_wine_img);
 
     @POST("index.php/topapi")

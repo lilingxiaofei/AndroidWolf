@@ -89,185 +89,222 @@
                     android:background="@color/bg_gray" />
             </RelativeLayout>
 
+            <!--<RelativeLayout-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="44dp"-->
+                <!--android:background="@color/bg_white">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvSellCard"-->
+                    <!--android:layout_width="65dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:text="营业执照"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/etCardNum"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginLeft="36dp"-->
+                    <!--android:layout_toRightOf="@id/tvSellCard"-->
+                    <!--android:background="@null"-->
+                    <!--android:hint="请输入"-->
+                    <!--android:textColorHint="@color/t_gray"-->
+                    <!--android:paddingRight="10dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1px"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@color/bg_gray" />-->
+            <!--</RelativeLayout>-->
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rlCreateTime"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="44dp"-->
+                <!--android:background="@color/bg_white">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvTimeStr"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:text="成立时间"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvCreateTime"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="36dp"-->
+                    <!--android:layout_toRightOf="@id/tvTimeStr"-->
+                    <!--android:hint="请选择"-->
+                    <!--android:textColorHint="@color/t_gray"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:src="@mipmap/black_right_arrow" />-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1px"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@color/bg_gray" />-->
+            <!--</RelativeLayout>-->
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rlSellArea"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="44dp"-->
+                <!--android:background="@color/bg_white">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvAreaStr"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:text="经营区域"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvSellArea"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="36dp"-->
+                    <!--android:layout_toRightOf="@id/tvAreaStr"-->
+                    <!--android:hint="请选择"-->
+                    <!--android:textColorHint="@color/t_gray"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:src="@mipmap/black_right_arrow" />-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1px"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@color/bg_gray" />-->
+            <!--</RelativeLayout>-->
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="44dp"-->
+                <!--android:background="@color/bg_white">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvAddressStr"-->
+                    <!--android:layout_width="65dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:text="详细地址"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/etAddress"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginLeft="36dp"-->
+                    <!--android:layout_toRightOf="@id/tvAddressStr"-->
+                    <!--android:background="@null"-->
+                    <!--android:hint="请输入"-->
+                    <!--android:textColorHint="@color/t_gray"-->
+                    <!--android:paddingRight="10dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1px"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@color/bg_gray" />-->
+            <!--</RelativeLayout>-->
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="44dp"-->
+                <!--android:background="@color/bg_white">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvPhoneStr"-->
+                    <!--android:layout_width="65dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:text="固定电话"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/etPhone"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginLeft="36dp"-->
+                    <!--android:layout_toRightOf="@id/tvPhoneStr"-->
+                    <!--android:background="@null"-->
+                    <!--android:hint="请输入"-->
+                    <!--android:textColorHint="@color/t_gray"-->
+                    <!--android:inputType="number"-->
+                    <!--android:paddingRight="10dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="@dimen/sp_mid" />-->
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1px"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@color/bg_gray" />-->
+            <!--</RelativeLayout>-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:background="@color/bg_white">
 
                 <TextView
-                    android:id="@+id/tvSellCard"
+                    android:id="@+id/tvIdCardtr"
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="营业执照"
+                    android:text="身份证号"
                     android:textColor="@color/t_black"
                     android:textSize="@dimen/sp_mid" />
 
                 <EditText
-                    android:id="@+id/etCardNum"
+                    android:id="@+id/edtIdCard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="36dp"
-                    android:layout_toRightOf="@id/tvSellCard"
-                    android:background="@null"
-                    android:hint="请输入"
-                    android:textColorHint="@color/t_gray"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bg_gray" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rlCreateTime"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="@color/bg_white">
-
-                <TextView
-                    android:id="@+id/tvTimeStr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="成立时间"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
-
-                <TextView
-                    android:id="@+id/tvCreateTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="36dp"
-                    android:layout_toRightOf="@id/tvTimeStr"
-                    android:hint="请选择"
-                    android:textColorHint="@color/t_gray"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:src="@mipmap/black_right_arrow" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bg_gray" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rlSellArea"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="@color/bg_white">
-
-                <TextView
-                    android:id="@+id/tvAreaStr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="经营区域"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
-
-                <TextView
-                    android:id="@+id/tvSellArea"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="36dp"
-                    android:layout_toRightOf="@id/tvAreaStr"
-                    android:hint="请选择"
-                    android:textColorHint="@color/t_gray"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:src="@mipmap/black_right_arrow" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bg_gray" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="@color/bg_white">
-
-                <TextView
-                    android:id="@+id/tvAddressStr"
-                    android:layout_width="65dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="详细地址"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
-
-                <EditText
-                    android:id="@+id/etAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="36dp"
-                    android:layout_toRightOf="@id/tvAddressStr"
-                    android:background="@null"
-                    android:hint="请输入"
-                    android:textColorHint="@color/t_gray"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bg_gray" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="@color/bg_white">
-
-                <TextView
-                    android:id="@+id/tvPhoneStr"
-                    android:layout_width="65dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="固定电话"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
-
-                <EditText
-                    android:id="@+id/etPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="36dp"
-                    android:layout_toRightOf="@id/tvPhoneStr"
+                    android:layout_toRightOf="@id/tvIdCardtr"
                     android:background="@null"
                     android:hint="请输入"
                     android:textColorHint="@color/t_gray"
@@ -442,22 +479,84 @@
                         android:text="照片必须清晰哦～"/>
 
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/tvCommit"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/bg_red_rectangle"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:gravity="center"
-                    android:text="提交审核"
-                    android:textColor="@color/t_white"
-                    android:textSize="18sp"
-                    android:layout_marginTop="40dp"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="食品流通许可证/酒水流通许可证"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_15sp"
+                    android:layout_marginLeft="@dimen/icon_size_20dp"
+                    android:layout_marginTop="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="#999999"
+                    android:text="上传营业执照"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/bg_round_gray"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/imgFoodCertificate"
+                        android:layout_width="200dp"
+                        android:layout_height="110dp"
+                        android:src="@mipmap/food_lisense"/>
+                    <Button
+                        android:id="@+id/btnFoodCertificate"
+                        android:layout_width="200dp"
+                        android:layout_height="40dp"
+                        android:text="上传许可证"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/bg_red_rectangle"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp_12"
+                        android:layout_marginTop="10dp"
+                        android:textColor="#999999"
+                        android:text="照片必须清晰哦～"/>
 
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:text="请确认以上信息准确无误"
+                android:layout_marginTop="20dp"
+                android:textSize="12sp"
+                android:textColor="#999999"/>
+            <TextView
+                android:id="@+id/tvCommit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_red_rectangle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="提交审核"
+                android:textColor="@color/t_white"
+                android:textSize="18sp"
+                android:layout_marginTop="20dp"/>
             <!--<LinearLayout-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->

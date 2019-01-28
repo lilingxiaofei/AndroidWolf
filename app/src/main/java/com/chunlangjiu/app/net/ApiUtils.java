@@ -148,14 +148,12 @@ public class ApiUtils {
         return apiService.setHeadImg("member.setImg", "v1", url);
     }
 
-    public Flowable<ResultBean> personAuth(String name, String idcard, String dentity, String dentity_front, String dentity_reverse) {
-        return apiService.personAuth("member.autonym", "v1", name, idcard, dentity, dentity_front, dentity_reverse);
+    public Flowable<ResultBean> personAuth(String name, String mobile, String idcard, String dentity, String dentity_front, String dentity_reverse) {
+        return apiService.personAuth("member.autonym", "v1", name, mobile, idcard, dentity, dentity_front, dentity_reverse);
     }
 
-    public Flowable<ResultBean> companyAuth(String company_name, String representative, String license_num, String establish_date, String area,
-                                            String address, String company_phone, String license_img, String shopuser_identity_img_z, String food_or_wine_img) {
-        return apiService.companyAuth("member.enterprise", "v1", company_name, representative, license_num, establish_date, area,
-                address, company_phone, license_img, shopuser_identity_img_z, food_or_wine_img);
+    public Flowable<ResultBean> companyAuth(String token, String company_name, String representative, String idCard, String license_img, String shopuser_identity_img_z, String shopuser_identity_img_f, String food_or_wine_img) {
+        return apiService.companyAuth("member.enterprise", "v1", token, company_name, representative, idCard, license_img, shopuser_identity_img_z, shopuser_identity_img_f, food_or_wine_img);
     }
 
     public Observable<ResultBean<AuthStatusBean>> getPersonAuthStatus() {

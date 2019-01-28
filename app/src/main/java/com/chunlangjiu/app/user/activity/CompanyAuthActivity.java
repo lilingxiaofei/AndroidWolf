@@ -31,6 +31,7 @@ import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.FileUtils;
+import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.util.TimeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -54,6 +55,7 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
+import io.reactivex.functions.Function4;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -65,29 +67,31 @@ public class CompanyAuthActivity extends BaseActivity {
     public static final int REQUEST_CODE_SELECT_ONE = 103;
     public static final int REQUEST_CODE_SELECT_TWO = 104;
     public static final int REQUEST_CODE_SELECT_ALLOW_CARD = 105;
-
+    public static final int REQUEST_CODE_SELECT_FOOD_LISENCE = 106;
     private int codeType;
 
     @BindView(R.id.etCompany)
     EditText etCompany;
     @BindView(R.id.etPersonName)
     EditText etPersonName;
-    @BindView(R.id.etCardNum)
-    EditText etCardNum;
+    @BindView(R.id.edtIdCard)
+    EditText edtIdCard;
+//    @BindView(R.id.etCardNum)
+//    EditText etCardNum;
 
-    @BindView(R.id.rlCreateTime)
-    RelativeLayout rlCreateTime;
-    @BindView(R.id.tvCreateTime)
-    TextView tvCreateTime;
-    @BindView(R.id.rlSellArea)
-    RelativeLayout rlSellArea;
-    @BindView(R.id.tvSellArea)
-    TextView tvSellArea;
-
-    @BindView(R.id.etAddress)
-    EditText etAddress;
-    @BindView(R.id.etPhone)
-    EditText etPhone;
+//    @BindView(R.id.rlCreateTime)
+//    RelativeLayout rlCreateTime;
+//    @BindView(R.id.tvCreateTime)
+//    TextView tvCreateTime;
+//    @BindView(R.id.rlSellArea)
+//    RelativeLayout rlSellArea;
+//    @BindView(R.id.tvSellArea)
+//    TextView tvSellArea;
+//
+//    @BindView(R.id.etAddress)
+//    EditText etAddress;
+//    @BindView(R.id.etPhone)
+//    EditText etPhone;
 
     //    @BindView(R.id.rlOne)
 //    RelativeLayout rlOne;
@@ -107,6 +111,8 @@ public class CompanyAuthActivity extends BaseActivity {
     ImageView imgIdCardFront;
     @BindView(R.id.imgIdCardBehind)
     ImageView imgIdCardBehind;
+    @BindView(R.id.imgFoodCertificate)
+    ImageView imgFoodCertificate;
 
     @BindView(R.id.tvCommit)
     TextView tvCommit;
@@ -126,11 +132,13 @@ public class CompanyAuthActivity extends BaseActivity {
 
     private ChoicePhotoDialog photoDialog;
     private ArrayList<ImageItem> ZhiZhaoLists;
-    private ArrayList<ImageItem> cardLists;
-    private ArrayList<ImageItem> allowLists;
+    private ArrayList<ImageItem> cardFLists;
+    private ArrayList<ImageItem> cardBLists;
+    private ArrayList<ImageItem> foodLisenceLists;
     private String base64ZhiZhao;
-    private String base64IdCard;
-    private String base64Allow;
+    private String base64IdCardF;
+    private String base64IdCardB;
+    private String base64FoodLicense;
 
 //    private View.OnClickListener onClickListener = new View.OnClickListener() {
 //        @Override
@@ -219,7 +227,7 @@ public class CompanyAuthActivity extends BaseActivity {
 //        tvCommit.setOnClickListener(onClickListener);
     }
 
-    @OnClick({R.id.img_title_left,R.id.btnLicense, R.id.btnIdCardFront, R.id.btnIdCardBehind, R.id.tvCommit, R.id.rlCreateTime, R.id.rlSellArea})
+    @OnClick({R.id.img_title_left,R.id.btnLicense, R.id.btnIdCardFront, R.id.btnIdCardBehind, R.id.tvCommit,R.id.btnFoodCertificate})
     public void Onclick(View view) {
         switch (view.getId()) {
             case R.id.img_title_left:
@@ -234,15 +242,18 @@ public class CompanyAuthActivity extends BaseActivity {
             case R.id.btnIdCardBehind:
                 showPhotoDialog(REQUEST_CODE_SELECT_ALLOW_CARD);
                 break;
+            case R.id.btnFoodCertificate:
+                showPhotoDialog(REQUEST_CODE_SELECT_FOOD_LISENCE);
+                break;
             case R.id.tvCommit:
                 checkData();
                 break;
-            case R.id.rlCreateTime:
-                showTimeDialog();
-                break;
-            case R.id.rlSellArea:
-                showAreaDialog();
-                break;
+//            case R.id.rlCreateTime:
+//                showTimeDialog();
+//                break;
+//            case R.id.rlSellArea:
+//                showAreaDialog();
+//                break;
 
         }
 
@@ -250,7 +261,7 @@ public class CompanyAuthActivity extends BaseActivity {
 
 
     private void initData() {
-        getAreaData();
+//        getAreaData();
 //        getAuthStatus();
     }
 
@@ -344,7 +355,7 @@ public class CompanyAuthActivity extends BaseActivity {
     private OnDateSetListener onDateSetListener = new OnDateSetListener() {
         @Override
         public void onDateSet(TimePickerDialog timePickerView, long millSeconds) {
-            tvCreateTime.setText(TimeUtils.millisToYearMD(String.valueOf(millSeconds)));
+//            tvCreateTime.setText(TimeUtils.millisToYearMD(String.valueOf(millSeconds)));
         }
     };
 
@@ -376,7 +387,7 @@ public class CompanyAuthActivity extends BaseActivity {
                 provinceId = ((LocalAreaBean.ProvinceData) (selectAbles.get(0).getArg())).getId();
                 cityId = ((LocalAreaBean.ProvinceData.City) (selectAbles.get(1).getArg())).getId();
                 districtId = ((LocalAreaBean.ProvinceData.City.District) (selectAbles.get(2).getArg())).getId();
-                tvSellArea.setText(areaName);
+//                tvSellArea.setText(areaName);
                 areaDialog.dismiss();
             }
         });
@@ -508,21 +519,29 @@ public class CompanyAuthActivity extends BaseActivity {
 //                    GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgSellCard);
                     GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgLicense);
                 } else if (requestCode == REQUEST_CODE_SELECT_TWO) {
-                    cardLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                    ImageItem imageItem = cardLists.get(0);
+                    cardFLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                    ImageItem imageItem = cardFLists.get(0);
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-                    base64IdCard = FileUtils.imgToBase64(cardLists.get(0).path);
+                    base64IdCardF = FileUtils.imgToBase64(cardFLists.get(0).path);
 //                    GlideUtils.loadImage(CompanyAuthActivity.this, cardLists.get(0).path, imgIDCard);
-                    GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgIdCardFront);
+                    GlideUtils.loadImage(CompanyAuthActivity.this, cardFLists.get(0).path, imgIdCardFront);
                 } else if (requestCode == REQUEST_CODE_SELECT_ALLOW_CARD) {
-                    allowLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                    ImageItem imageItem = allowLists.get(0);
+                    cardBLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                    ImageItem imageItem = cardBLists.get(0);
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-                    base64Allow = FileUtils.imgToBase64(allowLists.get(0).path);
+                    base64IdCardB = FileUtils.imgToBase64(cardBLists.get(0).path);
 //                    GlideUtils.loadImage(CompanyAuthActivity.this, allowLists.get(0).path, imgAllowCard);
-                    GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgIdCardBehind);
+                    GlideUtils.loadImage(CompanyAuthActivity.this, cardBLists.get(0).path, imgIdCardBehind);
+                }else if (requestCode==REQUEST_CODE_SELECT_FOOD_LISENCE){
+                    foodLisenceLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                    ImageItem imageItem = foodLisenceLists.get(0);
+                    int index = imageItem.path.lastIndexOf("/");
+                    imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
+                    base64FoodLicense = FileUtils.imgToBase64(foodLisenceLists.get(0).path);
+//                    GlideUtils.loadImage(CompanyAuthActivity.this, allowLists.get(0).path, imgAllowCard);
+                    GlideUtils.loadImage(CompanyAuthActivity.this, foodLisenceLists.get(0).path, imgFoodCertificate);
                 }
             }
         }
@@ -533,39 +552,48 @@ public class CompanyAuthActivity extends BaseActivity {
             ToastUtils.showShort("请输入企业名称");
         } else if (TextUtils.isEmpty(etPersonName.getText().toString().trim())) {
             ToastUtils.showShort("请输入法人名称");
-        } else if (TextUtils.isEmpty(etCardNum.getText().toString().trim())) {
-            ToastUtils.showShort("请输入营业执照");
-        } else if (TextUtils.isEmpty(tvCreateTime.getText().toString())) {
-            ToastUtils.showShort("请选择成立时间");
-        } else if (TextUtils.isEmpty(tvSellArea.getText().toString())) {
-            ToastUtils.showShort("请选择经营区域");
-        } else if (TextUtils.isEmpty(etAddress.getText().toString())) {
-            ToastUtils.showShort("请输入详情地址");
-        } else if (TextUtils.isEmpty(etPhone.getText().toString())) {
-            ToastUtils.showShort("请输入固定电话");
-        } else if (base64ZhiZhao == null) {
+        }else if (TextUtils.isEmpty(edtIdCard.getText().toString().trim())){
+            ToastUtils.showShort("请输入身份证号");
+        }
+//        else if (TextUtils.isEmpty(etCardNum.getText().toString().trim())) {
+//            ToastUtils.showShort("请输入营业执照");
+//        } else if (TextUtils.isEmpty(tvCreateTime.getText().toString())) {
+//            ToastUtils.showShort("请选择成立时间");
+//        } else if (TextUtils.isEmpty(tvSellArea.getText().toString())) {
+//            ToastUtils.showShort("请选择经营区域");
+//        } else if (TextUtils.isEmpty(etAddress.getText().toString())) {
+//            ToastUtils.showShort("请输入详情地址");
+//        } else if (TextUtils.isEmpty(etPhone.getText().toString())) {
+//            ToastUtils.showShort("请输入固定电话");
+//        }
+        else if (base64ZhiZhao == null) {
             ToastUtils.showShort("请上传营业执照图片");
-        } else if (base64IdCard == null) {
-            ToastUtils.showShort("请上传法人身份证图片");
-        } else if (base64Allow == null) {
+        } else if (base64IdCardF == null) {
+            ToastUtils.showShort("请上传法人身份证正面图片");
+        } else if (base64IdCardB == null) {
+            ToastUtils.showShort("请上传法人身份证反面图片");
+        } else if (base64FoodLicense==null){
             ToastUtils.showShort("请上传食品流通许可证/酒类经营许可证");
-        } else {
+        }else {
             uploadImage();
+
         }
     }
 
     private void uploadImage() {
         showLoadingDialog();
         Observable<ResultBean<UploadImageBean>> front = ApiUtils.getInstance().userUploadImage(base64ZhiZhao, ZhiZhaoLists.get(0).name, "rate");
-        Observable<ResultBean<UploadImageBean>> behind = ApiUtils.getInstance().userUploadImage(base64IdCard, cardLists.get(0).name, "rate");
-        Observable<ResultBean<UploadImageBean>> allow = ApiUtils.getInstance().userUploadImage(base64Allow, allowLists.get(0).name, "rate");
-        disposable.add(Observable.zip(front, behind, allow, new Function3<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, List<String>>() {
+        Observable<ResultBean<UploadImageBean>> behind = ApiUtils.getInstance().userUploadImage(base64IdCardF, cardFLists.get(0).name, "rate");
+        Observable<ResultBean<UploadImageBean>> allow = ApiUtils.getInstance().userUploadImage(base64IdCardB, cardBLists.get(0).name, "rate");
+        Observable<ResultBean<UploadImageBean>> food = ApiUtils.getInstance().userUploadImage(base64FoodLicense, foodLisenceLists.get(0).name, "rate");
+        disposable.add(Observable.zip(front, behind, allow, food,new Function4<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>,ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, List<String>>() {
             @Override
-            public List<String> apply(ResultBean<UploadImageBean> uploadImageBeanResultBean, ResultBean<UploadImageBean> uploadImageBeanResultBean2, ResultBean<UploadImageBean> uploadImageBeanResultBean3) throws Exception {
+            public List<String> apply(ResultBean<UploadImageBean> uploadImageBeanResultBean, ResultBean<UploadImageBean> uploadImageBeanResultBean2, ResultBean<UploadImageBean> uploadImageBeanResultBean3,ResultBean<UploadImageBean> uploadImageBeanResultBean4) throws Exception {
                 List<String> imageLists = new ArrayList<>();
                 imageLists.add(uploadImageBeanResultBean.getData().getUrl());
                 imageLists.add(uploadImageBeanResultBean2.getData().getUrl());
                 imageLists.add(uploadImageBeanResultBean3.getData().getUrl());
+                imageLists.add(uploadImageBeanResultBean4.getData().getT_url());
                 return imageLists;
             }
         }).subscribeOn(Schedulers.io())
@@ -585,9 +613,8 @@ public class CompanyAuthActivity extends BaseActivity {
     }
 
     private void commitAuth(List<String> strings) {
-        disposable.add(ApiUtils.getInstance().companyAuth(etCompany.getText().toString().trim(), etPersonName.getText().toString().trim(),
-                etCardNum.getText().toString().trim(), tvCreateTime.getText().toString(), tvSellArea.getText().toString(),
-                etAddress.getText().toString(), etPhone.getText().toString(), strings.get(0), strings.get(1), strings.get(2))
+        disposable.add(ApiUtils.getInstance().companyAuth((String) SPUtils.get("token", ""),etCompany.getText().toString().trim(), etPersonName.getText().toString().trim(),edtIdCard.getText().toString().trim()
+               , strings.get(0), strings.get(1), strings.get(2),strings.get(3))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {
