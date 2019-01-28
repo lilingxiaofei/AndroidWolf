@@ -81,7 +81,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         break;
                     case OrderParams.TRADE_FINISHED:
                         tv1.setVisibility(View.GONE);
-                        if (0 == item.getBuyer_rate()) {
+                        if (1 == item.getBuyer_rate()) {
                             tv2.setText("评价");
                             tv2.setVisibility(View.VISIBLE);
                         } else {
@@ -261,17 +261,25 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                     TextView tvProductName = inflate.findViewById(R.id.tvProductName);
                     tvProductName.setText(orderBean.getTitle());
                     TextView tvProductPrice = inflate.findViewById(R.id.tvProductPrice);
-                    if (!TextUtils.isEmpty(orderBean.getPrice())) {
-                        tvProductPrice.setText(String.format("起拍价：%s", String.format("¥%s", new BigDecimal(orderBean.getPrice()).setScale(2, BigDecimal.ROUND_HALF_UP).toString())));
-                    }
                     TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
+                    tvProductPrice.setVisibility(View.GONE);
+                    tvProductNum.setVisibility(View.GONE);
+                    TextView tvAuctionPrice = inflate.findViewById(R.id.tvAuctionPrice);
+                    String startPrice = "" ;
+                    if (!TextUtils.isEmpty(orderBean.getPrice())) {
+                        startPrice = String.format("起拍价：%s", String.format("¥%s", new BigDecimal(orderBean.getPrice()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+                    }
+
                     tvProductNum.setGravity(Gravity.CENTER_VERTICAL);
+                    String maxPrice = "";
                     try {
                         BigDecimal bigDecimal = new BigDecimal(orderBean.getSpec_nature_info());
-                        tvProductNum.setText(String.format("最高出价：%s", String.format("¥%s", bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).toString())));
+                        maxPrice =String.format("最高出价：%s", String.format("¥%s", bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                     } catch (Exception ex) {
-                        tvProductNum.setText(String.format("最高出价：%s", orderBean.getSpec_nature_info()));
+                        maxPrice =String.format("最高出价：%s", orderBean.getSpec_nature_info());
                     }
+                    tvAuctionPrice.setText(startPrice+"\n"+maxPrice);
+                    tvAuctionPrice.setVisibility(View.VISIBLE);
                     llProducts.addView(inflate);
 //                    if (llProducts.getChildCount() == item.getOrder().size()) {
 //                        View view_line = inflate.findViewById(R.id.view_line);

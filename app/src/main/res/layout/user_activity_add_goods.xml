@@ -183,6 +183,7 @@
             <RelativeLayout
                 android:id="@+id/rlChoiceDegree"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="44dp">
 
                 <TextView
@@ -210,171 +211,6 @@
                     android:background="@color/bg_gray" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/bg_gray" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    android:id="@+id/tvTitleStr"
-                    android:text="商品标题"
-                    style="@style/add_goods_label" />
-
-                <EditText
-                    android:id="@+id/etTitle"
-                    style="@style/add_goods_value"
-                    android:layout_toRightOf="@id/tvTitleStr"
-                    android:background="@null"
-                    android:hint="请填写"
-                    android:singleLine="true"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bg_gray" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    android:id="@+id/tvSecondNameStr"
-                    android:text="商品副标题"
-                    style="@style/add_goods_label"/>
-
-                <EditText
-                    android:id="@+id/etSecondName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/tvSecondNameStr"
-                    android:background="@null"
-                    android:hint="请填写"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textColor="@color/t_black"
-                    android:textColorHint="@color/t_gray"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bg_gray" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    android:id="@+id/tvTag"
-                    android:text="商品标签"
-                    style="@style/add_goods_label" />
-
-                <EditText
-                    android:id="@+id/etTag"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/tvTag"
-                    android:background="@null"
-                    android:hint="如有多个请用“，”隔开"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textColor="@color/t_black"
-                    android:textColorHint="@color/t_gray"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bg_gray" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/bg_gray" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    android:id="@+id/tvPriceStr"
-                    android:text="一口价"
-                    style="@style/add_goods_label" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/tvPriceStr"
-                    android:text="¥"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_mid" />
-
-                <EditText
-                    android:id="@+id/etPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="30dp"
-                    android:layout_toRightOf="@id/tvPriceStr"
-                    android:background="@null"
-                    android:digits="0123456789."
-                    android:hint=""
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textColor="@color/t_black"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bg_gray" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp">
-
-                <TextView
-                    android:id="@+id/tvCountStr"
-                    android:text="商品总库存"
-                    style="@style/add_goods_label"/>
-
-                <EditText
-                    android:id="@+id/etCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/tvCountStr"
-                    android:background="@null"
-                    android:hint="请填写"
-                    android:inputType="number"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:textColor="@color/t_black"
-                    android:textColorHint="@color/t_gray"
-                    android:textSize="12sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/bg_gray" />
-            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -934,6 +770,173 @@
             </RelativeLayout>
 
 
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/bg_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvTitleStr"
+                    android:text="商品标题"
+                    style="@style/add_goods_label" />
+
+                <EditText
+                    android:id="@+id/etTitle"
+                    style="@style/add_goods_value"
+                    android:layout_toRightOf="@id/tvTitleStr"
+                    android:background="@null"
+                    android:hint="请填写"
+                    android:singleLine="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvSecondNameStr"
+                    android:text="商品副标题"
+                    style="@style/add_goods_label"/>
+
+                <EditText
+                    android:id="@+id/etSecondName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/tvSecondNameStr"
+                    android:background="@null"
+                    android:hint="请填写"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/t_black"
+                    android:textColorHint="@color/t_gray"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvTag"
+                    android:text="商品标签"
+                    style="@style/add_goods_label" />
+
+                <EditText
+                    android:id="@+id/etTag"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/tvTag"
+                    android:background="@null"
+                    android:hint="如有多个请用“，”隔开"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/t_black"
+                    android:textColorHint="@color/t_gray"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/bg_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvPriceStr"
+                    android:text="商品价格"
+                    style="@style/add_goods_label" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/tvPriceStr"
+                    android:text="¥"
+                    android:textColor="@color/t_black"
+                    android:textSize="@dimen/sp_mid" />
+
+                <EditText
+                    android:id="@+id/etPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@id/tvPriceStr"
+                    android:background="@null"
+                    android:digits="0123456789."
+                    android:hint=""
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/t_black"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvCountStr"
+                    android:text="商品库存"
+                    style="@style/add_goods_label"/>
+
+                <EditText
+                    android:id="@+id/etCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/tvCountStr"
+                    android:background="@null"
+                    android:hint="请填写"
+                    android:inputType="number"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/t_black"
+                    android:textColorHint="@color/t_gray"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
@@ -949,6 +952,8 @@
                     android:id="@+id/tvDescStr"
                     android:layout_width="82dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:text="商品说明"
                     android:textColor="@color/t_black"
                     android:textSize="@dimen/sp_mid" />

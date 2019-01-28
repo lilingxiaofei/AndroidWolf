@@ -23,7 +23,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setTitleView() {
-
+        titleName.setText("设置");
     }
 
     public static void startActivity(Activity activity){
@@ -63,7 +63,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }else if(resId == R.id.tvAbout){
             AboutActivity.startActivity(SettingActivity.this);
         }else if(resId == R.id.tvUseAgreement){
-
+            WebViewActivity.startWebViewActivity(this, ConstantMsg.WEB_URL_LICENSE, "用户协议");
         }else if(resId == R.id.tvLoginOut){
             EventManager.getInstance().notify(null, ConstantMsg.LOGOUT_SUCCESS);
             finish();

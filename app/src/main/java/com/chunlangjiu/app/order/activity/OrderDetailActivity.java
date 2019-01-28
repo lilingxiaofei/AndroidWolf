@@ -1081,7 +1081,8 @@ public class OrderDetailActivity extends BaseActivity {
                             }
                             break;
                         case 1:
-                            switch (orderDetailBean.getStatus()) {
+                            String status = orderDetailBean.getAuction().getStatus();
+                            switch (status) {
                                 case "0":
                                     paymentId = orderDetailBean.getPaymentId();
                                     getPayment();

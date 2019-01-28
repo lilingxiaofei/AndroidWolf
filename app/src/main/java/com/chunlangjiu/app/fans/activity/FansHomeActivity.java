@@ -15,8 +15,14 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.ShareUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.SystemUtils;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
@@ -31,6 +37,7 @@ public class FansHomeActivity extends BaseActivity {
     private ImageView ivQrCode ;
     private TextView  tvMyCode;
     private TextView tvShare ;
+    private TextView tvCopy ;
     private FansCodeBean fansBean ;
     private CompositeDisposable disposable;
     @Override
@@ -47,7 +54,9 @@ public class FansHomeActivity extends BaseActivity {
         ivQrCode = findViewById(R.id.ivQrCode) ;
         tvMyCode = findViewById(R.id.tvMyCode) ;
         tvShare  = findViewById(R.id.tvShare) ;
+        tvCopy = findViewById(R.id.tvCopy);
         tvShare.setOnClickListener(onClickListener);
+        tvCopy.setOnClickListener(onClickListener);
     }
 
     private void createEnglishQRCodeWithLogo(final String qrCode) {
@@ -104,11 +113,18 @@ public class FansHomeActivity extends BaseActivity {
             }else if(resId == R.id.tv_right){
                 startFansListActivity();
             }else if(resId == R.id.tvShare){
-                startFansInviteActivity();
+                showShare();
+            }else if(resId ==R.id.tvCopy){
+                setCopyContent();
             }
         }
     };
 
+    private void setCopyContent(){
+        if(fansBean!=null){
+            SystemUtils.copyContent(this,fansBean.getCode());
+        }
+    }
 
     private void startFansListActivity(){
         Intent intent = new Intent();
@@ -124,6 +140,34 @@ public class FansHomeActivity extends BaseActivity {
             WebViewActivity.startWebViewActivity(this,url,title);
         }
     }
+
+
+    private void showShare() {
+        UMImage thumb = new UMImage(this, R.mipmap.launcher);
+        UMWeb web = new UMWeb(fansBean.getUrl());
+        web.setTitle("邀请码分享");//标题
+        web.setThumb(thumb);  //缩略图
+        web.setDescription("邀请码分享");//描述
+
+        ShareUtils.shareLink(this, web, new UMShareListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+            }
+
+            @Override
+            public void onResult(SHARE_MEDIA share_media) {
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media) {
+            }
+        });
+    }
+
     @Override
     public void setTitleView() {
         titleName.setText(R.string.my_recommend);

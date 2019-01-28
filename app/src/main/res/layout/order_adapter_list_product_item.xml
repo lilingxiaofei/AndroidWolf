@@ -29,6 +29,16 @@
         android:maxLines="2"/>
 
     <TextView
+        android:id="@+id/tvAuctionPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProductName"
+        android:layout_alignLeft="@+id/tvProductName"
+        android:text="竞拍价格"
+        android:visibility="gone"
+        android:textSize="15sp"/>
+
+    <TextView
         android:id="@+id/tvAfterSale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,7 +68,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/tvProductPrice"
         android:layout_alignBottom="@+id/tvProductPrice"
-
         android:text="x3"
         android:gravity="end|center_vertical" />
     <TextView
@@ -67,7 +76,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvProductPrice"
         android:layout_alignLeft="@+id/tvProductName"
-        android:text="产品说明"
         android:textSize="12sp"/>
 
     </RelativeLayout>

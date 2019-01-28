@@ -1,15 +1,9 @@
 package com.chunlangjiu.app.abase;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -17,7 +11,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
-import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.dialog.CommonLoadingDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -70,8 +63,10 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.abase_activity);
+        setStatusBarColor();
         findView();
         setTitleView();
+
     }
 
     private void findView() {
@@ -100,7 +95,7 @@ public abstract class BaseActivity extends FragmentActivity {
     public void setContentView(int layoutResID) {
         addSubContentView(layoutResID);
         ButterKnife.bind(this);
-        setStatusBarColor();
+
     }
 
     private void setStatusBarColor() {

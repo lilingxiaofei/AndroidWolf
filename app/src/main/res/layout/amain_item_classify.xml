@@ -9,11 +9,11 @@
         android:id="@+id/riv_pic"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:sriv_aoval="true"
-        app:sriv_left_bottom_corner_radius="5dp"
-        app:sriv_right_bottom_corner_radius="5dp"
+        android:scaleType="centerCrop"
         app:sriv_left_top_corner_radius="5dp"
         app:sriv_right_top_corner_radius="5dp"
+        app:sriv_left_bottom_corner_radius="5dp"
+        app:sriv_right_bottom_corner_radius="5dp"
         />
     <TextView
         android:id="@+id/tvClass"

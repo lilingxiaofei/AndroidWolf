@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
@@ -26,17 +27,22 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class WithDrawActivity extends BaseActivity {
+public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00）
 
     @BindView(R.id.edtAmount)
     EditText edtAmount;
     @BindView(R.id.tvBankCard)
     TextView tvBankCard;
+    @BindView(R.id.tvTips)
+    TextView tvTips;
+    @BindView(R.id.lineMoney)
+    LinearLayout lineMoney;
 
-    public static final String WithDrawType="WithDrawType";
-    public static final String DepositCash="DepositCash";
-    public static final String DepositRefund="DepositRefund";
+    public static final String WithDrawType = "WithDrawType";
+    public static final String DepositCash = "DepositCash";
+    public static final String DepositRefund = "DepositRefund";
     public static final String BankCardData = "BankCardData";
+    public static final String MoneyCount = "MoneyCount";
 
     public static final int BankCardRequestCode = 188;
     public static final int BankCardResultCode = 200;
@@ -51,11 +57,30 @@ public class WithDrawActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_with_draw);
         disposable = new CompositeDisposable();
+        initView();
+
+    }
+
+    private void initView() {
+        String type = getIntent().getStringExtra(WithDrawType);
+        if (type.equals(DepositRefund)) {
+            lineMoney.setVisibility(View.GONE);
+            tvTips.setText(getResources().getString(R.string.refund_deposit_security_tips));
+        } else {
+            tvTips.setText(getResources().getString(R.string.refund_tips));
+            String count =getIntent().getStringExtra(MoneyCount);
+            edtAmount.setHint(String.format("最多可提（%s）",count));
+        }
     }
 
     @Override
     public void setTitleView() {
-        titleName.setText("提现");
+        String type = getIntent().getStringExtra(WithDrawType);
+        if (type.equals(DepositCash)) {
+            titleName.setText("提现");
+        } else {
+            titleName.setText("撤销保证金");
+        }
     }
 
     @OnClick({R.id.img_title_left, R.id.reBankCard, R.id.btnOk})
@@ -65,24 +90,24 @@ public class WithDrawActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.reBankCard:
-                Intent intent =new Intent(this, BankCardActivity.class);
-                intent.putExtra(BankCardActivity.FromType,BankCardActivity.ClassWithDrawActivity);
+                Intent intent = new Intent(this, BankCardActivity.class);
+                intent.putExtra(BankCardActivity.FromType, BankCardActivity.ClassWithDrawActivity);
                 startActivityForResult(intent, BankCardRequestCode);
                 break;
             case R.id.btnOk:
                 String amount = edtAmount.getText().toString().trim();
-                if (TextUtils.isEmpty(bankCardId)){
+                if (TextUtils.isEmpty(bankCardId)) {
                     ToastUtils.showShort("请选择银行卡");
                     return;
                 }
                 String type = getIntent().getStringExtra(WithDrawType);
-                if (DepositCash.equals(type)){
+                if (DepositCash.equals(type)) {
                     if (TextUtils.isEmpty(amount)) {
                         ToastUtils.showShort("请输入提现金额");
                         return;
                     }
                     depositCash(bankCardId, amount);
-                }else if (DepositRefund.equals(type)){
+                } else if (DepositRefund.equals(type)) {
                     depositRefund(bankCardId);
                 }
                 break;
@@ -98,6 +123,7 @@ public class WithDrawActivity extends BaseActivity {
 
     /**
      * 余额提现
+     *
      * @param bankCardId
      * @param amount
      */
@@ -108,10 +134,10 @@ public class WithDrawActivity extends BaseActivity {
                 .subscribe(new Consumer<ResultBean<DepositCashBean>>() {
                     @Override
                     public void accept(ResultBean<DepositCashBean> resultBean) throws Exception {
-                        DepositCashBean depositCashBean =   resultBean.getData();
-                        if (null!=depositCashBean){
+                        DepositCashBean depositCashBean = resultBean.getData();
+                        if (null != depositCashBean) {
                             ToastUtils.showShort(depositCashBean.getMessage());
-                            EventManager.getInstance().notify(null,ConstantMsg.WITHDRAW_DEPOSIT_CASH);
+                            EventManager.getInstance().notify(null, ConstantMsg.WITHDRAW_DEPOSIT_CASH);
                             finish();
                         }
                     }
@@ -126,20 +152,21 @@ public class WithDrawActivity extends BaseActivity {
 
     /**
      * 撤销保证金
+     *
      * @param bankCardId
      */
 
-    private void depositRefund(String bankCardId){
+    private void depositRefund(String bankCardId) {
         disposable.add(ApiUtils.getInstance().depositRefund((String) SPUtils.get("token", ""), bankCardId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<DepositCashBean>>() {
                     @Override
                     public void accept(ResultBean<DepositCashBean> resultBean) throws Exception {
-                        DepositCashBean depositCashBean =   resultBean.getData();
-                        if (null!=depositCashBean){
+                        DepositCashBean depositCashBean = resultBean.getData();
+                        if (null != depositCashBean) {
                             ToastUtils.showShort(depositCashBean.getMessage());
-                            EventManager.getInstance().notify(null,ConstantMsg.WITHDRAW_DEPOSIT_REFUND);
+                            EventManager.getInstance().notify(null, ConstantMsg.WITHDRAW_DEPOSIT_REFUND);
                             finish();
                         }
                     }
@@ -156,7 +183,7 @@ public class WithDrawActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == BankCardRequestCode && resultCode == BankCardResultCode) {
             bankCardDetailBean = (BankCardListBean.BankCardDetailBean) data.getSerializableExtra(BankCardData);
-            if (null!=bankCardDetailBean){
+            if (null != bankCardDetailBean) {
                 bankCardId = String.valueOf(bankCardDetailBean.getBank_id());
                 tvBankCard.setText(bankCardDetailBean.getCard());
             }

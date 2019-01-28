@@ -115,9 +115,9 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
         viewHolder.setText(R.id.tv_store_into,"进店");
         viewHolder.addOnClickListener(R.id.tv_store_into);
         String level = item.getGrade();
-        if ("1".equals(level)) {
+        if ("2".equals(level)) {
             viewHolder.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_partner);
-        } else if ("2".equals(level)) {
+        } else if ("1".equals(level)) {
             viewHolder.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_star);
         } else {
             viewHolder.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_common);

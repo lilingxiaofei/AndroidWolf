@@ -20,7 +20,7 @@
     <string name="fans_input_code">请输入验证码</string>
     <string name="fans_send_code">发送验证码</string>
     <string name="fans_reset_send">重新发送</string>
-    <string name="fans_register_time">重新发送</string>
+    <string name="fans_register_time">注册时间</string>
     <string name="fans_register">注册</string>
     <string name="fans_copy">复制</string>
     <string name="classify">分类</string>
@@ -39,8 +39,8 @@
 
 
     <string name="into_store">进店</string>
-    <string name="into_seller_center">进入卖家中心</string>
-    <string name="into_buyer_center">进入买家中心</string>
+    <string name="into_seller_center">进入卖家中心 >></string>
+    <string name="into_buyer_center">进入买家中心 >></string>
     <string name="find_all_order">查看全部订单</string>
     <string name="my_recommend">我的推荐</string>
     <string name="pay_phone">验证码将会发送到%s手机上</string>
@@ -54,5 +54,14 @@
     <string name="action_number">%s次出价</string>
     <string name="openPicStr">%ss | 完成</string>
     <string name="store_home">店铺首页</string>
-
+    <string name="deposit_security_desc">保证金交纳说明:
+        \n 1.保证金交纳成功后，用户即可成为星级卖家。尊享海量特权
+        \n 2.卖家升级为星级卖家，可无限发布商品，发布的商品有优先排序功能。
+        \n 3。此操作成功需要短信提示。
+    </string>
+    <string name="refund_tips">单笔提现金额最大位50000.00元</string>
+    <string name="refund_deposit_security_tips">温馨提示
+    \n 1.撤销保证金后，您不再是星级用户，无法享用海量特权。
+    \n 2.撤销保证金后，您已发布的商品会自动下架。
+    \n 3.撤销保证金后，您最多只能发布3款商品。</string>
 </resources>

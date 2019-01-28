@@ -196,10 +196,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:background="@color/bg_red"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="4dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="2dp"
                     android:text="查看竞拍出价"
                     android:textColor="@color/t_white"
                     android:textSize="10sp" />
@@ -380,32 +380,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/bg_gray" />
-
-            <LinearLayout
-                android:id="@+id/rlSafeguard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSafeguard"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:text="服务保障"
-                    android:textColor="@color/t_black"
-                    android:textSize="15sp" />
-                <include layout="@layout/line_horizontal"/>
-                <ImageView android:id="@+id/ivSafeguard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"/>
-            </LinearLayout>
-
             <RelativeLayout
                 android:id="@+id/rlAuctionExplain"
                 android:layout_width="match_parent"
@@ -520,9 +494,37 @@
                 </LinearLayout>
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/bg_gray" />
+
+            <LinearLayout
+                android:id="@+id/rlSafeguard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvSafeguard"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="服务保障"
+                    android:textColor="@color/t_black"
+                    android:textSize="15sp" />
+                <include layout="@layout/line_horizontal"/>
+                <ImageView android:id="@+id/ivSafeguard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"/>
+            </LinearLayout>
+
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="50dp"
                 android:background="@color/bg_gray">
 
                 <TextView
@@ -535,18 +537,19 @@
                     android:textColor="@color/t_black"
                     android:textSize="@dimen/sp_small" />
             </RelativeLayout>
-
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp" />
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:background="@color/bg_gray"
+                android:layout_marginBottom="12dp"/>
             <LinearLayout
                 android:id="@+id/llSeeMore"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -649,7 +652,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:padding="10dp"
+                android:padding="12dp"
                 android:src="@mipmap/phone_icon" />
 
 
@@ -658,7 +661,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:padding="10dp"
+                android:padding="12dp"
                 android:src="@mipmap/collect_false" />
 
 
@@ -669,7 +672,7 @@
 
                 <ImageView
                     android:id="@+id/imgCart"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:src="@mipmap/tab_cart_normal" />
@@ -679,14 +682,13 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_alignTop="@id/imgCart"
-                    android:layout_marginLeft="-10dp"
-                    android:layout_marginTop="-5dp"
+                    android:layout_marginLeft="-6dp"
+                    android:layout_marginTop="-6dp"
                     android:layout_toRightOf="@id/imgCart"
                     android:background="@drawable/cart_num_bg"
                     android:gravity="center"
                     android:textColor="@color/t_white"
                     android:textSize="8sp"
-                    android:visibility="gone"
                     tools:text="1" />
 
             </RelativeLayout>

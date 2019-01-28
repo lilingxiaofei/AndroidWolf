@@ -302,14 +302,14 @@
 
         <TextView
             android:id="@+id/tv_store_name"
-            android:layout_toRightOf="@+id/tv_store_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_store_into"
+            android:layout_marginRight="37dp"
+            android:layout_toRightOf="@+id/tv_store_level"
+            android:lines="1"
             android:textColor="@color/t_gray"
             android:textSize="10sp"
-            android:layout_marginRight="33dp"
-            android:lines="1"
-            android:layout_alignBottom="@+id/tv_store_into"
             tools:text="店铺名称店铺名称店铺名称店铺名称店铺名称店铺名称店铺名称店铺名称店铺名称" />
         <TextView
             android:id="@+id/tv_store_into"
@@ -321,6 +321,7 @@
             android:drawablePadding="4dp"
             android:paddingTop="4dp"
             android:paddingLeft="10dp"
+            android:paddingRight="5dp"
             android:drawableRight="@mipmap/black_right_arrow_two"
             tools:text="进店" />
     </RelativeLayout>
