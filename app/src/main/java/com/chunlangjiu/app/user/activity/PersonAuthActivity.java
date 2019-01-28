@@ -60,13 +60,15 @@ public class PersonAuthActivity extends BaseActivity {
 //    TextView tvClass;
     @BindView(R.id.etCardNum)
     EditText etCardNum;
+    @BindView(R.id.etPhone)
+    EditText etPhone;
 
 //    @BindView(R.id.llPicOne)
 //    LinearLayout llPicOne;
 //    @BindView(R.id.llPicTwo)
 //    LinearLayout llPicTwo;
 
-//    @BindView(R.id.rlFront)
+    //    @BindView(R.id.rlFront)
 //    RelativeLayout rlFront;
 //    @BindView(R.id.rlBehind)
 //    RelativeLayout rlBehind;
@@ -125,7 +127,7 @@ public class PersonAuthActivity extends BaseActivity {
 //        }
 //    };
 
-    @OnClick({R.id.img_title_left, R.id.btnFront, R.id.btnBehind, R.id.btnPerson,R.id.tvCommit})
+    @OnClick({R.id.img_title_left, R.id.btnFront, R.id.btnBehind, R.id.btnPerson, R.id.tvCommit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_title_left:
@@ -359,6 +361,8 @@ public class PersonAuthActivity extends BaseActivity {
     private void checkData() {
         if (TextUtils.isEmpty(etName.getText().toString().trim())) {
             ToastUtils.showShort("请填写名字");
+        } else if (TextUtils.isEmpty(etPhone.getText().toString().trim())) {
+            ToastUtils.showShort("请填手机号码");
         } else if (TextUtils.isEmpty(etCardNum.getText().toString().trim())) {
             ToastUtils.showShort("请填写身份证号码");
         } else if (base64Front == null) {
@@ -406,7 +410,7 @@ public class PersonAuthActivity extends BaseActivity {
     }
 
     private void commitAuth(List<String> strings) {
-        disposable.add(ApiUtils.getInstance().personAuth(etName.getText().toString().trim(), etCardNum.getText().toString().trim(),
+        disposable.add(ApiUtils.getInstance().personAuth(etName.getText().toString().trim(), etPhone.getText().toString().trim(), etCardNum.getText().toString().trim(),
                 strings.get(0), strings.get(1), strings.get(2))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

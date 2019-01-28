@@ -34,6 +34,8 @@ public class VerifiedActivity extends BaseActivity {
     ImageView imgHead;
     @BindView(R.id.tvAccount)
     TextView tvAccount;
+    @BindView(R.id.tvDesc)
+    TextView tvDesc;
 
     private CompositeDisposable disposable;
     private String personStatus;
@@ -45,6 +47,7 @@ public class VerifiedActivity extends BaseActivity {
         setContentView(R.layout.activity_verified);
         disposable = new CompositeDisposable();
         initView();
+        getPersonAndCompanyAuthStatus();
     }
 
     private void initView() {
@@ -52,7 +55,7 @@ public class VerifiedActivity extends BaseActivity {
         if (!TextUtils.isEmpty(headUrl)) {
             GlideUtils.loadImageHead(this, headUrl, imgHead);
         }
-        tvAccount.setText((String)SPUtils.get("account",""));
+        tvAccount.setText((String) SPUtils.get("account", ""));
     }
 
     @Override
@@ -183,7 +186,7 @@ public class VerifiedActivity extends BaseActivity {
                     public void accept(List<AuthStatusBean> authStatusBeans) throws Exception {
                         personStatus = authStatusBeans.get(0).getStatus();
                         companyStatus = authStatusBeans.get(1).getStatus();
-//                        setAuthView();
+                        setAuthView();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -191,6 +194,14 @@ public class VerifiedActivity extends BaseActivity {
                         hideLoadingDialog();
                     }
                 }));
+    }
+
+    private void setAuthView() {
+        if ((AuthStatusBean.AUTH_SUCCESS.equals(personStatus) || AuthStatusBean.AUTH_SUCCESS.equals(companyStatus))) {
+            tvDesc.setText("已认证");
+        } else {
+            tvDesc.setText("立即实名认证享受更多特权服务");
+        }
     }
 
     private void toAuthActivity() {
