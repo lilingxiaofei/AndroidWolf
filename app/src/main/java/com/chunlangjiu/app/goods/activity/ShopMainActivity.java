@@ -485,7 +485,7 @@ public class ShopMainActivity extends BaseActivity {
         }
 
         if ("2".equals(shopType)) {
-            llRootLayout.setBackgroundResource(R.mipmap.store_bg_star);
+            llRootLayout.setBackgroundResource(R.mipmap.store_bg_partner);
             ivShopLevel.setImageResource(R.mipmap.store_partner);
         } else if ("1".equals(shopType)) {
             llRootLayout.setBackgroundResource(R.mipmap.store_bg_star);
