@@ -23,6 +23,7 @@ import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
+import com.pkqup.commonlibrary.view.ClearEditText;
 import com.pkqup.commonlibrary.view.choicearea.BottomDialog;
 import com.pkqup.commonlibrary.view.choicearea.DataProvider;
 import com.pkqup.commonlibrary.view.choicearea.ISelectAble;
@@ -46,17 +47,17 @@ import static com.chunlangjiu.app.util.ConstantMsg.BANKCARD_CHANGE;
 
 public class AddBankCardActivity extends BaseActivity {
     @BindView(R.id.edtName)
-    EditText edtName;
+    ClearEditText edtName;
     @BindView(R.id.edtIdCard)
-    EditText edtIdCard;
+    ClearEditText edtIdCard;
     @BindView(R.id.edtBankCard)
-    EditText edtBankCard;
+    ClearEditText edtBankCard;
     @BindView(R.id.edtBranch)
-    EditText edtBranch;
+    ClearEditText edtBranch;
     @BindView(R.id.edtPhone)
-    EditText edtPhone;
+    ClearEditText edtPhone;
     @BindView(R.id.edtCode)
-    EditText edtCode;
+    ClearEditText edtCode;
     @BindView(R.id.btnGetCode)
     Button btnGetCode;
     @BindView(R.id.edtBankName)
@@ -173,6 +174,7 @@ public class AddBankCardActivity extends BaseActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showErrorMsg(throwable);
                     }
                 }));
 
