@@ -69,4 +69,18 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:hint">请选择</item>
     </style>
+
+
+    <style name="corner_mark">
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_height">15dp</item>
+        <item name="android:textColor">@color/t_white</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginRight">-7dp</item>
+        <item name="android:layout_marginTop">-7dp</item>
+        <item name="android:visibility">invisible</item>
+
+        <item name="android:background">@drawable/cart_num_bg</item>
+    </style>
 </resources>
