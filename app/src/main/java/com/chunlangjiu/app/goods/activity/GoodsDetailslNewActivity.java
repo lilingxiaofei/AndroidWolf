@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -48,6 +48,8 @@ import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.chunlangjiu.app.util.ShareUtils;
+import com.lzy.imagepicker.util.Utils;
+import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.BannerGlideLoader;
 import com.pkqup.commonlibrary.glide.GlideUtils;
@@ -181,13 +183,15 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     toConfirmOrder();
                     break;
                 case R.id.tvPriceList://查看出价
-                    showPriceListDialog();
+//                    showPriceListDialog();
+                    GoodsPriceListActivity.startActivity(GoodsDetailslNewActivity.this,goodsDetailBean.getItem().getAuction().getAuctionitem_id());
                     break;
                 case R.id.tvLookAll://查看店铺
                     ShopMainActivity.startShopMainActivity(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_id());
                     break;
                 case R.id.rlEvaluate://评价
-                    EventManager.getInstance().notify(null, ConstantMsg.CHANGE_TO_EVALUATE);
+//                    EventManager.getInstance().notify(null, ConstantMsg.CHANGE_TO_EVALUATE);
+                    GoodsEvaluateActivity.startActivity(GoodsDetailslNewActivity.this,itemId);
                     break;
                 case R.id.llSeeMore://查看更多
                     GoodsListNewActivity.startGoodsListNewActivity(GoodsDetailslNewActivity.this, "", "", "");
@@ -446,14 +450,24 @@ public class GoodsDetailslNewActivity extends BaseActivity {
             String arrayStr = parameter == null?"":parameter.toString();
             JSONArray jsonArray = new JSONArray(arrayStr);
             if (jsonArray != null && jsonArray.length() > 0) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject objItem = jsonArray.getJSONObject(i);
+                for (int i = -1; i < jsonArray.length(); i++) {
                     View infoView = getLayoutInflater().inflate(R.layout.goods_activity_details_new_table_item, null);
                     TextView tvLabel = infoView.findViewById(R.id.tvLabel);
                     TextView tvValue = infoView.findViewById(R.id.tvValue);
-                    tvLabel.setText(objItem.optString("title"));
-                    tvValue.setText(objItem.optString("value"));
-                    llInfoList.addView(infoView);
+
+                    if(i==-1){
+                        tvLabel.setText("商品名称：");
+                        tvValue.setText(goodsDetailBean.getItem().getTitle());
+                        llInfoList.addView(infoView);
+                    }else{
+                        JSONObject objItem = jsonArray.getJSONObject(i);
+                        if(!TextUtils.isEmpty(objItem.optString("value"))&& !TextUtils.isEmpty(objItem.optString("value"))){
+                            tvLabel.setText(objItem.optString("title")+"：");
+                            tvValue.setText(objItem.optString("value"));
+                            llInfoList.addView(infoView);
+                        }
+                    }
+
                 }
                 llAuctionInfo.setVisibility(View.VISIBLE);
             } else {
@@ -530,7 +544,10 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private void initRecommendView(List<RecommendGoodsBean> list) {
         recommendLists = list;
         recommendAdapter = new RecommendAdapter(R.layout.goods_item_recommend, recommendLists);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        ;
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        GridSpacingItemDecoration decoration2 = new GridSpacingItemDecoration(2, Utils.dp2px(this, 5), false);
+        recyclerView.addItemDecoration(decoration2);
         recyclerView.setAdapter(recommendAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -557,7 +574,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
             ImageView imgPic = helper.getView(R.id.img_pic);
             ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
             int screenWidth = SizeUtils.getScreenWidth();
-            int picWidth = (screenWidth - SizeUtils.dp2px(45)) / 3;
+            int picWidth = (screenWidth - SizeUtils.dp2px(25)) / 2;
             layoutParams.height = picWidth;
             layoutParams.width = picWidth;
             imgPic.setLayoutParams(layoutParams);

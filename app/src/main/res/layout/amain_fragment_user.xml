@@ -7,7 +7,8 @@
     android:background="@color/bg_gray"
     android:scrollbars="none">
 
-    <RelativeLayout android:id="@+id/headLayout"
+    <RelativeLayout
+        android:id="@+id/headLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -15,86 +16,92 @@
         <RelativeLayout
             android:id="@+id/rlUserHead"
             android:layout_width="match_parent"
-            android:layout_height="165dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="25dp"
             android:background="@color/bg_black">
 
-            <TextView
-                android:id="@+id/tvUserTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="买家中心"
-                android:textColor="@color/bg_white"
-                android:textSize="@dimen/text_size_18sp" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgHead"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="29dp"
-                android:layout_marginTop="65dp"
-                android:src="@mipmap/common_head_icon"
-                app:civ_border_color="@color/bg_white"
-                app:civ_border_width="2dp" />
-
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/imgHead"
-                android:layout_marginLeft="23dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/imgHead"
-                android:textColor="@color/t_white"
-                android:textSize="15sp"
-                tools:text="姓名" />
-
-            <ImageView
-                android:id="@+id/imgEditName"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignTop="@id/imgHead"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/tvName"
-                android:src="@mipmap/my_edit"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/llAuthStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_alignBottom="@+id/imgHead"
-                android:layout_alignLeft="@+id/tvName"
-                android:background="@drawable/bg_round_red_8dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="3dp"
-                android:paddingRight="6dp">
-
-                <ImageView
-                    android:id="@+id/imgAuthStatus"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@mipmap/my_no_auth" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="165dp">
 
                 <TextView
-                    android:id="@+id/tvAuthStatus"
+                    android:id="@+id/tvUserTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="买家中心"
+                    android:textColor="@color/bg_white"
+                    android:textSize="@dimen/text_size_18sp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgHead"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="29dp"
+                    android:layout_marginTop="65dp"
+                    android:src="@mipmap/common_head_icon"
+                    app:civ_border_color="@color/bg_white"
+                    app:civ_border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_alignTop="@id/imgHead"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/imgHead"
                     android:textColor="@color/t_white"
-                    android:textSize="10sp"
-                    tools:text="未认证" />
+                    android:textSize="15sp"
+                    tools:text="姓名" />
 
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/imgEditName"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignTop="@id/imgHead"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/tvName"
+                    android:src="@mipmap/my_edit"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/llAuthStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_alignBottom="@+id/imgHead"
+                    android:layout_alignLeft="@+id/tvName"
+                    android:background="@drawable/bg_round_red_8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="6dp">
+
+                    <ImageView
+                        android:id="@+id/imgAuthStatus"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:src="@mipmap/my_no_auth" />
+
+                    <TextView
+                        android:id="@+id/tvAuthStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/t_white"
+                        android:textSize="10sp"
+                        tools:text="未认证" />
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
-        <LinearLayout android:id="@+id/llNotLogin"
+        <LinearLayout
+            android:id="@+id/llNotLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/rlUserHead"
             android:layout_alignBottom="@+id/rlUserHead"
+            android:layout_alignTop="@+id/rlUserHead"
             android:background="@color/bg_black"
             android:gravity="center"
             android:orientation="vertical"
@@ -103,12 +110,12 @@
             <TextView
                 android:id="@+id/tvToLogin"
                 android:layout_width="100dp"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/bg_round_white_red_border"
+                android:background="@drawable/bg_round_red_15dp"
                 android:gravity="center"
                 android:text="请登录"
-                android:textColor="@color/t_red"
+                android:textColor="@color/t_white"
                 android:textSize="@dimen/sp_mid"
                 android:visibility="visible" />
         </LinearLayout>
@@ -119,7 +126,8 @@
             android:layout_height="35dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:layout_marginTop="148dp"
+            android:layout_marginTop="-20dp"
+            android:layout_below="@+id/rlUserHead"
             android:background="@drawable/bg_round_white"
             android:gravity="center">
 
@@ -135,7 +143,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:drawablePadding="5dp"
-                android:drawableRight="@mipmap/black_right_arrow"
                 android:text="@string/into_seller_center"
                 android:textColor="@color/t_blue" />
         </LinearLayout>
@@ -160,34 +167,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_centerVertical="true"
-                    android:gravity="center_vertical"
                     android:layout_marginLeft="15dp"
+                    android:gravity="center_vertical"
                     android:text="订单管理"
                     android:textColor="@color/t_black"
                     android:textSize="15sp" />
 
 
-                <TextView android:id="@+id/tv_find_all_order"
+                <TextView
+                    android:id="@+id/tv_find_all_order"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:drawableRight="@mipmap/black_right_arrow_two"
-                    android:text="@string/find_all_order"
                     android:layout_marginRight="17dp"
-                    android:textColor="@color/t_grey"
-                    android:gravity="center_vertical"
                     android:drawablePadding="6dp"
+                    android:drawableRight="@mipmap/black_right_arrow_two"
+                    android:gravity="center_vertical"
+                    android:text="@string/find_all_order"
+                    android:textColor="@color/t_grey"
                     android:textSize="12sp" />
 
-                <View android:id="@+id/line_order"
-                    android:layout_below="@+id/tv_find_all_order"
+                <View
+                    android:id="@+id/line_order"
                     android:layout_width="match_parent"
-                    android:layout_alignParentBottom="true"
                     android:layout_height="1dp"
-                    android:visibility="visible"
-                    android:background="@color/bg_gray" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/tv_find_all_order"
+                    android:background="@color/bg_gray"
+                    android:visibility="visible" />
             </RelativeLayout>
 
 
@@ -195,9 +204,9 @@
                 android:id="@+id/llBuyOrder"
                 android:layout_width="match_parent"
                 android:layout_height="81dp"
-                android:visibility="visible"
                 android:background="@drawable/bg_round_white_bottom"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:id="@+id/rlOrderOne"
@@ -370,10 +379,10 @@
                 <RelativeLayout
                     android:id="@+id/rlOrderFive"
                     android:layout_width="0dp"
-                    android:visibility="gone"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imgOrderFive"
@@ -415,9 +424,9 @@
                 android:id="@+id/llSellOrder"
                 android:layout_width="match_parent"
                 android:layout_height="81dp"
-                android:visibility="gone"
                 android:background="@drawable/bg_round_white_bottom"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/rlSellOrderOne"
@@ -586,6 +595,7 @@
                         tools:text="1" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rlSellOrderFour"
                     android:layout_width="0dp"
@@ -1088,14 +1098,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="商品管理"
-                    android:layout_alignParentRight="true"
-                    android:drawableRight="@mipmap/black_right_arrow_two"
-                    android:textColor="@color/t_grey"
                     android:layout_marginRight="17dp"
                     android:drawablePadding="6dp"
+                    android:drawableRight="@mipmap/black_right_arrow_two"
+                    android:text="商品管理"
+                    android:textColor="@color/t_grey"
                     android:textSize="12sp" />
 
                 <View
@@ -1178,6 +1188,7 @@
                         android:visibility="gone"
                         tools:text="1" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rlWareHouseGoods"
                     android:layout_width="0dp"
@@ -1218,6 +1229,7 @@
                         tools:text="1" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rlSellGoods"
                     android:layout_width="0dp"
@@ -1301,7 +1313,6 @@
                 </RelativeLayout>
 
 
-
                 <RelativeLayout
                     android:id="@+id/rlGoodsManagerPlace"
                     android:layout_width="0dp"
@@ -1334,8 +1345,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:visibility="gone"
-                    android:src="@mipmap/black_right_arrow" />
+                    android:src="@mipmap/black_right_arrow"
+                    android:visibility="gone" />
 
                 <View
                     android:layout_width="match_parent"
@@ -1465,8 +1476,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imgVip"
@@ -1494,8 +1505,8 @@
                 android:id="@+id/llMyManagerSecond"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:layout_marginBottom="12dp"
+                android:layout_weight="3"
                 android:background="@drawable/bg_round_white_bottom"
                 android:orientation="horizontal">
 
@@ -1504,10 +1515,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="12dp"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="20dp">
 
                     <ImageView
                         android:id="@+id/iv_service"
@@ -1526,15 +1537,16 @@
                         android:textColor="@color/t_black"
                         android:textSize="@dimen/text_size_12sp" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/rl_fans_manage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="12dp"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="20dp">
 
                     <ImageView
                         android:id="@+id/iv_fans_manage"
@@ -1559,10 +1571,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="12dp"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="20dp">
 
                     <ImageView
                         android:id="@+id/iv_setting"
@@ -1583,23 +1595,24 @@
                 </RelativeLayout>
 
                 <!--<RelativeLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1" />-->
 
                 <!--<RelativeLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1" />-->
 
                 <!--<RelativeLayout-->
-                    <!--android:id="@+id/rlMySecondPlace"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:visibility="gone" />-->
+                <!--android:id="@+id/rlMySecondPlace"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:visibility="gone" />-->
             </LinearLayout>
         </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/rlHead"
             android:layout_width="match_parent"
@@ -1607,25 +1620,25 @@
             android:visibility="gone">
 
             <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                <!--android:id="@+id/imgHead"-->
-                <!--android:layout_width="70dp"-->
-                <!--android:layout_height="70dp"-->
-                <!--android:layout_marginLeft="15dp"-->
-                <!--android:layout_marginTop="60dp"-->
-                <!--android:src="@mipmap/common_head_icon"-->
-                <!--app:civ_border_color="@color/bg_white"-->
-                <!--app:civ_border_width="2dp" />-->
+            <!--android:id="@+id/imgHead"-->
+            <!--android:layout_width="70dp"-->
+            <!--android:layout_height="70dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginTop="60dp"-->
+            <!--android:src="@mipmap/common_head_icon"-->
+            <!--app:civ_border_color="@color/bg_white"-->
+            <!--app:civ_border_width="2dp" />-->
 
             <!--<TextView-->
-                <!--android:id="@+id/tvName"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignTop="@id/imgHead"-->
-                <!--android:layout_marginLeft="15dp"-->
-                <!--android:layout_toRightOf="@id/imgHead"-->
-                <!--android:textColor="@color/t_white"-->
-                <!--android:textSize="17sp"-->
-                <!--tools:text="姓名" />-->
+            <!--android:id="@+id/tvName"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignTop="@id/imgHead"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_toRightOf="@id/imgHead"-->
+            <!--android:textColor="@color/t_white"-->
+            <!--android:textSize="17sp"-->
+            <!--tools:text="姓名" />-->
 
             <TextView
                 android:id="@+id/tvAccountType"

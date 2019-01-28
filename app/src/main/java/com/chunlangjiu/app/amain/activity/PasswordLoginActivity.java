@@ -128,7 +128,7 @@ public class PasswordLoginActivity extends BaseActivity {
                         SPUtils.put("account", etPhone.getText().toString());
                         BaseApplication.setToken(loginBeanResultBean.getData().getAccessToken());
                         BaseApplication.initToken();
-                        if("true".equals(loginBeanResultBean.getData().getReferrer())){
+                        if("false".equals(loginBeanResultBean.getData().getReferrer())){
                             EventManager.getInstance().notify(null, ConstantMsg.SET_INVITATION_CODE);
                         }
                         EventManager.getInstance().notify(null, ConstantMsg.LOGIN_SUCCESS);

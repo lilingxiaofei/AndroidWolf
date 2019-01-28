@@ -20,7 +20,7 @@
     <string name="fans_input_code">请输入验证码</string>
     <string name="fans_send_code">发送验证码</string>
     <string name="fans_reset_send">重新发送</string>
-    <string name="fans_register_time">重新发送</string>
+    <string name="fans_register_time">注册时间</string>
     <string name="fans_register">注册</string>
     <string name="fans_copy">复制</string>
     <string name="classify">分类</string>
@@ -39,8 +39,8 @@
 
 
     <string name="into_store">进店</string>
-    <string name="into_seller_center">进入卖家中心</string>
-    <string name="into_buyer_center">进入买家中心</string>
+    <string name="into_seller_center">进入卖家中心 >></string>
+    <string name="into_buyer_center">进入买家中心 >></string>
     <string name="find_all_order">查看全部订单</string>
     <string name="my_recommend">我的推荐</string>
     <string name="pay_phone">验证码将会发送到%s手机上</string>
