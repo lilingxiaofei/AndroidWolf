@@ -99,6 +99,7 @@ public class MoneyManagerActivity extends BaseActivity {
     }
 
     private void initData() {
+        btnPaySecurityDeposit.setEnabled(false);
         getUserMoney();
         getDepositMoney();
 
@@ -137,6 +138,7 @@ public class MoneyManagerActivity extends BaseActivity {
                             tvDepositCount.setText(depositBean.getDeposit() == null ? "" : depositBean.getDeposit());
                             if ("1".equals(depositBean.getDeposit_status())) { //deposit_status 1.交纳 2.撤销中 3.撤销
                                 btnPaySecurityDeposit.setText("撤销保证金");
+                                btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
                             } else if ("2".equals(depositBean.getDeposit_status())) {
                                 btnPaySecurityDeposit.setText("撤销保证金中");
@@ -144,6 +146,7 @@ public class MoneyManagerActivity extends BaseActivity {
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
                             } else if ("3".equals(depositBean.getDeposit_status())) {
                                 btnPaySecurityDeposit.setText("交纳保证金");
+                                btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
                             }
                         }
