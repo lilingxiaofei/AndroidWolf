@@ -1,13 +1,21 @@
 package com.chunlangjiu.app.user.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -16,9 +24,11 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.money.activity.WithDrawActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.user.bean.BankCardInfoBean;
 import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
+import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -58,23 +68,57 @@ public class BankCardActivity extends BaseActivity {
         bankCardAdapter = new BankCardAdapter(R.layout.bank_card_list_item, bankCard);
         recycleBankCardList.setAdapter(bankCardAdapter);
         recycleBankCardList.setLayoutManager(new LinearLayoutManager(this));
-        bankCardAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        bankCardAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (ClassWithDrawActivity.equals(getIntent().getStringExtra(FromType))) {
                     Intent intent = new Intent();
                     intent.putExtra(WithDrawActivity.BankCardData, bankCard.get(position));
                     setResult(WithDrawActivity.BankCardResultCode, intent);
                     finish();
                 }
-//                deleteBankCard(String.valueOf(bankCard.get(position).getBank_id()));
+
             }
         });
+//        bankCardAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                if (ClassWithDrawActivity.equals(getIntent().getStringExtra(FromType))) {
+//                    Intent intent = new Intent();
+//                    intent.putExtra(WithDrawActivity.BankCardData, bankCard.get(position));
+//                    setResult(WithDrawActivity.BankCardResultCode, intent);
+//                    finish();
+//                }
+////                deleteBankCard(String.valueOf(bankCard.get(position).getBank_id()));
+//            }
+//        });
+        bankCardAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recycleBankCardList.getParent(), false));
 
     }
+    private Drawable getDrawable(String color){
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setGradientType(GradientDrawable.RECTANGLE);
+        //设置圆角大小
+        drawable.setCornerRadius(dip2px(this,4));
+        //设置边缘线的宽以及颜色
+//        drawable.setStroke(1, Color.parseColor(#FF00FF));
+        //设置shape背景色
+        drawable.setColor(Color.parseColor(color));
+        //设置到TextView中
+        return drawable;
 
+    }
+    public static int dip2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
     private void initData() {
         getBankCardList();
+    }
+
+    private void test() {
+        bankCard.add(new BankCardListBean.BankCardDetailBean());
+        bankCardAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -153,6 +197,8 @@ public class BankCardActivity extends BaseActivity {
                         bankCard.clear();
                         bankCard.addAll(bankCardListBeanResultBean.getData().getList());
                         bankCardAdapter.notifyDataSetChanged();
+                        getBankCardListInfo();
+//                        test();
 
                     }
                 }, new Consumer<Throwable>() {
@@ -186,9 +232,43 @@ public class BankCardActivity extends BaseActivity {
 
     }
 
+    private void getBankCardListInfo() {
+        for (BankCardListBean.BankCardDetailBean bankCardDetailBean : bankCard) {
+            if (null != bankCardDetailBean) {
+                getBankCardInfo(bankCardDetailBean.getCard(), bankCardDetailBean);
+            }
+        }
+
+
+    }
+
+    private void getBankCardInfo(final String cardId, final BankCardListBean.BankCardDetailBean bankCardDetailBean) {
+        disposable.add(ApiUtils.getInstance().getBankCardInfo((String) SPUtils.get("token", ""), cardId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<BankCardInfoBean>>() {
+                    @Override
+                    public void accept(ResultBean<BankCardInfoBean> resultBean) throws Exception {
+                        if (null != resultBean && null != resultBean.getData()) {
+                            BankCardInfoBean bankCardInfoBean = resultBean.getData();
+                            bankCardDetailBean.setBankCardInfoBean(bankCardInfoBean);
+                            bankCardAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                }));
+
+    }
+
+
     private void removeLocalData(String id) {
         for (BankCardListBean.BankCardDetailBean bankCardDetailBean : bankCard) {
-            if (id.equals(String.valueOf(bankCardDetailBean.getBank_id()))){
+            if (id.equals(String.valueOf(bankCardDetailBean.getBank_id()))) {
                 bankCard.remove(bankCardDetailBean);
                 break;
             }
@@ -205,8 +285,10 @@ public class BankCardActivity extends BaseActivity {
 
         @Override
         protected void convert(BaseViewHolder helper, final BankCardListBean.BankCardDetailBean item) {
-            helper.setText(R.id.tvBankName, item.getName());
-            helper.setText(R.id.tvCardType, item.getBank());
+            BankCardInfoBean bankCardInfoBean = item.getBankCardInfoBean();
+            helper.getView(R.id.linearBankCard).setBackground(getDrawable("#ffb31f3f"));
+            helper.setText(R.id.tvBankName, item.getBank());
+            helper.setText(R.id.tvCardType, "");
             helper.setText(R.id.tvBankCardNumber, formateBankCard(item.getCard()));
             helper.setOnClickListener(R.id.tvDelete, new View.OnClickListener() {
                 @Override
@@ -215,6 +297,11 @@ public class BankCardActivity extends BaseActivity {
 
                 }
             });
+            helper.addOnClickListener(R.id.linearBankCard);
+            if (null != bankCardInfoBean) {
+                GlideUtils.loadImageHead(BankCardActivity.this, bankCardInfoBean.getBankimage(), (ImageView) helper.getView(R.id.imgBank));
+                helper.setText(R.id.tvCardType,bankCardInfoBean.getCardtype());
+            }
 
         }
     }

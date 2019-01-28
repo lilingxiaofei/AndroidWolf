@@ -192,10 +192,12 @@ public class AddBankCardActivity extends BaseActivity {
             public void onFinish() {
                 btnGetCode.setText("获取验证码");
                 btnGetCode.setClickable(true);
+                btnGetCode.setBackgroundResource(R.drawable.bg_round_red);
             }
         };
         countDownTimer.start();
         btnGetCode.setClickable(false);
+        btnGetCode.setBackgroundResource(R.drawable.bg_round_gray);
     }
 
     private ArrayList<ISelectAble> getProvince() {

@@ -35,6 +35,15 @@ public class BankCardListBean {
         private String card;
         private String mobile;
         private String bank_branch;
+        private BankCardInfoBean bankCardInfoBean;
+
+        public BankCardInfoBean getBankCardInfoBean() {
+            return bankCardInfoBean;
+        }
+
+        public void setBankCardInfoBean(BankCardInfoBean bankCardInfoBean) {
+            this.bankCardInfoBean = bankCardInfoBean;
+        }
 
         public int getBank_id() {
             return bank_id;

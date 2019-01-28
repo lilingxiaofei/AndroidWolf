@@ -63,7 +63,7 @@ public class VerifiedActivity extends BaseActivity {
         titleName.setText("实名认证");
     }
 
-    @OnClick({R.id.btnPerson, R.id.btnCompany})
+    @OnClick({R.id.btnPerson, R.id.btnCompany,R.id.img_title_left})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnPerson:
@@ -73,6 +73,9 @@ public class VerifiedActivity extends BaseActivity {
             case R.id.btnCompany:
                 checkCompanyStatus();
 //                startActivity(new Intent(this,CompanyAuthActivity.class));
+                break;
+            case R.id.img_title_left:
+                finish();
                 break;
         }
 
