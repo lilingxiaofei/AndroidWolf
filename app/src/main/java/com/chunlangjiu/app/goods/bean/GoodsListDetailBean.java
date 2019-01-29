@@ -8,6 +8,11 @@ import java.util.List;
  */
 public class GoodsListDetailBean {
 
+    public static final int ITEM_GOODS = 1;
+    public static final int ITEM_JINGPAI = 2;
+    public static final int ITEM_TUIJIAN = 3;
+    private int itemType;
+
     private String item_id;
     private String title;
     private String image_default_id;
@@ -26,8 +31,6 @@ public class GoodsListDetailBean {
     private String grade ;//店铺等级 0普通店铺，1,星级卖家，2城市合伙人
 
     private String rate ;//好评率
-
-
 
     private String imgsrc;
 
@@ -103,6 +106,15 @@ public class GoodsListDetailBean {
 
     public void setImage_default_id(String image_default_id) {
         this.image_default_id = image_default_id;
+    }
+
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
     }
 
     public String getPrice() {

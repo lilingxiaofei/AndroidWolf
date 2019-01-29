@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chunlangjiu.app.R;
+import com.chunlangjiu.app.goods.activity.FestivalActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
@@ -33,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
     private ImageView ivOpenPic ;
     private String openPic ;
     private int loadTime = 2000;
-    private int what = 88 ;
+    private final int WHAT_COUNT_DOWN = 88 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,19 +62,27 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            loadTime = loadTime -1000 ;
-            if(loadTime<=0){
-                startNextActivity();
-            }else{
-                startCountDown();
+            switch (msg.what){
+                case WHAT_COUNT_DOWN:
+                    loadTime = loadTime -1000 ;
+                    if(loadTime<=0){
+                        startNextActivity();
+                    }else{
+                        startCountDown();
+                    }
+                    break;
+                    default:
+                        FestivalActivity.startActivity(SplashActivity.this);
+                        SplashActivity.this.finish();
+                        break;
             }
         }
     };
 
     private void startCountDown(){
         tvOpenPic.setText(getString(R.string.openPicStr,loadTime/1000+""));
-        handler.removeMessages(what);
-        handler.sendEmptyMessageDelayed(what,1000);
+        handler.removeMessages(WHAT_COUNT_DOWN);
+        handler.sendEmptyMessageDelayed(WHAT_COUNT_DOWN,1000);
     }
 
     private void startNextActivity(){
@@ -81,13 +90,12 @@ public class SplashActivity extends AppCompatActivity {
         if(isFirstStart){
             Intent intent = new Intent(SplashActivity.this,GuideActivity.class);
             startActivity(intent);
-            finish();
         }else{
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
-            finish();
         }
         SPUtils.put("firstStart",false);
+        SplashActivity.this.finish();
     }
 
     private void loadOpen(){
@@ -103,6 +111,8 @@ public class SplashActivity extends AppCompatActivity {
                             startCountDown();
                             openPic = (String)resultMap.get("url");
                             tvOpenPic.setVisibility(View.VISIBLE);
+                            tvOpenPic.setOnClickListener(onClickListener);
+                            ivOpenPic.setOnClickListener(onClickListener);
                             setOpenPic();
                         }
                     }
@@ -112,6 +122,21 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 }));
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.tvOpenPic){
+                startNextActivity();
+                SplashActivity.this.finish();
+            }else if(v.getId() == R.id.ivOpenPic){
+                handler.removeMessages(WHAT_COUNT_DOWN);
+                startNextActivity();
+                handler.sendEmptyMessageDelayed(11,200);
+            }
+        }
+    };
+
 
     private void setOpenPic(){
         Glide.with(this).load(openPic).into(ivOpenPic);

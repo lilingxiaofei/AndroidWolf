@@ -31,7 +31,7 @@ import java.util.List;
 public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
 
     private Context context;
-    private int gridHead = -100;
+    private int recommendHead = 0;
 
     public HomeAdapter(Context context, List<HomeBean> list) {
         super(list);
@@ -62,7 +62,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 int right = 0;
                 int top = 0;
                 int bottom = 0;
-                int index = viewHolder.getLayoutPosition()-gridHead;
+                int index = viewHolder.getLayoutPosition()- recommendHead;
                 if (index % 2 == 0) {
                     right = size;
                 }else {
@@ -89,12 +89,20 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 setItemContent(viewHolder, item);
                 break;
             case HomeBean.ITEM_TUIJIAN:
-                gridHead = viewHolder.getLayoutPosition();
+                recommendHead = viewHolder.getLayoutPosition();
                 break;
             case HomeBean.ITEM_JINGPAI:
                 viewHolder.addOnClickListener(R.id.tvMoreAuction);
                 break;
         }
+    }
+
+    public int getRecommendHead() {
+        return recommendHead;
+    }
+
+    public void setRecommendHead(int recommendHead) {
+        this.recommendHead = recommendHead;
     }
 
     private void setItemContent(BaseViewHolder viewHolder, HomeBean item) {

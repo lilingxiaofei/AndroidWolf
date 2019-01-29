@@ -29,6 +29,7 @@ import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
+import com.chunlangjiu.app.goods.bean.StoreActivityBean;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
 import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.money.bean.DepositCashBean;
@@ -320,6 +321,10 @@ public class ApiUtils {
 
     public Flowable<ResultBean<HomeListBean>> getHomeLists(int pageNo) {
         return apiService.getHomeLists("theme.pull.goods", "v1", "index", pageNo, 10);
+    }
+
+    public Flowable<ResultBean<StoreActivityBean>> getStoreActivityLists() {
+        return apiService.getStoreActivityLists("app.open.activity", "v1");
     }
 
     // image_type —— complaints 用户投诉商家图片, aftersales售后图片, rate 评价图片
