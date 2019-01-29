@@ -170,6 +170,11 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlWareHouseGoods;
     private RelativeLayout rlCheckGoods;
     private RelativeLayout rlGoodsManagerPlace;
+    private TextView tvCheckGoodsNum;
+    private TextView tvWareHouseGoodsNum;
+    private TextView tvAuctionGoodsNum;
+    private TextView tvSellGoodsNum;
+
     /*商品管理*/
 
     /*我的管理*/
@@ -489,6 +494,10 @@ public class UserFragment extends BaseFragment {
         rlWareHouseGoods = rootView.findViewById(R.id.rlWareHouseGoods);
         rlCheckGoods = rootView.findViewById(R.id.rlCheckGoods);
         rlGoodsManagerPlace = rootView.findViewById(R.id.rlGoodsManagerPlace);
+        tvCheckGoodsNum = rootView.findViewById(R.id.tvCheckGoodsNum);
+        tvWareHouseGoodsNum = rootView.findViewById(R.id.tvWareHouseGoodsNum);
+        tvAuctionGoodsNum = rootView.findViewById(R.id.tvAuctionGoodsNum);
+        tvSellGoodsNum = rootView.findViewById(R.id.tvSellGoodsNum);
         rlGoodsManager.setOnClickListener(onClickListener);
         rlAddGoods.setOnClickListener(onClickListener);
         rlSellGoods.setOnClickListener(onClickListener);
@@ -743,6 +752,15 @@ public class UserFragment extends BaseFragment {
                             tvCanUseMoney.setText(TextUtils.isEmpty(data.getMoney()) ? "0" : data.getMoney());
                             tvNotUseMoney.setText(TextUtils.isEmpty(data.getMoney_frozen()) ? "0" : data.getMoney_frozen());
                             tvMessageNum.setText(TextUtils.isEmpty(data.getInformation()) ? "0" : data.getInformation());
+
+                            tvCheckGoodsNum.setText(data.getPending_num());
+                            tvWareHouseGoodsNum.setText(data.getNotrate_num());
+                            tvAuctionGoodsNum.setText(data.getAuction_num());
+                            tvSellGoodsNum.setText(data.getInstock_num());
+                            tvCheckGoodsNum.setVisibility(TextUtils.isEmpty(data.getPending_num())?View.GONE: View.VISIBLE);
+                            tvWareHouseGoodsNum.setVisibility(TextUtils.isEmpty(data.getNotrate_num())?View.GONE: View.VISIBLE);
+                            tvAuctionGoodsNum.setVisibility(TextUtils.isEmpty(data.getAuction_num())?View.GONE: View.VISIBLE);
+                            tvSellGoodsNum.setVisibility(TextUtils.isEmpty(data.getInstock_num())?View.GONE: View.VISIBLE);
                         }
                     }
                 }, new Consumer<Throwable>() {

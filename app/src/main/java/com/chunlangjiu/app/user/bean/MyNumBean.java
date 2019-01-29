@@ -17,6 +17,15 @@ public class MyNumBean {
     private String money_frozen;//冻结金额
     private String information;//消息
 
+    private String pending_num;
+    private String instock_num;
+    private String auction_num;
+
+    private String coupon_num;
+    private String voucher_num;
+    private String point;
+
+
     public String getAfter_sale_num() {
         return after_sale_num;
     }
@@ -87,5 +96,53 @@ public class MyNumBean {
 
     public void setNotrate_num(String notrate_num) {
         this.notrate_num = notrate_num;
+    }
+
+    public String getPending_num() {
+        return pending_num;
+    }
+
+    public void setPending_num(String pending_num) {
+        this.pending_num = pending_num;
+    }
+
+    public String getInstock_num() {
+        return instock_num;
+    }
+
+    public void setInstock_num(String instock_num) {
+        this.instock_num = instock_num;
+    }
+
+    public String getAuction_num() {
+        return auction_num;
+    }
+
+    public void setAuction_num(String auction_num) {
+        this.auction_num = auction_num;
+    }
+
+    public String getCoupon_num() {
+        return coupon_num;
+    }
+
+    public void setCoupon_num(String coupon_num) {
+        this.coupon_num = coupon_num;
+    }
+
+    public String getVoucher_num() {
+        return voucher_num;
+    }
+
+    public void setVoucher_num(String voucher_num) {
+        this.voucher_num = voucher_num;
+    }
+
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
     }
 }
