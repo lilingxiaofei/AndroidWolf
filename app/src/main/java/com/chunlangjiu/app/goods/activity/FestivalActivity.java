@@ -5,16 +5,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
@@ -26,7 +24,6 @@ import com.chunlangjiu.app.goods.bean.StoreActivityBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
-import com.chunlangjiu.app.util.UmengEventUtil;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -50,6 +47,8 @@ public class FestivalActivity extends BaseActivity {
 
     @BindView(R.id.ivBack)
     ImageView ivBack;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
     @BindView(R.id.ivBgHead)
     ImageView ivBgHead ;
     @BindView(R.id.ivBgBottom)
@@ -98,6 +97,7 @@ public class FestivalActivity extends BaseActivity {
 
     private void initFilterView() {
         ivBack.setOnClickListener(onClickListener);
+        tv_title.setText("店铺活动");
     }
 
 
@@ -107,7 +107,6 @@ public class FestivalActivity extends BaseActivity {
 
         productList = new ArrayList<>();
         goodsAdapter = new GoodsAdapter(this, productList);
-        goodsAdapter.setShowStoreView(false);
         goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -125,7 +124,7 @@ public class FestivalActivity extends BaseActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 GoodsListDetailBean homeBean = productList.get(position);
-                if(view.getId() == R.id.tv_store_into){
+                if(view.getId() == R.id.rl_store_layout){
                     ShopMainActivity.startShopMainActivity(FestivalActivity.this, homeBean.getShop_id());
                 }else if(view.getId() == R.id.tvMoreAuction){
                     EventManager.getInstance().notify(null, BaseApplication.HIDE_AUCTION ? ConstantMsg.MSG_PAGE_CLASS : ConstantMsg.MSG_PAGE_AUCTION);
@@ -169,6 +168,7 @@ public class FestivalActivity extends BaseActivity {
     private void getListSuccess() {
 
         if (activityBean != null) {
+            productList.clear();
             GlideUtils.loadImage(this, activityBean.getTop_img(),ivBgHead);
             GlideUtils.loadImage(this, activityBean.getBottom_img(), ivBgBottom);
             try {
@@ -185,7 +185,7 @@ public class FestivalActivity extends BaseActivity {
                 GoodsListDetailBean detailBean = new GoodsListDetailBean();
                 detailBean.setItemType(GoodsListDetailBean.ITEM_JINGPAI);
                 productList.add(detailBean);
-                productList.addAll(dataLists);
+                productList.addAll(auctionItems);
             }
 
             if (dataLists != null) {
@@ -195,7 +195,7 @@ public class FestivalActivity extends BaseActivity {
                 productList.addAll(dataLists);
             }
         }
-        productList.clear();
+        goodsAdapter.setListType(GoodsAdapter.LIST_LINEAR);
         goodsAdapter.setNewData(productList);
         goodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recycleView.getParent(), false));
     }

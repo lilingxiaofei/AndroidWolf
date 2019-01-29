@@ -2,7 +2,6 @@ package com.chunlangjiu.app.goods.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,8 @@ import java.util.List;
  * @Describe:
  */
 public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseViewHolder> {
-    public static final int LIST_LINEAR = 1;
-    public static final int LIST_GRID = 2;
+    public static final int LIST_LINEAR = 0;
+    public static final int LIST_GRID = 1;
     private int itemType = LIST_GRID;
 
     private Context context;
@@ -53,8 +52,8 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
         getMultiTypeDelegate()
                 .registerItemType(LIST_LINEAR, R.layout.amain_item_goods_list_linear)
                 .registerItemType(LIST_GRID, R.layout.amain_item_goods_list_grid)
-                .registerItemType(GoodsListDetailBean.ITEM_JINGPAI, R.layout.amain_item_home_list_auction)
-                .registerItemType(GoodsListDetailBean.ITEM_TUIJIAN, R.layout.amain_item_home_list_pic);
+                .registerItemType(GoodsListDetailBean.ITEM_JINGPAI, R.layout.goods_item_list_auction)
+                .registerItemType(GoodsListDetailBean.ITEM_TUIJIAN, R.layout.goods_item_list_tuijian);
 
     }
 
@@ -124,8 +123,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
 
             GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
             helper.setText(R.id.tv_name, item.getTitle());
-
-            if (TextUtils.isEmpty(item.getAuction().getAuctionitem_id())) {
+            if (!item.isAuction()) {
                 //普通商品
                 imgAuction.setVisibility(View.GONE);
                 llStartPrice.setVisibility(View.GONE);
