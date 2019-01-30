@@ -49,8 +49,8 @@ public class BalancePayDialog extends Dialog {
         super(context, R.style.dialog_transparent);
         this.context = context;
         this.payMoney = payMoney;
-        setCancelable(true);
-        setCanceledOnTouchOutside(true);
+        setCancelable(false);
+        setCanceledOnTouchOutside(false);
         initView();
         getBalanceInfo();
     }
@@ -119,10 +119,18 @@ public class BalancePayDialog extends Dialog {
         public void onClick(View view) {
             if (view.getId() == R.id.tvConfirm ) {
                 confirm();
+            }else{
+                cancelPay();
             }
             dismiss();
         }
     };
+
+    private void cancelPay(){
+        if(callBack!=null){
+            callBack.cancelPay();
+        }
+    }
 
     private void confirm(){
         BigDecimal bigDecimal = BigDecimalUtils.substractObj(balanceBean.getDeposit(),payMoney);
