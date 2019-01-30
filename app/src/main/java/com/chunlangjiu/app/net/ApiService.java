@@ -1,7 +1,5 @@
 package com.chunlangjiu.app.net;
 
-import android.support.annotation.StringDef;
-
 import com.chunlangjiu.app.amain.bean.AuctionListBean;
 import com.chunlangjiu.app.amain.bean.CartCountBean;
 import com.chunlangjiu.app.amain.bean.CartListBean;
@@ -11,8 +9,8 @@ import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
-import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
+import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.fans.bean.FansNumBean;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
@@ -28,6 +26,7 @@ import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.GoodsListBean;
 import com.chunlangjiu.app.goods.bean.OrdoListBean;
 import com.chunlangjiu.app.goods.bean.PartnerBean;
+import com.chunlangjiu.app.goods.bean.PayBalanceBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
@@ -58,7 +57,6 @@ import com.chunlangjiu.app.user.bean.ShopCatIdList;
 import com.chunlangjiu.app.user.bean.ShopClassList;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
-import com.facebook.cache.disk.DefaultDiskStorage;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
 import org.json.JSONArray;
@@ -331,7 +329,12 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> payDo(@Field("method") String method, @Field("v") String v,
-                               @Field("payment_id") String payment_id, @Field("pay_app_id") String pay_app_id);
+                               @Field("payment_id") String payment_id, @Field("pay_app_id") String pay_app_id,@Field("deposit_password") String deposit_password);
+
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<PayBalanceBean>> getBalanceInfo(@Field("method") String method, @Field("v") String v);
 
 
     @POST("index.php/topapi")

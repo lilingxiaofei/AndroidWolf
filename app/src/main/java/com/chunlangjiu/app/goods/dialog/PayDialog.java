@@ -1,7 +1,7 @@
 package com.chunlangjiu.app.goods.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
@@ -27,7 +28,14 @@ public class PayDialog extends Dialog {
     private static final int PAY_WALLET = 2;
     private static final int PAY_LARGE = 3;
 
-    private Context context;
+    RelativeLayout rlWeiXin;
+    RelativeLayout rlZhiFuBao;
+    RelativeLayout rlWallet;
+    TextView tvWalletTips;
+    RelativeLayout rlLarge;
+
+
+    private Activity context;
     private int payMethod = PAY_WEIXIN;
     private List<PaymentBean.PaymentInfo> payList;
     private List<ImageView> imageViewLists;
@@ -36,10 +44,13 @@ public class PayDialog extends Dialog {
     private String yuePayId;
     private String daePayId;
 
-    public PayDialog(Context context, List<PaymentBean.PaymentInfo> payList) {
+    private String payMoney;
+
+    public PayDialog(Activity context, List<PaymentBean.PaymentInfo> payList, String payMoney) {
         super(context, R.style.dialog_transparent);
         this.context = context;
         this.payList = payList;
+        this.payMoney = payMoney;
         setCancelable(true);
         setCanceledOnTouchOutside(true);
         initView();
@@ -55,10 +66,11 @@ public class PayDialog extends Dialog {
         setContentView(view);// 设置布局
 
         findViewById(R.id.imgClose).setOnClickListener(onClickListener);
-        RelativeLayout rlWeiXin = findViewById(R.id.rlWeiXin);
-        RelativeLayout rlZhiFuBao = findViewById(R.id.rlZhiFuBao);
-        RelativeLayout rlWallet = findViewById(R.id.rlWallet);
-        RelativeLayout rlLarge = findViewById(R.id.rlLarge);
+        rlWeiXin = findViewById(R.id.rlWeiXin);
+        rlZhiFuBao = findViewById(R.id.rlZhiFuBao);
+        rlWallet = findViewById(R.id.rlWallet);
+        tvWalletTips = findViewById(R.id.tvWalletTips);
+        rlLarge = findViewById(R.id.rlLarge);
         rlWeiXin.setOnClickListener(onClickListener);
         rlZhiFuBao.setOnClickListener(onClickListener);
         rlWallet.setOnClickListener(onClickListener);
@@ -79,21 +91,26 @@ public class PayDialog extends Dialog {
         imageViewLists.add(imgChoiceLarge);
 
         for (int i = 0; i < payList.size(); i++) {
-            if (payList.get(i).getApp_display_name().contains("微信")) {
-                weixinPayId = payList.get(i).getApp_id();
-                rlWeiXin.setVisibility(View.VISIBLE);
-            }
-            if (payList.get(i).getApp_display_name().contains("支付宝")) {
-                zhifubaoPayId = payList.get(i).getApp_id();
-                rlZhiFuBao.setVisibility(View.VISIBLE);
-            }
-            if (payList.get(i).getApp_display_name().contains("余额")) {
-                yuePayId = payList.get(i).getApp_id();
-                rlWallet.setVisibility(View.VISIBLE);
-            }
-            if (payList.get(i).getApp_display_name().contains("大额")) {
-                daePayId = payList.get(i).getApp_id();
-                rlLarge.setVisibility(View.VISIBLE);
+            PaymentBean.PaymentInfo payInfo = payList.get(i);
+            if (payInfo != null) {
+                String displayName = payInfo.getApp_display_name();
+                displayName = null != displayName ? displayName : "";
+                if (displayName.contains("微信")) {
+                    weixinPayId = payList.get(i).getApp_id();
+                    rlWeiXin.setVisibility(View.VISIBLE);
+                }
+                if (displayName.contains("支付宝")) {
+                    zhifubaoPayId = payList.get(i).getApp_id();
+                    rlZhiFuBao.setVisibility(View.VISIBLE);
+                }
+                if (displayName.contains("余额")) {
+                    yuePayId = payList.get(i).getApp_id();
+                    rlWallet.setVisibility(View.VISIBLE);
+                }
+                if (displayName.contains("大额")) {
+                    daePayId = payList.get(i).getApp_id();
+                    rlLarge.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

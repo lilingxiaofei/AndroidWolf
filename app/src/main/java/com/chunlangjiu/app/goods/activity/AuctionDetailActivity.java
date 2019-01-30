@@ -22,11 +22,9 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragmentAdapter;
 import com.chunlangjiu.app.amain.activity.LoginActivity;
-import com.chunlangjiu.app.amain.bean.AuctionListBean;
-import com.chunlangjiu.app.cart.ChoiceNumDialog;
-import com.chunlangjiu.app.goods.bean.CreateAuctionBean;
 import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
+import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.CallDialog;
 import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
@@ -44,7 +42,6 @@ import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
-import com.pkqup.commonlibrary.view.MyViewPager;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -424,11 +421,12 @@ public class AuctionDetailActivity extends BaseActivity {
             ToastUtils.showShort("获取支付方式失败");
         } else {
             if (payDialog == null) {
-                payDialog = new PayDialog(this, payList);
+                payDialog = new PayDialog(this, payList,"");
                 payDialog.setCallBack(new PayDialog.CallBack() {
                     @Override
                     public void choicePayMethod(int payMethod, String payMethodId) {
-                        payMoney(payMethod, payMethodId);
+//                        payMoney(payMethod, payMethodId);
+                        confirmPayMode(payMethod, payMethodId);
                     }
                 });
             }
@@ -436,8 +434,29 @@ public class AuctionDetailActivity extends BaseActivity {
         }
     }
 
-    private void payMoney(final int payMethod, String payMethodId) {
-        disposable.add(ApiUtils.getInstance().payDo(payment_id, payMethodId)
+    /**
+     * 确认支付方式
+     */
+    private void confirmPayMode(final int payMethod,final String payMethodId){
+        if(payMethod ==2){
+            String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
+            BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
+            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
+                @Override
+                public void confirmPay(String pwd) {
+                    payMoney(payMethod,payMethodId,pwd);
+                }
+            });
+            balancePayDialog.show();
+        }else{
+            payMoney(payMethod,payMethodId,"");
+        }
+    }
+
+
+
+    private void payMoney(final int payMethod, String payMethodId,String payPwd) {
+        disposable.add(ApiUtils.getInstance().payDo(payment_id, payMethodId,payPwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {
