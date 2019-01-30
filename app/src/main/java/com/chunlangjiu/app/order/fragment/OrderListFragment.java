@@ -1152,6 +1152,9 @@ public class OrderListFragment extends BaseFragment {
             BalancePayDialog balancePayDialog = new BalancePayDialog(activity,payMoney);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
                 @Override
+                public void cancelPay() {
+                }
+                @Override
                 public void confirmPay(String pwd) {
                     payDo(payMethod,payMethodId,pwd);
                 }

@@ -366,6 +366,10 @@ public class ConfirmOrderActivity extends BaseActivity {
             BalancePayDialog balancePayDialog = new BalancePayDialog(this,payPrice);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
                 @Override
+                public void cancelPay() {
+                    finish();
+                }
+                @Override
                 public void confirmPay(String pwd) {
                     createSuccess(data,pwd);
                 }

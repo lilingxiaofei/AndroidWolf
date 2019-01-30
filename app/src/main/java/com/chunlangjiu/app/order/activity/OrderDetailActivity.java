@@ -1381,6 +1381,9 @@ public class OrderDetailActivity extends BaseActivity {
             BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
                 @Override
+                public void cancelPay() {
+                }
+                @Override
                 public void confirmPay(String pwd) {
                     payDo(payMethod,payMethodId,pwd);
                 }
