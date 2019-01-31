@@ -26,4 +26,9 @@ public class OrderParams {
 
     public static final String REFRESH_ORDER_LIST = "REFRESH_ORDER_LIST";//刷新订单列表
     public static final String REFRESH_ORDER_DETAIL = "REFRESH_ORDER_DETAIL";//刷新订单详情
+
+
+    public static final String PAY_APP_DEPOSIT ="deposit";
+    public static final String PAY_APP_ALIPAY ="alipayApp";
+    public static final String PAY_APP_WXPAY ="wxpayApp";
 }

@@ -2,8 +2,10 @@ package com.chunlangjiu.app.amain.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -135,12 +137,12 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
         viewHolder.setText(R.id.tv_name, item.getTitle());
         viewHolder.setText(R.id.tv_store_name,item.getShop_name());
 //                tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
-        //设置标签显示
-        String label = item.getLabel();
-        Log.d(this.getClass().getName(),"label="+label);
-        viewHolder.setGone(R.id.tvLabel,!TextUtils.isEmpty(label));
-        TextView tvLabel = viewHolder.getView(R.id.tvLabel);
-        tvLabel.setText(label);
+        LinearLayout labelLayout = viewHolder.getView(R.id.llLabel);
+        setLabelList(labelLayout,item.getLabel());
+
+//        viewHolder.setGone(R.id.tvLabel,!TextUtils.isEmpty(label));
+//        TextView tvLabel = viewHolder.getView(R.id.tvLabel);
+//        tvLabel.setText(label);
 //        viewHolder.setText(R.id.tvLabel,);
 
         if (item.isAuction()) {
@@ -207,6 +209,27 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
         tv_good_evaluate.setText((TextUtils.isEmpty(rate) ? "0%" :rate+"%") + "好评");
     }
 
+    
+    private void setLabelList(LinearLayout layout,String label){
+        //设置标签显示
+        try {
+            layout.removeAllViews();
+            String[] labelList = label.split(",");
+            if(labelList.length== 1){
+                labelList = label.split(" ");
+            }
+            if(labelList.length== 1){
+                labelList = label.split("，");
+            }
+            for (int i = 0; i < labelList.length; i++) {
+                TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.amain_item_goods_list_label,null);
+                textView.setText(labelList[i]);
+                layout.addView(textView);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * 以下两个接口代替 activity.onStart() 和 activity.onStop(), 控制 timer 的开关
      */
