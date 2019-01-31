@@ -1,10 +1,9 @@
 package com.chunlangjiu.app.money.activity;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -15,10 +14,8 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.goods.activity.ConfirmOrderActivity;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
-import com.chunlangjiu.app.money.bean.UserMoneyBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
@@ -180,7 +177,7 @@ public class ReChargeActivity extends BaseActivity {
 
     private void createSuccess(CreateRechargeOrderBean data) {
         if (null != data) {
-            disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId)
+            disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId,"")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<ResultBean>() {

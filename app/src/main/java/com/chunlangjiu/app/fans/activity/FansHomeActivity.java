@@ -34,12 +34,13 @@ import io.reactivex.schedulers.Schedulers;
 public class FansHomeActivity extends BaseActivity {
 
 
-    private ImageView ivQrCode ;
-    private TextView  tvMyCode;
-    private TextView tvShare ;
-    private TextView tvCopy ;
-    private FansCodeBean fansBean ;
+    private ImageView ivQrCode;
+    private TextView tvMyCode;
+    private TextView tvShare;
+    private TextView tvCopy;
+    private FansCodeBean fansBean;
     private CompositeDisposable disposable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,33 +52,37 @@ public class FansHomeActivity extends BaseActivity {
     private void initView() {
         disposable = new CompositeDisposable();
 
-        ivQrCode = findViewById(R.id.ivQrCode) ;
-        tvMyCode = findViewById(R.id.tvMyCode) ;
-        tvShare  = findViewById(R.id.tvShare) ;
+        ivQrCode = findViewById(R.id.ivQrCode);
+        tvMyCode = findViewById(R.id.tvMyCode);
+        tvShare = findViewById(R.id.tvShare);
         tvCopy = findViewById(R.id.tvCopy);
         tvShare.setOnClickListener(onClickListener);
         tvCopy.setOnClickListener(onClickListener);
     }
 
-    private void createEnglishQRCodeWithLogo(final String qrCode) {
-        tvMyCode.setText(qrCode);
-        new AsyncTask<Void, Void, Bitmap>() {
-            @Override
-            protected Bitmap doInBackground(Void... params) {
-                Bitmap logoBitmap = BitmapFactory.decodeResource(FansHomeActivity.this.getResources(), R.mipmap.launcher);
-                return QRCodeEncoder.syncEncodeQRCode(qrCode, BGAQRCodeUtil.dp2px(FansHomeActivity.this, 150), Color.BLACK, Color.WHITE,
-                        logoBitmap);
-            }
+    private void createEnglishQRCodeWithLogo() {
 
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                if (bitmap != null) {
-                    ivQrCode.setImageBitmap(bitmap);
-                } else {
-                    Toast.makeText(FansHomeActivity.this, "生成带logo的英文二维码失败", Toast.LENGTH_SHORT).show();
+        if (fansBean != null) {
+
+            tvMyCode.setText(fansBean.getCode());
+            new AsyncTask<Void, Void, Bitmap>() {
+                @Override
+                protected Bitmap doInBackground(Void... params) {
+                    Bitmap logoBitmap = BitmapFactory.decodeResource(FansHomeActivity.this.getResources(), R.mipmap.launcher);
+                    return QRCodeEncoder.syncEncodeQRCode(fansBean.getUrl(), BGAQRCodeUtil.dp2px(FansHomeActivity.this, 150), Color.BLACK, Color.WHITE,
+                            logoBitmap);
                 }
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(Bitmap bitmap) {
+                    if (bitmap != null) {
+                        ivQrCode.setImageBitmap(bitmap);
+                    } else {
+                        Toast.makeText(FansHomeActivity.this, "生成带logo的英文二维码失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }.execute();
+        }
     }
 
     private void initData() {
@@ -94,7 +99,7 @@ public class FansHomeActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean<FansCodeBean> mainClassBeanResultBean) throws Exception {
                         fansBean = mainClassBeanResultBean.getData();
-                        createEnglishQRCodeWithLogo(fansBean.getCode());
+                        createEnglishQRCodeWithLogo();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -108,36 +113,37 @@ public class FansHomeActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             int resId = v.getId();
-            if(resId == R.id.img_title_left){
+            if (resId == R.id.img_title_left) {
                 finish();
-            }else if(resId == R.id.tv_right){
+            } else if (resId == R.id.tv_right) {
                 startFansListActivity();
-            }else if(resId == R.id.tvShare){
+            } else if (resId == R.id.tvShare) {
                 showShare();
-            }else if(resId ==R.id.tvCopy){
+            } else if (resId == R.id.tvCopy) {
                 setCopyContent();
             }
         }
     };
 
-    private void setCopyContent(){
-        if(fansBean!=null){
-            SystemUtils.copyContent(this,fansBean.getCode());
+    private void setCopyContent() {
+        if (fansBean != null) {
+            SystemUtils.copyContent(this, fansBean.getCode());
         }
     }
 
-    private void startFansListActivity(){
+    private void startFansListActivity() {
         Intent intent = new Intent();
-        intent.setClass(this,FansListActivity.class);
-        String url = fansBean!=null?fansBean.getUrl():"";
-        intent.putExtra("shareUrl",url);
+        intent.setClass(this, FansListActivity.class);
+        String url = fansBean != null ? fansBean.getUrl() : "";
+        intent.putExtra("shareUrl", url);
         startActivity(intent);
     }
-    private void startFansInviteActivity(){
-        if(null != fansBean){
+
+    private void startFansInviteActivity() {
+        if (null != fansBean) {
             String url = fansBean.getUrl();
             String title = getString(R.string.fans_register_app);
-            WebViewActivity.startWebViewActivity(this,url,title);
+            WebViewActivity.startWebViewActivity(this, url, title);
         }
     }
 

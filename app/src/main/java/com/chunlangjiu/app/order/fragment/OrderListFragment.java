@@ -21,6 +21,7 @@ import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.bean.CreateOrderBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
+import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
@@ -102,6 +103,7 @@ public class OrderListFragment extends BaseFragment {
     private IWXAPI wxapi;
     private static final int SDK_PAY_FLAG = 1;
     private ResultBean<CreateOrderBean> createOrderBeanResultBean;
+    private OrderListBean.ListBean payBean ;
     private String paymentId;
 
     private InputPriceDialog inputPriceDialog;
@@ -837,7 +839,9 @@ public class OrderListFragment extends BaseFragment {
                         case 0:
                             switch (listBeans.get(Integer.parseInt(view.getTag().toString())).getStatus()) {
                                 case OrderParams.WAIT_BUYER_PAY:
-                                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
+//                                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
+                                    payBean = listBeans.get(Integer.parseInt(view.getTag().toString()));
+                                    tid = payBean.getTid()+"";
                                     repay();
                                     break;
                                 case OrderParams.WAIT_BUYER_CONFIRM_GOODS:
@@ -864,7 +868,8 @@ public class OrderListFragment extends BaseFragment {
                         case 1:
                             switch (listBeans.get(Integer.parseInt(view.getTag().toString())).getStatus()) {
                                 case "0":
-                                    paymentId = listBeans.get(Integer.parseInt(view.getTag().toString())).getPaymentId();
+                                    payBean = listBeans.get(Integer.parseInt(view.getTag().toString()));
+                                    paymentId = payBean.getPaymentId();
                                     getPayment();
                                     break;
                                 case "1":
@@ -872,7 +877,8 @@ public class OrderListFragment extends BaseFragment {
                                     changeMyPrice();
                                     break;
                                 case "2":
-                                    paymentId = listBeans.get(Integer.parseInt(view.getTag().toString())).getPaymentId();
+                                    payBean = listBeans.get(Integer.parseInt(view.getTag().toString()));
+                                    paymentId = payBean.getPaymentId();
                                     getPayment();
                                     break;
                             }
@@ -1105,11 +1111,13 @@ public class OrderListFragment extends BaseFragment {
                             if (payList == null || payList.size() == 0) {
                                 ToastUtils.showShort("获取支付方式失败");
                             } else {
-                                payDialog = new PayDialog(activity, payList);
+                                String payMoney = payBean!=null ?payBean.getPayment():"";
+                                payDialog = new PayDialog(activity, payList,payMoney);
                                 payDialog.setCallBack(new PayDialog.CallBack() {
                                     @Override
                                     public void choicePayMethod(int payMethod, String payMethodId) {
-                                        payDo(payMethod, payMethodId);
+//                                        payDo(payMethod, payMethodId);
+                                        confirmPayMode(payMethod, payMethodId);
                                     }
                                 });
                                 payDialog.show();
@@ -1135,10 +1143,32 @@ public class OrderListFragment extends BaseFragment {
                 }));
     }
 
-    private void payDo(int payMethod, String payMethodId) {
+    /**
+     * 确认支付方式
+     */
+    private void confirmPayMode(final int payMethod,final String payMethodId){
+        if(payMethod ==2){
+            String payMoney = payBean!=null ?payBean.getPayment():"";
+            BalancePayDialog balancePayDialog = new BalancePayDialog(activity,payMoney);
+            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
+                @Override
+                public void cancelPay() {
+                }
+                @Override
+                public void confirmPay(String pwd) {
+                    payDo(payMethod,payMethodId,pwd);
+                }
+            });
+            balancePayDialog.show();
+        }else{
+            payDo(payMethod,payMethodId,"");
+        }
+    }
+
+    private void payDo(int payMethod, String payMethodId,String payPwd) {
         this.payMehtod = payMethod;
         this.payMehtodId = payMethodId;
-        disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId)
+        disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId,payPwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {

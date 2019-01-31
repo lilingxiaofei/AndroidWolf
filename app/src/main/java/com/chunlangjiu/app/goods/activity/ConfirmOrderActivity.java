@@ -26,6 +26,7 @@ import com.chunlangjiu.app.goods.bean.MarkBean;
 import com.chunlangjiu.app.goods.bean.OrderGoodsBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.ShippingTypeBean;
+import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainActivity;
@@ -277,7 +278,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             ToastUtils.showShort("获取支付方式失败");
         } else {
             if (payDialog == null) {
-                payDialog = new PayDialog(this, payList);
+                payDialog = new PayDialog(this, payList,payPrice);
                 payDialog.setCallBack(new PayDialog.CallBack() {
                     @Override
                     public void choicePayMethod(int payMethod, String payMethodId) {
@@ -340,7 +341,8 @@ public class ConfirmOrderActivity extends BaseActivity {
                     .subscribe(new Consumer<ResultBean<CreateOrderBean>>() {
                         @Override
                         public void accept(ResultBean<CreateOrderBean> resultBean) throws Exception {
-                            createSuccess(resultBean.getData());
+//                            createSuccess(resultBean.getData());
+                            confirmPayMode(resultBean.getData());
                         }
                     }, new Consumer<Throwable>() {
                         @Override
@@ -354,8 +356,32 @@ public class ConfirmOrderActivity extends BaseActivity {
         }
     }
 
-    private void createSuccess(CreateOrderBean data) {
-        disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId)
+    /**
+     * 确认支付方式
+     * @param data
+     */
+    private void confirmPayMode(final CreateOrderBean data){
+        String payMoned  = tvPayMethod.getText().toString();
+        if(payMoned.contains("余额")){
+            BalancePayDialog balancePayDialog = new BalancePayDialog(this,payPrice);
+            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
+                @Override
+                public void cancelPay() {
+                    finish();
+                }
+                @Override
+                public void confirmPay(String pwd) {
+                    createSuccess(data,pwd);
+                }
+            });
+            balancePayDialog.show();
+        }else{
+            createSuccess(data,"");
+        }
+    }
+
+    private void createSuccess(CreateOrderBean data,String payPwd) {
+        disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId,payPwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {
@@ -447,7 +473,22 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
 
     private void invokeYuePay(ResultBean data) {
-
+//        String payMoned  = tvPayMethod.getText().toString();
+//        if(payMoned.contains("余额")){
+//            String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
+//            BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
+//            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
+//                @Override
+//                public void confirmPay(String pwd) {
+//                    payPwd =  pwd;
+//                    commitOrder();
+//                }
+//            });
+//            balancePayDialog.show();
+//        }else{
+//            this.payPwd = "";
+//            commitOrder();
+//        }
     }
 
     private void invokeDaePay(ResultBean data) {

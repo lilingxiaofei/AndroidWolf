@@ -21,6 +21,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.goods.bean.CreateOrderBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
+import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
@@ -1339,11 +1340,12 @@ public class OrderDetailActivity extends BaseActivity {
                             if (payList == null || payList.size() == 0) {
                                 ToastUtils.showShort("获取支付方式失败");
                             } else {
-                                payDialog = new PayDialog(OrderDetailActivity.this, payList);
+                                payDialog = new PayDialog(OrderDetailActivity.this, payList,orderDetailBean.getPayment());
                                 payDialog.setCallBack(new PayDialog.CallBack() {
                                     @Override
                                     public void choicePayMethod(int payMethod, String payMethodId) {
-                                        payDo(payMethod, payMethodId);
+//                                        payDo(payMethod, payMethodId);
+                                        confirmPayMode(payMethod, payMethodId);
                                     }
                                 });
                                 payDialog.show();
@@ -1369,11 +1371,34 @@ public class OrderDetailActivity extends BaseActivity {
                 }));
     }
 
-    private void payDo(int payMethod, String payMethodId) {
+
+    /**
+     * 确认支付方式
+     */
+    private void confirmPayMode(final int payMethod,final String payMethodId){
+        if(payMethod ==2){
+            String payMoney =orderDetailBean.getPayment();
+            BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
+            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
+                @Override
+                public void cancelPay() {
+                }
+                @Override
+                public void confirmPay(String pwd) {
+                    payDo(payMethod,payMethodId,pwd);
+                }
+            });
+            balancePayDialog.show();
+        }else{
+            payDo(payMethod,payMethodId,"");
+        }
+    }
+
+    private void payDo(int payMethod, String payMethodId,String payPwd) {
         showLoadingDialog();
         this.payMehtod = payMethod;
         this.payMehtodId = payMethodId;
-        disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId)
+        disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId,payPwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {

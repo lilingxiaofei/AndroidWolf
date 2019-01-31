@@ -771,6 +771,9 @@ public class UserFragment extends BaseFragment {
     }
 
 
+
+
+
     private void getPersonAndCompanyAuthStatus() {
         Observable<ResultBean<AuthStatusBean>> personAuthStatus = ApiUtils.getInstance().getPersonAuthStatus();
         Observable<ResultBean<AuthStatusBean>> companyAuthStatus = ApiUtils.getInstance().getCompanyAuthStatus();

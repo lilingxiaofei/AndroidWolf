@@ -18,11 +18,10 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.amain.bean.AuctionListBean;
 import com.chunlangjiu.app.goods.bean.CreateAuctionBean;
-import com.chunlangjiu.app.goods.bean.CreateOrderBean;
 import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
+import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainActivity;
@@ -106,6 +105,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     private PayDialog payDialog;
     private int payMehtod;//默认微信支付
     private String payMehtodId;//支付方式类型
+    private String payPwd ;
 
 
     private GoodsDetailBean goodsDetailBean;
@@ -223,7 +223,8 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
             ToastUtils.showShort("获取支付方式失败");
         } else {
             if (payDialog == null) {
-                payDialog = new PayDialog(this, payList);
+                String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
+                payDialog = new PayDialog(this, payList,payMoney);
                 payDialog.setCallBack(new PayDialog.CallBack() {
                     @Override
                     public void choicePayMethod(int payMethod, String payMethodId) {
@@ -270,6 +271,29 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
         } else if (TextUtils.isEmpty(etPrice.getText().toString().trim())) {
             ToastUtils.showShort("请输入出钱金额");
         } else {
+            confirmPayMode();
+        }
+    }
+
+    private void confirmPayMode(){
+        String payMoned  = tvPayMethod.getText().toString();
+        if(payMoned.contains("余额")){
+            String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
+            BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
+            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
+                @Override
+                public void cancelPay() {
+                    finish();
+                }
+                @Override
+                public void confirmPay(String pwd) {
+                    payPwd =  pwd;
+                    commitOrder();
+                }
+            });
+            balancePayDialog.show();
+        }else{
+            this.payPwd = "";
             commitOrder();
         }
     }
@@ -295,7 +319,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     }
 
     private void payMoney(CreateAuctionBean data) {
-        disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId)
+        disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId,payPwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {

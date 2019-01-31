@@ -9,8 +9,8 @@ import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
-import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
+import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.fans.bean.FansNumBean;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
@@ -26,6 +26,7 @@ import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.GoodsListBean;
 import com.chunlangjiu.app.goods.bean.OrdoListBean;
 import com.chunlangjiu.app.goods.bean.PartnerBean;
+import com.chunlangjiu.app.goods.bean.PayBalanceBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
@@ -66,7 +67,6 @@ import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import retrofit2.http.Field;
 
 /**
  * @CreatedbBy: liucun on 2018/7/6
@@ -290,7 +290,7 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<PaymentBean>> getPayment() {
-        return apiService.getPayment("payment.pay.paycenter", "v1");
+        return apiService.getPayment("payment.pay.paycenter", "v2");
     }
 
     public Flowable<ResultBean<CreateOrderBean>> createOrder(String mode, String md5, String addrId, String paymentId, String shippingType,
@@ -299,8 +299,13 @@ public class ApiUtils {
                 shippingType, mark, "notuse", "", "");
     }
 
-    public Flowable<ResultBean> payDo(String payment_id, String payment_type) {
-        return apiService.payDo("payment.pay.do", "v1", payment_id, payment_type);
+
+    public Flowable<ResultBean<PayBalanceBean>> getBalanceInfo() {
+        return apiService.getBalanceInfo("member.pay.status", "v1");
+    }
+
+    public Flowable<ResultBean> payDo(String payment_id, String payment_type,String payPwd) {
+        return apiService.payDo("payment.pay.do", "v1", payment_id, payment_type, payPwd);
     }
 
     public Flowable<ResultBean<CreateAuctionBean>> createAuctionOrder(String auctionitem_id, String addr_id, String price) {
