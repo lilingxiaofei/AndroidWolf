@@ -10,7 +10,6 @@ public class HomeBean {
     public static final int ITEM_GOODS = 1;
     public static final int ITEM_JINGPAI = 2;
     public static final int ITEM_TUIJIAN = 3;
-
     private int itemType;
 
     private String item_id;
@@ -35,6 +34,9 @@ public class HomeBean {
     private String auction_end_time;
     private String auction_status;
     private String auction_number;
+
+
+
 
     public String getView_count() {
         return view_count;

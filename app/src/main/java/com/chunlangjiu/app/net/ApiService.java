@@ -31,6 +31,7 @@ import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
+import com.chunlangjiu.app.goods.bean.StoreActivityBean;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
 import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.money.bean.DepositCashBean;
@@ -360,6 +361,10 @@ public interface ApiService {
     Flowable<ResultBean<HomeListBean>> getHomeLists(@Field("method") String method, @Field("v") String v,
                                                     @Field("tmpl") String payment_id, @Field("page_no") int page_no,
                                                     @Field("pagesize") int pagesize);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<StoreActivityBean>> getStoreActivityLists(@Field("method") String method, @Field("v") String v);
 
     @POST("index.php/topapi")
     @FormUrlEncoded

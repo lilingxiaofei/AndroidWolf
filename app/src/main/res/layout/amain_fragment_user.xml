@@ -1176,16 +1176,9 @@
 
                     <TextView
                         android:id="@+id/tvCheckGoodsNum"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="-15dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_toRightOf="@id/imgCheckGoods"
-                        android:background="@drawable/cart_num_bg"
-                        android:gravity="center"
-                        android:textColor="@color/t_white"
-                        android:textSize="10sp"
-                        android:visibility="gone"
+                        style="@style/corner_mark"
+                        android:layout_alignRight="@+id/imgCheckGoods"
+                        android:layout_alignTop="@+id/imgCheckGoods"
                         tools:text="1" />
                 </RelativeLayout>
 
@@ -1216,16 +1209,9 @@
 
                     <TextView
                         android:id="@+id/tvWareHouseGoodsNum"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="-15dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_toRightOf="@id/imgWareHouseGoods"
-                        android:background="@drawable/cart_num_bg"
-                        android:gravity="center"
-                        android:textColor="@color/t_white"
-                        android:textSize="10sp"
-                        android:visibility="gone"
+                        style="@style/corner_mark"
+                        android:layout_alignRight="@+id/imgWareHouseGoods"
+                        android:layout_alignTop="@+id/imgWareHouseGoods"
                         tools:text="1" />
 
                 </RelativeLayout>
@@ -1257,16 +1243,9 @@
 
                     <TextView
                         android:id="@+id/tvSellGoodsNum"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="-15dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_toRightOf="@id/imgSellGoods"
-                        android:background="@drawable/cart_num_bg"
-                        android:gravity="center"
-                        android:textColor="@color/t_white"
-                        android:textSize="10sp"
-                        android:visibility="gone"
+                        style="@style/corner_mark"
+                        android:layout_alignRight="@+id/imgSellGoods"
+                        android:layout_alignTop="@+id/imgSellGoods"
                         tools:text="1" />
 
                 </RelativeLayout>
@@ -1298,16 +1277,9 @@
 
                     <TextView
                         android:id="@+id/tvAuctionGoodsNum"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="-15dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_toRightOf="@id/imgAuctionGoods"
-                        android:background="@drawable/cart_num_bg"
-                        android:gravity="center"
-                        android:textColor="@color/t_white"
-                        android:textSize="10sp"
-                        android:visibility="gone"
+                        style="@style/corner_mark"
+                        android:layout_alignRight="@+id/imgAuctionGoods"
+                        android:layout_alignTop="@+id/imgAuctionGoods"
                         tools:text="1" />
 
                 </RelativeLayout>

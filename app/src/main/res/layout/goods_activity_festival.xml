@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#c7171e"
-    android:id="@+id/llRootLayout"
-    android:orientation="vertical">
+    android:id="@+id/rlRootLayout">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,35 +12,68 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/ivBgHead"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:src="@mipmap/festival_bg_top" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycle_view"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:nestedScrollingEnabled="false" />
+            </LinearLayout>
             <ImageView
                 android:id="@+id/ivBgBottom"
+                android:layout_marginTop="40dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
                 android:src="@mipmap/festival_bg_bottom" />
         </LinearLayout>
     </ScrollView>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rlShopTitle"
+        android:layout_width="match_parent"
+        android:minHeight="@dimen/title_bar_height"
+        android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
+            android:padding="14dp"
+            android:src="@mipmap/white_left_arrow" />
 
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="@dimen/title_bar_height"
-        android:layout_height="@dimen/title_bar_height"
-        android:padding="14dp"
-        android:src="@mipmap/white_left_arrow" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_centerHorizontal="true"
+            android:lines="1"
+            android:layout_marginLeft="@dimen/title_bar_height"
+            android:layout_marginRight="@dimen/title_bar_height"
+            android:text="标题"
+            android:gravity="center"
+            android:textColor="@color/t_white"
+            android:textSize="18sp" />
 
-
-
+    </RelativeLayout>
 </RelativeLayout>
+
+
+
+
+
+

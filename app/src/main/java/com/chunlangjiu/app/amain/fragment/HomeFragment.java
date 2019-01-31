@@ -133,7 +133,7 @@ public class HomeFragment extends BaseFragment {
     private HomeAdapter homeAdapter;
     private List<HomeBean> lists;
     private List<HomeBean> newLists;
-    private List<HomeAuctionBean> auction_list;
+    private List<HomeBean> auction_list;
 
     private String locationCityName;//定位城市名
     private LocatedCity locatedCity;//定位城市实体
@@ -451,23 +451,13 @@ public class HomeFragment extends BaseFragment {
         homeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                int resId = view.getId();
-
                 HomeBean homeBean = lists.get(position);
                 if (homeBean.getItemType() == HomeBean.ITEM_GOODS || homeBean.getItemType() == HomeBean.ITEM_GRID_GOODS) {
                         GoodsDetailslNewActivity.startActivity(getActivity(), homeBean.getItem_id());
-//                        GoodsDetailsActivity.startGoodsDetailsActivity(getActivity(), homeBean.getItem_id());
-                        if (auction_list != null && auction_list.size() > 0) {
-                            if (position > 1 + auction_list.size() && position < 2 + auction_list.size() + 6) {
-                                UmengEventUtil.recommendEvent(getActivity(), position - 1 - auction_list.size() + "");
-                            }
-                        } else {
-                            if (position > 0 && position < 7) {
-                                UmengEventUtil.recommendEvent(getActivity(), position + "");
-                            }
-                        }
-                } else if (homeBean.getItemType() == HomeBean.ITEM_TUIJIAN) {
-
+                    if(position>homeAdapter.getRecommendHead()){
+                        int index = position -homeAdapter.getRecommendHead();
+                        UmengEventUtil.recommendEvent(getActivity(), index + "");
+                    }
                 }
             }
         });
@@ -656,8 +646,9 @@ public class HomeFragment extends BaseFragment {
         }
         if (isRefresh) {
             pageNo = 1;
+            lists.clear();
+            //拼接竞拍的商品到商品列表去
             if (auction_list != null && auction_list.size() > 0) {
-                lists.clear();
                 if (BaseApplication.HIDE_AUCTION) {
                     auction_list.clear();
                 } else {
@@ -665,7 +656,7 @@ public class HomeFragment extends BaseFragment {
                     jingpaiFlag.setItemType(HomeBean.ITEM_JINGPAI);
                     lists.add(jingpaiFlag);
                     for (int i = 0; i < auction_list.size(); i++) {
-                        HomeAuctionBean auctionBean = auction_list.get(i);
+                        HomeBean auctionBean = auction_list.get(i);
                         String end_time = auctionBean.getAuction_end_time();
                         long endTime = 0;
                         if (!TextUtils.isEmpty(end_time)) {
@@ -675,42 +666,19 @@ public class HomeFragment extends BaseFragment {
                             HomeBean homeBean = new HomeBean();
                             homeBean.setItemType(HomeBean.ITEM_GOODS);
                             homeBean.setAuction(true);
-                            homeBean.setItem_id(auctionBean.getItem_id());
-                            homeBean.setTitle(auctionBean.getTitle());
-                            homeBean.setImage_default_id(auctionBean.getImage_default_id());
-                            homeBean.setLabel(auctionBean.getLabel());
-                            homeBean.setAuction_starting_price(auctionBean.getAuction_starting_price());
-                            homeBean.setAuction_end_time(auctionBean.getAuction_end_time());
-                            homeBean.setMax_price(auctionBean.getMax_price());
-                            homeBean.setAuction_status(auctionBean.getAuction_status());
-                            homeBean.setAuction_number(auctionBean.getAuction_number());
-
-                            homeBean.setShop_id(auctionBean.getShop_id());
-                            homeBean.setShop_name(auctionBean.getShop_name());
-                            homeBean.setGrade(auctionBean.getGrade());
-                            homeBean.setView_count(auctionBean.getView_count());
-                            homeBean.setRate_count(auctionBean.getRate_count());
-                            homeBean.setRate(auctionBean.getRate());
                             lists.add(homeBean);
                         }
                     }
                 }
-
-                if (newLists.size() > 0) {
-                    HomeBean tuijian = new HomeBean();
-                    tuijian.setItemType(HomeBean.ITEM_TUIJIAN);
-                    lists.add(tuijian);
-                }
-                lists.addAll(newLists);
-            } else {
-                lists.clear();
-                if (newLists.size() > 0) {
-                    HomeBean tuijian = new HomeBean();
-                    tuijian.setItemType(HomeBean.ITEM_TUIJIAN);
-                    lists.add(tuijian);
-                }
-                lists.addAll(newLists);
             }
+            if (newLists.size() > 0) {
+                HomeBean tuijian = new HomeBean();
+                tuijian.setItemType(HomeBean.ITEM_TUIJIAN);
+                lists.add(tuijian);
+            }
+            lists.addAll(newLists);
+
+
         } else {
             pageNo++;
             lists.addAll(newLists);

@@ -50,6 +50,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
+
         <activity
             android:name=".amain.activity.LoginActivity"
             android:screenOrientation="portrait"
@@ -79,6 +80,10 @@
 
         <activity
             android:name=".cart.CartActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".goods.activity.FestivalActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity

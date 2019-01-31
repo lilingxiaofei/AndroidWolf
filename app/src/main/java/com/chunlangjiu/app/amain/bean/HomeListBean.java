@@ -10,13 +10,13 @@ public class HomeListBean {
 
     private List<HomeBean> list;
 
-    private List<HomeAuctionBean> auction_list;
+    private List<HomeBean> auction_list;
 
-    public List<HomeAuctionBean> getAuction_list() {
+    public List<HomeBean> getAuction_list() {
         return auction_list;
     }
 
-    public void setAuction_list(List<HomeAuctionBean> auction_list) {
+    public void setAuction_list(List<HomeBean> auction_list) {
         this.auction_list = auction_list;
     }
 

@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.chunlangjiu.app.R;
+import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.goods.bean.GoodsListDetailBean;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
@@ -25,47 +26,83 @@ import java.util.List;
  * @Describe:
  */
 public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseViewHolder> {
-    public static final int LIST_LINEAR = 1;
-    public static final int LIST_GRID = 2;
+    public static final int LIST_LINEAR = 0;
+    public static final int LIST_GRID = 1;
     private int itemType = LIST_GRID;
 
-    private Context context ;
+    private Context context;
     private boolean isShowStoreView = true;
+
     public GoodsAdapter(Context context, List<GoodsListDetailBean> data) {
         super(data);
-        this.context = context ;
+        this.context = context;
         setMultiTypeDelegate(new MultiTypeDelegate<GoodsListDetailBean>() {
             @Override
             protected int getItemType(GoodsListDetailBean cartGoodsBean) {
-                return itemType;
+                switch (cartGoodsBean.getItemType()){
+                    case GoodsListDetailBean.ITEM_TUIJIAN:
+                        return GoodsListDetailBean.ITEM_TUIJIAN;
+                    case GoodsListDetailBean.ITEM_JINGPAI:
+                        return GoodsListDetailBean.ITEM_JINGPAI;
+                    default:
+                        return itemType;
+                }
             }
         });
         getMultiTypeDelegate()
                 .registerItemType(LIST_LINEAR, R.layout.amain_item_goods_list_linear)
-                .registerItemType(LIST_GRID, R.layout.amain_item_goods_list_grid);
-    }
-    //切换布局显示样式
-    public void switchListType(){
-        itemType = itemType == LIST_LINEAR?LIST_GRID:LIST_LINEAR;
+                .registerItemType(LIST_GRID, R.layout.amain_item_goods_list_grid)
+                .registerItemType(GoodsListDetailBean.ITEM_JINGPAI, R.layout.goods_item_list_auction)
+                .registerItemType(GoodsListDetailBean.ITEM_TUIJIAN, R.layout.goods_item_list_tuijian);
+
     }
 
-    public int getItemType(){
+    //切换布局显示样式
+    public void switchListType() {
+        itemType = itemType == LIST_LINEAR ? LIST_GRID : LIST_LINEAR;
+    }
+
+    public int getItemType() {
         return itemType;
     }
+
     //设置布局显示样式
-    public void setListType(int type){
-        itemType = type == LIST_LINEAR?LIST_LINEAR:LIST_GRID;
+    public void setListType(int type) {
+        itemType = type == LIST_LINEAR ? LIST_LINEAR : LIST_GRID;
     }
 
-    public void setShowStoreView(boolean isShow){
+    public void setShowStoreView(boolean isShow) {
         isShowStoreView = isShow;
     }
 
-    public boolean isGridLayout(){
-        return itemType == LIST_GRID ;
+    public boolean isGridLayout() {
+        return itemType == LIST_GRID;
     }
+
     @Override
     protected void convert(BaseViewHolder helper, GoodsListDetailBean item) {
+
+        int itemType = helper.getItemViewType();
+//        RelativeLayout rlItemLayout = viewHolder.getView(R.id.rl_item_layout);
+//        int size =  SizeUtils.dp2px(10);
+        switch (itemType) {
+            case HomeBean.ITEM_GRID_GOODS:
+                setItemContent(helper, item);
+                break;
+            case HomeBean.ITEM_GOODS:
+                setItemContent(helper, item);
+                break;
+            case GoodsListDetailBean.ITEM_TUIJIAN:
+                break;
+            case GoodsListDetailBean.ITEM_JINGPAI:
+                helper.addOnClickListener(R.id.tvMoreAuction);
+                break;
+
+        }
+
+    }
+
+    private void setItemContent(BaseViewHolder helper, GoodsListDetailBean item) {
         try {
             ImageView imgPic = helper.getView(R.id.imgPic);
             ImageView imgAuction = helper.getView(R.id.imgAuction);
@@ -76,7 +113,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
 
             //网格布局的时候设置图片大小
             ViewGroup.LayoutParams layoutParams = imgPic.getLayoutParams();
-            if(itemType == LIST_GRID && layoutParams.width == layoutParams.height && layoutParams.width>0){
+            if (itemType == LIST_GRID && layoutParams.width == layoutParams.height && layoutParams.width > 0) {
                 int picWidth = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(25)) / 2;
                 layoutParams.width = picWidth;
                 layoutParams.height = picWidth;
@@ -86,8 +123,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
 
             GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
             helper.setText(R.id.tv_name, item.getTitle());
-
-            if (TextUtils.isEmpty(item.getAuction().getAuctionitem_id())) {
+            if (!item.isAuction()) {
                 //普通商品
                 imgAuction.setVisibility(View.GONE);
                 llStartPrice.setVisibility(View.GONE);
@@ -95,8 +131,8 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 tvAnPaiStr.setVisibility(View.GONE);
                 helper.setText(R.id.tvSellPriceStr, "");
                 helper.setText(R.id.tvSellPrice, "");
-                helper.setText(R.id.tvGoodsPrice,"¥" +item.getPrice());
-                helper.setVisible(R.id.tvGoodsPrice,true);
+                helper.setText(R.id.tvGoodsPrice, "¥" + item.getPrice());
+                helper.setVisible(R.id.tvGoodsPrice, true);
                 helper.setText(R.id.tvStartPriceStr, "原价：");
                 tvStartPrice.setText(item.getMkt_price());
                 tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
@@ -106,7 +142,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 llStartPrice.setVisibility(View.VISIBLE);
                 helper.setText(R.id.tvStartPriceStr, "起拍价：");
                 tvStartPrice.setText("¥" + item.getAuction().getStarting_price());
-                helper.setText(R.id.tvGoodsPrice,"");
+                helper.setText(R.id.tvGoodsPrice, "");
                 if ("true".equals(item.getAuction().getAuction_status())) {
                     //明拍
                     llHighPrice.setVisibility(View.VISIBLE);
@@ -124,36 +160,32 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             }
 
             RelativeLayout llTime = helper.getView(R.id.llTime);
-            if(llTime!=null){
+            if (llTime != null) {
                 llTime.setVisibility(View.GONE);
             }
 
-            String label  = item.getLabel();
+            String label = item.getLabel();
             helper.setText(R.id.tvLabel, label);
             helper.setGone(R.id.tvLabel, !TextUtils.isEmpty(label));
             helper.setText(R.id.tvAttention, item.getView_count() + "人关注");
             helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
             helper.setText(R.id.tv_good_evaluate, item.getRate_count() + "好评");
 
-            helper.setText(R.id.tv_store_into,R.string.into_store);
+            helper.setText(R.id.tv_store_into, R.string.into_store);
 
-            helper.setGone(R.id.rl_store_layout,isShowStoreView);
-            if(isShowStoreView){
+            helper.setGone(R.id.rl_store_layout, isShowStoreView);
+            if (isShowStoreView) {
                 helper.addOnClickListener(R.id.rl_store_layout);
-                helper.setText(R.id.tv_store_name,item.getShop_name());
+                helper.setText(R.id.tv_store_name, item.getShop_name());
                 String level = item.getGrade();
-                if("2".equals(level)){
-                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_partner);
-                }else if("1".equals(level)){
-                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_star);
-                }else{
-                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_common);
+                if ("2".equals(level)) {
+                    helper.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_partner);
+                } else if ("1".equals(level)) {
+                    helper.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_star);
+                } else {
+                    helper.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_common);
                 }
             }
-
-
-
-
 
 
         } catch (Exception e) {
