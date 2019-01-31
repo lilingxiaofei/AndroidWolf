@@ -23,7 +23,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_15sp" />
 
-        <EditText
+        <com.pkqup.commonlibrary.view.ClearEditText
             android:id="@+id/edtName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_15sp" />
 
-        <EditText
+        <com.pkqup.commonlibrary.view.ClearEditText
             android:id="@+id/edtIdCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_15sp" />
 
-        <EditText
+        <com.pkqup.commonlibrary.view.ClearEditText
             android:id="@+id/edtBankCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_15sp" />
 
-        <EditText
+        <com.pkqup.commonlibrary.view.ClearEditText
             android:id="@+id/edtBranch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -228,7 +228,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_15sp" />
 
-        <EditText
+        <com.pkqup.commonlibrary.view.ClearEditText
             android:id="@+id/edtPhone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -256,7 +256,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_15sp" />
 
-        <EditText
+        <com.pkqup.commonlibrary.view.ClearEditText
             android:id="@+id/edtCode"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

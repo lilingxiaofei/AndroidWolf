@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +37,10 @@ public class VerifiedActivity extends BaseActivity {
     TextView tvAccount;
     @BindView(R.id.tvDesc)
     TextView tvDesc;
+    @BindView(R.id.btnPerson)
+    Button btnPerson;
+    @BindView(R.id.btnCompany)
+    Button btnCompany;
 
     private CompositeDisposable disposable;
     private String personStatus;
@@ -63,7 +68,7 @@ public class VerifiedActivity extends BaseActivity {
         titleName.setText("实名认证");
     }
 
-    @OnClick({R.id.btnPerson, R.id.btnCompany})
+    @OnClick({R.id.btnPerson, R.id.btnCompany, R.id.img_title_left})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnPerson:
@@ -73,6 +78,9 @@ public class VerifiedActivity extends BaseActivity {
             case R.id.btnCompany:
                 checkCompanyStatus();
 //                startActivity(new Intent(this,CompanyAuthActivity.class));
+                break;
+            case R.id.img_title_left:
+                finish();
                 break;
         }
 
@@ -169,6 +177,7 @@ public class VerifiedActivity extends BaseActivity {
     }
 
     private void getPersonAndCompanyAuthStatus() {
+        showLoadingDialog();
         Observable<ResultBean<AuthStatusBean>> personAuthStatus = ApiUtils.getInstance().getPersonAuthStatus();
         Observable<ResultBean<AuthStatusBean>> companyAuthStatus = ApiUtils.getInstance().getCompanyAuthStatus();
         disposable.add(Observable.zip(personAuthStatus, companyAuthStatus, new BiFunction<ResultBean<AuthStatusBean>, ResultBean<AuthStatusBean>, List<AuthStatusBean>>() {
@@ -184,6 +193,7 @@ public class VerifiedActivity extends BaseActivity {
                 .subscribe(new Consumer<List<AuthStatusBean>>() {
                     @Override
                     public void accept(List<AuthStatusBean> authStatusBeans) throws Exception {
+                        hideLoadingDialog();
                         personStatus = authStatusBeans.get(0).getStatus();
                         companyStatus = authStatusBeans.get(1).getStatus();
                         setAuthView();
@@ -192,14 +202,34 @@ public class VerifiedActivity extends BaseActivity {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         hideLoadingDialog();
+                        ToastUtils.showNetErrorMsg(throwable);
                     }
                 }));
     }
 
     private void setAuthView() {
-        if ((AuthStatusBean.AUTH_SUCCESS.equals(personStatus) || AuthStatusBean.AUTH_SUCCESS.equals(companyStatus))) {
+        boolean authed = false;
+        if (AuthStatusBean.AUTH_SUCCESS.equals(personStatus)) {
             tvDesc.setText("已认证");
-        } else {
+            btnPerson.setText("已认证");
+            btnCompany.setSelected(false);
+            btnPerson.setEnabled(false);
+            authed = true;
+        }else {
+            btnPerson.setSelected(true);
+            btnPerson.setEnabled(true);
+        }
+        if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+            tvDesc.setText("已认证");
+            btnCompany.setText("已认证");
+            btnCompany.setSelected(false);
+            btnCompany.setEnabled(false);
+            authed = true;
+        }else {
+            btnCompany.setSelected(true);
+            btnCompany.setEnabled(true);
+        }
+        if (!authed) {
             tvDesc.setText("立即实名认证享受更多特权服务");
         }
     }

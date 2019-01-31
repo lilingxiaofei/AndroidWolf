@@ -84,6 +84,9 @@ public class ReChargeActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         setContentView(R.layout.activity_re_charge);
         rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
+        if (rechargeType==null){
+            rechargeType=RechargeType.Balance;
+        }
         togglePayType(PayType.Wx);
         initPay();
         initView();
@@ -306,7 +309,11 @@ public class ReChargeActivity extends BaseActivity {
             case R.id.btnOk:
                 String money = edtMoney.getText().toString().trim();
                 if (rechargeType == RechargeType.Balance) {
-                    createOrder("0.01");
+                    if (TextUtils.isEmpty(money)){
+                        ToastUtils.showShort("请输入充值金额");
+                        return;
+                    }
+                    createOrder(money);
                 } else {
                     //depositCreate
                     createDespositOrder();
