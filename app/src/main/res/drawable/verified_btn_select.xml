@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item android:state_selected="true">
         <shape
             android:shape="rectangle"
             android:useLevel="true">
@@ -8,6 +8,17 @@
                 android:radius="5dp"></corners>
             <solid
                  android:color="#189CDD"></solid>
+
+        </shape>
+    </item>
+    <item >
+        <shape
+            android:shape="rectangle"
+            android:useLevel="true">
+            <corners
+                android:radius="5dp"></corners>
+            <solid
+                android:color="#F3F3F3"></solid>
 
         </shape>
     </item>

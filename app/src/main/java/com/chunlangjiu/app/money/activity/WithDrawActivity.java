@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,6 +38,8 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
     TextView tvTips;
     @BindView(R.id.lineMoney)
     LinearLayout lineMoney;
+    @BindView(R.id.btnOk)
+    Button btnOk;
 
     public static final String WithDrawType = "WithDrawType";
     public static final String DepositCash = "DepositCash";
@@ -66,10 +69,12 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
         if (type.equals(DepositRefund)) {
             lineMoney.setVisibility(View.GONE);
             tvTips.setText(getResources().getString(R.string.refund_deposit_security_tips));
+            btnOk.setText("撤销保证金");
         } else {
             tvTips.setText(getResources().getString(R.string.refund_tips));
             String count =getIntent().getStringExtra(MoneyCount);
             edtAmount.setHint(String.format("最多可提（%s）",count));
+            btnOk.setText("确认提现");
         }
     }
 

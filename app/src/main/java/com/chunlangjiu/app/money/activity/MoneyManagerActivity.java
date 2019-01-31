@@ -106,12 +106,14 @@ public class MoneyManagerActivity extends BaseActivity {
     }
 
     private void getUserMoney() {
+        showLoadingDialog();
         disposable.add(ApiUtils.getInstance().getUserMoney((String) SPUtils.get("token", ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<UserMoneyBean>>() {
                     @Override
                     public void accept(ResultBean<UserMoneyBean> resultBean) throws Exception {
+                        hideLoadingDialog();
                         userMoneyBean = resultBean.getData();
                         if (null != userMoneyBean)
                             tvFreezeBalance.setText(userMoneyBean.getFreeze_money() == null ? "" : userMoneyBean.getFreeze_money());
@@ -120,6 +122,7 @@ public class MoneyManagerActivity extends BaseActivity {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
                         ToastUtils.showErrorMsg(throwable);
                     }
                 }));
