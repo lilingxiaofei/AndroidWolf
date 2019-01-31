@@ -36,7 +36,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:tabIndicatorColor="@color/black" />
+        app:tabSelectedTextColor="@color/t_red"
+        app:tabTextColor="@color/t_black"
+        app:tabIndicatorColor="@color/bg_red" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpContent"

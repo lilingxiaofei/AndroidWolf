@@ -640,10 +640,10 @@ public class HomeFragment extends BaseFragment {
         auction_list = homeListBeanResultBean.getData().getAuction_list();
         if (newLists == null) newLists = new ArrayList<>();
         if (auction_list == null) auction_list = new ArrayList<>();
-        for (HomeBean homeBean : newLists) {
-            homeBean.setItemType(HomeBean.ITEM_GRID_GOODS);
-            homeBean.setAuction(false);
-        }
+//        for (HomeBean homeBean : newLists) {
+//            homeBean.setItemType(HomeBean.ITEM_GRID_GOODS);
+//            homeBean.setAuction(false);
+//        }
         if (isRefresh) {
             pageNo = 1;
             lists.clear();
@@ -663,10 +663,9 @@ public class HomeFragment extends BaseFragment {
                             endTime = Long.parseLong(end_time);
                         }
                         if ((endTime * 1000 - System.currentTimeMillis()) > 0) {
-                            HomeBean homeBean = new HomeBean();
-                            homeBean.setItemType(HomeBean.ITEM_GOODS);
-                            homeBean.setAuction(true);
-                            lists.add(homeBean);
+                            auctionBean.setItemType(HomeBean.ITEM_GOODS);
+                            auctionBean.setAuction(true);
+                            lists.add(auctionBean);
                         }
                     }
                 }

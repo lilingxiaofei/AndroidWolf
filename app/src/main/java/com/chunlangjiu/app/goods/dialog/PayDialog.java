@@ -149,7 +149,7 @@ public class PayDialog extends Dialog {
             }
         }
         if (callBack != null) {
-            callBack.choicePayMethod(payMethod, payMethodId);
+            callBack.choicePayMethod(payMethodId);
         }
         dismiss();
     }
@@ -161,6 +161,6 @@ public class PayDialog extends Dialog {
     }
 
     public interface CallBack {
-        void choicePayMethod(int payMethod, String payMethodId);
+        void choicePayMethod(String payMethodId);
     }
 }

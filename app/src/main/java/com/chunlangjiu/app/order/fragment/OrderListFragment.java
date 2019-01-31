@@ -97,7 +97,6 @@ public class OrderListFragment extends BaseFragment {
     private RefundAfterSaleOrderDialog refundCancelOrderDialog;
 
     private List<PaymentBean.PaymentInfo> payList;
-    private int payMehtod;//默认微信支付
     private String payMehtodId;//支付方式类型
     private PayDialog payDialog;
     private IWXAPI wxapi;
@@ -1115,9 +1114,9 @@ public class OrderListFragment extends BaseFragment {
                                 payDialog = new PayDialog(activity, payList,payMoney);
                                 payDialog.setCallBack(new PayDialog.CallBack() {
                                     @Override
-                                    public void choicePayMethod(int payMethod, String payMethodId) {
+                                    public void choicePayMethod( String payMethodId) {
 //                                        payDo(payMethod, payMethodId);
-                                        confirmPayMode(payMethod, payMethodId);
+                                        confirmPayMode(payMethodId);
                                     }
                                 });
                                 payDialog.show();
@@ -1146,8 +1145,8 @@ public class OrderListFragment extends BaseFragment {
     /**
      * 确认支付方式
      */
-    private void confirmPayMode(final int payMethod,final String payMethodId){
-        if(payMethod ==2){
+    private void confirmPayMode(final String payMethodId){
+        if(OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)){
             String payMoney = payBean!=null ?payBean.getPayment():"";
             BalancePayDialog balancePayDialog = new BalancePayDialog(activity,payMoney);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
@@ -1156,17 +1155,16 @@ public class OrderListFragment extends BaseFragment {
                 }
                 @Override
                 public void confirmPay(String pwd) {
-                    payDo(payMethod,payMethodId,pwd);
+                    payDo(payMethodId,pwd);
                 }
             });
             balancePayDialog.show();
         }else{
-            payDo(payMethod,payMethodId,"");
+            payDo(payMethodId,"");
         }
     }
 
-    private void payDo(int payMethod, String payMethodId,String payPwd) {
-        this.payMehtod = payMethod;
+    private void payDo( String payMethodId,String payPwd) {
         this.payMehtodId = payMethodId;
         disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId,payPwd)
                 .subscribeOn(Schedulers.io())
@@ -1199,18 +1197,15 @@ public class OrderListFragment extends BaseFragment {
     }
 
     private void invokePay(ResultBean data) {
-        switch (payMehtod) {
-            case 0:
+        switch (payMehtodId) {
+            case OrderParams.PAY_APP_WXPAY:
                 invokeWeixinPay(data);
                 break;
-            case 1:
+            case OrderParams.PAY_APP_ALIPAY:
                 invokeZhifubaoPay(data);
                 break;
-            case 2:
+            case OrderParams.PAY_APP_DEPOSIT:
                 invokeYuePay(data);
-                break;
-            case 3:
-                invokeDaePay(data);
                 break;
         }
     }
@@ -1271,7 +1266,9 @@ public class OrderListFragment extends BaseFragment {
     }
 
     private void invokeYuePay(ResultBean data) {
-
+        if(data.getResult()){
+            refreshLayout.autoRefresh();
+        }
     }
 
     private void invokeDaePay(ResultBean data) {

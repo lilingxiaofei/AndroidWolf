@@ -29,7 +29,7 @@ import com.chunlangjiu.app.goods.bean.ShippingTypeBean;
 import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.order.activity.OrderMainActivity;
+import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.bean.AddressListDetailBean;
@@ -103,11 +103,11 @@ public class ConfirmOrderActivity extends BaseActivity {
     private List<OrderGoodsBean> lists;
     private ConfirmOrderGoodsAdapter orderGoodsAdapter;
     private PayDialog payDialog;
-    private int payMehtod;//默认微信支付
     private String payMehtodId;//支付方式类型
 
     private String mode;//是立即购买还是购物车购买
     private ConfirmOrderBean confirmOrderBean;
+    private CreateOrderBean createOrderBean ;
     private String addressId = "";
     private String sendPrice = "0.00";
     private String goodsPrice = "0.00";
@@ -138,7 +138,11 @@ public class ConfirmOrderActivity extends BaseActivity {
                     showPayMethodDialog();
                     break;
                 case R.id.tvCommit:
-                    createOrder();
+                    if(createOrderBean == null){
+                        createOrder();
+                    }else{
+                        confirmPayMode();
+                    }
                     break;
             }
         }
@@ -278,11 +282,11 @@ public class ConfirmOrderActivity extends BaseActivity {
             ToastUtils.showShort("获取支付方式失败");
         } else {
             if (payDialog == null) {
-                payDialog = new PayDialog(this, payList,payPrice);
+                payDialog = new PayDialog(this, payList, payPrice);
                 payDialog.setCallBack(new PayDialog.CallBack() {
                     @Override
-                    public void choicePayMethod(int payMethod, String payMethodId) {
-                        updatePayMethod(payMethod, payMethodId);
+                    public void choicePayMethod(String payMethodId) {
+                        updatePayMethod(payMethodId);
                     }
                 });
             }
@@ -290,21 +294,17 @@ public class ConfirmOrderActivity extends BaseActivity {
         }
     }
 
-    private void updatePayMethod(int payMethod, String payMethodId) {
-        this.payMehtod = payMethod;
+    private void updatePayMethod(String payMethodId) {
         this.payMehtodId = payMethodId;
-        switch (payMethod) {
-            case 0:
+        switch (payMehtodId) {
+            case OrderParams.PAY_APP_WXPAY:
                 tvPayMethod.setText("微信支付");
                 break;
-            case 1:
+            case OrderParams.PAY_APP_ALIPAY:
                 tvPayMethod.setText("支付宝支付");
                 break;
-            case 2:
+            case OrderParams.PAY_APP_DEPOSIT:
                 tvPayMethod.setText("余额支付");
-                break;
-            case 3:
-                tvPayMethod.setText("大额支付");
                 break;
         }
     }
@@ -315,6 +315,34 @@ public class ConfirmOrderActivity extends BaseActivity {
         intent.putExtra("selectAddressId", addressId);
         intent.putExtra("isSelect", true);
         startActivityForResult(intent, CHOICE_ADDRESS);
+    }
+
+    /**
+     * 确认支付方式
+     */
+    private void confirmPayMode() {
+        if (!TextUtils.isEmpty(addressId)) {
+            String payMoned = tvPayMethod.getText().toString();
+            if (payMoned.contains("余额")) {
+                BalancePayDialog balancePayDialog = new BalancePayDialog(this, payPrice);
+                balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
+                    @Override
+                    public void cancelPay() {
+
+                    }
+
+                    @Override
+                    public void confirmPay(String pwd) {
+                        createSuccess(pwd);
+                    }
+                });
+                balancePayDialog.show();
+            } else {
+                createSuccess("");
+            }
+        } else {
+            ToastUtils.showShort("请选择地址");
+        }
     }
 
     private void createOrder() {
@@ -341,8 +369,8 @@ public class ConfirmOrderActivity extends BaseActivity {
                     .subscribe(new Consumer<ResultBean<CreateOrderBean>>() {
                         @Override
                         public void accept(ResultBean<CreateOrderBean> resultBean) throws Exception {
-//                            createSuccess(resultBean.getData());
-                            confirmPayMode(resultBean.getData());
+                            createOrderBean= resultBean.getData();
+                            confirmPayMode();
                         }
                     }, new Consumer<Throwable>() {
                         @Override
@@ -356,62 +384,39 @@ public class ConfirmOrderActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 确认支付方式
-     * @param data
-     */
-    private void confirmPayMode(final CreateOrderBean data){
-        String payMoned  = tvPayMethod.getText().toString();
-        if(payMoned.contains("余额")){
-            BalancePayDialog balancePayDialog = new BalancePayDialog(this,payPrice);
-            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
-                @Override
-                public void cancelPay() {
-                    finish();
-                }
-                @Override
-                public void confirmPay(String pwd) {
-                    createSuccess(data,pwd);
-                }
-            });
-            balancePayDialog.show();
-        }else{
-            createSuccess(data,"");
+
+
+    private void createSuccess( String payPwd) {
+        if(null != createOrderBean ){
+            disposable.add(ApiUtils.getInstance().payDo(createOrderBean.getPayment_id(), payMehtodId, payPwd)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResultBean>() {
+                        @Override
+                        public void accept(ResultBean resultBean) throws Exception {
+                            hideLoadingDialog();
+                            invokePay(resultBean);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            hideLoadingDialog();
+                            ToastUtils.showErrorMsg(throwable);
+                        }
+                    }));
         }
     }
 
-    private void createSuccess(CreateOrderBean data,String payPwd) {
-        disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId,payPwd)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean>() {
-                    @Override
-                    public void accept(ResultBean resultBean) throws Exception {
-                        hideLoadingDialog();
-                        invokePay(resultBean);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        hideLoadingDialog();
-                        ToastUtils.showErrorMsg(throwable);
-                    }
-                }));
-    }
-
     private void invokePay(ResultBean data) {
-        switch (payMehtod) {
-            case 0:
+        switch (payMehtodId) {
+            case OrderParams.PAY_APP_WXPAY:
                 invokeWeixinPay(data);
                 break;
-            case 1:
+            case OrderParams.PAY_APP_ALIPAY:
                 invokeZhifubaoPay(data);
                 break;
-            case 2:
+            case OrderParams.PAY_APP_DEPOSIT:
                 invokeYuePay(data);
-                break;
-            case 3:
-                invokeDaePay(data);
                 break;
         }
     }
@@ -431,7 +436,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
-            if(msg.what==SDK_PAY_FLAG){
+            if (msg.what == SDK_PAY_FLAG) {
                 @SuppressWarnings("unchecked")
                 PayResult payResult = new PayResult((Map<String, String>) msg.obj);
                 /**
@@ -449,7 +454,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                     Toast.makeText(ConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     finish();
                 }
-                toOrderMainActivity(0,0);
+                toOrderMainActivity();
             }
         }
     };
@@ -473,22 +478,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
 
     private void invokeYuePay(ResultBean data) {
-//        String payMoned  = tvPayMethod.getText().toString();
-//        if(payMoned.contains("余额")){
-//            String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
-//            BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
-//            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
-//                @Override
-//                public void confirmPay(String pwd) {
-//                    payPwd =  pwd;
-//                    commitOrder();
-//                }
-//            });
-//            balancePayDialog.show();
-//        }else{
-//            this.payPwd = "";
-//            commitOrder();
-//        }
+        toOrderMainActivity();
     }
 
     private void invokeDaePay(ResultBean data) {
@@ -548,14 +538,14 @@ public class ConfirmOrderActivity extends BaseActivity {
                 ToastUtils.showShort("支付取消");
             }
             finish();
-            toOrderMainActivity(0,0);
+            toOrderMainActivity();
         }
     }
 
-    private void toOrderMainActivity(int type, int target) {
-        Intent intent = new Intent(this, OrderMainActivity.class);
-        intent.putExtra(OrderParams.TYPE, type);
-        intent.putExtra(OrderParams.TARGET, target);
+    private void toOrderMainActivity() {
+        Intent intent = new Intent(this, OrderMainNewActivity.class);
+        intent.putExtra(OrderParams.TYPE, 0);
+        intent.putExtra(OrderParams.TARGET, 0);
         startActivity(intent);
     }
 }

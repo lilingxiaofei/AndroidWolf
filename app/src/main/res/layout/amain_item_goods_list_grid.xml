@@ -48,13 +48,16 @@
             tools:text="法国凡特纳酒庄 全都是系列 康帝" />
 
         <LinearLayout
-            android:id="@+id/llFlag"
-            android:layout_width="wrap_content"
+            android:id="@+id/llLabel"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_name"
             android:layout_below="@id/tv_name"
+            android:background="@color/bg_red"
             android:layout_marginTop="2dp"
             android:gravity="center_vertical"
+            android:divider="@drawable/line_vertical_transparent"
+            android:showDividers="middle"
             android:minHeight="15dp"
             android:orientation="horizontal">
 
@@ -68,6 +71,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:textColor="@color/t_black"
+                android:visibility="gone"
                 android:textSize="11sp" />
 
             <TextView
@@ -88,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_name"
-            android:layout_below="@id/llFlag"
+            android:layout_below="@id/llLabel"
             android:layout_marginTop="2dp"
             android:orientation="horizontal">
 

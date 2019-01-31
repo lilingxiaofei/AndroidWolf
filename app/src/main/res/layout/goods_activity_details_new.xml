@@ -470,7 +470,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTop="@mipmap/auction_icon_three"
                         android:gravity="center"
-                        android:text="支付贷款"
+                        android:text="支付尾款"
                         android:textColor="@color/t_black"
                         android:textSize="13sp" />
 

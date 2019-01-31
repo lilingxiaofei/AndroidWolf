@@ -183,7 +183,6 @@ public class OrderDetailActivity extends BaseActivity {
     private ChooseExpressSellerDialog chooseExpressSellerDialog;
 
     private List<PaymentBean.PaymentInfo> payList;
-    private int payMehtod;//默认微信支付
     private String payMehtodId;//支付方式类型
     private PayDialog payDialog;
     private IWXAPI wxapi;
@@ -1343,9 +1342,9 @@ public class OrderDetailActivity extends BaseActivity {
                                 payDialog = new PayDialog(OrderDetailActivity.this, payList,orderDetailBean.getPayment());
                                 payDialog.setCallBack(new PayDialog.CallBack() {
                                     @Override
-                                    public void choicePayMethod(int payMethod, String payMethodId) {
+                                    public void choicePayMethod(String payMethodId) {
 //                                        payDo(payMethod, payMethodId);
-                                        confirmPayMode(payMethod, payMethodId);
+                                        confirmPayMode( payMethodId);
                                     }
                                 });
                                 payDialog.show();
@@ -1375,8 +1374,8 @@ public class OrderDetailActivity extends BaseActivity {
     /**
      * 确认支付方式
      */
-    private void confirmPayMode(final int payMethod,final String payMethodId){
-        if(payMethod ==2){
+    private void confirmPayMode(final String payMethodId){
+        if(OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)){
             String payMoney =orderDetailBean.getPayment();
             BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
@@ -1385,18 +1384,17 @@ public class OrderDetailActivity extends BaseActivity {
                 }
                 @Override
                 public void confirmPay(String pwd) {
-                    payDo(payMethod,payMethodId,pwd);
+                    payDo(payMethodId,pwd);
                 }
             });
             balancePayDialog.show();
         }else{
-            payDo(payMethod,payMethodId,"");
+            payDo(payMethodId,"");
         }
     }
 
-    private void payDo(int payMethod, String payMethodId,String payPwd) {
+    private void payDo( String payMethodId,String payPwd) {
         showLoadingDialog();
-        this.payMehtod = payMethod;
         this.payMehtodId = payMethodId;
         disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId,payPwd)
                 .subscribeOn(Schedulers.io())
@@ -1429,18 +1427,15 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void invokePay(ResultBean data) {
-        switch (payMehtod) {
-            case 0:
+        switch (payMehtodId) {
+            case OrderParams.PAY_APP_WXPAY:
                 invokeWeixinPay(data);
                 break;
-            case 1:
+            case OrderParams.PAY_APP_ALIPAY:
                 invokeZhifubaoPay(data);
                 break;
-            case 2:
+            case OrderParams.PAY_APP_DEPOSIT:
                 invokeYuePay(data);
-                break;
-            case 3:
-                invokeDaePay(data);
                 break;
         }
     }
@@ -1502,7 +1497,12 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void invokeYuePay(ResultBean data) {
-
+        if(data.getResult()){
+            Toast.makeText(OrderDetailActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+            EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+            EventManager.getInstance().notify(null, ConstantMsg.UPDATE_CART_LIST);
+            finish();
+        }
     }
 
     private void invokeDaePay(ResultBean data) {

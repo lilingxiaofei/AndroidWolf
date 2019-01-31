@@ -118,11 +118,13 @@
             android:textColor="@color/t_black"
             android:textSize="@dimen/sp_small"
             tools:text="法国凡特纳酒庄全都是系列康帝德干白" />
-        <LinearLayout
+        <LinearLayout android:id="@+id/llLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:minHeight="15dp"
+            android:divider="@drawable/line_vertical_transparent"
+            android:showDividers="middle"
             android:orientation="horizontal">
 
             <TextView

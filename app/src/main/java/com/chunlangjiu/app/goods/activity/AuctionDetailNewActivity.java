@@ -32,7 +32,7 @@ import com.chunlangjiu.app.goods.fragment.AuctionDetailFragment;
 import com.chunlangjiu.app.goods.fragment.GoodsCommentFragment;
 import com.chunlangjiu.app.goods.fragment.GoodsWebFragment;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.order.activity.OrderMainActivity;
+import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
@@ -110,7 +110,6 @@ public class AuctionDetailNewActivity extends BaseActivity {
     private String payment_id;
     private List<PaymentBean.PaymentInfo> payList;
     private PayDialog payDialog;
-    private int payMethod;//默认微信支付
     private String payMethodId;//支付方式类型
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -425,8 +424,8 @@ public class AuctionDetailNewActivity extends BaseActivity {
                 payDialog = new PayDialog(this, payList,payMoney);
                 payDialog.setCallBack(new PayDialog.CallBack() {
                     @Override
-                    public void choicePayMethod(int payMethod, String payMethodId) {
-                        confirmPayMode(payMethod, payMethodId);
+                    public void choicePayMethod(String payMethodId) {
+                        confirmPayMode(payMethodId);
                     }
                 });
             }
@@ -438,27 +437,27 @@ public class AuctionDetailNewActivity extends BaseActivity {
     /**
      * 确认支付方式
      */
-    private void confirmPayMode(final int payMethod,final String payMethodId){
-        if(payMethod ==2){
+    private void confirmPayMode(final String payMethodId){
+        if(OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)){
             String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
             BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
                 @Override
                 public void cancelPay() {
-                    finish();
+
                 }
                 @Override
                 public void confirmPay(String pwd) {
-                    payMoney(payMethod,payMethodId,pwd);
+                    payMoney(payMethodId,pwd);
                 }
             });
             balancePayDialog.show();
         }else{
-            payMoney(payMethod,payMethodId,"");
+            payMoney(payMethodId,"");
         }
     }
 
-    private void payMoney(final int payMethod, String payMethodId,String payPwd) {
+    private void payMoney(final String payMethodId,String payPwd) {
         disposable.add(ApiUtils.getInstance().payDo(payment_id, payMethodId,payPwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -466,7 +465,7 @@ public class AuctionDetailNewActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean resultBean) throws Exception {
                         hideLoadingDialog();
-                        invokePay(payMethod,resultBean);
+                        invokePay(payMethodId,resultBean);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -478,17 +477,16 @@ public class AuctionDetailNewActivity extends BaseActivity {
     }
 
 
-    private void invokePay(int payMethod,ResultBean data) {
-        switch (payMethod) {
-            case 0:
+    private void invokePay(String payMethodId,ResultBean data) {
+        switch (payMethodId) {
+            case OrderParams.PAY_APP_WXPAY:
                 invokeWeixinPay(data);
                 break;
-            case 1:
+            case OrderParams.PAY_APP_ALIPAY:
                 invokeZhifubaoPay(data);
                 break;
-            case 2:
-                break;
-            case 3:
+            case OrderParams.PAY_APP_DEPOSIT:
+                toOrderMainActivity();
                 break;
         }
     }
@@ -527,7 +525,7 @@ public class AuctionDetailNewActivity extends BaseActivity {
                     Toast.makeText(AuctionDetailNewActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     finish();
                 }
-                toOrderMainActivity(1, 0);
+                toOrderMainActivity();
             }
         }
     };
@@ -582,7 +580,7 @@ public class AuctionDetailNewActivity extends BaseActivity {
                 ToastUtils.showShort("支付取消");
             }
             finish();
-            toOrderMainActivity(1, 0);
+            toOrderMainActivity();
         }
     }
 
@@ -621,10 +619,10 @@ public class AuctionDetailNewActivity extends BaseActivity {
         EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
 
-    private void toOrderMainActivity(int type, int target) {
-        Intent intent = new Intent(this, OrderMainActivity.class);
-        intent.putExtra(OrderParams.TYPE, type);
-        intent.putExtra(OrderParams.TARGET, target);
+    private void toOrderMainActivity() {
+        Intent intent = new Intent(this, OrderMainNewActivity.class);
+        intent.putExtra(OrderParams.TYPE, 1);
+        intent.putExtra(OrderParams.TARGET, 0);
         startActivity(intent);
     }
 }

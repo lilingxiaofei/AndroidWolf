@@ -54,6 +54,10 @@ public class OrderMainNewActivity extends BaseActivity {
     private void initView() {
         type = getIntent().getIntExtra(OrderParams.TYPE, 0);
         int target = getIntent().getIntExtra(OrderParams.TARGET, 0);
+        if(type ==1){
+            type = 0 ;
+            target = target+5;
+        }
 
 
         rgOrderTab.setVisibility(View.GONE);

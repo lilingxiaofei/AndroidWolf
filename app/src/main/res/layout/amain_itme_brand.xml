@@ -9,11 +9,10 @@
         android:id="@+id/imgPic"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        app:sriv_left_bottom_corner_radius="@dimen/dp_10"
-        app:sriv_right_bottom_corner_radius="@dimen/dp_10"
-        app:sriv_left_top_corner_radius="@dimen/dp_10"
-        app:sriv_right_top_corner_radius="@dimen/dp_10"
-        app:sriv_aoval="true"
+        app:sriv_left_bottom_corner_radius="5dp"
+        app:sriv_right_bottom_corner_radius="5dp"
+        app:sriv_left_top_corner_radius="5dp"
+        app:sriv_right_top_corner_radius="5dp"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop" />
 
