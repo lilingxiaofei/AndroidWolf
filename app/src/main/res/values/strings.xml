@@ -64,4 +64,6 @@
     \n 1.撤销保证金后，您不再是星级用户，无法享用海量特权。
     \n 2.撤销保证金后，您已发布的商品会自动下架。
     \n 3.撤销保证金后，您最多只能发布3款商品。</string>
+    <string name="skip_str">跳过</string>
+    <string name="into_str">进入</string>
 </resources>

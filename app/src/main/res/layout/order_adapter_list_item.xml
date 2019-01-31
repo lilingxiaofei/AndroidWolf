@@ -23,6 +23,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:paddingRight="12dp">
 
             <TextView
@@ -49,9 +50,15 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="状态"
+                android:textColor="@color/t_red"
                 android:gravity="center" />
         </RelativeLayout>
-
+        <ImageView android:id="@+id/ivDel"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:visibility="gone"
+            android:src="@mipmap/gray_delete"/>
     </LinearLayout>
 
 
