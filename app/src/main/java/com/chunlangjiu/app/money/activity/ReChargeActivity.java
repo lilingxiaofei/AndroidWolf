@@ -17,6 +17,7 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -164,7 +165,7 @@ public class ReChargeActivity extends BaseActivity {
                         payList = paymentBeanResultBean.getData().getList();
                         if (payList != null & payList.size() > 0) {
 //                            tvPayMethod.setText(payList.get(0).getApp_display_name());
-                            payMehtodId = payList.get(0).getApp_id();
+                            payMehtodId = OrderParams.PAY_APP_WXPAY;
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -297,7 +298,7 @@ public class ReChargeActivity extends BaseActivity {
     public void setTitleView() {
         rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
         if (rechargeType==RechargeType.SecurityDeposit){
-            titleName.setText("交纳保证金");
+            titleName.setText(R.string.payment_deposit);
         }else {
             titleName.setText("充值");
         }
@@ -359,16 +360,12 @@ public class ReChargeActivity extends BaseActivity {
             case Alipay:
                 imgZfbCheck.setSelected(true);
                 imgWxCheck.setSelected(false);
-                if (null != payList && payList.size() > 0) {
-                    payMehtodId = payList.get(1).getApp_id();
-                }
+                payMehtodId = OrderParams.PAY_APP_ALIPAY;
                 break;
             case Wx:
                 imgZfbCheck.setSelected(false);
                 imgWxCheck.setSelected(true);
-                if (null != payList && payList.size() > 0) {
-                    payMehtodId = payList.get(0).getApp_id();
-                }
+                payMehtodId = OrderParams.PAY_APP_WXPAY;
                 break;
         }
 

@@ -45,6 +45,7 @@ import com.pkqup.commonlibrary.dialog.ChoicePhotoDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.FileUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -98,10 +99,9 @@ public class UserFragment extends BaseFragment {
 
 
     //切换用户布局
-    private LinearLayout llSwitchLayout ;
-    private ImageView ivSwitchIcon ;
+    private LinearLayout llSwitchLayout;
+    private ImageView ivSwitchIcon;
     private TextView tvSwitchText;
-
 
 
     /*订单管理*/
@@ -184,7 +184,7 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlVip;
     private LinearLayout llMyManagerSecond;
     private RelativeLayout rlMyEvaluate;
-    private RelativeLayout rlFansManage ;
+    private RelativeLayout rlFansManage;
     private RelativeLayout rlSetting;
     private RelativeLayout rlService;
     /*我的管理*/
@@ -322,7 +322,7 @@ public class UserFragment extends BaseFragment {
                     break;
                 case R.id.rlMoneyManager:// 资金管理
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_MONEY_MANAGER + BaseApplication.getToken(), "资金管理");
-                    startActivity(new Intent(getActivity(),MoneyManagerActivity.class));
+                    startActivity(new Intent(getActivity(), MoneyManagerActivity.class));
                     break;
                 case R.id.rlShare:// 分享
                     showShareDialog();
@@ -354,11 +354,12 @@ public class UserFragment extends BaseFragment {
         }
     };
 
-    private Activity activity ;
+    private Activity activity;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        activity  = (Activity)context ;
+        activity = (Activity) context;
     }
 
     @Override
@@ -379,7 +380,7 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.rlUserHead));
+        MyStatusBarUtils.setTitleBarPadding(getActivity(), rootView.findViewById(R.id.rlUserHead));
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
         tvToLogin.setOnClickListener(onClickListener);
@@ -526,9 +527,9 @@ public class UserFragment extends BaseFragment {
 
 
         //切换用户布局
-        llSwitchLayout = rootView.findViewById(R.id.llSwitchLayout) ;
-        ivSwitchIcon  = rootView.findViewById(R.id.ivSwitchIcon) ;
-        tvSwitchText = rootView.findViewById(R.id.tvSwitchText) ;
+        llSwitchLayout = rootView.findViewById(R.id.llSwitchLayout);
+        ivSwitchIcon = rootView.findViewById(R.id.ivSwitchIcon);
+        tvSwitchText = rootView.findViewById(R.id.tvSwitchText);
         llSwitchLayout.setOnClickListener(onClickListener);
 
 //        if (BaseApplication.HIDE_AUCTION) {
@@ -671,8 +672,8 @@ public class UserFragment extends BaseFragment {
                         companyName = userInfoBeanResultBean.getData().getCompany_name();
                         shopName = userInfoBeanResultBean.getData().getShop_name();
                         tvName.setText(loginAccount);
-                        SPUtils.put("account",loginAccount);
-                        SPUtils.put("avator",userInfoBeanResultBean.getData().getHead_portrait());
+                        SPUtils.put("account", loginAccount);
+                        SPUtils.put("avator", userInfoBeanResultBean.getData().getHead_portrait());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -757,10 +758,12 @@ public class UserFragment extends BaseFragment {
                             tvWareHouseGoodsNum.setText(data.getNotrate_num());
                             tvAuctionGoodsNum.setText(data.getAuction_num());
                             tvSellGoodsNum.setText(data.getInstock_num());
-                            tvCheckGoodsNum.setVisibility(TextUtils.isEmpty(data.getPending_num())?View.GONE: View.VISIBLE);
-                            tvWareHouseGoodsNum.setVisibility(TextUtils.isEmpty(data.getNotrate_num())?View.GONE: View.VISIBLE);
-                            tvAuctionGoodsNum.setVisibility(TextUtils.isEmpty(data.getAuction_num())?View.GONE: View.VISIBLE);
-                            tvSellGoodsNum.setVisibility(TextUtils.isEmpty(data.getInstock_num())?View.GONE: View.VISIBLE);
+
+                            tvCheckGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getPending_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
+                            tvWareHouseGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getNotrate_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
+                            tvAuctionGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getAuction_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
+                            tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getInstock_num()).intValue() > 0 ? View.VISIBLE
+                                          : View.GONE);
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -769,9 +772,6 @@ public class UserFragment extends BaseFragment {
                     }
                 }));
     }
-
-
-
 
 
     private void getPersonAndCompanyAuthStatus() {

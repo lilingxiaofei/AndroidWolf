@@ -66,4 +66,5 @@
     \n 3.撤销保证金后，您最多只能发布3款商品。</string>
     <string name="skip_str">跳过</string>
     <string name="into_str">进入</string>
+    <string name="payment_deposit">缴纳保证金</string>
 </resources>

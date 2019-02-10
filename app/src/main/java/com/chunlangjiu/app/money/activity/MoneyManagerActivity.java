@@ -16,6 +16,7 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
@@ -116,8 +117,8 @@ public class MoneyManagerActivity extends BaseActivity {
                         hideLoadingDialog();
                         userMoneyBean = resultBean.getData();
                         if (null != userMoneyBean)
-                            tvFreezeBalance.setText(userMoneyBean.getFreeze_money() == null ? "" : userMoneyBean.getFreeze_money());
-                        tvAvailableBalance.setText(userMoneyBean.getMoney() == null ? "" : userMoneyBean.getMoney());
+                            tvFreezeBalance.setText(BigDecimalUtils.objToStr(userMoneyBean.getFreeze_money(),2));
+                        tvAvailableBalance.setText(BigDecimalUtils.objToStr(userMoneyBean.getMoney(),2));
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -147,8 +148,8 @@ public class MoneyManagerActivity extends BaseActivity {
                                 btnPaySecurityDeposit.setText("撤销保证金中");
                                 btnPaySecurityDeposit.setEnabled(false);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
-                            } else if ("3".equals(depositBean.getDeposit_status())) {
-                                btnPaySecurityDeposit.setText("交纳保证金");
+                            } else if ("0".equals(depositBean.getDeposit_status())) {
+                                btnPaySecurityDeposit.setText(R.string.payment_deposit);
                                 btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
                             }
@@ -198,10 +199,10 @@ public class MoneyManagerActivity extends BaseActivity {
                     startActivity(intent);
                 } else if ("2".equals(status)) {
 
-                } else if ("3".equals(status)) {
+                } else if ("0".equals(status)) {
                     Intent intent = new Intent(this, ReChargeActivity.class);
                     intent.putExtra(ReChargeActivity.ReChargeType, ReChargeActivity.RechargeType.SecurityDeposit);
-                    intent.putExtra(ReChargeActivity.ReChargeType,depositBean.getDeposit());
+//                    intent.putExtra(ReChargeActivity.ReChargeType,depositBean.getDeposit());
                     intent.putExtra(ReChargeActivity.DepositMoney, depositBean.getDeposit());
                     startActivity(intent);
 

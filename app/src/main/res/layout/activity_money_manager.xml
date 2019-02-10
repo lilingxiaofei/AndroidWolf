@@ -213,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_red_rectangle"
-                android:text="交纳保证金"
+                android:text="@string/payment_deposit"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_15sp" />
         </LinearLayout>

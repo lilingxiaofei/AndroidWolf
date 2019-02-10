@@ -50,7 +50,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         TextView tvTotalNum = helper.getView(R.id.tvTotalNum);
         LinearLayout llBottom = helper.getView(R.id.llBottom);
 
-        helper.setGone(R.id.ivDel,true);
+        helper.setGone(R.id.ivDel,false);
         TextView tv1 = helper.getView(R.id.tv1);
         TextView tv2 = helper.getView(R.id.tv2);
 
@@ -94,7 +94,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         } else {
                             tv2.setVisibility(View.GONE);
                         }
-                        helper.setGone(R.id.ivDel,false);
+                        helper.setGone(R.id.ivDel,true);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_black));
                         break;
                 }

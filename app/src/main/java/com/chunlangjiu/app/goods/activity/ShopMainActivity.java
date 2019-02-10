@@ -124,7 +124,7 @@ public class ShopMainActivity extends BaseActivity {
     TextView tvShopName;
     @BindView(R.id.ivShopLevel)
     ImageView ivShopLevel;
-    @BindView(R.id.llRootLayout)
+    @BindView(R.id.llShopRootLayout)
     android.widget.LinearLayout llRootLayout;
     @BindView(R.id.tvShopTips)
     TextView tvShopTips;

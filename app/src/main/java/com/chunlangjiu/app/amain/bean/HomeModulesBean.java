@@ -19,6 +19,7 @@ public class HomeModulesBean {
     public static final String ITEM_CART = "cart";//购物车
     public static final String ITEM_H5 = "h5";//网页
     public static final String ITEM_SELLWINE = "sellwine";//我要卖酒
+    public static final String ITEM_AUCTION = "auction";//竞拍列表
 
 
     private List<Modules> modules;
@@ -71,6 +72,14 @@ public class HomeModulesBean {
     }
 
     public class Params {
+        private String image;
+        private String linktype;
+        private String link;
+        private String imagesrc;
+        private String webview;
+
+
+
         private List<Pic> pic;
 
         public List<Pic> getPic() {
@@ -80,6 +89,47 @@ public class HomeModulesBean {
         public void setPic(List<Pic> pic) {
             this.pic = pic;
         }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public String getLinktype() {
+            return linktype;
+        }
+
+        public void setLinktype(String linktype) {
+            this.linktype = linktype;
+        }
+
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        public String getImagesrc() {
+            return imagesrc;
+        }
+
+        public void setImagesrc(String imagesrc) {
+            this.imagesrc = imagesrc;
+        }
+
+        public String getWebview() {
+            return webview;
+        }
+
+        public void setWebview(String webview) {
+            this.webview = webview;
+        }
+
     }
 
     public class Pic {

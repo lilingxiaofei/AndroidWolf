@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@mipmap/store_bg_common"
-    android:id="@+id/llRootLayout"
+    android:id="@+id/llShopRootLayout"
     android:orientation="vertical">
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rlShopTitle"
@@ -28,7 +28,7 @@
             android:lines="1"
             android:layout_marginLeft="@dimen/title_bar_height"
             android:layout_marginRight="@dimen/title_bar_height"
-            android:text="标题"
+            android:text="店铺首页"
             android:gravity="center"
             android:textColor="@color/t_white"
             android:textSize="18sp" />

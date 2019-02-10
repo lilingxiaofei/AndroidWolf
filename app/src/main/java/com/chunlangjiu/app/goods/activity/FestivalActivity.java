@@ -178,9 +178,9 @@ public class FestivalActivity extends BaseActivity {
             }
 
             List<GoodsListDetailBean> dataLists = activityBean.getItem();
-            List<GoodsListDetailBean> auctionItems = activityBean.getItem();
+            List<GoodsListDetailBean> auctionItems = activityBean.getAuction();
 
-            if (!BaseApplication.HIDE_AUCTION && auctionItems != null) {
+            if (!BaseApplication.HIDE_AUCTION && auctionItems != null && auctionItems.size()>0) {
                 //过滤竞拍商品
                 GoodsListDetailBean detailBean = new GoodsListDetailBean();
                 detailBean.setItemType(GoodsListDetailBean.ITEM_JINGPAI);
@@ -188,7 +188,7 @@ public class FestivalActivity extends BaseActivity {
                 productList.addAll(auctionItems);
             }
 
-            if (dataLists != null) {
+            if (dataLists != null && dataLists.size()>0) {
                 GoodsListDetailBean detailBean = new GoodsListDetailBean();
                 detailBean.setItemType(GoodsListDetailBean.ITEM_TUIJIAN);
                 productList.add(detailBean);

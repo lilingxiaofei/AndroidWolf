@@ -24,11 +24,11 @@ import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.amain.activity.LoginActivity;
 import com.chunlangjiu.app.amain.adapter.BrandAdapter;
 import com.chunlangjiu.app.amain.adapter.HomeAdapter;
-import com.chunlangjiu.app.amain.bean.HomeAuctionBean;
 import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.fans.dialog.InviteCodeDialog;
+import com.chunlangjiu.app.goods.activity.FestivalActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.PartnerListActivity;
@@ -799,7 +799,8 @@ public class HomeFragment extends BaseFragment {
 //                    UmengEventUtil.iconEvent(getActivity(), "我要买酒");
 //                    break;
                 case 1:
-                    checkStatus();
+//                    checkStatus();
+                    startActivity(new Intent(getActivity(), AddGoodsActivity.class));
                     UmengEventUtil.iconEvent(getActivity(), "我要卖酒");
                     break;
                 case 2:
@@ -822,7 +823,7 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    private void functionJump(HomeModulesBean.Pic function, String type) {
+    public void functionJump( HomeModulesBean.Pic function, String type) {
         switch (function.getLinktype()) {
             case HomeModulesBean.ITEM_GOODS:
                 GoodsDetailslNewActivity.startActivity(getActivity(), function.getLinktarget());
@@ -856,12 +857,20 @@ public class HomeFragment extends BaseFragment {
                     UmengEventUtil.iconEvent(getActivity(), "品牌】");
                 }
                 break;
-            case HomeModulesBean.ITEM_ACTIVITY:
+            case HomeModulesBean.ITEM_AUCTION:
                 EventManager.getInstance().notify(null, BaseApplication.HIDE_AUCTION ? ConstantMsg.MSG_PAGE_CLASS : ConstantMsg.MSG_PAGE_AUCTION);
                 if ("banner".equals(type)) {
                     UmengEventUtil.bannerEvent(getActivity(), "竞拍专区");
                 } else {
                     UmengEventUtil.iconEvent(getActivity(), "竞拍专区");
+                }
+                break;
+            case HomeModulesBean.ITEM_ACTIVITY:
+                FestivalActivity.startActivity(getActivity());
+                if ("banner".equals(type)) {
+                    UmengEventUtil.bannerEvent(getActivity(), "店铺活动");
+                } else {
+                    UmengEventUtil.iconEvent(getActivity(), "店铺活动");
                 }
                 break;
             case HomeModulesBean.ITEM_WINERY:
@@ -909,7 +918,8 @@ public class HomeFragment extends BaseFragment {
                 }
                 break;
             case HomeModulesBean.ITEM_SELLWINE:
-                checkStatus();
+//                checkStatus();
+                startActivity(new Intent(getActivity(), AddGoodsActivity.class));
                 if ("banner".equals(type)) {
                     UmengEventUtil.bannerEvent(getActivity(), "我要卖酒");
                 } else {

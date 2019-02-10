@@ -324,6 +324,12 @@ public class ApiUtils {
         return apiService.getHomeModules("theme.modules", "v1", "index");
     }
 
+
+    public Flowable<ResultBean<HomeModulesBean>> getOpenAd() {
+        return apiService.getHomeModules("theme.modules", "v1", "activityindex");
+    }
+
+
     public Flowable<ResultBean<HomeListBean>> getHomeLists(int pageNo) {
         return apiService.getHomeLists("theme.pull.goods", "v1", "index", pageNo, 10);
     }

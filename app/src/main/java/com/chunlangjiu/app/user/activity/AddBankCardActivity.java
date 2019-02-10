@@ -1,8 +1,7 @@
 package com.chunlangjiu.app.user.activity;
 
-import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -16,7 +15,6 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.BankCardInfoBean;
-import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.user.bean.LocalAreaBean;
 import com.chunlangjiu.app.util.AreaUtils;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -84,6 +82,13 @@ public class AddBankCardActivity extends BaseActivity {
         setContentView(R.layout.activity_add_bank_card);
         initData();
         initEvent();
+
+
+        edtName.setText("吴申飞");
+        edtIdCard.setText("430281199101039116");
+        edtBankCard.setText("6217921175562548");
+        edtPhone.setText("18665398952");
+        edtBranch.setText("深圳科苑支行");
     }
 
     private void initEvent() {
