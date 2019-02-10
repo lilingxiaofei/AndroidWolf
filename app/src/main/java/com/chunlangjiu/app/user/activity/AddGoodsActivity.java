@@ -912,6 +912,7 @@ public class AddGoodsActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean resultBean) throws Exception {
                         hideLoadingDialog();
+                        EventManager.getInstance().notify(null, ConstantMsg.SHOP_DATA_CHANGE);
                         startActivity(new Intent(AddGoodsActivity.this, AddGoodsSuccessActivity.class));
                         finish();
                     }

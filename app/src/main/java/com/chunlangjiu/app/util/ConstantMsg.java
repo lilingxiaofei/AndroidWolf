@@ -12,8 +12,9 @@ public class ConstantMsg {
     public static final String MSG_PAGE_AUCTION = "msg_page_auction";//首页切换到竞拍专区
     public static final String MSG_PAGE_MY = "msg_page_my";//首页切换到我的
     public static final String MSG_PAGE_CART = "msg_page_cart";//首页切换到购物车
+    public static final String SHOP_DATA_CHANGE = "shop_data_change";//商家数据变化
     public static final String LOGIN_SUCCESS = "msg_login_success";//登录成功
-    public static final String LOGOUT_SUCCESS = "msg_logout_success";//登录成功
+    public static final String LOGOUT_SUCCESS = "msg_logout_success";//登出成功
     public static final String PERSON_COMPANY_AUTH_SUCCESS = "person_company_auth_success";//个人或者企业认证成功
     public static final String ADD_ADDRESS_SUCCESS = "msg_add_address_success";//添加地址成功
     public static final String CHANGE_TO_EVALUATE = "msg_change_to_evaluate";//切换到评论tab

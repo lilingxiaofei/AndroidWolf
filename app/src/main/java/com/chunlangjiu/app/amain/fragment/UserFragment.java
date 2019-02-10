@@ -755,14 +755,14 @@ public class UserFragment extends BaseFragment {
                             tvMessageNum.setText(TextUtils.isEmpty(data.getInformation()) ? "0" : data.getInformation());
 
                             tvCheckGoodsNum.setText(data.getPending_num());
-                            tvWareHouseGoodsNum.setText(data.getNotrate_num());
+                            tvWareHouseGoodsNum.setText(data.getInstock_num());
+                            tvSellGoodsNum.setText(data.getNotrate_num());
                             tvAuctionGoodsNum.setText(data.getAuction_num());
-                            tvSellGoodsNum.setText(data.getInstock_num());
 
                             tvCheckGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getPending_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
-                            tvWareHouseGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getNotrate_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
+                            tvWareHouseGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getInstock_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
                             tvAuctionGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getAuction_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
-                            tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getInstock_num()).intValue() > 0 ? View.VISIBLE
+                            tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getNotrate_num()).intValue() > 0 ? View.VISIBLE
                                           : View.GONE);
                         }
                     }
@@ -1060,8 +1060,20 @@ public class UserFragment extends BaseFragment {
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
-            loginSuccess(eventTag);
-            logoutSuccess(eventTag);
+            eventTag =  eventTag == null?"":eventTag;
+            switch (eventTag){
+                case ConstantMsg.SHOP_DATA_CHANGE:
+                    getSellerOrderNumIndex();
+                    break;
+                case ConstantMsg.LOGIN_SUCCESS:
+                    loginSuccess(eventTag);
+                    break;
+                case ConstantMsg.LOGOUT_SUCCESS:
+                    logoutSuccess(eventTag);
+                    break;
+            }
+
+
 //            authSuccess(eventTag);
         }
     };
