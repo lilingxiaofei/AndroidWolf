@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.chunlangjiu.app.money.activity.ReChargeActivity;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.socks.library.KLog;
@@ -44,8 +45,10 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onResp(BaseResp baseResp) {
         KLog.e("---weixinpay----", baseResp.errCode + "");
+        if (baseResp.errCode==0){
+            EventManager.getInstance().notify(baseResp.errCode,ReChargeActivity.getPayType());
+        }
         EventManager.getInstance().notify(baseResp.errCode, ConstantMsg.WEIXIN_PAY_CALLBACK);
-        EventManager.getInstance().notify(baseResp.errCode,ConstantMsg.RECHARGE);
         finish();
     }
 }

@@ -17,6 +17,7 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -40,9 +41,9 @@ import io.reactivex.schedulers.Schedulers;
 public class ReChargeActivity extends BaseActivity {
     private static final int SDK_PAY_FLAG = 1;
     public static final String ReChargeType = "ReChargeType";
-    public static final String DepositMoney="DepositMoney";
+    public static final String DepositMoney = "DepositMoney";
 
-//    @BindView(R.id.relBalance)
+    //    @BindView(R.id.relBalance)
 //    RelativeLayout relBalance;
 //    @BindView(R.id.imgBalance)
 //    ImageView imgBalance;
@@ -62,7 +63,7 @@ public class ReChargeActivity extends BaseActivity {
     EditText edtMoney;
 
     private PayType payType = PayType.Wx;
-    private RechargeType rechargeType = RechargeType.Balance;
+    private static RechargeType rechargeType = RechargeType.Balance;
     private List<PaymentBean.PaymentInfo> payList;
     private String payMehtodId;//支付方式类型
     private int payMehtod;//默认微信支付
@@ -84,17 +85,22 @@ public class ReChargeActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         setContentView(R.layout.activity_re_charge);
         rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
-        if (rechargeType==null){
-            rechargeType=RechargeType.Balance;
+        if (rechargeType == null) {
+            rechargeType = RechargeType.Balance;
         }
         togglePayType(PayType.Wx);
         initPay();
         initView();
         initData();
+        initEvent();
+    }
+
+    private void initEvent() {
+        EventManager.getInstance().registerListener(onNotifyListener);
     }
 
     private void initView() {
-        if (rechargeType==RechargeType.SecurityDeposit){
+        if (rechargeType == RechargeType.SecurityDeposit) {
             edtMoney.setEnabled(false);
             edtMoney.setText(getIntent().getStringExtra(DepositMoney));
         }
@@ -106,7 +112,7 @@ public class ReChargeActivity extends BaseActivity {
     }
 
     private void initData() {
-        getPaymentList();
+//        getPaymentList();
     }
 
     @Override
@@ -115,6 +121,7 @@ public class ReChargeActivity extends BaseActivity {
         if (null != disposable) {
             disposable.dispose();
         }
+        EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
 
     private void createOrder(String count) {
@@ -177,7 +184,7 @@ public class ReChargeActivity extends BaseActivity {
 
     private void createSuccess(CreateRechargeOrderBean data) {
         if (null != data) {
-            disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId,"")
+            disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId, "")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<ResultBean>() {
@@ -230,6 +237,15 @@ public class ReChargeActivity extends BaseActivity {
                 break;
         }
 
+    }
+
+    public static String getPayType() {
+        if (rechargeType == RechargeType.Balance) {
+            return ConstantMsg.RECHARGE;
+        } else if (rechargeType == RechargeType.SecurityDeposit) {
+            return ConstantMsg.DEPOSIT_CREATE;
+        }
+        return ConstantMsg.RECHARGE;
     }
 
     private void invokeZhifubaoPay(ResultBean data) {
@@ -296,9 +312,9 @@ public class ReChargeActivity extends BaseActivity {
     @Override
     public void setTitleView() {
         rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
-        if (rechargeType==RechargeType.SecurityDeposit){
+        if (rechargeType == RechargeType.SecurityDeposit) {
             titleName.setText("交纳保证金");
-        }else {
+        } else {
             titleName.setText("充值");
         }
     }
@@ -309,7 +325,7 @@ public class ReChargeActivity extends BaseActivity {
             case R.id.btnOk:
                 String money = edtMoney.getText().toString().trim();
                 if (rechargeType == RechargeType.Balance) {
-                    if (TextUtils.isEmpty(money)){
+                    if (TextUtils.isEmpty(money)) {
                         ToastUtils.showShort("请输入充值金额");
                         return;
                     }
@@ -337,6 +353,21 @@ public class ReChargeActivity extends BaseActivity {
         }
 
     }
+
+    private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
+        @Override
+        public void onNotify(Object object, String eventTag) {
+            switch (eventTag) {
+                case ConstantMsg.DEPOSIT_CREATE:
+                case ConstantMsg.RECHARGE:
+                    finish();
+                    break;
+                case ConstantMsg.WITHDRAW_DEPOSIT_REFUND:
+                    break;
+            }
+
+        }
+    };
 //
 //    public void toggleBalanceSecurityDeposit(RechargeType rechargeType) {
 //        this.rechargeType = rechargeType;
@@ -359,16 +390,18 @@ public class ReChargeActivity extends BaseActivity {
             case Alipay:
                 imgZfbCheck.setSelected(true);
                 imgWxCheck.setSelected(false);
-                if (null != payList && payList.size() > 0) {
-                    payMehtodId = payList.get(1).getApp_id();
-                }
+                payMehtodId = OrderParams.PAY_APP_ALIPAY;
+//                if (null != payList && payList.size() > 0) {
+//                    payMehtodId = payList.get(1).getApp_id();
+//                }
                 break;
             case Wx:
                 imgZfbCheck.setSelected(false);
                 imgWxCheck.setSelected(true);
-                if (null != payList && payList.size() > 0) {
-                    payMehtodId = payList.get(0).getApp_id();
-                }
+                payMehtodId = OrderParams.PAY_APP_WXPAY;
+//                if (null != payList && payList.size() > 0) {
+//                    payMehtodId = payList.get(0).getApp_id();
+//                }
                 break;
         }
 

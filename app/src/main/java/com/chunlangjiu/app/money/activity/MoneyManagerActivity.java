@@ -116,8 +116,8 @@ public class MoneyManagerActivity extends BaseActivity {
                         hideLoadingDialog();
                         userMoneyBean = resultBean.getData();
                         if (null != userMoneyBean)
-                            tvFreezeBalance.setText(userMoneyBean.getFreeze_money() == null ? "" : userMoneyBean.getFreeze_money());
-                        tvAvailableBalance.setText(userMoneyBean.getMoney() == null ? "" : userMoneyBean.getMoney());
+                            tvFreezeBalance.setText(userMoneyBean.getFreeze_money() == null ? "0.00" : userMoneyBean.getFreeze_money());
+                        tvAvailableBalance.setText(userMoneyBean.getMoney() == null ? "0.00" : userMoneyBean.getMoney());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -138,7 +138,7 @@ public class MoneyManagerActivity extends BaseActivity {
                     public void accept(ResultBean<DepositBean> resultBean) throws Exception {
                         depositBean = resultBean.getData();
                         if (null != depositBean) {
-                            tvDepositCount.setText(depositBean.getDeposit() == null ? "" : depositBean.getDeposit());
+                            tvDepositCount.setText(depositBean.getDeposit() == null ? "0.00" : depositBean.getDeposit());
                             if ("1".equals(depositBean.getDeposit_status())) { //deposit_status 1.交纳 2.撤销中 3.撤销
                                 btnPaySecurityDeposit.setText("撤销保证金");
                                 btnPaySecurityDeposit.setEnabled(true);
@@ -147,8 +147,8 @@ public class MoneyManagerActivity extends BaseActivity {
                                 btnPaySecurityDeposit.setText("撤销保证金中");
                                 btnPaySecurityDeposit.setEnabled(false);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
-                            } else if ("3".equals(depositBean.getDeposit_status())) {
-                                btnPaySecurityDeposit.setText("交纳保证金");
+                            } else if ("0".equals(depositBean.getDeposit_status())) {
+                                btnPaySecurityDeposit.setText("缴纳保证金");
                                 btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
                             }
@@ -198,10 +198,10 @@ public class MoneyManagerActivity extends BaseActivity {
                     startActivity(intent);
                 } else if ("2".equals(status)) {
 
-                } else if ("3".equals(status)) {
+                } else if ("0".equals(status)) {
                     Intent intent = new Intent(this, ReChargeActivity.class);
                     intent.putExtra(ReChargeActivity.ReChargeType, ReChargeActivity.RechargeType.SecurityDeposit);
-                    intent.putExtra(ReChargeActivity.ReChargeType,depositBean.getDeposit());
+//                    intent.putExtra(ReChargeActivity.ReChargeType,depositBean.getDeposit());
                     intent.putExtra(ReChargeActivity.DepositMoney, depositBean.getDeposit());
                     startActivity(intent);
 
