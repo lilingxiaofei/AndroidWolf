@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
+import com.chunlangjiu.app.abase.BaseApplication;
+import com.chunlangjiu.app.amain.activity.LoginActivity;
 import com.chunlangjiu.app.amain.bean.FirstClassBean;
 import com.chunlangjiu.app.amain.bean.SecondClassBean;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
@@ -22,6 +24,7 @@ import com.chunlangjiu.app.goods.bean.BrandsListBean;
 import com.chunlangjiu.app.goods.bean.OrdoListBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.AddGoodsValueBean;
+import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.ShopClassList;
 import com.chunlangjiu.app.user.bean.SkuBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
@@ -30,6 +33,7 @@ import com.chunlangjiu.app.user.dialog.ChoiceAreaPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ShopClassPopWindow;
+import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
 import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
@@ -37,6 +41,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.pkqup.commonlibrary.dialog.ChoicePhotoDialog;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.FileUtils;
@@ -51,6 +56,7 @@ import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function5;
 import io.reactivex.functions.Function6;
@@ -385,31 +391,9 @@ public class AddGoodsActivity extends BaseActivity {
 
 
     private void initData() {
-
+        EventManager.getInstance().registerListener(onNotifyListener);
         showLoadingView();
-        //获取平台分类
-        disposable.add(ApiUtils.getInstance().checkUploadGoods()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<Map>>() {
-                    @Override
-                    public void accept(ResultBean<Map> mainClassBeanResultBean) throws Exception {
-                        Map map = mainClassBeanResultBean.getData() ;
-                        if(null != map && map.containsKey("status")){
-                            if("true".equals(map.get("status"))){
-                                showContentView();
-                            }else{
-                                finish();
-                            }
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        finish();
-                    }
-                }));
-
+        checkStatus();
         //获取平台分类
         disposable.add(ApiUtils.getInstance().getShopClassList()
                 .subscribeOn(Schedulers.io())
@@ -433,6 +417,86 @@ public class AddGoodsActivity extends BaseActivity {
                     }
                 }));
     }
+
+
+    private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
+        @Override
+        public void onNotify(Object object, String eventTag) {
+            if (eventTag.equals(ConstantMsg.LOGIN_SUCCESS)) {
+                checkStatus();
+            }
+//            authSuccess(eventTag);
+        }
+    };
+
+
+    private void checkUploadGoods(){
+        disposable.add(ApiUtils.getInstance().checkUploadGoods()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<Map>>() {
+                    @Override
+                    public void accept(ResultBean<Map> mainClassBeanResultBean) throws Exception {
+                        Map map = mainClassBeanResultBean.getData() ;
+                        if(null != map && map.containsKey("status")){
+                            hideLoadingDialog();
+                            if("true".equals(map.get("status"))){
+                                showContentView();
+                            }else{
+                                finish();
+                            }
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        finish();
+                    }
+                }));
+    }
+
+
+    private void checkStatus() {
+        if (BaseApplication.isLogin()) {
+            Observable<ResultBean<AuthStatusBean>> personAuthStatus = ApiUtils.getInstance().getPersonAuthStatus();
+            Observable<ResultBean<AuthStatusBean>> companyAuthStatus = ApiUtils.getInstance().getCompanyAuthStatus();
+            disposable.add(Observable.zip(personAuthStatus, companyAuthStatus, new BiFunction<ResultBean<AuthStatusBean>, ResultBean<AuthStatusBean>, List<AuthStatusBean>>() {
+                @Override
+                public List<AuthStatusBean> apply(ResultBean<AuthStatusBean> uploadImageBeanResultBean, ResultBean<AuthStatusBean> uploadImageBeanResultBean2) throws Exception {
+                    List<AuthStatusBean> imageLists = new ArrayList<>();
+                    imageLists.add(uploadImageBeanResultBean.getData());
+                    imageLists.add(uploadImageBeanResultBean2.getData());
+                    return imageLists;
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<List<AuthStatusBean>>() {
+                        @Override
+                        public void accept(List<AuthStatusBean> authStatusBeans) throws Exception {
+                            if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeans.get(1).getStatus())) {
+                                checkUploadGoods();
+                            } else if (AuthStatusBean.AUTH_LOCKED.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_LOCKED.equals(authStatusBeans.get(1).getStatus())) {
+                                ToastUtils.showShort("您的认证正在审核中，我们会尽快处理");
+                                finish();
+                            } else if (AuthStatusBean.AUTH_FAILING.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_FAILING.equals(authStatusBeans.get(1).getStatus())) {
+                                ToastUtils.showShort("您的认证被驳回，请重新提交资料审核");
+                                startActivity(new Intent(AddGoodsActivity.this,VerifiedActivity.class));
+                            } else {
+                                ToastUtils.showShort("您还没有进行实名认证，请先认证");
+                                startActivity(new Intent(AddGoodsActivity.this,VerifiedActivity.class));
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            finish();
+                        }
+                    }));
+        } else {
+            startActivity(new Intent(AddGoodsActivity.this, LoginActivity.class));
+        }
+    }
+
 
 
     private void showShopClassPopWindow() {
@@ -848,6 +912,7 @@ public class AddGoodsActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean resultBean) throws Exception {
                         hideLoadingDialog();
+                        EventManager.getInstance().notify(null, ConstantMsg.SHOP_DATA_CHANGE);
                         startActivity(new Intent(AddGoodsActivity.this, AddGoodsSuccessActivity.class));
                         finish();
                     }
@@ -981,5 +1046,6 @@ public class AddGoodsActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         disposable.dispose();
+        EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
 }

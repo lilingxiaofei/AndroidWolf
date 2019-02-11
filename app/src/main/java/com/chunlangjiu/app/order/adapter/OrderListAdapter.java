@@ -1,6 +1,7 @@
 package com.chunlangjiu.app.order.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -48,6 +49,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         LinearLayout llProducts = helper.getView(R.id.llProducts);
         TextView tvTotalNum = helper.getView(R.id.tvTotalNum);
         LinearLayout llBottom = helper.getView(R.id.llBottom);
+
+        helper.setGone(R.id.ivDel,false);
         TextView tv1 = helper.getView(R.id.tv1);
         TextView tv2 = helper.getView(R.id.tv2);
 
@@ -59,11 +62,13 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         tv1.setVisibility(View.VISIBLE);
                         tv2.setText("去支付");
                         tv2.setVisibility(View.VISIBLE);
+                        tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case OrderParams.TRADE_CLOSED_BY_SYSTEM:
                         tv1.setVisibility(View.GONE);
                         tv2.setText("删除订单");
                         tv2.setVisibility(View.VISIBLE);
+                        tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_black));
                         break;
                     case OrderParams.WAIT_SELLER_SEND_GOODS:
                         tv1.setVisibility(View.GONE);
@@ -73,11 +78,13 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         } else {
                             tv2.setVisibility(View.GONE);
                         }
+                        tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case OrderParams.WAIT_BUYER_CONFIRM_GOODS:
                         tv1.setVisibility(View.GONE);
                         tv2.setText("商品签单");
                         tv2.setVisibility(View.VISIBLE);
+                        tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case OrderParams.TRADE_FINISHED:
                         tv1.setVisibility(View.GONE);
@@ -87,6 +94,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         } else {
                             tv2.setVisibility(View.GONE);
                         }
+                        helper.setGone(R.id.ivDel,true);
+                        tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_black));
                         break;
                 }
                 break;
@@ -97,21 +106,24 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                     case "0":
                         tv2.setText("去付定金");
                         tv2.setVisibility(View.VISIBLE);
+                        tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case "1":
                         tv2.setText("修改出价");
                         tv2.setVisibility(View.VISIBLE);
+                        tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case "2":
                         helper.setVisible(R.id.ivAuctionBid,true );
                         helper.setImageResource(R.id.ivAuctionBid,R.mipmap.bid_already );
+                        tvStatus.setText("");
 //                        tv2.setText("去支付");
 //                        tv2.setVisibility(View.VISIBLE);
-//                        break;
+                        break;
                     case "3":
 //                        tv2.setText("删除订单");
 //                        tv2.setVisibility(View.VISIBLE);
-//                        break;
+                        break;
                     default:
                         helper.setVisible(R.id.ivAuctionBid,true );
                         helper.setImageResource(R.id.ivAuctionBid,R.mipmap.bid_not);

@@ -39,7 +39,7 @@ public class SecurityDepositManagerActivity extends BaseActivity {
     public void setTitleView() {
         switch (securityDepositType) {
             case PAYING_DEPOSIT:
-                titleName.setText("交纳保证金");
+                titleName.setText(R.string.payment_deposit);
                 break;
             case REFUND_DEPOSIT:
                 titleName.setText("撤销保证金");

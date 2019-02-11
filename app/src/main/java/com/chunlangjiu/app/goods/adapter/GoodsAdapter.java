@@ -3,6 +3,7 @@ package com.chunlangjiu.app.goods.adapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -164,9 +165,9 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 llTime.setVisibility(View.GONE);
             }
 
-            String label = item.getLabel();
-            helper.setText(R.id.tvLabel, label);
-            helper.setGone(R.id.tvLabel, !TextUtils.isEmpty(label));
+            LinearLayout labelLayout = helper.getView(R.id.llLabel);
+            setLabelList(labelLayout,item.getLabel());
+
             helper.setText(R.id.tvAttention, item.getView_count() + "人关注");
             helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
             helper.setText(R.id.tv_good_evaluate, item.getRate_count() + "好评");
@@ -188,6 +189,28 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             }
 
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void setLabelList(LinearLayout layout,String label){
+        //设置标签显示
+        try {
+            layout.removeAllViews();
+            String[] labelList = label.split(",");
+            if(labelList.length== 1){
+                labelList = label.split(" ");
+            }
+            if(labelList.length== 1){
+                labelList = label.split("，");
+            }
+            for (int i = 0; i < labelList.length; i++) {
+                TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.amain_item_goods_list_label,null);
+                textView.setText(labelList[i]);
+                layout.addView(textView);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

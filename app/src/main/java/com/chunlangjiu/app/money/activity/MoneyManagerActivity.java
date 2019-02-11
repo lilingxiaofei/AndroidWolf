@@ -138,7 +138,7 @@ public class MoneyManagerActivity extends BaseActivity {
                     public void accept(ResultBean<DepositBean> resultBean) throws Exception {
                         depositBean = resultBean.getData();
                         if (null != depositBean) {
-                            tvDepositCount.setText(depositBean.getDeposit() == null ? "0.00" : depositBean.getDeposit());
+                            tvDepositCount.setText(depositBean.getDeposit() == null ? "" : depositBean.getDeposit());
                             if ("1".equals(depositBean.getDeposit_status())) { //deposit_status 1.交纳 2.撤销中 3.撤销
                                 btnPaySecurityDeposit.setText("撤销保证金");
                                 btnPaySecurityDeposit.setEnabled(true);

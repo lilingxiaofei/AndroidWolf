@@ -1,6 +1,8 @@
 package com.chunlangjiu.app.user.bean;
 
-public class BankCardInfoBean {
+import java.io.Serializable;
+
+public class BankCardInfoBean implements Serializable {
 
     /**
      * bankname : 招商银行

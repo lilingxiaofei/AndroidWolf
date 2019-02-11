@@ -12,7 +12,7 @@ public class StoreActivityBean {
     private String color;
     private String open;
     private List<GoodsListDetailBean> item;
-    private List<GoodsListDetailBean> auction_item;
+    private List<GoodsListDetailBean> auction;
 
     public String getTop_img() {
         return top_img;
@@ -54,11 +54,11 @@ public class StoreActivityBean {
         this.item = item;
     }
 
-    public List<GoodsListDetailBean> getAuction_item() {
-        return auction_item;
+    public List<GoodsListDetailBean> getAuction() {
+        return auction;
     }
 
-    public void setAuction_item(List<GoodsListDetailBean> auction_item) {
-        this.auction_item = auction_item;
+    public void setAuction(List<GoodsListDetailBean> auction) {
+        this.auction = auction;
     }
 }

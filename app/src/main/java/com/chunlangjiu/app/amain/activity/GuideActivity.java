@@ -35,6 +35,26 @@ public class GuideActivity extends AppCompatActivity {
         setContentView(R.layout.gride_activity);
         tvSkip = findViewById(R.id.tvSkip);
         vpGuide = findViewById(R.id.vpGuide);
+        vpGuide.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(imgs.length-1 == position){
+                    tvSkip.setText(R.string.into_str);
+                }else{
+                    tvSkip.setText(R.string.skip_str);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tvSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

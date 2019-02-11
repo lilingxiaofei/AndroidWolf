@@ -2,6 +2,7 @@ package com.chunlangjiu.app.amain.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,8 +39,8 @@ public class AuctionListAdapter extends BaseQuickAdapter<AuctionListBean.Auction
         TextView tvAnPaiStr = helper.getView(R.id.tvAnPaiStr);
         TextView tvStartPrice = helper.getView(R.id.tvStartPrice);
         String actionNum = item.getAuction_number();
-        String actionNumStr = context.getString(R.string.action_number,actionNum);
-        helper.setText(R.id.tvActionNum,actionNumStr);
+        String actionNumStr = context.getString(R.string.action_number, actionNum);
+        helper.setText(R.id.tvActionNum, actionNumStr);
         GlideUtils.loadImage(context, item.getImage_default_id(), imageView);
         helper.setText(R.id.tv_name, item.getTitle());
         helper.setText(R.id.tvStartPrice, "¥" + item.getAuction_starting_price());
@@ -49,7 +50,7 @@ public class AuctionListAdapter extends BaseQuickAdapter<AuctionListBean.Auction
             //明拍
             llHighPrice.setVisibility(View.VISIBLE);
             tvAnPaiStr.setVisibility(View.GONE);
-        }else{
+        } else {
             llHighPrice.setVisibility(View.GONE);
             tvAnPaiStr.setVisibility(View.VISIBLE);
         }
@@ -67,6 +68,9 @@ public class AuctionListAdapter extends BaseQuickAdapter<AuctionListBean.Auction
             tvLabel.setVisibility(View.VISIBLE);
             tvLabel.setText(item.getLabel());
         }
+
+        LinearLayout labelLayout = helper.getView(R.id.llLabel);
+        setLabelList(labelLayout, item.getLabel());
 
         CountdownView countdownView = helper.getView(R.id.countdownView);
         String end_time = item.getAuction_end_time();
@@ -87,27 +91,48 @@ public class AuctionListAdapter extends BaseQuickAdapter<AuctionListBean.Auction
             }
 
 
-                helper.setText(R.id.tv_store_name,item.getShop_name());
-                String level = item.getGrade();
-                if("2".equals(level)){
-                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_partner);
-                }else if("1".equals(level)){
-                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_star);
-                }else{
-                    helper.setBackgroundRes(R.id.tv_store_level,R.mipmap.store_common);
-                }
+            helper.setText(R.id.tv_store_name, item.getShop_name());
+            String level = item.getGrade();
+            if ("2".equals(level)) {
+                helper.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_partner);
+            } else if ("1".equals(level)) {
+                helper.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_star);
+            } else {
+                helper.setBackgroundRes(R.id.tv_store_level, R.mipmap.store_common);
+            }
 
-            helper.setText(R.id.tv_store_into,R.string.into_store);
+            helper.setText(R.id.tv_store_into, R.string.into_store);
             helper.addOnClickListener(R.id.tv_store_into);
             TextView tv_attention = helper.getView(R.id.tvAttention);
             TextView tv_evaluate = helper.getView(R.id.tvEvaluate);
-            TextView tv_good_evaluate  = helper.getView(R.id.tv_good_evaluate);
-            String viewCount = item.getView_count() ;
-            String  rateCount =  item.getRate_count() ;
-            String  rate =  item.getRate() ;
-            tv_attention.setText((TextUtils.isEmpty(viewCount) ? "0" :viewCount ) + "人关注");
-            tv_evaluate.setText((TextUtils.isEmpty(rateCount) ? "0" :rateCount) + "条评价");
-            tv_good_evaluate.setText((TextUtils.isEmpty(rate) ? "0%" :rate+"%") + "好评");
+            TextView tv_good_evaluate = helper.getView(R.id.tv_good_evaluate);
+            String viewCount = item.getView_count();
+            String rateCount = item.getRate_count();
+            String rate = item.getRate();
+            tv_attention.setText((TextUtils.isEmpty(viewCount) ? "0" : viewCount) + "人关注");
+            tv_evaluate.setText((TextUtils.isEmpty(rateCount) ? "0" : rateCount) + "条评价");
+            tv_good_evaluate.setText((TextUtils.isEmpty(rate) ? "0%" : rate + "%") + "好评");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setLabelList(LinearLayout layout, String label) {
+        //设置标签显示
+        try {
+            layout.removeAllViews();
+            String[] labelList = label.split(",");
+            if (labelList.length == 1) {
+                labelList = label.split(" ");
+            }
+            if (labelList.length == 1) {
+                labelList = label.split("，");
+            }
+            for (int i = 0; i < labelList.length; i++) {
+                TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.amain_item_goods_list_label, null);
+                textView.setText(labelList[i]);
+                layout.addView(textView);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
