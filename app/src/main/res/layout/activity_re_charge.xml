@@ -8,51 +8,51 @@
     tools:context=".money.activity.ReChargeActivity">
 
     <!--<RelativeLayout-->
-        <!--android:id="@+id/relBalance"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:background="@color/white"-->
-        <!--android:gravity="center_vertical">-->
+    <!--android:id="@+id/relBalance"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:background="@color/white"-->
+    <!--android:gravity="center_vertical">-->
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:text="余额"-->
-            <!--android:textColor="@color/black" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:text="余额"-->
+    <!--android:textColor="@color/black" />-->
 
-        <!--<ImageView-->
-            <!--android:id="@+id/imgBalance"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--android:background="@drawable/recharge_select" />-->
+    <!--<ImageView-->
+    <!--android:id="@+id/imgBalance"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginRight="15dp"-->
+    <!--android:background="@drawable/recharge_select" />-->
 
     <!--</RelativeLayout>-->
 
     <!--<RelativeLayout-->
-        <!--android:id="@+id/relSecurityDeposit"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_marginTop="1dp"-->
-        <!--android:background="@color/white"-->
-        <!--android:gravity="center_vertical">-->
+    <!--android:id="@+id/relSecurityDeposit"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_marginTop="1dp"-->
+    <!--android:background="@color/white"-->
+    <!--android:gravity="center_vertical">-->
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:text="保证金"-->
-            <!--android:textColor="@color/black" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:text="保证金"-->
+    <!--android:textColor="@color/black" />-->
 
-        <!--<ImageView-->
-            <!--android:id="@+id/imgSecurityDeposit"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--android:background="@drawable/recharge_select" />-->
+    <!--<ImageView-->
+    <!--android:id="@+id/imgSecurityDeposit"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginRight="15dp"-->
+    <!--android:background="@drawable/recharge_select" />-->
 
     <!--</RelativeLayout>-->
 
@@ -67,92 +67,81 @@
             android:id="@+id/tvCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
             android:text="金额"
             android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/edtMoney"
             android:layout_width="match_parent"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@+id/tvCount"
+            android:background="@null"
             android:hint="单笔金额不高于500000"
+            android:inputType="numberDecimal"
             android:textColor="#666666"
-            android:inputType="number"
-            android:textSize="@dimen/text_size_12sp"
-            android:background="@null"/>
+            android:textSize="@dimen/text_size_12sp" />
 
     </RelativeLayout>
 
-
-    <RelativeLayout
-        android:id="@+id/relWx"
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imgWx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:src="@mipmap/pay_weixin" />
+        <RadioButton
+            android:id="@+id/rbBalance"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/bg_white"
+            android:button="@null"
+            android:drawableLeft="@mipmap/pay_wallet"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/recharge_select"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="余额"
+            android:textColor="@color/black" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="9dp"
-            android:layout_toRightOf="@+id/imgWx"
+        <include layout="@layout/line_horizontal" />
+
+        <RadioButton
+            android:id="@+id/rbWx"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/bg_white"
+            android:button="@null"
+            android:drawableLeft="@mipmap/pay_weixin"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/recharge_select"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="微信"
             android:textColor="@color/black" />
 
-        <ImageView
-            android:id="@+id/imgWxCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/recharge_select" />
+        <include layout="@layout/line_horizontal" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relZfb"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/white"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:id="@+id/imgZfb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:src="@mipmap/pay_zhifubao" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="9dp"
-            android:layout_toRightOf="@+id/imgZfb"
+        <RadioButton
+            android:id="@+id/rbZfb"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/bg_white"
+            android:button="@null"
+            android:drawableLeft="@mipmap/pay_zhifubao"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/recharge_select"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="支付宝"
             android:textColor="@color/black" />
 
-        <ImageView
-            android:id="@+id/imgZfbCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/recharge_select" />
-
-    </RelativeLayout>
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"

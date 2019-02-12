@@ -46,7 +46,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp baseResp) {
         KLog.e("---weixinpay----", baseResp.errCode + "");
         if (baseResp.errCode==0){
-            EventManager.getInstance().notify(baseResp.errCode,ReChargeActivity.getPayType());
+            EventManager.getInstance().notify(baseResp.errCode,String.valueOf(ReChargeActivity.getPayType().ordinal()));
         }
         EventManager.getInstance().notify(baseResp.errCode, ConstantMsg.WEIXIN_PAY_CALLBACK);
         finish();
