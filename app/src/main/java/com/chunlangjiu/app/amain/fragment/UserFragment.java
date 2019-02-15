@@ -380,6 +380,7 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void initView() {
+
         MyStatusBarUtils.setTitleBarPadding(getActivity(), rootView.findViewById(R.id.rlUserHead));
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
