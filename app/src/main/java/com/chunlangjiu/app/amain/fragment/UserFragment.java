@@ -956,7 +956,7 @@ public class UserFragment extends BaseFragment {
         float centerZ = 0f;
 
         if(rotateStart==null){
-            rotateStart = new Rotate3dAnimation(0, 90, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, true);
+            rotateStart = new Rotate3dAnimation(0, 90, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, false);
             rotateStart.setDuration(500);
             rotateStart.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -967,8 +967,7 @@ public class UserFragment extends BaseFragment {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     showUserTypeView();
-                    rlContentLayout.clearAnimation();
-                    rlContentLayout.setAnimation(rotateEnd);
+                    rlContentLayout.startAnimation(rotateEnd);
                 }
 
                 @Override
