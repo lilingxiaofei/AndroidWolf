@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -75,7 +77,7 @@ public class UserFragment extends BaseFragment {
     private LinearLayout llNotLogin;
     private TextView tvToLogin;
     private RelativeLayout rlHead;
-
+    private RelativeLayout rlContentLayout;
 
     private TextView tvMyTitle;
 
@@ -189,6 +191,7 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlService;
     /*我的管理*/
 
+    Animation rotate;
     public static final int TYPE_BUYER = 0;//买家中心
     public static final int TYPE_SELLER = 1;//卖家中心
     public static int userType = TYPE_BUYER;
@@ -380,8 +383,9 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
         MyStatusBarUtils.setTitleBarPadding(getActivity(), rootView.findViewById(R.id.rlUserHead));
+        rlContentLayout = rootView.findViewById(R.id.rlContentLayout);
+        rotate = AnimationUtils.loadAnimation(activity, R.anim.rotate_anim);
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
         tvToLogin.setOnClickListener(onClickListener);
@@ -934,8 +938,15 @@ public class UserFragment extends BaseFragment {
     }
 
     private void changeUserType() {
+        if (rotate != null) {
+            rlContentLayout.startAnimation(rotate);
+        }  else {
+            rlContentLayout.setAnimation(rotate);
+            rlContentLayout.startAnimation(rotate);
+        }
         userType = userType == TYPE_BUYER ? TYPE_SELLER : TYPE_BUYER;
         showUserTypeView();
+
     }
 
 
