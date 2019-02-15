@@ -173,15 +173,7 @@ public class ReChargeActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean<CreateRechargeOrderBean> resultBean) throws Exception {
                         paymentId = resultBean.getData().getPayment_id() ;
-                        if(OrderParams.PAY_APP_DEPOSIT.equals(payMehtodId)){
-                            if(balancePayDialog == null){
-                                String money = getIntent().getStringExtra(DepositMoney);
-                                balancePayDialog = new BalancePayDialog(ReChargeActivity.this,money);
-                            }
-                            balancePayDialog.show();
-                        }else{
                             createSuccess(paymentId,"");
-                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -200,7 +192,15 @@ public class ReChargeActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean<CreateRechargeOrderBean> resultBean) throws Exception {
                         paymentId = resultBean.getData().getPayment_id() ;
-                        createSuccess(paymentId,"");
+                        if(OrderParams.PAY_APP_DEPOSIT.equals(payMehtodId)){
+                            if(balancePayDialog == null){
+                                String money = getIntent().getStringExtra(DepositMoney);
+                                balancePayDialog = new BalancePayDialog(ReChargeActivity.this,money);
+                            }
+                            balancePayDialog.show();
+                        }else {
+                            createSuccess(paymentId, "");
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
