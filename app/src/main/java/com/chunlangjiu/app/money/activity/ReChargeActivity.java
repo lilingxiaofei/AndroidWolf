@@ -62,7 +62,7 @@ public class ReChargeActivity extends BaseActivity {
     EditText edtMoney;
 
 //    private PayType payType = PayType.Wx;
-    private RechargeType rechargeType = RechargeType.Balance;
+    private static RechargeType rechargeType = RechargeType.Balance;
     private List<PaymentBean.PaymentInfo> payList;
     private String paymentId ;
     private String payMehtodId ;//支付方式类型
