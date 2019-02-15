@@ -37,6 +37,7 @@ import com.chunlangjiu.app.user.bean.UserInfoBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
+import com.chunlangjiu.app.util.Rotate3dAnimation;
 import com.chunlangjiu.app.util.ShareUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.lzy.imagepicker.ImagePicker;
@@ -191,7 +192,6 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlService;
     /*我的管理*/
 
-    Animation rotate;
     public static final int TYPE_BUYER = 0;//买家中心
     public static final int TYPE_SELLER = 1;//卖家中心
     public static int userType = TYPE_BUYER;
@@ -209,6 +209,9 @@ public class UserFragment extends BaseFragment {
     private String companyName;
     private String shopName;
 
+
+    Rotate3dAnimation rotateStart ;
+    Rotate3dAnimation rotateEnd;
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -383,9 +386,10 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void initView() {
+
+
         MyStatusBarUtils.setTitleBarPadding(getActivity(), rootView.findViewById(R.id.rlUserHead));
         rlContentLayout = rootView.findViewById(R.id.rlContentLayout);
-        rotate = AnimationUtils.loadAnimation(activity, R.anim.rotate_anim);
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
         tvToLogin.setOnClickListener(onClickListener);
@@ -938,15 +942,46 @@ public class UserFragment extends BaseFragment {
     }
 
     private void changeUserType() {
-        if (rotate != null) {
-            rlContentLayout.startAnimation(rotate);
-        }  else {
-            rlContentLayout.setAnimation(rotate);
-            rlContentLayout.startAnimation(rotate);
-        }
+        initRotateAnimation();
+//        Rotate3dAnimation.rotateOnYCoordinate(rlContentLayout);
         userType = userType == TYPE_BUYER ? TYPE_SELLER : TYPE_BUYER;
-        showUserTypeView();
+        rlContentLayout.clearAnimation();
+        rlContentLayout.startAnimation(rotateStart);
+//        showUserTypeView();
+    }
 
+    private void initRotateAnimation(){
+        float centerX = rlContentLayout.getWidth() / 2.0f;
+        float centerY = rlContentLayout.getHeight() / 2.0f;
+        float centerZ = 0f;
+
+        if(rotateStart==null){
+            rotateStart = new Rotate3dAnimation(0, 90, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, true);
+            rotateStart.setDuration(500);
+            rotateStart.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    showUserTypeView();
+                    rlContentLayout.clearAnimation();
+                    rlContentLayout.setAnimation(rotateEnd);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        }
+
+        if(rotateEnd==null) {
+            rotateEnd = new Rotate3dAnimation(270, 360, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, true);
+            rotateEnd.setDuration(500);
+        }
     }
 
 
