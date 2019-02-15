@@ -41,7 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ReChargeActivity extends BaseActivity {
     private static final int SDK_PAY_FLAG = 1;
     public static final String ReChargeType = "ReChargeType";
-    public static final String DepositMoney = "DepositMoney";
+    public static final String DepositMoney="DepositMoney";
 
 //    @BindView(R.id.relBalance)
 //    RelativeLayout relBalance;
@@ -61,15 +61,15 @@ public class ReChargeActivity extends BaseActivity {
     @BindView(R.id.edtMoney)
     EditText edtMoney;
 
-    //    private PayType payType = PayType.Wx;
-    private static RechargeType rechargeType = RechargeType.Balance;
+//    private PayType payType = PayType.Wx;
+    private RechargeType rechargeType = RechargeType.Balance;
     private List<PaymentBean.PaymentInfo> payList;
-    private static String payMehtodId;//支付方式类型
-    private int payMehtod;//默认微信支付
+    private String paymentId ;
+    private String payMehtodId ;//支付方式类型
 
     private CompositeDisposable disposable;
 
-    private BalancePayDialog balancePayDialog;
+    private BalancePayDialog balancePayDialog ;
     private IWXAPI wxapi;
 //
 //    enum PayType {
@@ -86,8 +86,8 @@ public class ReChargeActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         setContentView(R.layout.activity_re_charge);
         rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
-        if (rechargeType == null) {
-            rechargeType = RechargeType.Balance;
+        if (rechargeType==null){
+            rechargeType=RechargeType.Balance;
         }
 //        togglePayType(PayType.Wx);
         initPay();
@@ -123,14 +123,25 @@ public class ReChargeActivity extends BaseActivity {
 
     private void initView() {
 
-        if (rechargeType == RechargeType.SecurityDeposit) {
+        if (rechargeType==RechargeType.SecurityDeposit){
             String money = getIntent().getStringExtra(DepositMoney);
             edtMoney.setEnabled(false);
             edtMoney.setText(money);
             rbBalance.setVisibility(View.VISIBLE);
-            balancePayDialog = new BalancePayDialog(this, money);
+            balancePayDialog = new BalancePayDialog(this,money);
+            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
+                @Override
+                public void cancelPay() {
+
+                }
+
+                @Override
+                public void confirmPay(String payPwd) {
+                    createSuccess(paymentId,payPwd);
+                }
+            });
             togglePayType(OrderParams.PAY_APP_DEPOSIT);
-        } else {
+        }else{
             togglePayType(OrderParams.PAY_APP_WXPAY);
             rbBalance.setVisibility(View.GONE);
         }
@@ -161,7 +172,16 @@ public class ReChargeActivity extends BaseActivity {
                 .subscribe(new Consumer<ResultBean<CreateRechargeOrderBean>>() {
                     @Override
                     public void accept(ResultBean<CreateRechargeOrderBean> resultBean) throws Exception {
-                        createSuccess(resultBean.getData());
+                        paymentId = resultBean.getData().getPayment_id() ;
+                        if(OrderParams.PAY_APP_DEPOSIT.equals(payMehtodId)){
+                            if(balancePayDialog == null){
+                                String money = getIntent().getStringExtra(DepositMoney);
+                                balancePayDialog = new BalancePayDialog(ReChargeActivity.this,money);
+                            }
+                            balancePayDialog.show();
+                        }else{
+                            createSuccess(paymentId,"");
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -179,7 +199,8 @@ public class ReChargeActivity extends BaseActivity {
                 .subscribe(new Consumer<ResultBean<CreateRechargeOrderBean>>() {
                     @Override
                     public void accept(ResultBean<CreateRechargeOrderBean> resultBean) throws Exception {
-                        createSuccess(resultBean.getData());
+                        paymentId = resultBean.getData().getPayment_id() ;
+                        createSuccess(paymentId,"");
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -212,9 +233,9 @@ public class ReChargeActivity extends BaseActivity {
                 }));
     }
 
-    private void createSuccess(CreateRechargeOrderBean data) {
-        if (null != data) {
-            disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId, "")
+    private void createSuccess(String paymentId,String pwd) {
+        if (!TextUtils.isEmpty(paymentId)) {
+            disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId,pwd)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<ResultBean>() {
@@ -295,9 +316,9 @@ public class ReChargeActivity extends BaseActivity {
     }
 
     private void invokeBalancePay() {
-        if (balancePayDialog == null) {
-            balancePayDialog.show();
-        }
+        Toast.makeText(ReChargeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+        EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
+        finish();
     }
 
     private void invokeWeixinPay(ResultBean data) {
@@ -346,21 +367,20 @@ public class ReChargeActivity extends BaseActivity {
     @Override
     public void setTitleView() {
         rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
-        if (rechargeType == RechargeType.SecurityDeposit) {
+        if (rechargeType==RechargeType.SecurityDeposit){
             titleName.setText(R.string.payment_deposit);
-        } else {
+        }else {
             titleName.setText("充值");
         }
     }
 
-
-    @OnClick({R.id.btnOk, R.id.rbBalance, R.id.rbWx, R.id.rbZfb, R.id.img_title_left})
+    @OnClick({R.id.btnOk, R.id.rbBalance,R.id.rbWx, R.id.rbZfb, R.id.img_title_left})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnOk:
                 String money = edtMoney.getText().toString().trim();
                 if (rechargeType == RechargeType.Balance) {
-                    if (TextUtils.isEmpty(money)) {
+                    if (TextUtils.isEmpty(money)){
                         ToastUtils.showShort("请输入充值金额");
                         return;
                     }
@@ -428,10 +448,10 @@ public class ReChargeActivity extends BaseActivity {
             case OrderParams.PAY_APP_DEPOSIT:
                 rbBalance.setChecked(true);
                 break;
-            case OrderParams.PAY_APP_ALIPAY:
+            case  OrderParams.PAY_APP_ALIPAY:
                 rbZfb.setChecked(true);
                 break;
-            case OrderParams.PAY_APP_WXPAY:
+            case  OrderParams.PAY_APP_WXPAY:
                 rbWx.setChecked(true);
                 break;
         }
