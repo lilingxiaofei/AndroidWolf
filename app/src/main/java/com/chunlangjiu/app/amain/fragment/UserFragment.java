@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -978,7 +977,7 @@ public class UserFragment extends BaseFragment {
         }
 
         if(rotateEnd==null) {
-            rotateEnd = new Rotate3dAnimation(270, 360, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, true);
+            rotateEnd = new Rotate3dAnimation(270, 360, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, false);
             rotateEnd.setDuration(500);
         }
     }

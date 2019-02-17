@@ -221,26 +221,26 @@ public class OrderListFragment extends BaseFragment {
                         status = OrderParams.TRADE_FINISHED;
                         getNormalOrderList();
                         break;
-                    case 5:
-                        status = OrderParams.AUCTION_WAIT_PAY;
-                        getAuctionOrderLists();
-                        break;
-                    case 6:
-                        status = OrderParams.AUCTION_BIDDING;
-                        getAuctionOrderLists();
-                        break;
-                    case 7:
-                        status = OrderParams.AUCTION_WON_BID;
-                        getAuctionOrderLists();
-                        break;
-                    case 8:
-                        status = OrderParams.AUCTION_DELIVERY;
-                        getAuctionOrderLists();
-                        break;
-                    case 9:
-                        status = OrderParams.AUCTION_OUTBID;
-                        getAuctionOrderLists();
-                        break;
+//                    case 5:
+//                        status = OrderParams.AUCTION_WAIT_PAY;
+//                        getAuctionOrderLists();
+//                        break;
+//                    case 6:
+//                        status = OrderParams.AUCTION_BIDDING;
+//                        getAuctionOrderLists();
+//                        break;
+//                    case 7:
+//                        status = OrderParams.AUCTION_WON_BID;
+//                        getAuctionOrderLists();
+//                        break;
+//                    case 8:
+//                        status = OrderParams.AUCTION_DELIVERY;
+//                        getAuctionOrderLists();
+//                        break;
+//                    case 9:
+//                        status = OrderParams.AUCTION_OUTBID;
+//                        getAuctionOrderLists();
+//                        break;
 
                 }
 
@@ -264,7 +264,6 @@ public class OrderListFragment extends BaseFragment {
                         getAuctionOrderLists();
                         break;
                     case 4:
-
                         status = OrderParams.AUCTION_DELIVERY;
                         getAuctionOrderLists();
                         break;

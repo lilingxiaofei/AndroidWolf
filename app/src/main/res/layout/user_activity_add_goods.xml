@@ -59,458 +59,458 @@
                     android:background="@color/bg_gray" />
             </RelativeLayout>
 
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rlChoicePlateClass"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="44dp">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvPlateClassStr"-->
-                    <!--style="@style/add_goods_label"-->
-                    <!--android:text="选择分类"-->
-                     <!--/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvPlateClass"-->
-                    <!--style="@style/add_goods_value"-->
-                    <!--android:layout_toRightOf="@id/tvPlateClassStr"/>-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:src="@mipmap/black_right_arrow" />-->
-
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1px"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@color/bg_gray" />-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rlChoiceBrand"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="44dp">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvBrandStr"-->
-                    <!--android:text="选择品牌"-->
-                    <!--style="@style/add_goods_label" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvBrand"-->
-                    <!--android:layout_toRightOf="@id/tvBrandStr"-->
-                    <!--style="@style/add_goods_value" />-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:src="@mipmap/black_right_arrow" />-->
-
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1px"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@color/bg_gray" />-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rlChoiceArea"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="44dp">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvAreaStr"-->
-                    <!--android:text="选择产地"-->
-                    <!--style="@style/add_goods_label" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvChoiceArea"-->
-                    <!--android:layout_toRightOf="@id/tvAreaStr"-->
-                    <!--style="@style/add_goods_value" />-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:src="@mipmap/black_right_arrow" />-->
-
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1px"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@color/bg_gray" />-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rlChoiceIncense"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="44dp">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvIncenseStr"-->
-                    <!--android:text="选择类型"-->
-                    <!--style="@style/add_goods_label" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvIncense"-->
-                    <!--android:layout_toRightOf="@id/tvIncenseStr"-->
-                    <!--style="@style/add_goods_value"/>-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:src="@mipmap/black_right_arrow" />-->
-
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1px"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@color/bg_gray" />-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rlChoiceDegree"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:visibility="gone"-->
-                <!--android:layout_height="44dp">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvDegreeStr"-->
-                    <!--android:text="选择酒精度"-->
-                    <!--style="@style/add_goods_label" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvDegree"-->
-                    <!--android:layout_toRightOf="@id/tvDegreeStr"-->
-                    <!--style="@style/add_goods_value" />-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:src="@mipmap/black_right_arrow" />-->
-
-                <!--<View-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1px"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@color/bg_gray" />-->
-            <!--</RelativeLayout>-->
-
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="10dp"-->
-                <!--android:background="@color/bg_gray" />-->
-
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="44dp"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:paddingLeft="10dp"-->
-                <!--android:text="商品主图"-->
-                <!--android:textColor="@color/t_black"-->
-                <!--android:textSize="@dimen/sp_mid" />-->
-
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/llMainPic"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="170dp"-->
-                    <!--android:layout_marginTop="10dp"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:paddingBottom="10dp"-->
-                    <!--android:paddingLeft="10dp"-->
-                    <!--android:paddingRight="10dp">-->
-
-                    <!--<RelativeLayout-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_weight="1">-->
-
-                        <!--<ImageView-->
-                            <!--android:id="@+id/imgMainEx"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:scaleType="centerCrop"-->
-                            <!--android:src="@mipmap/example_main" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="34dp"-->
-                            <!--android:layout_alignParentBottom="true"-->
-                            <!--android:background="#99000000"-->
-                            <!--android:gravity="center"-->
-                            <!--android:text="示例图"-->
-                            <!--android:textColor="@color/t_white"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</RelativeLayout>-->
-
-                    <!--<RelativeLayout-->
-                        <!--android:id="@+id/rlMainPic"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:background="@drawable/bg_gray_stroke">-->
-
-                        <!--<LinearLayout-->
-                            <!--android:id="@+id/llChoiceMainPic"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_centerInParent="true"-->
-                            <!--android:gravity="center"-->
-                            <!--android:orientation="vertical">-->
-
-                            <!--<ImageView-->
-                                <!--android:layout_width="33dp"-->
-                                <!--android:layout_height="29dp"-->
-                                <!--android:background="@mipmap/camera" />-->
-
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginTop="13dp"-->
-                                <!--android:text="上传商品主图"-->
-                                <!--android:textColor="@color/t_gray"-->
-                                <!--android:textSize="@dimen/sp_small" />-->
-
-                        <!--</LinearLayout>-->
-
-                        <!--<ImageView-->
-                            <!--android:id="@+id/imgMainPic"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:scaleType="centerCrop" />-->
-                    <!--</RelativeLayout>-->
-
-                <!--</LinearLayout>-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/imgDeleteMainPic"-->
-                    <!--android:layout_width="30dp"-->
-                    <!--android:layout_height="30dp"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_marginRight="-5dp"-->
-                    <!--android:layout_marginTop="-5dp"-->
-                    <!--android:padding="8dp"-->
-                    <!--android:scaleType="centerCrop"-->
-                    <!--android:src="@mipmap/delete_ic"-->
-                    <!--android:visibility="gone" />-->
-            <!--</RelativeLayout>-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="10dp"-->
-                <!--android:background="@color/bg_gray" />-->
-
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="44dp"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:paddingLeft="10dp"-->
-                <!--android:text="商品细节图"-->
-                <!--android:textColor="@color/t_black"-->
-                <!--android:textSize="@dimen/sp_mid" />-->
-
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/llDescOnePic"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="170dp"-->
-                    <!--android:layout_marginTop="10dp"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:paddingBottom="10dp"-->
-                    <!--android:paddingLeft="10dp"-->
-                    <!--android:paddingRight="10dp">-->
-
-                    <!--<RelativeLayout-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_weight="1">-->
-
-                        <!--<ImageView-->
-                            <!--android:id="@+id/imgDescOneEx"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:scaleType="centerCrop"-->
-                            <!--android:src="@mipmap/example_detail_one" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="34dp"-->
-                            <!--android:layout_alignParentBottom="true"-->
-                            <!--android:background="#99000000"-->
-                            <!--android:gravity="center"-->
-                            <!--android:text="示例图"-->
-                            <!--android:textColor="@color/t_white"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</RelativeLayout>-->
-
-                    <!--<RelativeLayout-->
-                        <!--android:id="@+id/rlDescOnePic"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:background="@drawable/bg_gray_stroke">-->
-
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_centerInParent="true"-->
-                            <!--android:gravity="center"-->
-                            <!--android:orientation="vertical">-->
-
-                            <!--<ImageView-->
-                                <!--android:layout_width="33dp"-->
-                                <!--android:layout_height="29dp"-->
-                                <!--android:background="@mipmap/camera" />-->
-
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginTop="13dp"-->
-                                <!--android:text="正标"-->
-                                <!--android:textColor="@color/t_gray"-->
-                                <!--android:textSize="@dimen/sp_small" />-->
-
-                        <!--</LinearLayout>-->
-
-                        <!--<ImageView-->
-                            <!--android:id="@+id/imgDescOnePic"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:scaleType="centerCrop" />-->
-                    <!--</RelativeLayout>-->
-                <!--</LinearLayout>-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/imgDeleteDescOnePic"-->
-                    <!--android:layout_width="30dp"-->
-                    <!--android:layout_height="30dp"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_marginRight="-5dp"-->
-                    <!--android:layout_marginTop="-5dp"-->
-                    <!--android:padding="8dp"-->
-                    <!--android:scaleType="centerCrop"-->
-                    <!--android:src="@mipmap/delete_ic"-->
-                    <!--android:visibility="gone" />-->
-
-            <!--</RelativeLayout>-->
-
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rlDescTwo"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:visibility="gone">-->
-
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/llDescTwoPic"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="170dp"-->
-                    <!--android:layout_marginTop="10dp"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:paddingBottom="10dp"-->
-                    <!--android:paddingLeft="10dp"-->
-                    <!--android:paddingRight="10dp">-->
-
-                    <!--<RelativeLayout-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_weight="1">-->
-
-                        <!--<ImageView-->
-                            <!--android:id="@+id/imgDescTwoEx"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:scaleType="centerCrop"-->
-                            <!--android:src="@mipmap/example_detail_two" />-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="34dp"-->
-                            <!--android:layout_alignParentBottom="true"-->
-                            <!--android:background="#99000000"-->
-                            <!--android:gravity="center"-->
-                            <!--android:text="示例图"-->
-                            <!--android:textColor="@color/t_white"-->
-                            <!--android:textSize="12sp" />-->
-                    <!--</RelativeLayout>-->
-
-                    <!--<RelativeLayout-->
-                        <!--android:id="@+id/rlDescTwoPic"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:background="@drawable/bg_gray_stroke">-->
-
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_centerInParent="true"-->
-                            <!--android:gravity="center"-->
-                            <!--android:orientation="vertical">-->
-
-                            <!--<ImageView-->
-                                <!--android:layout_width="33dp"-->
-                                <!--android:layout_height="29dp"-->
-                                <!--android:background="@mipmap/camera" />-->
-
-                            <!--<TextView-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginTop="13dp"-->
-                                <!--android:text="瓶口水位线"-->
-                                <!--android:textColor="@color/t_gray"-->
-                                <!--android:textSize="@dimen/sp_small" />-->
-
-                        <!--</LinearLayout>-->
-
-                        <!--<ImageView-->
-                            <!--android:id="@+id/imgDescTwoPic"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:scaleType="centerCrop" />-->
-                    <!--</RelativeLayout>-->
-                <!--</LinearLayout>-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/imgDeleteDescTwoPic"-->
-                    <!--android:layout_width="30dp"-->
-                    <!--android:layout_height="30dp"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_marginRight="-5dp"-->
-                    <!--android:layout_marginTop="-5dp"-->
-                    <!--android:padding="8dp"-->
-                    <!--android:scaleType="centerCrop"-->
-                    <!--android:src="@mipmap/delete_ic"-->
-                    <!--android:visibility="gone" />-->
-
-            <!--</RelativeLayout>-->
+            <RelativeLayout
+                android:id="@+id/rlChoicePlateClass"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvPlateClassStr"
+                    style="@style/add_goods_label"
+                    android:text="选择分类"
+                     />
+
+                <TextView
+                    android:id="@+id/tvPlateClass"
+                    style="@style/add_goods_value"
+                    android:layout_toRightOf="@id/tvPlateClassStr"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@mipmap/black_right_arrow" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlChoiceBrand"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvBrandStr"
+                    android:text="选择品牌"
+                    style="@style/add_goods_label" />
+
+                <TextView
+                    android:id="@+id/tvBrand"
+                    android:layout_toRightOf="@id/tvBrandStr"
+                    style="@style/add_goods_value" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@mipmap/black_right_arrow" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlChoiceArea"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvAreaStr"
+                    android:text="选择产地"
+                    style="@style/add_goods_label" />
+
+                <TextView
+                    android:id="@+id/tvChoiceArea"
+                    android:layout_toRightOf="@id/tvAreaStr"
+                    style="@style/add_goods_value" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@mipmap/black_right_arrow" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlChoiceIncense"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvIncenseStr"
+                    android:text="选择类型"
+                    style="@style/add_goods_label" />
+
+                <TextView
+                    android:id="@+id/tvIncense"
+                    android:layout_toRightOf="@id/tvIncenseStr"
+                    style="@style/add_goods_value"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@mipmap/black_right_arrow" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlChoiceDegree"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:id="@+id/tvDegreeStr"
+                    android:text="选择酒精度"
+                    style="@style/add_goods_label" />
+
+                <TextView
+                    android:id="@+id/tvDegree"
+                    android:layout_toRightOf="@id/tvDegreeStr"
+                    style="@style/add_goods_value" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@mipmap/black_right_arrow" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/bg_gray" />
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/bg_gray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="商品主图"
+                android:textColor="@color/t_black"
+                android:textSize="@dimen/sp_mid" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/llMainPic"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/imgMainEx"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/example_main" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="34dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="#99000000"
+                            android:gravity="center"
+                            android:text="示例图"
+                            android:textColor="@color/t_white"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlMainPic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_gray_stroke">
+
+                        <LinearLayout
+                            android:id="@+id/llChoiceMainPic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="33dp"
+                                android:layout_height="29dp"
+                                android:background="@mipmap/camera" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="13dp"
+                                android:text="上传商品主图"
+                                android:textColor="@color/t_gray"
+                                android:textSize="@dimen/sp_small" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgMainPic"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgDeleteMainPic"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginTop="-5dp"
+                    android:padding="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/delete_ic"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/bg_gray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="商品细节图"
+                android:textColor="@color/t_black"
+                android:textSize="@dimen/sp_mid" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/llDescOnePic"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/imgDescOneEx"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/example_detail_one" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="34dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="#99000000"
+                            android:gravity="center"
+                            android:text="示例图"
+                            android:textColor="@color/t_white"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlDescOnePic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_gray_stroke">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="33dp"
+                                android:layout_height="29dp"
+                                android:background="@mipmap/camera" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="13dp"
+                                android:text="正标"
+                                android:textColor="@color/t_gray"
+                                android:textSize="@dimen/sp_small" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgDescOnePic"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgDeleteDescOnePic"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginTop="-5dp"
+                    android:padding="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/delete_ic"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlDescTwo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/llDescTwoPic"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/imgDescTwoEx"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/example_detail_two" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="34dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="#99000000"
+                            android:gravity="center"
+                            android:text="示例图"
+                            android:textColor="@color/t_white"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlDescTwoPic"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_gray_stroke">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="33dp"
+                                android:layout_height="29dp"
+                                android:background="@mipmap/camera" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="13dp"
+                                android:text="瓶口水位线"
+                                android:textColor="@color/t_gray"
+                                android:textSize="@dimen/sp_small" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imgDescTwoPic"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgDeleteDescTwoPic"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginTop="-5dp"
+                    android:padding="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/delete_ic"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rlDescThree"
