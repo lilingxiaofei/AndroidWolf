@@ -136,6 +136,7 @@ public class FansHomeActivity extends BaseActivity {
         intent.setClass(this, FansListActivity.class);
         String url = fansBean != null ? fansBean.getUrl() : "";
         intent.putExtra("shareUrl", url);
+        intent.putExtra("fansBean", fansBean);
         startActivity(intent);
     }
 
@@ -151,9 +152,9 @@ public class FansHomeActivity extends BaseActivity {
     private void showShare() {
         UMImage thumb = new UMImage(this, R.mipmap.launcher);
         UMWeb web = new UMWeb(fansBean.getUrl());
-        web.setTitle("邀请码分享");//标题
+        web.setTitle(fansBean.getTitle());//标题
         web.setThumb(thumb);  //缩略图
-        web.setDescription("邀请码分享");//描述
+        web.setDescription(fansBean.getSub_title());//描述
 
         ShareUtils.shareLink(this, web, new UMShareListener() {
             @Override
