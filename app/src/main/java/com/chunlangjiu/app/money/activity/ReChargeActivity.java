@@ -62,7 +62,7 @@ public class ReChargeActivity extends BaseActivity {
     EditText edtMoney;
 
 //    private PayType payType = PayType.Wx;
-    private RechargeType rechargeType = RechargeType.Balance;
+    private static RechargeType rechargeType = RechargeType.Balance;
     private List<PaymentBean.PaymentInfo> payList;
     private String paymentId ;
     private String payMehtodId ;//支付方式类型
@@ -93,6 +93,32 @@ public class ReChargeActivity extends BaseActivity {
         initPay();
         initView();
         initData();
+        initEvent();
+    }
+
+    private void initEvent() {
+        EventManager.getInstance().registerListener(onNotifyListener);
+    }
+
+    private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
+        @Override
+        public void onNotify(Object object, String eventTag) {
+            if (eventTag.equals(String.valueOf(RechargeType.Balance.ordinal()))) {
+                EventManager.getInstance().notify(null,ConstantMsg.RECHARGE);
+                finish();
+            }else if (eventTag.equals(String.valueOf(RechargeType.SecurityDeposit.ordinal()))){
+                EventManager.getInstance().notify(null,ConstantMsg.DEPOSIT_CREATE);
+                finish();
+
+            }
+
+        }
+
+    };
+
+    public static RechargeType getPayType() {
+        return rechargeType;
+
     }
 
     private void initView() {
@@ -136,6 +162,7 @@ public class ReChargeActivity extends BaseActivity {
         if (null != disposable) {
             disposable.dispose();
         }
+        EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
 
     private void createOrder(String count) {
@@ -321,7 +348,11 @@ public class ReChargeActivity extends BaseActivity {
                 if (TextUtils.equals(resultStatus, "9000")) {
                     // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                     Toast.makeText(ReChargeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                    EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
+                    if (rechargeType==RechargeType.Balance){
+                        EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
+                    }else if (rechargeType==RechargeType.SecurityDeposit){
+                        EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
+                    }
                     finish();
                 } else {
                     // 该笔订单真实的支付结果，需要依赖服务端的异步通知。

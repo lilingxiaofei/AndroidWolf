@@ -773,7 +773,7 @@ public class UserFragment extends BaseFragment {
                             tvWareHouseGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getInstock_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
                             tvAuctionGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getAuction_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
                             tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getNotrate_num()).intValue() > 0 ? View.VISIBLE
-                                    : View.GONE);
+                                          : View.GONE);
                         }
                     }
                 }, new Consumer<Throwable>() {
