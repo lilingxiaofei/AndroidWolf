@@ -183,7 +183,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
         tvGivePrice.setText("¥" + goodsDetailBean.getItem().getAuction().getPledge());
         tvPayPrice.setText(goodsDetailBean.getItem().getAuction().getPledge());
 
-        if ("true".equals(goodsDetailBean.getItem().getAuction().getStatus())) {
+        if ("true".equals(goodsDetailBean.getItem().getAuction().getAuction_status())) {
             //明拍
             etPrice.setHint("目前最高出价为¥" + goodsDetailBean.getItem().getAuction().getMax_price());
         } else {

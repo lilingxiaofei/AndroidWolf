@@ -50,10 +50,16 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         TextView tvTotalNum = helper.getView(R.id.tvTotalNum);
         LinearLayout llBottom = helper.getView(R.id.llBottom);
 
+        tvStore.setText(item.getShopname());
+        tvStatus.setText(item.getStatus_desc());
+        GlideUtils.loadImageShop(context, item.getShop_logo(), imgStore);
+
+
         helper.setGone(R.id.ivDel,false);
         TextView tv1 = helper.getView(R.id.tv1);
         TextView tv2 = helper.getView(R.id.tv2);
-
+        tv1.setVisibility(View.GONE);
+        tv2.setVisibility(View.GONE);
         switch (type) {
             case 0:
                 switch (item.getStatus()) {
@@ -103,31 +109,31 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                 tv1.setVisibility(View.GONE);
                 helper.setVisible(R.id.ivAuctionBid,false );
                 switch (item.getStatus()) {
-                    case "0":
+                    case OrderParams.AUCTION_WAIT_PAY:
                         tv2.setText("去付定金");
                         tv2.setVisibility(View.VISIBLE);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
-                    case "1":
+                    case OrderParams.AUCTION_BIDDING:
                         tv2.setText("修改出价");
                         tv2.setVisibility(View.VISIBLE);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
-                    case "2":
+                    case OrderParams.AUCTION_WON_BID:
                         helper.setVisible(R.id.ivAuctionBid,true );
                         helper.setImageResource(R.id.ivAuctionBid,R.mipmap.bid_already );
                         tvStatus.setText("");
-//                        tv2.setText("去支付");
-//                        tv2.setVisibility(View.VISIBLE);
                         break;
-                    case "3":
+                    case OrderParams.AUCTION_OUTBID:
+                        helper.setVisible(R.id.ivAuctionBid,true );
+                        helper.setImageResource(R.id.ivAuctionBid,R.mipmap.bid_not);
+                        tv2.setVisibility(View.GONE);
+                        break;
+                    case OrderParams.AUCTION_DELIVERY:
 //                        tv2.setText("删除订单");
 //                        tv2.setVisibility(View.VISIBLE);
                         break;
                     default:
-                        helper.setVisible(R.id.ivAuctionBid,true );
-                        helper.setImageResource(R.id.ivAuctionBid,R.mipmap.bid_not);
-                        tv2.setVisibility(View.GONE);
                         break;
                 }
                 break;
@@ -230,9 +236,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         tv1.setOnClickListener(onClickListener);
         tv2.setTag(helper.getAdapterPosition());
         tv2.setOnClickListener(onClickListener);
-        tvStore.setText(item.getShopname());
-        tvStatus.setText(item.getStatus_desc());
-        GlideUtils.loadImageShop(context, item.getShop_logo(), imgStore);
+
         llProducts.removeAllViews();
         switch (type) {
             case 0:

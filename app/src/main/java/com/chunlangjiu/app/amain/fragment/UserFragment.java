@@ -9,7 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -210,8 +211,12 @@ public class UserFragment extends BaseFragment {
     private String shopName;
 
 
+    AnimationSet setStart=new AnimationSet(true);
+    AnimationSet setEnd=new AnimationSet(true);
     Rotate3dAnimation rotateStart ;
     Rotate3dAnimation rotateEnd;
+    ScaleAnimation scaleStart ;
+    ScaleAnimation scaleEnd ;
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -946,7 +951,7 @@ public class UserFragment extends BaseFragment {
 //        Rotate3dAnimation.rotateOnYCoordinate(rlContentLayout);
         userType = userType == TYPE_BUYER ? TYPE_SELLER : TYPE_BUYER;
         rlContentLayout.clearAnimation();
-        rlContentLayout.startAnimation(rotateStart);
+        rlContentLayout.startAnimation(setStart);
 //        showUserTypeView();
     }
 
@@ -954,6 +959,18 @@ public class UserFragment extends BaseFragment {
         float centerX = rlContentLayout.getWidth() / 2.0f;
         float centerY = rlContentLayout.getHeight() / 2.0f;
         float centerZ = 0f;
+
+
+        if(scaleStart== null){
+            scaleStart=new ScaleAnimation(1f, 0.8f, 1, 0.8f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+            scaleStart.setDuration(500);
+            setStart.addAnimation(scaleStart);
+        }
+        if(scaleEnd== null){
+            scaleEnd=new ScaleAnimation(0.8f, 1f, 0.8f, 1f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+            scaleEnd.setDuration(500);
+            setEnd.addAnimation(scaleEnd);
+        }
 
         if(rotateStart==null){
             rotateStart = new Rotate3dAnimation(0, 90, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, true);
@@ -967,8 +984,7 @@ public class UserFragment extends BaseFragment {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     showUserTypeView();
-                    rlContentLayout.clearAnimation();
-                    rlContentLayout.startAnimation(rotateEnd);
+                    rlContentLayout.startAnimation(setEnd);
                 }
 
                 @Override
@@ -976,12 +992,15 @@ public class UserFragment extends BaseFragment {
 
                 }
             });
+            setStart.addAnimation(rotateStart);
         }
 
         if(rotateEnd==null) {
-            rotateEnd = new Rotate3dAnimation(270, 360, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, true);
+            rotateEnd = new Rotate3dAnimation(270, 360, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, false);
             rotateEnd.setDuration(500);
+            setEnd.addAnimation(rotateEnd);
         }
+
     }
 
 
