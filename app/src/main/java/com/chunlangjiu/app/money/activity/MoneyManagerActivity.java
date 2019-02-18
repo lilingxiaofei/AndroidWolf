@@ -16,7 +16,6 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
-import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
@@ -117,8 +116,8 @@ public class MoneyManagerActivity extends BaseActivity {
                         hideLoadingDialog();
                         userMoneyBean = resultBean.getData();
                         if (null != userMoneyBean)
-                            tvFreezeBalance.setText(BigDecimalUtils.objToStr(userMoneyBean.getFreeze_money(),2));
-                        tvAvailableBalance.setText(BigDecimalUtils.objToStr(userMoneyBean.getMoney(),2));
+                            tvFreezeBalance.setText(userMoneyBean.getFreeze_money() == null ? "0.00" : userMoneyBean.getFreeze_money());
+                        tvAvailableBalance.setText(userMoneyBean.getMoney() == null ? "0.00" : userMoneyBean.getMoney());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -149,7 +148,7 @@ public class MoneyManagerActivity extends BaseActivity {
                                 btnPaySecurityDeposit.setEnabled(false);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
                             } else if ("0".equals(depositBean.getDeposit_status())) {
-                                btnPaySecurityDeposit.setText(R.string.payment_deposit);
+                                btnPaySecurityDeposit.setText("缴纳保证金");
                                 btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
                             }
