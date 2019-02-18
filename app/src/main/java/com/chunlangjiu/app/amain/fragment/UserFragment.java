@@ -211,12 +211,8 @@ public class UserFragment extends BaseFragment {
     private String shopName;
 
 
-    AnimationSet setStart=new AnimationSet(true);
-    AnimationSet setEnd=new AnimationSet(true);
-    Rotate3dAnimation rotateStart ;
+    Rotate3dAnimation rotateStart;
     Rotate3dAnimation rotateEnd;
-    ScaleAnimation scaleStart ;
-    ScaleAnimation scaleEnd ;
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -777,7 +773,7 @@ public class UserFragment extends BaseFragment {
                             tvWareHouseGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getInstock_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
                             tvAuctionGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getAuction_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
                             tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getNotrate_num()).intValue() > 0 ? View.VISIBLE
-                                          : View.GONE);
+                                    : View.GONE);
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -951,58 +947,48 @@ public class UserFragment extends BaseFragment {
 //        Rotate3dAnimation.rotateOnYCoordinate(rlContentLayout);
         userType = userType == TYPE_BUYER ? TYPE_SELLER : TYPE_BUYER;
         rlContentLayout.clearAnimation();
-        rlContentLayout.startAnimation(setStart);
+        rlContentLayout.startAnimation(rotateStart);
 //        showUserTypeView();
     }
 
-    private void initRotateAnimation(){
+    private void initRotateAnimation() {
         float centerX = rlContentLayout.getWidth() / 2.0f;
         float centerY = rlContentLayout.getHeight() / 2.0f;
-        float centerZ = 0f;
+        float centerZ = 800f;
 
-
-        if(scaleStart== null){
-            scaleStart=new ScaleAnimation(1f, 0.8f, 1, 0.8f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-            scaleStart.setDuration(500);
-            setStart.addAnimation(scaleStart);
-        }
-        if(scaleEnd== null){
-            scaleEnd=new ScaleAnimation(0.8f, 1f, 0.8f, 1f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-            scaleEnd.setDuration(500);
-            setEnd.addAnimation(scaleEnd);
-        }
-
-        if(rotateStart==null){
+        if (rotateStart == null) {
             rotateStart = new Rotate3dAnimation(0, 90, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, true);
             rotateStart.setDuration(500);
-            rotateStart.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    showUserTypeView();
-                    rlContentLayout.startAnimation(setEnd);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            setStart.addAnimation(rotateStart);
+            rotateStart.setAnimationListener(animationListener);
         }
 
-        if(rotateEnd==null) {
+        if (rotateEnd == null) {
             rotateEnd = new Rotate3dAnimation(270, 360, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, false);
             rotateEnd.setDuration(500);
-            setEnd.addAnimation(rotateEnd);
+            rotateEnd.setAnimationListener(animationListener);
         }
 
     }
 
+    Animation.AnimationListener animationListener = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            if (animation == rotateStart) {
+                showUserTypeView();
+                rlContentLayout.startAnimation(rotateEnd);
+            }
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+
+        }
+    };
 
     private void checkPersonStatus() {
         showLoadingDialog();
@@ -1126,8 +1112,8 @@ public class UserFragment extends BaseFragment {
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
-            eventTag =  eventTag == null?"":eventTag;
-            switch (eventTag){
+            eventTag = eventTag == null ? "" : eventTag;
+            switch (eventTag) {
                 case ConstantMsg.SHOP_DATA_CHANGE:
                     getSellerOrderNumIndex();
                     break;

@@ -1,5 +1,6 @@
 package com.chunlangjiu.app.util;
 
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -46,6 +47,7 @@ public class Rotate3dAnimation extends Animation {
     @Override
     public void initialize(int width, int height, int parentWidth, int parentHeight) {
         super.initialize(width, height, parentWidth, parentHeight);
+//        Log.d("initialize",width+"--"+height+"--"+parentWidth+"--"+parentHeight);
         mCamera = new Camera();
     }
 
