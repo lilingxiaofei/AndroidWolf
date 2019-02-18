@@ -968,7 +968,7 @@ public class UserFragment extends BaseFragment {
                 public void onAnimationEnd(Animation animation) {
                     showUserTypeView();
                     rlContentLayout.clearAnimation();
-                    rlContentLayout.setAnimation(rotateEnd);
+                    rlContentLayout.startAnimation(rotateEnd);
                 }
 
                 @Override
