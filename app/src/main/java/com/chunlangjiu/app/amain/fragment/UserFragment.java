@@ -964,12 +964,12 @@ public class UserFragment extends BaseFragment {
         if(scaleStart== null){
             scaleStart=new ScaleAnimation(1f, 0.8f, 1, 0.8f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
             scaleStart.setDuration(500);
-            setStart.addAnimation(scaleStart);
+//            setStart.addAnimation(scaleStart);
         }
         if(scaleEnd== null){
             scaleEnd=new ScaleAnimation(0.8f, 1f, 0.8f, 1f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
             scaleEnd.setDuration(500);
-            setEnd.addAnimation(scaleEnd);
+//            setEnd.addAnimation(scaleEnd);
         }
 
         if(rotateStart==null){
@@ -992,13 +992,13 @@ public class UserFragment extends BaseFragment {
 
                 }
             });
-            setStart.addAnimation(rotateStart);
+//            setStart.addAnimation(rotateStart);
         }
 
         if(rotateEnd==null) {
             rotateEnd = new Rotate3dAnimation(270, 360, centerX, centerY, centerZ, Rotate3dAnimation.ROTATE_Y_AXIS, false);
             rotateEnd.setDuration(500);
-            setEnd.addAnimation(rotateEnd);
+//            setEnd.addAnimation(rotateEnd);
         }
 
     }
