@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_round_white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="醇狼提示"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/t_black"
+            android:textSize="18sp" />
+        <TextView android:id="@+id/tvTips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:text="尊敬的用户，您现在还是普通卖家， 只能发布3件商品，交纳1000元保证金， 升级成为星级卖家，享海量特权！"
+            android:textColor="@color/t_grey"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvCancel"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:background="@drawable/bg_gray_rectangle"
+                android:text="暂时先不考虑"
+                android:textColor="@color/t_white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvConfirm"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="50dp"
+                android:background="@color/bg_red"
+                android:gravity="center"
+                android:text="升级星级卖家"
+                android:textColor="@color/t_white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

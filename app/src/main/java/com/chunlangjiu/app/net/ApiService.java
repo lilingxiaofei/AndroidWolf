@@ -51,6 +51,7 @@ import com.chunlangjiu.app.user.bean.AddressListBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.BankCardInfoBean;
 import com.chunlangjiu.app.user.bean.BankCardListBean;
+import com.chunlangjiu.app.user.bean.CheckGoodsBean;
 import com.chunlangjiu.app.user.bean.EditGoodsDetailBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.user.bean.ShopCatIdList;
@@ -385,7 +386,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<Map>> checkUploadGoods(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<CheckGoodsBean>> checkUploadGoods(@Field("method") String method, @Field("v") String v);
 
 
     @POST("index.php/shop/topapi")

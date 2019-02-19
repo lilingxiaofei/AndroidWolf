@@ -22,9 +22,11 @@ import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
 import com.chunlangjiu.app.goods.bean.OrdoListBean;
+import com.chunlangjiu.app.money.activity.ReChargeActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.AddGoodsValueBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
+import com.chunlangjiu.app.user.bean.CheckGoodsBean;
 import com.chunlangjiu.app.user.bean.ShopClassList;
 import com.chunlangjiu.app.user.bean.SkuBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
@@ -33,6 +35,7 @@ import com.chunlangjiu.app.user.dialog.ChoiceAreaPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ShopClassPopWindow;
+import com.chunlangjiu.app.user.dialog.StarLevelDialog;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
 import com.google.gson.Gson;
@@ -50,7 +53,6 @@ import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
@@ -248,6 +250,9 @@ public class AddGoodsActivity extends BaseActivity {
     private String base64DetailFour;
     private String base64Goods;
 
+    StarLevelDialog starLevelDialog = null ;
+    private CheckGoodsBean checkGoodsBean ;
+
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -333,6 +338,7 @@ public class AddGoodsActivity extends BaseActivity {
     }
 
     private void initView() {
+
         disposable = new CompositeDisposable();
         int picSize = (SizeUtils.getScreenWidth() - 30) / 2;
         ViewGroup.LayoutParams layoutParams = llMainPic.getLayoutParams();
@@ -372,6 +378,24 @@ public class AddGoodsActivity extends BaseActivity {
         tvCommit.setOnClickListener(onClickListener);
 
         classLists = new ArrayList<>();
+
+        starLevelDialog = new StarLevelDialog(this);
+        starLevelDialog.setCallBack(new StarLevelDialog.CallBack() {
+            @Override
+            public void cancel() {
+                finish();
+            }
+
+            @Override
+            public void confirm() {
+                if(checkGoodsBean!=null){
+                    Intent intent = new Intent(AddGoodsActivity.this, ReChargeActivity.class);
+                    intent.putExtra(ReChargeActivity.ReChargeType, ReChargeActivity.RechargeType.SecurityDeposit);
+                    intent.putExtra(ReChargeActivity.DepositMoney, checkGoodsBean.getDeposit());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void initImagePicker() {
@@ -434,16 +458,17 @@ public class AddGoodsActivity extends BaseActivity {
         disposable.add(ApiUtils.getInstance().checkUploadGoods()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<Map>>() {
+                .subscribe(new Consumer<ResultBean<CheckGoodsBean>>() {
                     @Override
-                    public void accept(ResultBean<Map> mainClassBeanResultBean) throws Exception {
-                        Map map = mainClassBeanResultBean.getData() ;
-                        if(null != map && map.containsKey("status")){
+                    public void accept(ResultBean<CheckGoodsBean> mainClassBeanResultBean) throws Exception {
+                        checkGoodsBean = mainClassBeanResultBean.getData() ;
+                        if(null != checkGoodsBean ){
                             hideLoadingDialog();
-                            if("true".equals(map.get("status"))){
+                            if("true".equals(checkGoodsBean.getStatus())){
                                 showContentView();
                             }else{
-                                finish();
+                                starLevelDialog.updateTips(checkGoodsBean.getTips());
+                                starLevelDialog.show();
                             }
                         }
                     }

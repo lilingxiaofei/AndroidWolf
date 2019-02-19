@@ -16,6 +16,7 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
+import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -99,9 +100,19 @@ public class ReChargeActivity extends BaseActivity {
 
         if (rechargeType==RechargeType.SecurityDeposit){
             String money = getIntent().getStringExtra(DepositMoney);
+            setDepositMoney(money);
             edtMoney.setEnabled(false);
-            edtMoney.setText(money);
             rbBalance.setVisibility(View.VISIBLE);
+            togglePayType(OrderParams.PAY_APP_DEPOSIT);
+        }else{
+            togglePayType(OrderParams.PAY_APP_WXPAY);
+            rbBalance.setVisibility(View.GONE);
+        }
+    }
+
+    private void setDepositMoney(String money){
+        if(!TextUtils.isEmpty(money)){
+            edtMoney.setText(money);
             balancePayDialog = new BalancePayDialog(this,money);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
                 @Override
@@ -114,10 +125,8 @@ public class ReChargeActivity extends BaseActivity {
                     createSuccess(paymentId,payPwd);
                 }
             });
-            togglePayType(OrderParams.PAY_APP_DEPOSIT);
         }else{
-            togglePayType(OrderParams.PAY_APP_WXPAY);
-            rbBalance.setVisibility(View.GONE);
+            getDepositMoney();
         }
     }
 
@@ -129,6 +138,27 @@ public class ReChargeActivity extends BaseActivity {
     private void initData() {
 //        getPaymentList();
     }
+
+    private void getDepositMoney() {
+        disposable.add(ApiUtils.getInstance().getDeposit((String) SPUtils.get("token", ""))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<DepositBean>>() {
+                    @Override
+                    public void accept(ResultBean<DepositBean> resultBean) throws Exception {
+                        DepositBean depositBean = resultBean.getData();
+                        if (null != depositBean) {
+                            setDepositMoney(depositBean.getDeposit());
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                }));
+    }
+
 
     @Override
     protected void onDestroy() {
