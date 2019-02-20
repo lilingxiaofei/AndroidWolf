@@ -733,6 +733,10 @@ public class UserFragment extends BaseFragment {
                 }));
     }
 
+    private void updateMyNum(){
+
+    }
+
 
     private void getSellerOrderNumIndex() {
         disposable.add(ApiUtils.getInstance().getMyNumFlag("shop")
@@ -1196,6 +1200,18 @@ public class UserFragment extends BaseFragment {
             tvOrderOneNum.setVisibility(View.GONE);
             tvOrderTwoNum.setVisibility(View.GONE);
             tvOrderThreeNum.setVisibility(View.GONE);
+            tvOrderFourNum.setVisibility(View.GONE);
+
+            tvSellOrderOneNum.setVisibility(View.GONE);
+            tvSellOrderTwoNum.setVisibility(View.GONE);
+            tvSellOrderThreeNum.setVisibility(View.GONE);
+            tvSellOrderFourNum.setVisibility(View.GONE);
+            tvSellOrderFiveNum.setVisibility(View.GONE);
+            tvCheckGoodsNum.setVisibility(View.GONE);
+            tvWareHouseGoodsNum.setVisibility(View.GONE);
+            tvAuctionGoodsNum.setVisibility(View.GONE);
+            tvSellGoodsNum.setVisibility(View.GONE);
+
             llNotUseMoney.setVisibility(View.VISIBLE);
             disposable.add(ApiUtils.getInstance().logout()
                     .subscribeOn(Schedulers.io())
