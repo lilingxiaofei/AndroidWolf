@@ -29,6 +29,7 @@ import com.chunlangjiu.app.order.bean.CancelReasonBean;
 import com.chunlangjiu.app.order.bean.LogisticsBean;
 import com.chunlangjiu.app.order.bean.OrderDetailBean;
 import com.chunlangjiu.app.order.bean.OrderListBean;
+import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.bean.SellerOrderDetailBean;
 import com.chunlangjiu.app.order.dialog.CancelOrderDialog;
 import com.chunlangjiu.app.order.dialog.ChooseExpressDialog;
@@ -606,10 +607,6 @@ public class OrderDetailActivity extends BaseActivity {
                 }
                 tvPayment.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 tvPaymentTips.setText("实付金额：");
-
-
-
-
 
 
                 OrderDetailBean.LogiBean logi = orderDetailBean.getLogi();
@@ -1497,7 +1494,8 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void invokeYuePay(ResultBean data) {
-        if(data.getResult()){
+        PayResultBean payResultBean = (PayResultBean)data.getData();
+        if(payResultBean!=null && "success".equals(payResultBean.getStatus())){
             Toast.makeText(OrderDetailActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
             EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
             EventManager.getInstance().notify(null, ConstantMsg.UPDATE_CART_LIST);
