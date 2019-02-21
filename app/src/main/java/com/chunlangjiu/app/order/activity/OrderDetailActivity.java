@@ -38,7 +38,6 @@ import com.chunlangjiu.app.order.dialog.SellerCancelOrderDialog;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
-import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.HttpUtils;
@@ -1497,7 +1496,8 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void invokeYuePay(ResultBean data) {
-        if (data.getResult()) {
+        PayResultBean payResultBean = (PayResultBean)data.getData();
+        if(payResultBean!=null && "success".equals(payResultBean.getStatus())){
             Toast.makeText(OrderDetailActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
             EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
             EventManager.getInstance().notify(null, ConstantMsg.UPDATE_CART_LIST);

@@ -33,6 +33,7 @@ import com.chunlangjiu.app.order.bean.AuctionOrderListBean;
 import com.chunlangjiu.app.order.bean.CancelReasonBean;
 import com.chunlangjiu.app.order.bean.LogisticsBean;
 import com.chunlangjiu.app.order.bean.OrderListBean;
+import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.dialog.CancelOrderDialog;
 import com.chunlangjiu.app.order.dialog.ChooseExpressDialog;
 import com.chunlangjiu.app.order.dialog.ChooseExpressSellerDialog;
@@ -1273,7 +1274,8 @@ public class OrderListFragment extends BaseFragment {
     }
 
     private void invokeYuePay(ResultBean data) {
-        if(data.getResult()){
+        PayResultBean payResultBean = (PayResultBean)data.getData();
+        if(payResultBean!=null && "success".equals(payResultBean.getStatus())){
             refreshLayout.autoRefresh();
         }
     }

@@ -172,7 +172,11 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
                         if (null != depositCashBean) {
                             ToastUtils.showShort(depositCashBean.getMessage());
                             EventManager.getInstance().notify(null, ConstantMsg.WITHDRAW_DEPOSIT_REFUND);
-                            finish();
+//                            finish();
+                            Intent intent = new Intent(WithDrawActivity.this, SecurityDepositManagerActivity.class);
+                            intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
+                            intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.REFUND_SUCCESS);
+                            startActivity(intent);
                         }
                     }
                 }, new Consumer<Throwable>() {

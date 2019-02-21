@@ -83,12 +83,11 @@ public class AddBankCardActivity extends BaseActivity {
         initData();
         initEvent();
 
-
-        edtName.setText("吴申飞");
-        edtIdCard.setText("430281199101039116");
-        edtBankCard.setText("6217921175562548");
-        edtPhone.setText("18665398952");
-        edtBranch.setText("深圳科苑支行");
+//        edtName.setText("吴申飞");
+//        edtIdCard.setText("430281199101039116");
+//        edtBankCard.setText("6217921175562548");
+//        edtPhone.setText("18665398952");
+//        edtBranch.setText("深圳科苑支行");
     }
 
     private void initEvent() {

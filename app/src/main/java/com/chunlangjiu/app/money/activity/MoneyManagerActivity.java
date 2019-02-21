@@ -48,6 +48,8 @@ public class MoneyManagerActivity extends BaseActivity {
     TextView tvDepositCount;
     @BindView(R.id.btnPaySecurityDeposit)
     Button btnPaySecurityDeposit;
+    @BindView(R.id.btnDepositCancel)
+    Button btnDepositCancel;
 
     private CompositeDisposable disposable;
     private UserMoneyBean userMoneyBean;
@@ -143,11 +145,14 @@ public class MoneyManagerActivity extends BaseActivity {
                                 btnPaySecurityDeposit.setText("撤销保证金");
                                 btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
+                                btnDepositCancel.setVisibility(View.GONE);
                             } else if ("2".equals(depositBean.getDeposit_status())) {
+                                btnDepositCancel.setVisibility(View.VISIBLE);
                                 btnPaySecurityDeposit.setText("撤销保证金中");
                                 btnPaySecurityDeposit.setEnabled(false);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
                             } else if ("0".equals(depositBean.getDeposit_status())) {
+                                btnDepositCancel.setVisibility(View.GONE);
                                 btnPaySecurityDeposit.setText("缴纳保证金");
                                 btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
@@ -168,7 +173,7 @@ public class MoneyManagerActivity extends BaseActivity {
         setRightText();
     }
 
-    @OnClick({R.id.img_title_left, R.id.relSelectBalance, R.id.relSelectSecurityDeposit, R.id.btnWithdraw, R.id.btnRecharge, R.id.btnPaySecurityDeposit})
+    @OnClick({R.id.img_title_left, R.id.relSelectBalance, R.id.relSelectSecurityDeposit, R.id.btnWithdraw, R.id.btnRecharge, R.id.btnPaySecurityDeposit,R.id.btnDepositCancel})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_title_left:
@@ -193,12 +198,19 @@ public class MoneyManagerActivity extends BaseActivity {
             case R.id.btnPaySecurityDeposit:
                 String status = depositBean.getDeposit_status();
                 if ("1".equals(status)) {
-                    Intent intent = new Intent(this, WithDrawActivity.class);
-                    intent.putExtra(WithDrawActivity.WithDrawType, WithDrawActivity.DepositRefund);
+                    Intent intent = new Intent(this, SecurityDepositManagerActivity.class);
+                    intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
                     startActivity(intent);
+
+//                    Intent intent = new Intent(this, WithDrawActivity.class);
+//                    intent.putExtra(WithDrawActivity.WithDrawType, WithDrawActivity.DepositRefund);
+//                    startActivity(intent);
+                    btnDepositCancel.setVisibility(View.GONE);
                 } else if ("2".equals(status)) {
+                    btnDepositCancel.setVisibility(View.VISIBLE);
 
                 } else if ("0".equals(status)) {
+                    btnDepositCancel.setVisibility(View.GONE);
                     Intent intent = new Intent(this, ReChargeActivity.class);
                     intent.putExtra(ReChargeActivity.ReChargeType, ReChargeActivity.RechargeType.SecurityDeposit);
 //                    intent.putExtra(ReChargeActivity.ReChargeType,depositBean.getDeposit());
@@ -207,11 +219,33 @@ public class MoneyManagerActivity extends BaseActivity {
 
                 }
                 break;
+            case R.id.btnDepositCancel:
+                depositCancel();
+                break;
 
         }
 
     }
-
+    private void depositCancel(){
+        showLoadingDialog();
+        disposable.add(ApiUtils.getInstance().cancelDeposit((String) SPUtils.get("token", ""))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean>() {
+                    @Override
+                    public void accept(ResultBean resultBean) throws Exception {
+                        hideLoadingDialog();
+                        ToastUtils.showShort("取消撤销成功");
+                        getDepositMoney();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                }));
+    }
     private void setRightText() {
         titleView.removeView(titleSearchView);
         TextView rightTv = new TextView(this);
