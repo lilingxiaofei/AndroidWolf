@@ -1,6 +1,7 @@
 package com.chunlangjiu.app.money.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -109,6 +110,9 @@ public class ReChargeActivity extends BaseActivity {
                 finish();
             }else if (eventTag.equals(String.valueOf(RechargeType.SecurityDeposit.ordinal()))){
                 EventManager.getInstance().notify(null,ConstantMsg.DEPOSIT_CREATE);
+                Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
+                intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
+                intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
                 finish();
 
             }
@@ -348,6 +352,10 @@ public class ReChargeActivity extends BaseActivity {
     private void invokeBalancePay() {
         Toast.makeText(ReChargeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
         EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
+        EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
+        Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
+        intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
+        intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
         finish();
     }
 
@@ -380,10 +388,15 @@ public class ReChargeActivity extends BaseActivity {
                     Toast.makeText(ReChargeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                     if (rechargeType==RechargeType.Balance){
                         EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
+                        finish();
                     }else if (rechargeType==RechargeType.SecurityDeposit){
                         EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
+                        Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
+                        intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
+                        intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
+                        finish();
                     }
-                    finish();
+
                 } else {
                     // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                     Toast.makeText(ReChargeActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
