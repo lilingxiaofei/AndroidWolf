@@ -52,6 +52,7 @@ import com.chunlangjiu.app.user.bean.AddressListBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.BankCardInfoBean;
 import com.chunlangjiu.app.user.bean.BankCardListBean;
+import com.chunlangjiu.app.user.bean.CheckGoodsBean;
 import com.chunlangjiu.app.user.bean.EditGoodsDetailBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.user.bean.ShopCatIdList;
@@ -353,7 +354,7 @@ public class ApiUtils {
         return apiService.getShopClassList("category.platform.get", "v1");
     }
 
-    public Flowable<ResultBean<Map>> checkUploadGoods() {
+    public Flowable<ResultBean<CheckGoodsBean>> checkUploadGoods() {
         return apiService.checkUploadGoods("item.check", "v1");
     }
 
