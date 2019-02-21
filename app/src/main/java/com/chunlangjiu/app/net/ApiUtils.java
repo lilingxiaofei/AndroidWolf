@@ -618,5 +618,8 @@ public class ApiUtils {
     public Flowable<ResultBean<BankCardInfoBean>> getBankCardInfo(String token, String bank_id) {//member.bank.get
         return apiService.bankCardGet("member.bank.get", "v1", token, bank_id);
     }
+    public Flowable<ResultBean> cancelDeposit(String token){
+       return apiService.depositCancel("member.deposit.cancel","v1",token);
+    }
 
 }

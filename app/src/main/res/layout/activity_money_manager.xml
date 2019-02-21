@@ -210,12 +210,24 @@
 
             <Button
                 android:id="@+id/btnPaySecurityDeposit"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_red_rectangle"
                 android:text="@string/payment_deposit"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_15sp" />
+                android:textSize="@dimen/text_size_15sp"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/btnDepositCancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:background="@drawable/bg_red_rectangle"
+                android:text="取消"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_15sp"
+                android:layout_weight="0.3"/>
         </LinearLayout>
     </RelativeLayout>
 
