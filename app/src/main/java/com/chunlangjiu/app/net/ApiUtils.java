@@ -43,6 +43,7 @@ import com.chunlangjiu.app.order.bean.LogisticsBean;
 import com.chunlangjiu.app.order.bean.OrderAfterSaleReasonBean;
 import com.chunlangjiu.app.order.bean.OrderDetailBean;
 import com.chunlangjiu.app.order.bean.OrderListBean;
+import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.bean.SellerOrderDetailBean;
 import com.chunlangjiu.app.store.bean.StoreClassListBean;
 import com.chunlangjiu.app.store.bean.StoreDetailBean;
@@ -57,6 +58,7 @@ import com.chunlangjiu.app.user.bean.ShopCatIdList;
 import com.chunlangjiu.app.user.bean.ShopClassList;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
+import com.chunlangjiu.app.util.PayResult;
 import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
@@ -304,7 +306,7 @@ public class ApiUtils {
         return apiService.getBalanceInfo("member.pay.status", "v1");
     }
 
-    public Flowable<ResultBean> payDo(String payment_id, String payment_type,String payPwd) {
+    public Flowable<ResultBean<PayResultBean>> payDo(String payment_id, String payment_type, String payPwd) {
         return apiService.payDo("payment.pay.do", "v1", payment_id, payment_type, payPwd);
     }
 

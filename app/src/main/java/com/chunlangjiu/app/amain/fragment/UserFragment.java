@@ -377,6 +377,10 @@ public class UserFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (BaseApplication.isLogin()) {
+            getBuyerOrderNumIndex();
+            getSellerOrderNumIndex();
+        }
     }
 
     @Override
@@ -647,8 +651,8 @@ public class UserFragment extends BaseFragment {
         initImagePicker();
         if (BaseApplication.isLogin()) {
             getUserInfo();
-            getBuyerOrderNumIndex();
-            getSellerOrderNumIndex();
+//            getBuyerOrderNumIndex();
+//            getSellerOrderNumIndex();
             getPersonAndCompanyAuthStatus();
         }
     }
@@ -1114,9 +1118,9 @@ public class UserFragment extends BaseFragment {
         public void onNotify(Object object, String eventTag) {
             eventTag = eventTag == null ? "" : eventTag;
             switch (eventTag) {
-                case ConstantMsg.SHOP_DATA_CHANGE:
-                    getSellerOrderNumIndex();
-                    break;
+//                case ConstantMsg.SHOP_DATA_CHANGE:
+//                    getSellerOrderNumIndex();
+//                    break;
                 case ConstantMsg.LOGIN_SUCCESS:
                     loginSuccess(eventTag);
                     break;
@@ -1165,8 +1169,8 @@ public class UserFragment extends BaseFragment {
         if (eventTag.equals(ConstantMsg.LOGIN_SUCCESS)) {
             checkLogin();
             getUserInfo();
-            getBuyerOrderNumIndex();
-            getSellerOrderNumIndex();
+//            getBuyerOrderNumIndex();
+//            getSellerOrderNumIndex();
             getPersonAndCompanyAuthStatus();
         }
     }
