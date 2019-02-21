@@ -54,8 +54,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         tvStatus.setText(item.getStatus_desc());
         GlideUtils.loadImageShop(context, item.getShop_logo(), imgStore);
 
-
-        helper.setGone(R.id.ivDel,false);
+        ImageView ivDel = helper.getView(R.id.ivDel);
+        ivDel.setVisibility(View.GONE);
         TextView tv1 = helper.getView(R.id.tv1);
         TextView tv2 = helper.getView(R.id.tv2);
         tv1.setVisibility(View.GONE);
@@ -100,7 +100,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         } else {
                             tv2.setVisibility(View.GONE);
                         }
-                        helper.setGone(R.id.ivDel,true);
+                        ivDel.setVisibility(View.VISIBLE);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_black));
                         break;
                 }
@@ -236,7 +236,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         tv1.setOnClickListener(onClickListener);
         tv2.setTag(helper.getAdapterPosition());
         tv2.setOnClickListener(onClickListener);
-
+        ivDel.setTag(helper.getAdapterPosition());
+        ivDel.setOnClickListener(onClickListener);
         llProducts.removeAllViews();
         switch (type) {
             case 0:
