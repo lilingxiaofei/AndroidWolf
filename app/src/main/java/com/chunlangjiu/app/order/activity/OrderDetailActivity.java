@@ -717,6 +717,7 @@ public class OrderDetailActivity extends BaseActivity {
                         if (0 == orderDetailBean.getBuyer_rate()) {
                             tvEvaluate.setVisibility(View.VISIBLE);
                         }
+                        tvDelete.setVisibility(View.VISIBLE);
                     }
                     tvRightContentDesc.setVisibility(View.GONE);
                     tvRightContent.setVisibility(View.GONE);
