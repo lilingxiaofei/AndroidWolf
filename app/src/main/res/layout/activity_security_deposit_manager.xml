@@ -104,7 +104,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/delete_ic" />
+                    android:src="@mipmap/warn" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/delete_ic" />
+                    android:src="@mipmap/publish_success" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -258,7 +258,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/delete_ic" />
+                    android:src="@mipmap/publish_success" />
 
                 <TextView
                     android:layout_width="wrap_content"

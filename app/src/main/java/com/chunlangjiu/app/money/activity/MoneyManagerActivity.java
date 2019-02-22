@@ -150,7 +150,7 @@ public class MoneyManagerActivity extends BaseActivity {
                                 btnDepositCancel.setVisibility(View.VISIBLE);
                                 btnPaySecurityDeposit.setText("撤销保证金中");
                                 btnPaySecurityDeposit.setEnabled(false);
-                                btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
+                                btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
                             } else if ("0".equals(depositBean.getDeposit_status())) {
                                 btnDepositCancel.setVisibility(View.GONE);
                                 btnPaySecurityDeposit.setText("缴纳保证金");

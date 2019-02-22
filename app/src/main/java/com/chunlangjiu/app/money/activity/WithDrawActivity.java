@@ -177,6 +177,7 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
                             intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
                             intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.REFUND_SUCCESS);
                             startActivity(intent);
+                            finish();
                         }
                     }
                 }, new Consumer<Throwable>() {
