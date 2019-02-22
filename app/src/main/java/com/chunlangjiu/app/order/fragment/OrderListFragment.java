@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
@@ -174,7 +175,7 @@ public class OrderListFragment extends BaseFragment {
 
         GridSpacingItemDecoration decoration2 = new GridSpacingItemDecoration(1, Utils.dp2px(activity, 5), false);
         listView.addItemDecoration(decoration2);
-        orderListAdapter.setOnClickListener(onClickListener);
+        orderListAdapter.setOnItemChildClickListener(onItemChildClickListener);
         listView.setAdapter(orderListAdapter);
 
         delayLoad();
@@ -721,206 +722,131 @@ public class OrderListFragment extends BaseFragment {
                 }));
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
+
+    private BaseQuickAdapter.OnItemChildClickListener onItemChildClickListener = new BaseQuickAdapter.OnItemChildClickListener() {
         @Override
-        public void onClick(View view) {
+        public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+            OrderListBean.ListBean orderDetailBean = listBeans.get(position);
             switch (view.getId()) {
                 case R.id.llStore:
-                    ShopMainActivity.startShopMainActivity(activity, String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getShop_id()));
+                    ShopMainActivity.startShopMainActivity(activity, String.valueOf(listBeans.get(position).getShop_id()));
                     break;
                 case R.id.llProducts:
                 case R.id.llBottom:
                     toOrderDetailActivity(view);
                     break;
-                case R.id.ivDel:
-                    //删除订单
-                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
-                    delete();
-                    break;
-                case R.id.tv1:
-                    switch (type) {
-                        case 0:
-                            switch (listBeans.get(Integer.parseInt(view.getTag().toString())).getStatus()) {
-                                case OrderParams.WAIT_BUYER_PAY:
-                                case OrderParams.WAIT_SELLER_SEND_GOODS:
-                                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
-                                    getCancelReason();
-                                    break;
-                            }
-                            break;
-                        case 3:
-                            tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
-                            getSellerCancelReason();
-                            break;
-                        case 4:
-                            switch (listBeans.get(Integer.parseInt(view.getTag().toString())).getStatus()) {
-                                case "0":
-                                    aftersales_bn = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getAftersales_bn());
-                                    if (null == refundAfterSaleOrderDialog) {
-                                        refundAfterSaleOrderDialog = new RefundAfterSaleOrderDialog(activity);
-                                        refundAfterSaleOrderDialog.setCallBack(new RefundAfterSaleOrderDialog.CallBack() {
-                                            @Override
-                                            public void confirm(String reason) {
-                                                activity.showLoadingDialog();
-                                                disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true", "", reason)
-                                                        .subscribeOn(Schedulers.io())
-                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                        .subscribe(new Consumer<ResultBean>() {
-                                                            @Override
-                                                            public void accept(ResultBean resultBean) throws Exception {
-                                                                activity.hideLoadingDialog();
-                                                                if (0 == resultBean.getErrorcode()) {
-                                                                    ToastUtils.showShort("拒绝申请成功");
-                                                                    refreshLayout.autoRefresh();
-                                                                } else {
-                                                                    if (TextUtils.isEmpty(resultBean.getMsg())) {
-                                                                        ToastUtils.showShort("拒绝申请失败");
-                                                                    } else {
-                                                                        ToastUtils.showShort(resultBean.getMsg());
-                                                                    }
-                                                                }
-                                                            }
-                                                        }, new Consumer<Throwable>() {
-                                                            @Override
-                                                            public void accept(Throwable throwable) throws Exception {
-                                                                activity.hideLoadingDialog();
-                                                                if (TextUtils.isEmpty(throwable.getMessage())) {
-                                                                    ToastUtils.showShort("拒绝申请失败");
-                                                                } else {
-                                                                    ToastUtils.showShort(throwable.getMessage());
-                                                                }
-                                                            }
-                                                        }));
-                                            }
-                                        });
-                                    }
-                                    refundAfterSaleOrderDialog.show();
-                                    break;
-                            }
-                            break;
-                        case 5:
-                            cancel_id = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getCancel_id());
-                            if (null == refundCancelOrderDialog) {
-                                refundCancelOrderDialog = new RefundAfterSaleOrderDialog(activity);
-                                refundCancelOrderDialog.setCallBack(new RefundAfterSaleOrderDialog.CallBack() {
+
+                case R.id. tvCancel://取消订单
+                    if (type == 3) {
+                        tid = String.valueOf(orderDetailBean.getTid());
+                        getSellerCancelReason();
+                    } else {
+                        tid = String.valueOf(orderDetailBean.getTid());
+                        getCancelReason();
+                    }
+                case R.id.tvRefund://申请退款
+                case R.id.tvNotGoods://无货
+                case R.id.tvConsentRefund://同意退款
+                    if (type == 5) {
+                        cancel_id = String.valueOf(orderDetailBean.getCancel_id());
+                        showLoadingDialog();
+                        disposable.add(ApiUtils.getInstance().applySellerCancelOrder(cancel_id, "agree", "")
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<ResultBean>() {
                                     @Override
-                                    public void confirm(String reason) {
-                                        activity.showLoadingDialog();
-                                        disposable.add(ApiUtils.getInstance().applySellerCancelOrder(cancel_id, "reject", reason)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new Consumer<ResultBean>() {
-                                                    @Override
-                                                    public void accept(ResultBean resultBean) throws Exception {
-                                                        activity.hideLoadingDialog();
-                                                        if (0 == resultBean.getErrorcode()) {
-                                                            ToastUtils.showShort("拒绝申请成功");
-                                                            refreshLayout.autoRefresh();
-                                                        } else {
-                                                            if (TextUtils.isEmpty(resultBean.getMsg())) {
-                                                                ToastUtils.showShort("拒绝申请失败");
-                                                            } else {
-                                                                ToastUtils.showShort(resultBean.getMsg());
-                                                            }
-                                                        }
-                                                    }
-                                                }, new Consumer<Throwable>() {
-                                                    @Override
-                                                    public void accept(Throwable throwable) throws Exception {
-                                                        activity.hideLoadingDialog();
-                                                        if (TextUtils.isEmpty(throwable.getMessage())) {
-                                                            ToastUtils.showShort("拒绝申请失败");
-                                                        } else {
-                                                            ToastUtils.showShort(throwable.getMessage());
-                                                        }
-                                                    }
-                                                }));
+                                    public void accept(ResultBean resultBean) throws Exception {
+                                        hideLoadingDialog();
+                                        if (0 == resultBean.getErrorcode()) {
+                                            ToastUtils.showShort("同意退款成功");
+                                            initData();
+                                            EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                        } else {
+                                            if (TextUtils.isEmpty(resultBean.getMsg())) {
+                                                ToastUtils.showShort("同意退款失败");
+                                            } else {
+                                                ToastUtils.showShort(resultBean.getMsg());
+                                            }
+                                        }
                                     }
-                                });
-                            }
-                            refundCancelOrderDialog.show();
-                            break;
+                                }, new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        hideLoadingDialog();
+                                        if (TextUtils.isEmpty(throwable.getMessage())) {
+                                            ToastUtils.showShort("同意退款失败");
+                                        } else {
+                                            ToastUtils.showShort(throwable.getMessage());
+                                        }
+                                    }
+                                }));
+                        break;
+                    } else {
+                        showLoadingDialog();
+                        aftersales_bn = String.valueOf(orderDetailBean.getAftersales_bn());
+                        disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true",
+                                new BigDecimal(orderDetailBean.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString(), "")
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<ResultBean>() {
+                                    @Override
+                                    public void accept(ResultBean resultBean) throws Exception {
+                                        hideLoadingDialog();
+                                        if (0 == resultBean.getErrorcode()) {
+                                            ToastUtils.showShort("商品签单并同意退款成功");
+                                            initData();
+                                            EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                        } else {
+                                            if (TextUtils.isEmpty(resultBean.getMsg())) {
+                                                ToastUtils.showShort("商品签单并同意退款失败");
+                                            } else {
+                                                ToastUtils.showShort(resultBean.getMsg());
+                                            }
+                                        }
+                                    }
+                                }, new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        hideLoadingDialog();
+                                        if (TextUtils.isEmpty(throwable.getMessage())) {
+                                            ToastUtils.showShort("商品签单并同意退款失败");
+                                        } else {
+                                            ToastUtils.showShort(throwable.getMessage());
+                                        }
+                                    }
+                                }));
                     }
                     break;
-                case R.id.tv2:
-                    switch (type) {
-                        case 0:
-                            switch (listBeans.get(Integer.parseInt(view.getTag().toString())).getStatus()) {
-                                case OrderParams.WAIT_BUYER_PAY:
-//                                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
-                                    payBean = listBeans.get(Integer.parseInt(view.getTag().toString()));
-                                    tid = payBean.getTid()+"";
-                                    repay();
-                                    break;
-                                case OrderParams.WAIT_BUYER_CONFIRM_GOODS:
-                                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
-                                    confirmReceipt();
-                                    break;
-                                case OrderParams.TRADE_FINISHED:
-                                    OrderListBean.ListBean listBean = listBeans.get(Integer.parseInt(view.getTag().toString()));
-                                    Intent intent = new Intent(activity, OrderEvaluationDetailActivity.class);
-                                    intent.putExtra(OrderParams.PRODUCTS, listBean);
-                                    startActivity(intent);
-                                    break;
-//                                case OrderParams.WAIT_SELLER_SEND_GOODS:
-//                                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
-//                                    getCancelReason();
-//                                    break;
-                                case OrderParams.TRADE_CLOSED_BY_SYSTEM:
-                                    //删除订单
-                                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
-                                    delete();
-                                    break;
-                            }
-                            break;
-                        case 1:
-                            switch (listBeans.get(Integer.parseInt(view.getTag().toString())).getStatus()) {
-                                case "0":
-                                    payBean = listBeans.get(Integer.parseInt(view.getTag().toString()));
-                                    paymentId = payBean.getPaymentId();
-                                    getPayment();
-                                    break;
-                                case "1":
-                                    position = Integer.parseInt(view.getTag().toString());
-                                    changeMyPrice();
-                                    break;
-                                case "2":
-                                    payBean = listBeans.get(Integer.parseInt(view.getTag().toString()));
-                                    paymentId = payBean.getPaymentId();
-                                    getPayment();
-                                    break;
-                            }
-                            break;
-                        case 2:
-                            switch (listBeans.get(Integer.parseInt(view.getTag().toString())).getStatus()) {
-                                case "1":
-                                    aftersales_bn = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getAftersales_bn());
-                                    getLogisticsList();
-                                    break;
-                            }
-                            break;
-                        case 3:
-                            tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
-                            getSellerLogisticsList();
-                            break;
-                        case 4:
-                            switch (listBeans.get(Integer.parseInt(view.getTag().toString())).getStatus()) {
-                                case "0":
-                                    activity.showLoadingDialog();
-                                    aftersales_bn = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getAftersales_bn());
-                                    disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true", "", "")
+                case R.id.tvRefusedRefund://拒绝退款
+                case R.id.tvReturnSend://退货发货
+                    aftersales_bn = String.valueOf(listBeans.get(position).getAftersales_bn());
+                    getLogisticsList();
+                    break;
+                case R.id.tvBackOutApply ://撤销申请
+                    break;
+                case R.id.tvRefusedApply ://拒绝申请
+                    if (type == 4) {
+                        aftersales_bn = String.valueOf(orderDetailBean.getAftersales_bn());
+                        if (null == refundAfterSaleOrderDialog) {
+                            refundAfterSaleOrderDialog = new RefundAfterSaleOrderDialog(activity);
+                            refundAfterSaleOrderDialog.setCallBack(new RefundAfterSaleOrderDialog.CallBack() {
+                                @Override
+                                public void confirm(String reason) {
+                                    showLoadingDialog();
+                                    disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true", "", reason)
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .subscribe(new Consumer<ResultBean>() {
                                                 @Override
                                                 public void accept(ResultBean resultBean) throws Exception {
-                                                    activity.hideLoadingDialog();
+                                                    hideLoadingDialog();
                                                     if (0 == resultBean.getErrorcode()) {
-                                                        ToastUtils.showShort("同意申请成功");
-                                                        refreshLayout.autoRefresh();
+                                                        ToastUtils.showShort("拒绝申请成功");
+                                                        initData();
+                                                        EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
                                                     } else {
                                                         if (TextUtils.isEmpty(resultBean.getMsg())) {
-                                                            ToastUtils.showShort("同意申请失败");
+                                                            ToastUtils.showShort("拒绝申请失败");
                                                         } else {
                                                             ToastUtils.showShort(resultBean.getMsg());
                                                         }
@@ -929,93 +855,134 @@ public class OrderListFragment extends BaseFragment {
                                             }, new Consumer<Throwable>() {
                                                 @Override
                                                 public void accept(Throwable throwable) throws Exception {
-                                                    activity.hideLoadingDialog();
+                                                    hideLoadingDialog();
                                                     if (TextUtils.isEmpty(throwable.getMessage())) {
-                                                        ToastUtils.showShort("同意申请失败");
+                                                        ToastUtils.showShort("拒绝申请失败");
                                                     } else {
                                                         ToastUtils.showShort(throwable.getMessage());
                                                     }
                                                 }
                                             }));
-                                    break;
-                                case "1":
-                                    if ("2".equals(listBeans.get(Integer.parseInt(view.getTag().toString())).getProgress())) {
-                                        activity.showLoadingDialog();
-                                        aftersales_bn = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getAftersales_bn());
-                                        disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true",
-                                                new BigDecimal(listBeans.get(Integer.parseInt(view.getTag().toString())).getSku().getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString(), "")
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new Consumer<ResultBean>() {
-                                                    @Override
-                                                    public void accept(ResultBean resultBean) throws Exception {
-                                                        activity.hideLoadingDialog();
-                                                        if (0 == resultBean.getErrorcode()) {
-                                                            ToastUtils.showShort("商品签单并同意退款成功");
-                                                            refreshLayout.autoRefresh();
+                                }
+                            });
+                        }
+                        refundAfterSaleOrderDialog.show();
+                    } else if (type == 5) {
+                        cancel_id = String.valueOf(orderDetailBean.getCancel_id());
+                        if (null == refundCancelOrderDialog) {
+                            refundCancelOrderDialog = new RefundAfterSaleOrderDialog(activity);
+                            refundCancelOrderDialog.setCallBack(new RefundAfterSaleOrderDialog.CallBack() {
+                                @Override
+                                public void confirm(String reason) {
+                                    showLoadingDialog();
+                                    disposable.add(ApiUtils.getInstance().applySellerCancelOrder(cancel_id, "reject", reason)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new Consumer<ResultBean>() {
+                                                @Override
+                                                public void accept(ResultBean resultBean) throws Exception {
+                                                    hideLoadingDialog();
+                                                    if (0 == resultBean.getErrorcode()) {
+                                                        ToastUtils.showShort("拒绝申请成功");
+                                                        initData();
+                                                        EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                                    } else {
+                                                        if (TextUtils.isEmpty(resultBean.getMsg())) {
+                                                            ToastUtils.showShort("拒绝申请失败");
                                                         } else {
-                                                            if (TextUtils.isEmpty(resultBean.getMsg())) {
-                                                                ToastUtils.showShort("商品签单并同意退款失败");
-                                                            } else {
-                                                                ToastUtils.showShort(resultBean.getMsg());
-                                                            }
+                                                            ToastUtils.showShort(resultBean.getMsg());
                                                         }
                                                     }
-                                                }, new Consumer<Throwable>() {
-                                                    @Override
-                                                    public void accept(Throwable throwable) throws Exception {
-                                                        activity.hideLoadingDialog();
-                                                        if (TextUtils.isEmpty(throwable.getMessage())) {
-                                                            ToastUtils.showShort("商品签单并同意退款失败");
-                                                        } else {
-                                                            ToastUtils.showShort(throwable.getMessage());
-                                                        }
-                                                    }
-                                                }));
-                                    }
-                                    break;
-                            }
-                            break;
-                        case 5:
-                            cancel_id = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getCancel_id());
-                            activity.showLoadingDialog();
-                            disposable.add(ApiUtils.getInstance().applySellerCancelOrder(cancel_id, "agree", "")
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(new Consumer<ResultBean>() {
-                                        @Override
-                                        public void accept(ResultBean resultBean) throws Exception {
-                                            activity.hideLoadingDialog();
-                                            if (0 == resultBean.getErrorcode()) {
-                                                ToastUtils.showShort("同意退款成功");
-                                                refreshLayout.autoRefresh();
-                                            } else {
-                                                if (TextUtils.isEmpty(resultBean.getMsg())) {
-                                                    ToastUtils.showShort("同意退款失败");
-                                                } else {
-                                                    ToastUtils.showShort(resultBean.getMsg());
                                                 }
-                                            }
-                                        }
-                                    }, new Consumer<Throwable>() {
-                                        @Override
-                                        public void accept(Throwable throwable) throws Exception {
-                                            activity.hideLoadingDialog();
-                                            if (TextUtils.isEmpty(throwable.getMessage())) {
-                                                ToastUtils.showShort("同意退款失败");
-                                            } else {
-                                                ToastUtils.showShort(throwable.getMessage());
-                                            }
-                                        }
-                                    }));
-                            break;
+                                            }, new Consumer<Throwable>() {
+                                                @Override
+                                                public void accept(Throwable throwable) throws Exception {
+                                                    hideLoadingDialog();
+                                                    if (TextUtils.isEmpty(throwable.getMessage())) {
+                                                        ToastUtils.showShort("拒绝申请失败");
+                                                    } else {
+                                                        ToastUtils.showShort(throwable.getMessage());
+                                                    }
+                                                }
+                                            }));
+                                }
+                            });
+                        }
+                        refundCancelOrderDialog.show();
                     }
+                case R.id.tvConsentApply://同意申请
+                    showLoadingDialog();
+                    aftersales_bn = String.valueOf(orderDetailBean.getAftersales_bn());
+                    disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true", "", "")
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<ResultBean>() {
+                                @Override
+                                public void accept(ResultBean resultBean) throws Exception {
+                                    hideLoadingDialog();
+                                    if (0 == resultBean.getErrorcode()) {
+                                        ToastUtils.showShort("同意申请成功");
+                                        initData();
+                                        EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                    } else {
+                                        if (TextUtils.isEmpty(resultBean.getMsg())) {
+                                            ToastUtils.showShort("同意申请失败");
+                                        } else {
+                                            ToastUtils.showShort(resultBean.getMsg());
+                                        }
+                                    }
+                                }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    hideLoadingDialog();
+                                    if (TextUtils.isEmpty(throwable.getMessage())) {
+                                        ToastUtils.showShort("同意申请失败");
+                                    } else {
+                                        ToastUtils.showShort(throwable.getMessage());
+                                    }
+                                }
+                            }));
+                    break;
+                case R.id.tvSendGoods://发货
+                    tid = String.valueOf(orderDetailBean.getTid());
+                    getSellerLogisticsList();
+                    break;
+                case R.id.tvGoodsSignBill://商品签单
+                case R.id.tvConfirmReceipt://确认收货
+                    tid = String.valueOf(listBeans.get(position).getTid());
+                    confirmReceipt();
+                    break;
+                case R.id.tvEvaluate://去评价
+                    OrderListBean.ListBean listBean = listBeans.get(position);
+                    Intent intent = new Intent(activity, OrderEvaluationDetailActivity.class);
+                    intent.putExtra(OrderParams.PRODUCTS, listBean);
+                    startActivity(intent);
+                    break;
+                case R.id.tvPay://去支付
+                    payBean = listBeans.get(position);
+                    tid = payBean.getTid()+"";
+                    repay();
+                    break;
+                case R.id.tvEditPrice://修改出价
+                    changeMyPrice(position);
+                    break;
+                case R.id.tvPayDeposit://去付定金
+                    payBean = listBeans.get(position);
+                    paymentId = payBean.getPaymentId();
+                    getPayment();
+                    break;
+                case R.id.tvDelete://删除订单
+                case R.id.ivDel:
+                    //删除订单
+                    tid = String.valueOf(listBeans.get(position).getTid());
+                    delete();
                     break;
             }
         }
     };
 
-    private void changeMyPrice() {
+    private void changeMyPrice(int position) {
         String max_price;
         if (!TextUtils.isEmpty(listBeans.get(position).getAuction().getAuction_status())
                 && "false".equalsIgnoreCase(listBeans.get(position).getAuction().getAuction_status())) {

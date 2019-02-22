@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llBottom"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical|end"
     android:orientation="horizontal">
 
@@ -13,7 +13,8 @@
         android:text="删除订单" />
     <TextView
         android:id="@+id/tvCancel"
-        style="@style/order_btn_red"
+        style="@style/order_btn_gray"
+        android:visibility="visible"
         android:text="取消订单" />
 
     <TextView
@@ -22,12 +23,12 @@
         android:text="申请退款" />
     <TextView
         android:id="@+id/tvNotGoods"
-        style="@style/order_btn_red"
+        style="@style/order_btn_gray"
         android:text="无货" />
 
     <TextView
         android:id="@+id/tvConsentRefund"
-        style="@style/order_btn_red"
+        style="@style/order_btn_gray"
         android:text="同意退款" />
 
     <TextView
@@ -74,6 +75,7 @@
     <TextView
         android:id="@+id/tvPay"
         style="@style/order_btn_red"
+        android:visibility="visible"
         android:text="去支付" />
 
     <TextView

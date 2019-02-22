@@ -20,6 +20,8 @@ import com.pkqup.commonlibrary.glide.GlideUtils;
 import java.math.BigDecimal;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, BaseViewHolder> {
     private Context context;
     private LayoutInflater inflater;
@@ -55,68 +57,88 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         GlideUtils.loadImageShop(context, item.getShop_logo(), imgStore);
 
         ImageView ivDel = helper.getView(R.id.ivDel);
-        ivDel.setVisibility(View.GONE);
-        TextView tv1 = helper.getView(R.id.tv1);
-        TextView tv2 = helper.getView(R.id.tv2);
-        tv1.setVisibility(View.GONE);
-        tv2.setVisibility(View.GONE);
+//        ivDel.setVisibility(View.GONE);
+//        TextView tv1 = helper.getView(R.id.tv1);
+//        TextView tv2 = helper.getView(R.id.tv2);
+//        tv1.setVisibility(View.GONE);
+//        tv2.setVisibility(View.GONE);
+        TextView tvDelete = helper.getView(R.id.tvDelete);//删除订单
+        TextView tvCancel = helper.getView(R.id.tvCancel);//取消订单
+        TextView tvRefund = helper.getView(R.id.tvRefund);//申请退款
+        TextView tvNotGoods = helper.getView(R.id.tvNotGoods);//无货
+        TextView tvConsentRefund = helper.getView(R.id.tvConsentRefund);//同意退款
+        TextView tvRefusedRefund = helper.getView(R.id.tvRefusedRefund);//拒绝退款
+        TextView tvReturnSend = helper.getView(R.id.tvReturnSend);//退货发货
+        TextView tvBackOutApply = helper.getView(R.id.tvBackOutApply);//撤销申请
+        TextView tvRefusedApply = helper.getView(R.id.tvRefusedApply);//拒绝申请
+        TextView tvConsentApply = helper.getView(R.id.tvConsentApply);//同意申请
+        TextView tvSendGoods = helper.getView(R.id.tvSendGoods);//发货
+        TextView tvGoodsSignBill = helper.getView(R.id.tvGoodsSignBill);//商品签单
+        TextView tvConfirmReceipt = helper.getView(R.id.tvConfirmReceipt);//确认收货
+        TextView tvEvaluate = helper.getView(R.id.tvEvaluate);//去评价
+        TextView tvPay = helper.getView(R.id.tvPay);//去支付
+        TextView tvEditPrice = helper.getView(R.id.tvEditPrice);//修改出价
+        TextView tvPayDeposit = helper.getView(R.id.tvPayDeposit);//去付定金
+
+
+        tvDelete.setVisibility(View.GONE);//删除订单
+        tvCancel.setVisibility(View.GONE);//取消订单
+        tvRefund.setVisibility(View.GONE);//申请退款
+        tvNotGoods.setVisibility(View.GONE);//无货
+        tvConsentRefund.setVisibility(View.GONE);//同意退款
+        tvRefusedRefund.setVisibility(View.GONE);//拒绝退款
+        tvReturnSend.setVisibility(View.GONE);//退货发货
+        tvBackOutApply .setVisibility(View.GONE);//撤销申请
+        tvRefusedApply .setVisibility(View.GONE);//拒绝申请
+        tvConsentApply.setVisibility(View.GONE);//同意申请
+        tvSendGoods.setVisibility(View.GONE);//发货
+        tvGoodsSignBill.setVisibility(View.GONE);//商品签单
+        tvConfirmReceipt.setVisibility(View.GONE);//确认收货
+        tvEvaluate.setVisibility(View.GONE);//去评价
+        tvPay.setVisibility(View.GONE);//去支付
+        tvEditPrice.setVisibility(View.GONE);//修改出价
+        tvPayDeposit.setVisibility(View.GONE);//去付定金
+
         switch (type) {
             case 0:
                 switch (item.getStatus()) {
                     case OrderParams.WAIT_BUYER_PAY:
-                        tv1.setText("取消订单");
-                        tv1.setVisibility(View.VISIBLE);
-                        tv2.setText("去支付");
-                        tv2.setVisibility(View.VISIBLE);
+                        tvCancel.setVisibility(View.VISIBLE);
+                        tvPay.setVisibility(View.VISIBLE);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case OrderParams.TRADE_CLOSED_BY_SYSTEM:
-                        tv1.setVisibility(View.GONE);
-                        tv2.setText("删除订单");
-                        tv2.setVisibility(View.VISIBLE);
+                        tvDelete.setVisibility(View.VISIBLE);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_black));
                         break;
                     case OrderParams.WAIT_SELLER_SEND_GOODS:
-                        tv2.setVisibility(View.GONE);
                         if ("NO_APPLY_CANCEL".equals(item.getCancel_status())) {
-                            tv1.setText("取消订单");
-                            tv1.setVisibility(View.VISIBLE);
-                        } else {
-                            tv1.setVisibility(View.GONE);
+                            tvCancel.setVisibility(View.VISIBLE);
                         }
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case OrderParams.WAIT_BUYER_CONFIRM_GOODS:
-                        tv1.setVisibility(View.GONE);
-                        tv2.setText("商品签单");
-                        tv2.setVisibility(View.VISIBLE);
+                        tvGoodsSignBill.setVisibility(View.VISIBLE);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case OrderParams.TRADE_FINISHED:
-                        tv1.setVisibility(View.GONE);
                         if (1 == item.getBuyer_rate()) {
-                            tv2.setText("评价");
-                            tv2.setVisibility(View.VISIBLE);
-                        } else {
-                            tv2.setVisibility(View.GONE);
+                            tvEvaluate.setVisibility(View.VISIBLE);
                         }
-                        ivDel.setVisibility(View.VISIBLE);
+                        tvDelete.setVisibility(View.VISIBLE);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_black));
                         break;
                 }
                 break;
             case 1://竞拍订单
-                tv1.setVisibility(View.GONE);
                 helper.setVisible(R.id.ivAuctionBid,false );
                 switch (item.getStatus()) {
                     case OrderParams.AUCTION_WAIT_PAY:
-                        tv2.setText("去付定金");
-                        tv2.setVisibility(View.VISIBLE);
+                        tvPayDeposit.setVisibility(View.VISIBLE);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case OrderParams.AUCTION_BIDDING:
-                        tv2.setText("修改出价");
-                        tv2.setVisibility(View.VISIBLE);
+                        tvEditPrice.setVisibility(View.VISIBLE);
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;
                     case OrderParams.AUCTION_WON_BID:
@@ -127,7 +149,6 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                     case OrderParams.AUCTION_OUTBID:
                         helper.setVisible(R.id.ivAuctionBid,true );
                         helper.setImageResource(R.id.ivAuctionBid,R.mipmap.bid_not);
-                        tv2.setVisibility(View.GONE);
                         break;
                     case OrderParams.AUCTION_DELIVERY:
 //                        tv2.setText("删除订单");
@@ -140,30 +161,20 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
             case 2:
                 switch (item.getStatus()) {
                     case "0":
-                        tv1.setVisibility(View.GONE);
-                        tv2.setText("撤销申请");
-                        tv2.setVisibility(View.GONE);
+                        tvBackOutApply.setVisibility(View.VISIBLE);
                         break;
                     case "1":
                         if ("1".equals(item.getProgress())) {
-                            tv1.setText("撤销申请");
-                            tv1.setVisibility(View.GONE);
-                            tv2.setText("退货发货");
-                            tv2.setVisibility(View.VISIBLE);
+                            tvBackOutApply.setVisibility(View.GONE);
+                            tvReturnSend.setVisibility(View.VISIBLE);
                         } else {
-                            tv1.setVisibility(View.GONE);
-                            tv2.setText("撤销申请");
-                            tv2.setVisibility(View.GONE);
+                            tvBackOutApply.setVisibility(View.GONE);
                         }
                         break;
                     case "2":
-                        tv1.setVisibility(View.GONE);
-                        tv2.setVisibility(View.GONE);
                         break;
                     case "3":
-                        tv1.setVisibility(View.GONE);
-                        tv2.setText("删除");
-                        tv2.setVisibility(View.GONE);
+                        tvDelete.setVisibility(View.GONE);
                         break;
                 }
                 break;
@@ -171,73 +182,64 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                 switch (item.getStatus()) {
                     case OrderParams.WAIT_SELLER_SEND_GOODS:
                         if ("NO_APPLY_CANCEL".equals(item.getCancel_status()) || "FAILS".equals(item.getCancel_status())) {
-                            tv1.setText("无货");
-                            tv1.setVisibility(View.VISIBLE);
-                            tv2.setText("发货");
-                            tv2.setVisibility(View.VISIBLE);
-                        } else {
-                            tv1.setVisibility(View.GONE);
-                            tv2.setVisibility(View.GONE);
+                            tvNotGoods.setVisibility(View.VISIBLE);
+                            tvSendGoods.setVisibility(View.VISIBLE);
                         }
                         break;
                     default:
-                        tv1.setVisibility(View.GONE);
-                        tv2.setVisibility(View.GONE);
                         break;
                 }
                 break;
             case 4:
                 switch (item.getStatus()) {
                     case "0":
-                        tv1.setText("拒绝申请");
-                        tv1.setVisibility(View.VISIBLE);
-                        tv2.setText("同意申请");
-                        tv2.setVisibility(View.VISIBLE);
+                        tvRefusedApply.setVisibility(View.VISIBLE);
+                        tvConsentApply.setVisibility(View.VISIBLE);
                         break;
                     case "1":
                         if ("2".equals(item.getProgress())) {
-                            tv1.setVisibility(View.GONE);
-                            tv2.setText("同意退款");
-                            tv2.setVisibility(View.VISIBLE);
-                        } else {
-                            tv1.setVisibility(View.GONE);
-                            tv2.setVisibility(View.GONE);
+                            tvConsentRefund.setVisibility(View.VISIBLE);
                         }
                         break;
                     default:
-                        tv1.setVisibility(View.GONE);
-                        tv2.setVisibility(View.GONE);
                         break;
                 }
                 break;
             case 5:
                 switch (item.getStatus()) {
                     case "WAIT_CHECK":
-                        tv1.setText("拒绝");
-                        tv1.setVisibility(View.VISIBLE);
-                        tv2.setText("同意退款");
-                        tv2.setVisibility(View.VISIBLE);
+                        tvRefusedRefund.setVisibility(View.VISIBLE);
+                        tvConsentRefund.setVisibility(View.VISIBLE);
                         break;
                     default:
-                        tv1.setVisibility(View.GONE);
-                        tv2.setVisibility(View.GONE);
-                        break;
                 }
                 break;
         }
 
-        llStore.setTag(helper.getAdapterPosition());
-        llStore.setOnClickListener(onClickListener);
-        llProducts.setTag(helper.getAdapterPosition());
-        llProducts.setOnClickListener(onClickListener);
-        llBottom.setTag(helper.getAdapterPosition());
-        llBottom.setOnClickListener(onClickListener);
-        tv1.setTag(helper.getAdapterPosition());
-        tv1.setOnClickListener(onClickListener);
-        tv2.setTag(helper.getAdapterPosition());
-        tv2.setOnClickListener(onClickListener);
-        ivDel.setTag(helper.getAdapterPosition());
-        ivDel.setOnClickListener(onClickListener);
+        helper.addOnClickListener(R.id.tvDelete);//删除订单
+        helper.addOnClickListener(R.id. tvCancel);//取消订单
+        helper.addOnClickListener(R.id.tvRefund);//申请退款
+        helper.addOnClickListener(R.id.tvNotGoods);//无货
+        helper.addOnClickListener(R.id.tvConsentRefund);//同意退款
+        helper.addOnClickListener(R.id.tvRefusedRefund);//拒绝退款
+        helper.addOnClickListener(R.id.tvReturnSend);//退货发货
+        helper.addOnClickListener(R.id.tvBackOutApply );//撤销申请
+        helper.addOnClickListener(R.id.tvRefusedApply );//拒绝申请
+        helper.addOnClickListener(R.id.tvConsentApply);//同意申请
+        helper.addOnClickListener(R.id.tvSendGoods);//发货
+        helper.addOnClickListener(R.id.tvGoodsSignBill);//商品签单
+        helper.addOnClickListener(R.id.tvConfirmReceipt);//确认收货
+        helper.addOnClickListener(R.id.tvEvaluate);//去评价
+        helper.addOnClickListener(R.id.tvPay);//去支付
+        helper.addOnClickListener(R.id.tvEditPrice);//修改出价
+        helper.addOnClickListener(R.id.tvPayDeposit);//去付定金
+
+
+        helper.addOnClickListener(R.id.llStore);//点击店铺信息
+        helper.addOnClickListener(R.id.llProducts);//
+        helper.addOnClickListener(R.id.llBottom);//
+
+
         llProducts.removeAllViews();
         switch (type) {
             case 0:
@@ -259,10 +261,6 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                     TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
                     tvProductNum.setText(String.format("x%d", orderBean.getNum()));
                     llProducts.addView(inflate);
-//                    if (llProducts.getChildCount() == item.getOrder().size()) {
-//                        View view_line = inflate.findViewById(R.id.view_line);
-//                        view_line.setVisibility(View.GONE);
-//                    }
                 }
                 if (3 == type) {
                     tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getItemnum()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
@@ -298,10 +296,6 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                     tvAuctionPrice.setText(startPrice+"\n"+maxPrice);
                     tvAuctionPrice.setVisibility(View.VISIBLE);
                     llProducts.addView(inflate);
-//                    if (llProducts.getChildCount() == item.getOrder().size()) {
-//                        View view_line = inflate.findViewById(R.id.view_line);
-//                        view_line.setVisibility(View.GONE);
-//                    }
                 }
                 if (3 == type) {
                     tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getItemnum()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
@@ -325,8 +319,6 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                 TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
                 tvProductNum.setText(String.format("x%d", item.getNum()));
                 llProducts.addView(inflate);
-//                View view_line = inflate.findViewById(R.id.view_line);
-//                view_line.setVisibility(View.GONE);
                 tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", new BigDecimal(item.getTotalItem()).setScale(0, BigDecimal.ROUND_HALF_UP).toString(), new BigDecimal(item.getSku().getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
                 break;
         }
