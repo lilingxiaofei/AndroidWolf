@@ -59,7 +59,7 @@
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
             android:paddingRight="10dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:src="@mipmap/gray_delete"/>
     </LinearLayout>
 

@@ -13,18 +13,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.signature.ObjectKey;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.adapter.OrderEvaluationPicAdapter;
-import com.chunlangjiu.app.order.bean.OrderDetailBean;
 import com.chunlangjiu.app.order.bean.OrderEvaluationPicBean;
 import com.chunlangjiu.app.order.bean.OrderListBean;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.util.GlideImageLoader;
-import com.google.gson.Gson;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -36,7 +33,6 @@ import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.FileUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
-import com.socks.library.KLog;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,12 +42,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Function3;
 import io.reactivex.schedulers.Schedulers;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
@@ -131,10 +124,10 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
             TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
             tvProductNum.setText(String.format("x%d", orderBean.getNum()));
             llProducts.addView(inflate);
-            if (llProducts.getChildCount() == order.size()) {
-                View view_line = inflate.findViewById(R.id.view_line);
-                view_line.setVisibility(View.GONE);
-            }
+//            if (llProducts.getChildCount() == order.size()) {
+//                View view_line = inflate.findViewById(R.id.view_line);
+//                view_line.setVisibility(View.GONE);
+//            }
         }
 
         orderEvaluationPicBeanList = new ArrayList<>();
@@ -273,7 +266,9 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-
+                case R.id.img_title_left:
+                    finish();
+                    break;
                 case R.id.tvCommit:
                     commit();
                     break;

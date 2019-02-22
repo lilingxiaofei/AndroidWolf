@@ -16,11 +16,9 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.adapter.OrderEvaluationPicAdapter;
-import com.chunlangjiu.app.order.bean.CancelReasonBean;
 import com.chunlangjiu.app.order.bean.OrderAfterSaleReasonBean;
 import com.chunlangjiu.app.order.bean.OrderDetailBean;
 import com.chunlangjiu.app.order.bean.OrderEvaluationPicBean;
-import com.chunlangjiu.app.order.dialog.CancelOrderDialog;
 import com.chunlangjiu.app.order.dialog.OrderAfterSaleReasonDialog;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
@@ -119,8 +117,6 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
         TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
         tvProductNum.setText(String.format("x%d", orderBean.getNum()));
         llProducts.addView(inflate);
-        View view_line = inflate.findViewById(R.id.view_line);
-        view_line.setVisibility(View.GONE);
 
         tvAfterSaleNum.setText(String.valueOf(orderBean.getNum()));
 

@@ -44,6 +44,7 @@ import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
+import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -109,7 +110,7 @@ public class OrderListFragment extends BaseFragment {
     private InputPriceDialog inputPriceDialog;
 
     private int position;
-
+    CommonConfirmDialog confirmDialog ;
     /**
      *  静态工厂方法需要一个int型的值来初始化fragment的参数，
      *  然后返回新的fragment到调用者
@@ -140,6 +141,8 @@ public class OrderListFragment extends BaseFragment {
     public void initView() {
         disposable = new CompositeDisposable();
 
+        confirmDialog = new CommonConfirmDialog(activity,"确认删除订单吗？");
+        confirmDialog.setDialogStr("取消","删除");
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -728,6 +731,11 @@ public class OrderListFragment extends BaseFragment {
                 case R.id.llProducts:
                 case R.id.llBottom:
                     toOrderDetailActivity(view);
+                    break;
+                case R.id.ivDel:
+                    //删除订单
+                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
+                    delete();
                     break;
                 case R.id.tv1:
                     switch (type) {
@@ -1364,36 +1372,47 @@ public class OrderListFragment extends BaseFragment {
     }
 
     private void delete() {
-        activity.showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().delete(tid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean>() {
-                    @Override
-                    public void accept(ResultBean resultBean) throws Exception {
-                        activity.hideLoadingDialog();
-                        if (0 == resultBean.getErrorcode()) {
-                            ToastUtils.showShort("删除订单成功");
-                            refreshLayout.autoRefresh();
-                        } else {
-                            if (TextUtils.isEmpty(resultBean.getMsg())) {
-                                ToastUtils.showShort("删除订单失败");
-                            } else {
-                                ToastUtils.showShort(resultBean.getMsg());
+        confirmDialog.setCallBack(new CommonConfirmDialog.CallBack() {
+            @Override
+            public void onConfirm() {
+                activity.showLoadingDialog();
+                disposable.add(ApiUtils.getInstance().delete(tid)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<ResultBean>() {
+                            @Override
+                            public void accept(ResultBean resultBean) throws Exception {
+                                activity.hideLoadingDialog();
+                                if (0 == resultBean.getErrorcode()) {
+                                    ToastUtils.showShort("删除订单成功");
+                                    refreshLayout.autoRefresh();
+                                } else {
+                                    if (TextUtils.isEmpty(resultBean.getMsg())) {
+                                        ToastUtils.showShort("删除订单失败");
+                                    } else {
+                                        ToastUtils.showShort(resultBean.getMsg());
+                                    }
+                                }
                             }
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        activity.hideLoadingDialog();
-                        if (TextUtils.isEmpty(throwable.getMessage())) {
-                            ToastUtils.showShort("删除订单失败");
-                        } else {
-                            ToastUtils.showShort(throwable.getMessage());
-                        }
-                    }
-                }));
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                activity.hideLoadingDialog();
+                                if (TextUtils.isEmpty(throwable.getMessage())) {
+                                    ToastUtils.showShort("删除订单失败");
+                                } else {
+                                    ToastUtils.showShort(throwable.getMessage());
+                                }
+                            }
+                        }));
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+
     }
 
     private void toOrderDetailActivity(View view) {
