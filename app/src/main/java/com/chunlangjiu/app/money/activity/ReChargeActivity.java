@@ -113,6 +113,7 @@ public class ReChargeActivity extends BaseActivity {
                 Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
                 intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
                 intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
+                startActivity(intent);
                 finish();
 
             }
