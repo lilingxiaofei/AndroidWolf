@@ -742,6 +742,7 @@ public class OrderListFragment extends BaseFragment {
                         case 0:
                             switch (listBeans.get(Integer.parseInt(view.getTag().toString())).getStatus()) {
                                 case OrderParams.WAIT_BUYER_PAY:
+                                case OrderParams.WAIT_SELLER_SEND_GOODS:
                                     tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
                                     getCancelReason();
                                     break;
@@ -861,10 +862,10 @@ public class OrderListFragment extends BaseFragment {
                                     intent.putExtra(OrderParams.PRODUCTS, listBean);
                                     startActivity(intent);
                                     break;
-                                case OrderParams.WAIT_SELLER_SEND_GOODS:
-                                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
-                                    getCancelReason();
-                                    break;
+//                                case OrderParams.WAIT_SELLER_SEND_GOODS:
+//                                    tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());
+//                                    getCancelReason();
+//                                    break;
                                 case OrderParams.TRADE_CLOSED_BY_SYSTEM:
                                     //删除订单
                                     tid = String.valueOf(listBeans.get(Integer.parseInt(view.getTag().toString())).getTid());

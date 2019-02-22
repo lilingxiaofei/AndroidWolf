@@ -448,8 +448,9 @@ public class AddGoodsActivity extends BaseActivity {
         public void onNotify(Object object, String eventTag) {
             if (eventTag.equals(ConstantMsg.LOGIN_SUCCESS)) {
                 checkStatus();
+            }else if(ConstantMsg.DEPOSIT_CREATE.equals(eventTag)){
+                checkUploadGoods();
             }
-//            authSuccess(eventTag);
         }
     };
 
