@@ -38,7 +38,7 @@ public class PayDialog extends Dialog {
     private Activity context;
     private int payMethod = PAY_WEIXIN;
     private List<PaymentBean.PaymentInfo> payList;
-    private List<ImageView> imageViewLists;
+//    private List<ImageView> imageViewLists;
     private String weixinPayId;
     private String zhifubaoPayId;
     private String yuePayId;
@@ -79,16 +79,16 @@ public class PayDialog extends Dialog {
         rlZhiFuBao.setVisibility(View.GONE);
         rlWallet.setVisibility(View.GONE);
         rlLarge.setVisibility(View.GONE);
-        ImageView imgChoiceWeixin = findViewById(R.id.imgChoiceWeixin);
-        ImageView imgChoiceZhifubao = findViewById(R.id.imgChoiceZhifubao);
-        ImageView imgChoiceWallet = findViewById(R.id.imgChoiceWallet);
-        ImageView imgChoiceLarge = findViewById(R.id.imgChoiceLarge);
-        imgChoiceWeixin.setVisibility(View.VISIBLE);
-        imageViewLists = new ArrayList<>();
-        imageViewLists.add(imgChoiceWeixin);
-        imageViewLists.add(imgChoiceZhifubao);
-        imageViewLists.add(imgChoiceWallet);
-        imageViewLists.add(imgChoiceLarge);
+//        ImageView imgChoiceWeixin = findViewById(R.id.imgChoiceWeixin);
+//        ImageView imgChoiceZhifubao = findViewById(R.id.imgChoiceZhifubao);
+//        ImageView imgChoiceWallet = findViewById(R.id.imgChoiceWallet);
+//        ImageView imgChoiceLarge = findViewById(R.id.imgChoiceLarge);
+//        imgChoiceWeixin.setVisibility(View.VISIBLE);
+//        imageViewLists = new ArrayList<>();
+//        imageViewLists.add(imgChoiceWeixin);
+//        imageViewLists.add(imgChoiceZhifubao);
+//        imageViewLists.add(imgChoiceWallet);
+//        imageViewLists.add(imgChoiceLarge);
 
         for (int i = 0; i < payList.size(); i++) {
             PaymentBean.PaymentInfo payInfo = payList.get(i);
@@ -124,30 +124,30 @@ public class PayDialog extends Dialog {
                     dismiss();
                     break;
                 case R.id.rlWeiXin:
-                    choicePay(0, weixinPayId);
+                    choicePay(weixinPayId);
                     break;
                 case R.id.rlZhiFuBao:
-                    choicePay(1, zhifubaoPayId);
+                    choicePay(zhifubaoPayId);
                     break;
                 case R.id.rlWallet:
-                    choicePay(2, yuePayId);
+                    choicePay( yuePayId);
                     break;
                 case R.id.rlLarge:
-                    choicePay(3, daePayId);
+                    choicePay(daePayId);
                     break;
             }
         }
     };
 
 
-    private void choicePay(int payMethod, String payMethodId) {
-        for (int i = 0; i < imageViewLists.size(); i++) {
-            if (payMethod == i) {
-                imageViewLists.get(i).setVisibility(View.VISIBLE);
-            } else {
-                imageViewLists.get(i).setVisibility(View.GONE);
-            }
-        }
+    private void choicePay( String payMethodId) {
+//        for (int i = 0; i < imageViewLists.size(); i++) {
+//            if (payMethod == i) {
+//                imageViewLists.get(i).setVisibility(View.VISIBLE);
+//            } else {
+//                imageViewLists.get(i).setVisibility(View.GONE);
+//            }
+//        }
         if (callBack != null) {
             callBack.choicePayMethod(payMethodId);
         }

@@ -77,12 +77,12 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_black));
                         break;
                     case OrderParams.WAIT_SELLER_SEND_GOODS:
-                        tv1.setVisibility(View.GONE);
+                        tv2.setVisibility(View.GONE);
                         if ("NO_APPLY_CANCEL".equals(item.getCancel_status())) {
-                            tv2.setText("取消订单");
-                            tv2.setVisibility(View.VISIBLE);
+                            tv1.setText("取消订单");
+                            tv1.setVisibility(View.VISIBLE);
                         } else {
-                            tv2.setVisibility(View.GONE);
+                            tv1.setVisibility(View.GONE);
                         }
                         tvStatus.setTextColor(ContextCompat.getColor(context,R.color.t_red));
                         break;

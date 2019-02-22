@@ -29,6 +29,7 @@ import com.chunlangjiu.app.order.bean.CancelReasonBean;
 import com.chunlangjiu.app.order.bean.LogisticsBean;
 import com.chunlangjiu.app.order.bean.OrderDetailBean;
 import com.chunlangjiu.app.order.bean.OrderListBean;
+import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.bean.SellerOrderDetailBean;
 import com.chunlangjiu.app.order.dialog.CancelOrderDialog;
 import com.chunlangjiu.app.order.dialog.ChooseExpressDialog;

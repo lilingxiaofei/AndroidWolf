@@ -28,8 +28,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="15sp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:text="尊敬的用户，您现在还是普通卖家， 只能发布3件商品，交纳1000元保证金， 升级成为星级卖家，享海量特权！"
             android:textColor="@color/t_grey"/>
 
@@ -53,8 +53,8 @@
                 android:id="@+id/tvConfirm"
                 android:layout_width="110dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="50dp"
-                android:background="@color/bg_red"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/bg_round_red"
                 android:gravity="center"
                 android:text="升级星级卖家"
                 android:textColor="@color/t_white"

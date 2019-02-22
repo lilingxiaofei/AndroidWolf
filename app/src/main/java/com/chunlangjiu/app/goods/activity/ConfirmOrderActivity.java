@@ -324,6 +324,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         if (!TextUtils.isEmpty(addressId)) {
             String payMoned = tvPayMethod.getText().toString();
             if (payMoned.contains("余额")) {
+                hideLoadingDialog();
                 BalancePayDialog balancePayDialog = new BalancePayDialog(this, payPrice);
                 balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
                     @Override
@@ -333,6 +334,7 @@ public class ConfirmOrderActivity extends BaseActivity {
 
                     @Override
                     public void confirmPay(String pwd) {
+                        showLoadingDialog();
                         createSuccess(pwd);
                     }
                 });
