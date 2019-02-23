@@ -132,6 +132,9 @@ public class ShopMainActivity extends BaseActivity {
     RelativeLayout rlShopDetail;
     @BindView(R.id.tvShopPhone)
     TextView tvShopPhone;
+    @BindView(R.id.rlShopInfo)
+    RelativeLayout rlShopInfo;
+
     @BindView(R.id.tvDesc)
     TextView tvDesc;
 
@@ -174,6 +177,9 @@ public class ShopMainActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
+                case R.id.rlShopInfo:
+                    ShopDetailsActivity.startShopMainActivity(ShopMainActivity.this,shopId);
+                    break;
                 case R.id.ivBack:
                 case R.id.img_title_left:
                     finish();
@@ -287,7 +293,7 @@ public class ShopMainActivity extends BaseActivity {
         tv_title.setText(R.string.store_home);
         imgShow.setOnClickListener(onClickListener);
         scrollableLayout.setCurrentScrollableContainer(recycleView);
-
+        rlShopInfo.setOnClickListener(onClickListener);
         lists = new ArrayList<>();
         goodsAdapter = new GoodsAdapter(this, lists);
         goodsAdapter.setShowStoreView(false);

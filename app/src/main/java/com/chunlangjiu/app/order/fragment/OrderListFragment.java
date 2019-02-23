@@ -736,7 +736,7 @@ public class OrderListFragment extends BaseFragment {
                     toOrderDetailActivity(view);
                     break;
 
-                case R.id. tvCancel://取消订单
+                case R.id.tvCancel://取消订单
                     if (type == 3) {
                         tid = String.valueOf(orderDetailBean.getTid());
                         getSellerCancelReason();

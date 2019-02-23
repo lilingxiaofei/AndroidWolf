@@ -22,14 +22,12 @@ import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
-import com.jaeger.library.StatusBarUtil;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.view.RoundedImageView;
-import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +101,7 @@ public class ClassifyFragment extends BaseFragment {
                 UmengEventUtil.search_category(getActivity(), classLists.get(position).getCat_name());
                 selectClassId = classLists.get(position).getCat_id();
                 String classifyName = classLists.get(position).getCat_name();
-                GoodsListNewActivity.startGoodsListNewActivity(activity,selectClassId,classifyName,"");
+                GoodsListNewActivity.startGoodsListNewActivity(activity,selectClassId,classifyName,"","","");
 //                classAdapter.notifyDataSetChanged();
             }
         });
@@ -125,10 +123,10 @@ public class ClassifyFragment extends BaseFragment {
                     @Override
                     public void accept(ResultBean<MainClassBean> mainClassBean) throws Exception {
                         classLists.clear();
-                        ThirdClassBean thirdClassBean = new ThirdClassBean();
-                        thirdClassBean.setCat_id("");
-                        thirdClassBean.setCat_name("全部");
-                        classLists.add(thirdClassBean);
+//                        ThirdClassBean thirdClassBean = new ThirdClassBean();
+//                        thirdClassBean.setCat_id("");
+//                        thirdClassBean.setCat_name("全部");
+//                        classLists.add(thirdClassBean);
                         List<FirstClassBean> categorys = mainClassBean.getData().getCategorys();
                         for (int i = 0; i < categorys.size(); i++) {
                             List<SecondClassBean> lv2 = categorys.get(i).getLv2();

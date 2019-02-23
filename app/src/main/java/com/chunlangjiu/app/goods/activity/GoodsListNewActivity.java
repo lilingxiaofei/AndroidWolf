@@ -14,8 +14,10 @@ import com.chunlangjiu.app.amain.fragment.GoodsFragment;
  */
 public class GoodsListNewActivity extends BaseActivity {
 
-    public static void startGoodsListNewActivity(Activity activity, String brandId, String brandName, String searchKey) {
+    public static void startGoodsListNewActivity(Activity activity, String classId, String className, String brandId, String brandName, String searchKey) {
         Intent intent = new Intent(activity, GoodsListNewActivity.class);
+        intent.putExtra("classId", classId);
+        intent.putExtra("className", className);
         intent.putExtra("brandId", brandId);
         intent.putExtra("brandName", brandName);
         intent.putExtra("searchKey", searchKey);
@@ -31,10 +33,12 @@ public class GoodsListNewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_activity_goods_list_new);
+        String classId = getIntent().getStringExtra("classId");
+        String className = getIntent().getStringExtra("className");
         String brandId = getIntent().getStringExtra("brandId");
         String brandName = getIntent().getStringExtra("brandName");
         String searchKey = getIntent().getStringExtra("searchKey");
-        GoodsFragment goodsFragment = GoodsFragment.newInstance(searchKey, true, brandId, brandName);
+        GoodsFragment goodsFragment = GoodsFragment.newInstance(searchKey, true,classId,className, brandId, brandName);
         getSupportFragmentManager().beginTransaction().replace(R.id.content, goodsFragment)
                 .commit();
     }

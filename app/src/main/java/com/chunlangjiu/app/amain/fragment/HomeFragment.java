@@ -382,7 +382,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 UmengEventUtil.brandEvent(getActivity(), brandLists.get(position).getCategoryname());
-                GoodsListNewActivity.startGoodsListNewActivity(getActivity(), brandLists.get(position).getBrand_id(), brandLists.get(position).getBrandname(), "");
+                GoodsListNewActivity.startGoodsListNewActivity(getActivity(),"","", brandLists.get(position).getBrand_id(), brandLists.get(position).getBrandname(), "");
             }
         });
     }
@@ -850,7 +850,7 @@ public class HomeFragment extends BaseFragment {
                 }
                 break;
             case HomeModulesBean.ITEM_BRAND:
-                GoodsListNewActivity.startGoodsListNewActivity(getActivity(), function.getLinktarget(), "", "");
+                GoodsListNewActivity.startGoodsListNewActivity(getActivity(),"","", function.getLinktarget(), "", "");
                 if ("banner".equals(type)) {
                     UmengEventUtil.bannerEvent(getActivity(), "品牌");
                 } else {

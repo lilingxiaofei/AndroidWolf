@@ -169,7 +169,7 @@ public class SplashActivity extends AppCompatActivity {
                     UmengEventUtil.bannerEvent(SplashActivity.this, "全部");
                     break;
                 case HomeModulesBean.ITEM_BRAND:
-                    GoodsListNewActivity.startGoodsListNewActivity(SplashActivity.this, value, "", "");
+                    GoodsListNewActivity.startGoodsListNewActivity(SplashActivity.this,"","", value, "", "");
                     UmengEventUtil.bannerEvent(SplashActivity.this, "品牌");
                     break;
                 case HomeModulesBean.ITEM_AUCTION:

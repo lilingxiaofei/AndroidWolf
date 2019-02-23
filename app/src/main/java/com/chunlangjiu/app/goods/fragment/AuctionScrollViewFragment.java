@@ -117,7 +117,7 @@ public class AuctionScrollViewFragment extends BaseFragment {
                     EventManager.getInstance().notify(null, ConstantMsg.CHANGE_TO_EVALUATE);
                     break;
                 case R.id.llSeeMore://查看更多
-                    GoodsListNewActivity.startGoodsListNewActivity(getActivity(), "", "", "");
+                    GoodsListNewActivity.startGoodsListNewActivity(getActivity(), "","","", "", "");
                     break;
             }
         }

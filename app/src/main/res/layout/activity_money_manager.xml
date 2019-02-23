@@ -179,12 +179,12 @@
                 android:text="--"
                 android:textSize="12sp" />
 
-            <TextView
+            <TextView android:id="@+id/tvDepositLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/layout_margin_8dp"
                 android:text="保证金额"
-                android:textColor="#333333"
+                android:textColor="@color/t_red"
                 android:textSize="12sp" />
 
 
