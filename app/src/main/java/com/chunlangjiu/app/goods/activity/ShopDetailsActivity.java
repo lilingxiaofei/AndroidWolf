@@ -3,7 +3,6 @@ package com.chunlangjiu.app.goods.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,7 +13,6 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
-import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.TimeUtils;
@@ -33,8 +31,6 @@ import io.reactivex.schedulers.Schedulers;
 public class ShopDetailsActivity extends BaseActivity {
 
 
-    @BindView(R.id.tv_title)
-    TextView tv_title;
     @BindView(R.id.imgHead)
     CircleImageView imgHead;
     @BindView(R.id.tvShopName)
@@ -112,9 +108,8 @@ public class ShopDetailsActivity extends BaseActivity {
 
 
     private void initView() {
-        MyStatusBarUtils.setStatusBar(this,ContextCompat.getColor(this, R.color.bg_red));
-        MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlShopTitle),true);
-        tv_title.setText(R.string.store_details);
+//        MyStatusBarUtils.setStatusBar(this,ContextCompat.getColor(this, R.color.bg_red));
+//        MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlShopTitle),true);
         tvToShopMain.setOnClickListener(onClickListener);
     }
 

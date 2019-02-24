@@ -72,7 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/llStore"
         android:orientation="vertical"
-        android:padding="10dp" />
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
 
 
     <LinearLayout

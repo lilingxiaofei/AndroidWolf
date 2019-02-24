@@ -73,6 +73,7 @@ public class OrderDetailBean {
     private String total_fee;
     private String discount_fee;
     private int buyer_rate;
+    private boolean is_buyer_rate;
     private String adjust_fee;
     private int created_time;
     private int modified_time;
@@ -86,7 +87,6 @@ public class OrderDetailBean {
     private String refund_fee;
     private String shipping_type_name;
     private String status_desc;
-    private boolean is_buyer_rate;
     private String pay_name;
     private int close_time;// 剩余的支付时间。
     private int end_time;// 订单完成时间。

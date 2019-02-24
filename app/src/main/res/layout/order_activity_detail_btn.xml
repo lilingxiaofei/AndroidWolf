@@ -14,7 +14,6 @@
     <TextView
         android:id="@+id/tvCancel"
         style="@style/order_btn_gray"
-        android:visibility="visible"
         android:text="取消订单" />
 
     <TextView
@@ -75,7 +74,6 @@
     <TextView
         android:id="@+id/tvPay"
         style="@style/order_btn_red"
-        android:visibility="visible"
         android:text="去支付" />
 
     <TextView

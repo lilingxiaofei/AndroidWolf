@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -263,7 +261,7 @@ public class UserFragment extends BaseFragment {
                     toOrderMainActivity(0, 3);
                     break;
                 case R.id.rlOrderFour:// 买家售后订单
-                    toOrderMainActivity(2, 4);
+                    toOrderMainActivity(2, 0);
                     break;
                 case R.id.rlOrderFive:// 买家全部订单
                     toOrderMainActivity(0, 0);

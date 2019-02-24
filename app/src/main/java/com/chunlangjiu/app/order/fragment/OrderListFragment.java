@@ -733,9 +733,8 @@ public class OrderListFragment extends BaseFragment {
                     break;
                 case R.id.llProducts:
                 case R.id.llBottom:
-                    toOrderDetailActivity(view);
+                    toOrderDetailActivity(position);
                     break;
-
                 case R.id.tvCancel://取消订单
                     if (type == 3) {
                         tid = String.valueOf(orderDetailBean.getTid());
@@ -744,8 +743,11 @@ public class OrderListFragment extends BaseFragment {
                         tid = String.valueOf(orderDetailBean.getTid());
                         getCancelReason();
                     }
+                    break;
                 case R.id.tvRefund://申请退款
+                    break;
                 case R.id.tvNotGoods://无货
+                    break;
                 case R.id.tvConsentRefund://同意退款
                     if (type == 5) {
                         cancel_id = String.valueOf(orderDetailBean.getCancel_id());
@@ -818,6 +820,7 @@ public class OrderListFragment extends BaseFragment {
                     }
                     break;
                 case R.id.tvRefusedRefund://拒绝退款
+                    break;
                 case R.id.tvReturnSend://退货发货
                     aftersales_bn = String.valueOf(listBeans.get(position).getAftersales_bn());
                     getLogisticsList();
@@ -1383,9 +1386,8 @@ public class OrderListFragment extends BaseFragment {
 
     }
 
-    private void toOrderDetailActivity(View view) {
+    private void toOrderDetailActivity(int position) {
         Intent intent = new Intent(activity, OrderDetailActivity.class);
-        int position = Integer.parseInt(view.getTag().toString());
         intent.putExtra(OrderParams.ORDERID, listBeans.get(position).getTid());
         if (null != listBeans.get(position).getSku()) {
             intent.putExtra(OrderParams.OID, listBeans.get(position).getSku().getOid());
@@ -1393,7 +1395,7 @@ public class OrderListFragment extends BaseFragment {
         }
         intent.putExtra(OrderParams.CANCELID, listBeans.get(position).getCancel_id());
         intent.putExtra(OrderParams.AUCTIONITEMID, listBeans.get(position).getAuctionitem_id());
-        OrderListBean.ListBean listBean = listBeans.get(Integer.parseInt(view.getTag().toString()));
+        OrderListBean.ListBean listBean = listBeans.get(position);
         intent.putExtra(OrderParams.PRODUCTS, listBean);
         intent.putExtra(OrderParams.TYPE, type);
         startActivity(intent);
