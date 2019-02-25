@@ -436,7 +436,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
             tvDesc.setText(goodsDetailBean.getItem().getExplain());
             GlideUtils.loadImageShop(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_logo(), imgStore);
             tvStoreName.setText(goodsDetailBean.getShop().getShop_name());
-            tvStoreDesc.setText(goodsDetailBean.getShop().getShop_descript());
+            tvStoreDesc.setText("店铺简介："+goodsDetailBean.getShop().getShop_descript());
 
             String level = goodsDetailBean.getShop().getGrade();
             if("2".equals(level)){
@@ -463,7 +463,11 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     }else{
                         JSONObject objItem = jsonArray.getJSONObject(i);
                         if(!TextUtils.isEmpty(objItem.optString("value"))&& !TextUtils.isEmpty(objItem.optString("value"))){
-                            tvLabel.setText(objItem.optString("title")+"：");
+                            String title = objItem.optString("title");
+                            if(title.length() ==2){
+                                title = title.substring(0,1)+"\u3000\u3000"+title.substring(1,2);
+                            }
+                            tvLabel.setText(title+"：");
                             tvValue.setText(objItem.optString("value"));
                             llInfoList.addView(infoView);
                         }
