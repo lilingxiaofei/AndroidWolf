@@ -35,6 +35,7 @@ import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
 import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.money.bean.DepositCashBean;
 import com.chunlangjiu.app.money.bean.FundDetailListBean;
+import com.chunlangjiu.app.money.bean.FundInfoBean;
 import com.chunlangjiu.app.money.bean.UserMoneyBean;
 import com.chunlangjiu.app.order.bean.AuctionOrderListBean;
 import com.chunlangjiu.app.order.bean.CancelOrderResultBean;
@@ -620,6 +621,9 @@ public class ApiUtils {
     }
     public Flowable<ResultBean> cancelDeposit(String token){
        return apiService.depositCancel("member.deposit.cancel","v1",token);
+    }
+    public Flowable<ResultBean<FundInfoBean>> getfundInfo(String token, String log_id){
+        return apiService.fundInfo("member.fundInfo","v1",token,log_id);
     }
 
 }
