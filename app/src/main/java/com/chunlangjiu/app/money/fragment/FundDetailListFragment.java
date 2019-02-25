@@ -41,7 +41,7 @@ public class FundDetailListFragment extends BaseFragment {
     private List<FundDetailListBean.FundDetailBean> fundDetailBeans = new ArrayList<>();
     private FundDetailAdapter fundDetailAdapter;
     private CompositeDisposable disposable;
-    private String types="";
+    private String types = "";
 
     public FundDetailListFragment() {
 
@@ -50,7 +50,7 @@ public class FundDetailListFragment extends BaseFragment {
     @Override
     public void getContentView(LayoutInflater inflater, ViewGroup container) {
         inflater.inflate(R.layout.fund_detail_list_fragment, container, true);
-        types =getArguments().getString("type");
+        types = getArguments().getString("type");
         ButterKnife.bind(this, contentView);
 
     }
@@ -63,7 +63,11 @@ public class FundDetailListFragment extends BaseFragment {
         fundDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), BillDetailActivity.class));
+                Intent intent = new Intent(getActivity(), BillDetailActivity.class);
+                intent.putExtra("log_id", String.valueOf(fundDetailBeans.get(position).getLog_id()));
+                intent.putExtra("amount",fundDetailBeans.get(position).getFee());
+                intent.putExtra("type",types);
+                startActivity(intent);
             }
         });
     }
@@ -85,8 +89,9 @@ public class FundDetailListFragment extends BaseFragment {
             disposable.dispose();
         }
     }
+
     private void getFundDetails() {
-        disposable.add(ApiUtils.getInstance().getFundDetails((String) SPUtils.get("token", ""),types)
+        disposable.add(ApiUtils.getInstance().getFundDetails((String) SPUtils.get("token", ""), types)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<FundDetailListBean>>() {
@@ -115,10 +120,10 @@ public class FundDetailListFragment extends BaseFragment {
 
         @Override
         protected void convert(BaseViewHolder helper, FundDetailListBean.FundDetailBean item) {
-            helper.setText(R.id.tvFundType,item.getMessage());
-            helper.setText(R.id.tvCount,String.format("¥ %s",item.getFee()));
-            helper.setText(R.id.tvTime,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(item.getLogtime()*1000)));
-            helper.setText(R.id.tvStatus,""+item.getLogtime());
+            helper.setText(R.id.tvFundType, item.getMessage());
+            helper.setText(R.id.tvCount, String.format("¥ %s", item.getFee()));
+            helper.setText(R.id.tvTime, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(item.getLogtime() * 1000)));
+            helper.setText(R.id.tvStatus, "" + item.getLogtime());
 
         }
     }

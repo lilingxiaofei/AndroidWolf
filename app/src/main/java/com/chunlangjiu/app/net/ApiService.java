@@ -35,6 +35,7 @@ import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
 import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.money.bean.DepositCashBean;
 import com.chunlangjiu.app.money.bean.FundDetailListBean;
+import com.chunlangjiu.app.money.bean.FundInfoBean;
 import com.chunlangjiu.app.money.bean.UserMoneyBean;
 import com.chunlangjiu.app.order.bean.AuctionOrderListBean;
 import com.chunlangjiu.app.order.bean.CancelOrderResultBean;
@@ -715,4 +716,7 @@ public interface ApiService {
     @FormUrlEncoded
     Flowable<ResultBean<BankCardInfoBean>> bankCardGet(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("card")String bank_id);
 
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FundInfoBean>> fundInfo(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("log_id")String logid);
 }
