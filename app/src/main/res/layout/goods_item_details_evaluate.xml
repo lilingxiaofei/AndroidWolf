@@ -23,7 +23,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:clickable="true"
-        android:isIndicator="false"
+        android:isIndicator="true"
         android:numStars="5"
         android:rating="1"
         android:stepSize="1" />

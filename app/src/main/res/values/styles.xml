@@ -22,7 +22,7 @@
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/t_black</item>
-        <item name="android:gravity">right</item>
+        <item name="android:gravity">center</item>
     </style>
     <style name="auctionValue">
         <item name="android:layout_weight">3.5</item>
@@ -80,7 +80,32 @@
         <item name="android:layout_marginRight">-7dp</item>
         <item name="android:layout_marginTop">-7dp</item>
         <item name="android:visibility">invisible</item>
-
         <item name="android:background">@drawable/cart_num_bg</item>
+    </style>
+
+    <style name="order_btn_red">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textColor">@color/t_red</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginBottom">7dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">7dp</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:background">@drawable/bg_round_transparent_red_border_15dp</item>
+    </style>
+
+    <style name="order_btn_gray">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textColor">@color/t_grey</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginBottom">7dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">7dp</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:background">@drawable/bg_round_transparent_gray_border_15dp</item>
     </style>
 </resources>

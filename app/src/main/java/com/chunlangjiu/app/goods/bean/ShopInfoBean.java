@@ -17,6 +17,12 @@ public class ShopInfoBean {
     }
 
     public class ShopInfo{
+        private String open_time;
+        private String qq;
+        private String wangwang;
+        private String shop_area;
+        private String shop_addr;
+
         private String shop_id;
         private String shop_name;
         private String shop_descript;
@@ -97,6 +103,46 @@ public class ShopInfoBean {
 
         public void setGrade(String grade) {
             this.grade = grade;
+        }
+
+        public String getOpen_time() {
+            return open_time;
+        }
+
+        public void setOpen_time(String open_time) {
+            this.open_time = open_time;
+        }
+
+        public String getQq() {
+            return qq;
+        }
+
+        public void setQq(String qq) {
+            this.qq = qq;
+        }
+
+        public String getWangwang() {
+            return wangwang;
+        }
+
+        public void setWangwang(String wangwang) {
+            this.wangwang = wangwang;
+        }
+
+        public String getShop_area() {
+            return shop_area;
+        }
+
+        public void setShop_area(String shop_area) {
+            this.shop_area = shop_area;
+        }
+
+        public String getShop_addr() {
+            return shop_addr;
+        }
+
+        public void setShop_addr(String shop_addr) {
+            this.shop_addr = shop_addr;
         }
     }
 

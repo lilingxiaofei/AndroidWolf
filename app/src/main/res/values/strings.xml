@@ -54,6 +54,7 @@
     <string name="action_number">%s次出价</string>
     <string name="openPicStr">%ss | 完成</string>
     <string name="store_home">店铺首页</string>
+    <string name="store_details">店铺详情</string>
     <string name="deposit_security_desc">保证金交纳说明:
         \n 1.保证金交纳成功后，用户即可成为星级卖家。尊享海量特权
         \n 2.卖家升级为星级卖家，可无限发布商品，发布的商品有优先排序功能。

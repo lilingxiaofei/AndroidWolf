@@ -1,6 +1,5 @@
 package com.chunlangjiu.app.order.bean;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class SellerOrderDetailBean {
@@ -149,6 +148,9 @@ public class SellerOrderDetailBean {
     private OrderDetailBean.PaymentsBean payments;
     private String info;
 
+    private String commission ;//平台佣金
+    private String shop_payment ;//店铺实收
+
     public long getTid() {
         return tid;
     }
@@ -159,6 +161,22 @@ public class SellerOrderDetailBean {
 
     public long getAftersales_bn() {
         return aftersales_bn;
+    }
+
+    public String getCommission() {
+        return commission;
+    }
+
+    public void setCommission(String commission) {
+        this.commission = commission;
+    }
+
+    public String getShop_payment() {
+        return shop_payment;
+    }
+
+    public void setShop_payment(String shop_payment) {
+        this.shop_payment = shop_payment;
     }
 
     public void setAftersales_bn(long aftersales_bn) {

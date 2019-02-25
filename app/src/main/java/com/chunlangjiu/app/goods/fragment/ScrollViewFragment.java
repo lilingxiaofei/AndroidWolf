@@ -2,7 +2,6 @@ package com.chunlangjiu.app.goods.fragment;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -20,7 +19,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseFragment;
-import com.chunlangjiu.app.goods.activity.AuctionDetailActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
@@ -110,7 +108,7 @@ public class ScrollViewFragment extends BaseFragment {
                     EventManager.getInstance().notify(null, ConstantMsg.CHANGE_TO_EVALUATE);
                     break;
                 case R.id.llSeeMore://查看更多
-                    GoodsListNewActivity.startGoodsListNewActivity(getActivity(), "", "", "");
+                    GoodsListNewActivity.startGoodsListNewActivity(getActivity(), "","","", "", "");
                     break;
             }
         }

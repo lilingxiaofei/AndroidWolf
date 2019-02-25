@@ -38,6 +38,8 @@ public class MoneyManagerActivity extends BaseActivity {
     View vLineSecurityDeposit;
     @BindView(R.id.tvSecurityDeposit)
     TextView tvSecurityDeposit;
+
+
     @BindView(R.id.tvBalance)
     TextView tvBalance;
     @BindView(R.id.tvAvailableBalance)
@@ -46,10 +48,14 @@ public class MoneyManagerActivity extends BaseActivity {
     TextView tvFreezeBalance;
     @BindView(R.id.tvDepositCount)
     TextView tvDepositCount;
+    @BindView(R.id.tvDepositLabel)
+    TextView tvDepositLabel;
     @BindView(R.id.btnPaySecurityDeposit)
     Button btnPaySecurityDeposit;
     @BindView(R.id.btnDepositCancel)
     Button btnDepositCancel;
+
+
 
     private CompositeDisposable disposable;
     private UserMoneyBean userMoneyBean;
@@ -146,14 +152,17 @@ public class MoneyManagerActivity extends BaseActivity {
                                 btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
                                 btnDepositCancel.setVisibility(View.GONE);
+                                tvDepositLabel.setText("保证金金额（已缴纳）");
                             } else if ("2".equals(depositBean.getDeposit_status())) {
                                 btnDepositCancel.setVisibility(View.VISIBLE);
                                 btnPaySecurityDeposit.setText("撤销保证金中");
+                                tvDepositLabel.setText("保证金金额（撤销中）");
                                 btnPaySecurityDeposit.setEnabled(false);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
                             } else if ("0".equals(depositBean.getDeposit_status())) {
                                 btnDepositCancel.setVisibility(View.GONE);
                                 btnPaySecurityDeposit.setText("缴纳保证金");
+                                tvDepositLabel.setText("保证金金额（未缴纳）");
                                 btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
                             }

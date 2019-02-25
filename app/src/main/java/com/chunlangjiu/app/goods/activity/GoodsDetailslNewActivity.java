@@ -195,7 +195,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     GoodsEvaluateActivity.startActivity(GoodsDetailslNewActivity.this,itemId);
                     break;
                 case R.id.llSeeMore://查看更多
-                    GoodsListNewActivity.startGoodsListNewActivity(GoodsDetailslNewActivity.this, "", "", "");
+                    GoodsListNewActivity.startGoodsListNewActivity(GoodsDetailslNewActivity.this,"","", "", "", "");
                     break;
                 case R.id.tvMoreExplain:
                     AuctionExplainActivity.startActivity(GoodsDetailslNewActivity.this);

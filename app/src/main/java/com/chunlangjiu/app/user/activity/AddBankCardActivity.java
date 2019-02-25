@@ -167,7 +167,7 @@ public class AddBankCardActivity extends BaseActivity {
     }
     private void sendCode(){
         //sendSmsCode
-        disposable.add(ApiUtils.getInstance().sendSms((String) SPUtils.get("token",""))
+        disposable.add(ApiUtils.getInstance().getAuthSms(edtPhone.getText().toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {

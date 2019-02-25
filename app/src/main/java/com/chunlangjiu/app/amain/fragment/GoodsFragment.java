@@ -83,6 +83,7 @@ public class GoodsFragment extends BaseFragment {
     private ClassAdapter classAdapter;
     private List<ThirdClassBean> classLists;
     private String selectClassId = "";
+    private String selectClassName = "";
 
     //商品列表
     private SmartRefreshLayout refreshLayout;
@@ -133,12 +134,14 @@ public class GoodsFragment extends BaseFragment {
     private String priceId = "";
 
 
-    public static GoodsFragment newInstance(String searchKey, boolean isActivity, String brandId, String brandName) {
+    public static GoodsFragment newInstance(String searchKey, boolean isActivity,String classId,String className, String brandId, String brandName) {
         Bundle bundle = new Bundle();
         bundle.putString("searchKey", searchKey);
         bundle.putBoolean("isActivity", isActivity);
         bundle.putString("brandId", brandId);
         bundle.putString("brandName", brandName);
+        bundle.putString("classId", classId);
+        bundle.putString("className", className);
         GoodsFragment goodsFragment = new GoodsFragment();
         goodsFragment.setArguments(bundle);
         return goodsFragment;
@@ -212,9 +215,16 @@ public class GoodsFragment extends BaseFragment {
             brandId = intentBrandId;
             isActivity = bundle.getBoolean("isActivity");
             searchKey = bundle.getString("searchKey");
+
+            selectClassId =  bundle.getString("classId");
+            selectClassName =  bundle.getString("className");
         }
         titleView.setVisibility(View.VISIBLE);
-        tvTitleF.setText("全部商品");
+        if(TextUtils.isEmpty(selectClassName)){
+            tvTitleF.setText("全部商品");
+        }else{
+            tvTitleF.setText(selectClassName);
+        }
         imgTitleRightTwoF.setImageResource(R.mipmap.icon_list);
         imgTitleLeftF.setOnClickListener(onClickListener);
         imgTitleRightOneF.setOnClickListener(onClickListener);
