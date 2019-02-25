@@ -220,7 +220,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="10dp"
                     android:background="@color/bg_gray" />
 
                 <RelativeLayout
@@ -245,7 +245,7 @@
                         android:layout_marginLeft="24dp"
                         android:layout_toRightOf="@id/tvGivePriceStr"
                         android:text="¥"
-                        android:textColor="@color/t_black"
+                        android:textColor="@color/t_red"
                         android:textSize="@dimen/sp_mid" />
 
                     <EditText
@@ -253,15 +253,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingLeft="5dp"
                         android:layout_toRightOf="@id/tvRmb"
                         android:background="@null"
                         android:digits="0123456789."
-                        android:gravity="center_vertical|right"
+                        android:gravity="center_vertical"
                         android:hint="请输入金额"
-                        android:textColorHint="@color/t_gray"
+                        android:textColorHint="@color/t_grey"
                         android:singleLine="true"
-                        android:textColor="@color/t_black"
+                        android:textColor="@color/t_red"
                         android:textSize="@dimen/sp_mid" />
                 </RelativeLayout>
 
@@ -359,7 +360,14 @@
                     android:textColor="@color/t_black"
                     android:textSize="@dimen/sp_mid" />
 
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="85dp"
+                    android:hint="(若落标，定金则原路返回)"
+                    android:textColor="@color/t_black"
+                    android:textSize="12sp" />
                 <TextView
                     android:id="@+id/tvGivePrice"
                     android:layout_width="wrap_content"
@@ -367,7 +375,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:textColor="@color/t_black"
+                    android:textColor="@color/t_red"
                     android:textSize="@dimen/sp_mid"
                     tools:text="¥500" />
             </RelativeLayout>
@@ -392,49 +400,43 @@
         </LinearLayout>
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout android:id="@+id/llCommit"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/bg_white">
+        android:gravity="center"
+        android:background="@drawable/bg_red_soild">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/bg_gray" />
 
         <TextView
-            android:id="@+id/tv_str"
+            android:id="@+id/tvCommit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:text="实付金额：¥"
-            android:textColor="@color/t_black"
-            android:textSize="@dimen/sp_small" />
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/bg_red_soild"
+            android:gravity="center"
+            android:text="支付定金"
+            android:textColor="@color/t_white"
+            android:textSize="@dimen/sp_mid" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_str"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:text="实付金额：¥"-->
+            <!--android:textColor="@color/t_black"-->
+            <!--android:textSize="@dimen/sp_small" />-->
 
         <TextView
             android:id="@+id/tvPayPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tv_str"
             android:text="500"
-            android:textColor="@color/t_black"
-            android:textSize="@dimen/sp_small" />
-
-
-        <TextView
-            android:id="@+id/tvCommit"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@color/bg_red"
-            android:gravity="center"
-            android:text="支付定金"
             android:textColor="@color/t_white"
-            android:textSize="@dimen/sp_mid" />
-    </RelativeLayout>
+            android:textSize="13sp" />
+    </LinearLayout>
 
 </LinearLayout>

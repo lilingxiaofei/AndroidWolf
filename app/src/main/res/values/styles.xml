@@ -110,7 +110,7 @@
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/bg_gray</item>
+        <item name="colorControlNormal">@color/t_gray</item>
         <item name="colorControlActivated">@color/bg_yellow</item>
     </style>
 </resources>
