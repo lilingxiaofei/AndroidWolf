@@ -15,8 +15,11 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.goods.bean.GivePriceBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.TimeUtils;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -79,6 +82,7 @@ public class GoodsPriceListActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean<List<GivePriceBean>> listResultBean) throws Exception {
                         priceList = listResultBean.getData();
+                        priceSort();
                         priceAdapter.setNewData(priceList);
                     }
                 }, new Consumer<Throwable>() {
@@ -88,6 +92,20 @@ public class GoodsPriceListActivity extends BaseActivity {
                 }));
     }
 
+
+    private void priceSort(){
+        Collections.sort(priceList, new Comparator<GivePriceBean>() {
+
+            @Override
+            public int compare(GivePriceBean o1, GivePriceBean o2) {
+                // 按照学生的年龄进行升序排列
+                if (BigDecimalUtils.substractObj(o1.getPrice(),o2.getPrice()).doubleValue()>0) {
+                    return -1;
+                }
+                return 1;
+            }
+        });
+    }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override

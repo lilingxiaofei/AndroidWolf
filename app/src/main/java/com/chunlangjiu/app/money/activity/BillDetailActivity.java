@@ -137,6 +137,16 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
             lineaCreateTime.setVisibility(View.GONE);
             lineaApplyTime.setVisibility(View.VISIBLE);
             lineaArrivalTime.setVisibility(View.VISIBLE);
+        } else if ("refund".equals(type)) {
+            lineGoodsName.setVisibility(View.GONE);
+            lineaBusinessStatus.setVisibility(View.VISIBLE);
+            LineaBusinessType.setVisibility(View.VISIBLE);
+            lineaPayWay.setVisibility(View.GONE);
+            lineWithDrawBank.setVisibility(View.GONE);
+            lineaOrderNumber.setVisibility(View.VISIBLE);
+            lineaCreateTime.setVisibility(View.VISIBLE);
+            lineaApplyTime.setVisibility(View.GONE);
+            lineaArrivalTime.setVisibility(View.GONE);
         }
     }
 
@@ -200,6 +210,11 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
             tvOrderNumber.setText(fundInfoBean.getId());
             tvApplyTime.setText("");
             tvArrivalTime.setText("");
+        } else if ("refund".equals(type)) {
+            tvBusinessStatus.setText(fundInfoBean.getStatus());
+            tvBusinessType.setText(fundInfoBean.getMemo());
+            tvOrderNumber.setText(fundInfoBean.getId());
+            tvCreateTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(fundInfoBean.getTime() * 1000)));
         }
     }
 

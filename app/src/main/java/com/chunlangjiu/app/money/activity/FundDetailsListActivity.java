@@ -40,8 +40,8 @@ public class FundDetailsListActivity extends BaseActivity {
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     private List<FundDetailListBean.FundDetailBean> fundDetailBeans = new ArrayList<>();
 
-    private final String[] mTitles = {"销售记录", "充值", "提现"};
-    private final String[] types = {"sell", "add", "expense"};
+    private final String[] mTitles = {"销售记录", "充值", "提现","退款"};
+    private final String[] types = {"sell", "add", "expense","refund"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
