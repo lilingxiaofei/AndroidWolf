@@ -247,7 +247,20 @@
                         android:text="¥"
                         android:textColor="@color/t_red"
                         android:textSize="@dimen/sp_mid" />
-
+                    <TextView
+                        android:id="@+id/tvPriceHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="15dp"
+                        android:paddingLeft="5dp"
+                        android:layout_toRightOf="@id/tvRmb"
+                        android:background="@null"
+                        android:layout_centerVertical="true"
+                        android:hint="请输入金额"
+                        android:textColorHint="@color/t_grey"
+                        android:singleLine="true"
+                        android:textColor="@color/t_red"
+                        android:textSize="12sp" />
                     <EditText
                         android:id="@+id/etPrice"
                         android:layout_width="match_parent"
@@ -255,10 +268,10 @@
                         android:layout_alignParentRight="true"
                         android:paddingRight="15dp"
                         android:paddingLeft="5dp"
-                        android:layout_toRightOf="@id/tvRmb"
+                        android:layout_toRightOf="@id/tvPriceHint"
                         android:background="@null"
                         android:digits="0123456789."
-                        android:gravity="center_vertical"
+                        android:gravity="center_vertical|right"
                         android:hint="请输入金额"
                         android:textColorHint="@color/t_grey"
                         android:singleLine="true"

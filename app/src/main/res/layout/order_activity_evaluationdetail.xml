@@ -88,7 +88,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?attr/ratingBarStyleIndicator"
-                    android:clickable="true"
                     android:isIndicator="false"
                     android:numStars="5"
                     android:rating="3"
