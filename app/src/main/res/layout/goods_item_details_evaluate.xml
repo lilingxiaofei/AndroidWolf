@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         style="?attr/ratingBarStyleSmall"
         android:clickable="true"
-        android:isIndicator="false"
+        android:isIndicator="true"
         android:theme="@style/RatingBar"
         />
 

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -98,7 +99,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     @BindView(R.id.tvPayPrice)
     TextView tvPayPrice;
     @BindView(R.id.llCommit)
-    TextView llCommit;
+    LinearLayout llCommit;
 
     private IWXAPI wxapi;
 
