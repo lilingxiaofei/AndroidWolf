@@ -186,7 +186,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
         tv_name.setText(goodsDetailBean.getItem().getTitle());
         tv_price.setText("¥" + goodsDetailBean.getItem().getAuction().getStarting_price());
         tvGivePrice.setText("¥" + goodsDetailBean.getItem().getAuction().getPledge());
-        tvPayPrice.setText("（实付金额：¥"+goodsDetailBean.getItem().getAuction().getPledge()+"）");
+        tvPayPrice.setText("（定金金额 ¥"+goodsDetailBean.getItem().getAuction().getPledge()+"）");
 
         if ("true".equals(goodsDetailBean.getItem().getAuction().getAuction_status())) {
             //明拍
