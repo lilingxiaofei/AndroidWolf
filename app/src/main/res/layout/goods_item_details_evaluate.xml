@@ -36,9 +36,11 @@
         style="?attr/ratingBarStyleSmall"
         android:clickable="true"
         android:isIndicator="true"
+        android:numStars="5"
+        android:rating="1"
+        android:stepSize="1" 
         android:theme="@style/RatingBar"
         />
-
 
     <TextView
         android:id="@+id/tvContent"
