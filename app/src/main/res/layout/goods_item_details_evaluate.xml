@@ -15,18 +15,32 @@
         android:textColor="@color/t_black"
         android:textSize="@dimen/sp_small" />
 
-    <RatingBar
+    <!--<RatingBar-->
+        <!--android:id="@+id/ratingBar"-->
+        <!--style="?android:attr/ratingBarStyleSmall"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:clickable="true"-->
+        <!--android:isIndicator="true"-->
+        <!--android:numStars="5"-->
+        <!--android:rating="1"-->
+        <!--android:stepSize="1" />-->
+    <android.support.v7.widget.AppCompatRatingBar
         android:id="@+id/ratingBar"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?attr/ratingBarStyleSmall"
         android:clickable="true"
         android:isIndicator="true"
         android:numStars="5"
         android:rating="1"
-        android:stepSize="1" />
+        android:stepSize="1" 
+        android:theme="@style/RatingBar"
+        />
 
     <TextView
         android:id="@+id/tvContent"

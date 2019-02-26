@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.bean.AddressListDetailBean;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -96,8 +98,8 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     TextView tvGivePrice;
     @BindView(R.id.tvPayPrice)
     TextView tvPayPrice;
-    @BindView(R.id.tvCommit)
-    TextView tvCommit;
+    @BindView(R.id.llCommit)
+    LinearLayout llCommit;
 
     private IWXAPI wxapi;
 
@@ -133,7 +135,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
                 case R.id.rlChoicePay:
                     showPayMethodDialog();
                     break;
-                case R.id.tvCommit:
+                case R.id.llCommit:
                     checkData();
                     break;
             }
@@ -168,7 +170,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
         rlNoAddress.setOnClickListener(onClickListener);
         rlHasAddress.setOnClickListener(onClickListener);
         rlChoicePay.setOnClickListener(onClickListener);
-        tvCommit.setOnClickListener(onClickListener);
+        llCommit.setOnClickListener(onClickListener);
     }
 
     private void initData() {
@@ -181,11 +183,11 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
         tv_name.setText(goodsDetailBean.getItem().getTitle());
         tv_price.setText("¥" + goodsDetailBean.getItem().getAuction().getStarting_price());
         tvGivePrice.setText("¥" + goodsDetailBean.getItem().getAuction().getPledge());
-        tvPayPrice.setText(goodsDetailBean.getItem().getAuction().getPledge());
+        tvPayPrice.setText("（实付金额：¥"+goodsDetailBean.getItem().getAuction().getPledge()+"）");
 
         if ("true".equals(goodsDetailBean.getItem().getAuction().getAuction_status())) {
             //明拍
-            etPrice.setHint("目前最高出价为¥" + goodsDetailBean.getItem().getAuction().getMax_price());
+            etPrice.setHint(CommonUtils.joinStr("目前最高出价为¥",goodsDetailBean.getItem().getAuction().getMax_price()));
         } else {
             //暗拍
             etPrice.setHint("暗拍商品，其他出价保密");

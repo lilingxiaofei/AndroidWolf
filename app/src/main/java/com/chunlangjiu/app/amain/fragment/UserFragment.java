@@ -29,6 +29,7 @@ import com.chunlangjiu.app.user.activity.CompanyAuthActivity;
 import com.chunlangjiu.app.user.activity.PersonAuthActivity;
 import com.chunlangjiu.app.user.activity.ServiceActivity;
 import com.chunlangjiu.app.user.activity.SettingActivity;
+import com.chunlangjiu.app.user.activity.VerifiedActivity;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
@@ -235,6 +236,11 @@ public class UserFragment extends BaseFragment {
                 case R.id.imgEditName://编辑昵称或者店铺名
                     showEditNameDialog();
                     break;
+                case R.id.llAuthStatus:
+                    if (!AuthStatusBean.AUTH_SUCCESS.equals(personStatus) && !AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+                        startActivity(new Intent(getActivity(), VerifiedActivity.class));
+                    }
+                    break;
                 case R.id.tvAuthRealName:// 个人认证
                     checkPersonStatus();
                     break;
@@ -401,6 +407,7 @@ public class UserFragment extends BaseFragment {
 
         tvMyTitle = rootView.findViewById(R.id.tvUserTitle);
         llAuthStatus = rootView.findViewById(R.id.llAuthStatus);
+        llAuthStatus.setOnClickListener(onClickListener);
         llAuthStatus.setVisibility(View.GONE);
         imgAuthStatus = rootView.findViewById(R.id.imgAuthStatus);
         tvAuthStatus = rootView.findViewById(R.id.tvAuthStatus);
@@ -731,7 +738,7 @@ public class UserFragment extends BaseFragment {
                 }));
     }
 
-    private void updateMyNum(){
+    private void updateMyNum() {
 
     }
 
@@ -779,7 +786,7 @@ public class UserFragment extends BaseFragment {
                             tvWareHouseGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getInstock_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
                             tvAuctionGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getAuction_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
                             tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getNotrate_num()).intValue() > 0 ? View.VISIBLE
-                                          : View.GONE);
+                                    : View.GONE);
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -928,12 +935,13 @@ public class UserFragment extends BaseFragment {
                                     changeUserType();
                                 } else if (AuthStatusBean.AUTH_LOCKED.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_LOCKED.equals(authStatusBeans.get(1).getStatus())) {
                                     ToastUtils.showShort("您的认证正在审核中，我们会尽快处理");
+                                    startActivity(new Intent(getActivity(), VerifiedActivity.class));
                                 } else if (AuthStatusBean.AUTH_FAILING.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_FAILING.equals(authStatusBeans.get(1).getStatus())) {
                                     ToastUtils.showShort("您的认证被驳回，请重新提交资料审核");
-                                    startActivity(new Intent(getActivity(), PersonAuthActivity.class));
+                                    startActivity(new Intent(getActivity(), VerifiedActivity.class));
                                 } else {
                                     ToastUtils.showShort("您还没有进行实名认证，请先认证");
-                                    startActivity(new Intent(getActivity(), PersonAuthActivity.class));
+                                    startActivity(new Intent(getActivity(), VerifiedActivity.class));
                                 }
                             }
                         }, new Consumer<Throwable>() {
