@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
@@ -57,7 +58,7 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
     @BindView(R.id.llProducts)
     LinearLayout llProducts;
     @BindView(R.id.rbEvaluation)
-    MaterialRatingBar rbEvaluation;
+    RatingBar rbEvaluation;
     @BindView(R.id.etContent)
     EditText etContent;
     @BindView(R.id.tvCommit)
