@@ -179,7 +179,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     private void initData() {
         goodsDetailBean = (GoodsDetailBean) getIntent().getSerializableExtra("goodsDetailBean");
 
-        GlideUtils.loadImage(this, goodsDetailBean.getShop().getShop_logo(), img_store);
+        GlideUtils.loadImageShop(this, goodsDetailBean.getShop().getShop_logo(), img_store);
         tv_store_name.setText(goodsDetailBean.getShop().getShop_name());
 
         GlideUtils.loadImage(this, goodsDetailBean.getItem().getImage_default_id(), img_pic);

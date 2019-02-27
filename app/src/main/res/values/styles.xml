@@ -84,8 +84,9 @@
     </style>
 
     <style name="order_btn_red">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:layout_height">25dp</item>
         <item name="android:textColor">@color/t_red</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>
@@ -97,8 +98,9 @@
     </style>
 
     <style name="order_btn_gray">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:layout_height">25dp</item>
         <item name="android:textColor">@color/t_grey</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>

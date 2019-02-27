@@ -49,12 +49,12 @@ public class ConfirmOrderGoodsAdapter extends BaseQuickAdapter<OrderGoodsBean, B
                 }
 
                 ImageView img_store = helper.getView(R.id.img_store);
-                GlideUtils.loadImage(context, item.getStoreLogo(), img_store);
+                GlideUtils.loadImageShop(context, item.getStoreLogo(), img_store);
                 helper.setText(R.id.tv_store_name, item.getStoreName());
                 break;
             case OrderGoodsBean.ITEM_GOODS:
                 ImageView img_pic = helper.getView(R.id.img_pic);
-                GlideUtils.loadImage(context, item.getGoodsPic(), img_pic);
+                GlideUtils.loadImageShop(context, item.getGoodsPic(), img_pic);
                 helper.setText(R.id.tv_name, item.getGoodsName());
                 helper.setText(R.id.tv_price, "¥" + item.getGoodsPrice());
                 helper.setText(R.id.tv_num, "x" + item.getGoodsNum());

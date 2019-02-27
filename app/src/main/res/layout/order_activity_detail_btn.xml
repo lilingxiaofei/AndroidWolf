@@ -10,6 +10,7 @@
     <TextView
         android:id="@+id/tvDelete"
         style="@style/order_btn_gray"
+        android:visibility="visible"
         android:text="删除订单" />
     <TextView
         android:id="@+id/tvCancel"
