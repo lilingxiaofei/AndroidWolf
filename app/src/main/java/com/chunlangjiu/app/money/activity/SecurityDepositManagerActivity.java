@@ -89,7 +89,7 @@ public class SecurityDepositManagerActivity extends BaseActivity {
                 break;
             case R.id.btnNext: {
                 depositRefund();
-                depositRefund();
+//                depositRefund();
 //                Intent intent = new Intent(this, WithDrawActivity.class);
 //                intent.putExtra(WithDrawActivity.WithDrawType, WithDrawActivity.DepositRefund);
 //                startActivity(intent);
