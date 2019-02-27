@@ -164,7 +164,7 @@
         android:id="@+id/tvCommit"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:background="#ff0000"
+        android:background="@color/bg_red"
         android:gravity="center"
         android:text="提交售后申请"
         android:textColor="@color/white" />

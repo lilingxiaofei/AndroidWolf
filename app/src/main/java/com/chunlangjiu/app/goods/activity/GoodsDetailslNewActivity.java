@@ -511,15 +511,22 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         llEvaluate.removeAllViews();
         for (int i = 0; i < list.size(); i++) {
             if (i < 2) {
+                EvaluateListBean.EvaluateDetailBean bean = list.get(i);
                 View evaluateView = View.inflate(GoodsDetailslNewActivity.this, R.layout.goods_item_details_evaluate, null);
                 TextView tvName = evaluateView.findViewById(R.id.tvName);
                 RatingBar ratingBar = evaluateView.findViewById(R.id.ratingBar);
                 TextView tvContent = evaluateView.findViewById(R.id.tvContent);
                 TextView tvTime = evaluateView.findViewById(R.id.tvTime);
                 tvName.setText(list.get(i).getUser_name());
-                ratingBar.setRating(3);
-                tvContent.setText(list.get(i).getContent());
-                tvTime.setText(TimeUtils.millisToYearMD(list.get(i).getCreated_time() + "000"));
+                if ("good".equals(bean.getResult())) {
+                    ratingBar.setRating(5);
+                } else if ("neutral".equals(bean.getResult())) {
+                    ratingBar.setRating(3);
+                } else {
+                    ratingBar.setRating(2);
+                }
+                tvContent.setText(bean.getContent());
+                tvTime.setText(TimeUtils.millisToYearMD(bean.getCreated_time() + "000"));
                 llEvaluate.addView(evaluateView);
             }
         }

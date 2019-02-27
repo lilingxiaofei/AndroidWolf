@@ -188,13 +188,13 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
         tvGivePrice.setText("¥" + goodsDetailBean.getItem().getAuction().getPledge());
         tvPayPrice.setText("（定金金额 ¥"+goodsDetailBean.getItem().getAuction().getPledge()+"）");
 
-        if ("true".equals(goodsDetailBean.getItem().getAuction().getAuction_status())) {
-            //明拍
-            tvPriceHint.setHint(CommonUtils.joinStr("(目前最高出价为¥",goodsDetailBean.getItem().getAuction().getMax_price(),")"));
-        } else {
-            //暗拍
-            tvPriceHint.setHint("(暗拍商品，其他出价保密)");
-        }
+//        if ("true".equals(goodsDetailBean.getItem().getAuction().getAuction_status())) {
+//            //明拍
+//            tvPriceHint.setHint(CommonUtils.joinStr("(目前最高出价为¥",goodsDetailBean.getItem().getAuction().getMax_price(),")"));
+//        } else {
+//            //暗拍
+//            tvPriceHint.setHint("(暗拍商品，其他出价保密)");
+//        }
     }
 
 

@@ -32,7 +32,7 @@ public class ShareUtils {
     public static void shareLink(Activity activity, UMWeb umWeb, UMShareListener umShareListener) {
         new ShareAction(activity)
                 .withMedia(umWeb)
-                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ,SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE)
                 .setCallback(umShareListener).open();
     }
 }

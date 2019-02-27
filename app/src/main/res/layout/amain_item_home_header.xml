@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/bg_gray"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -194,7 +195,6 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-
     <LinearLayout
         android:id="@+id/llBrand"
         android:layout_width="match_parent"
