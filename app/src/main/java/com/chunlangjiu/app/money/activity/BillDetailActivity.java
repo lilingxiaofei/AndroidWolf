@@ -88,7 +88,6 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
     private String log_id = "";
     private String amount = "";
     private String type = "";
-    // {"sell", "add", "expense"};
 
 
     @Override
