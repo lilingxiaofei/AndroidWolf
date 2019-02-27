@@ -21,6 +21,7 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ public class FundDetailListFragment extends BaseFragment {
 
     @BindView(R.id.fundDetail)
     RecyclerView fundDetail;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+
     private List<FundDetailListBean.FundDetailBean> fundDetailBeans = new ArrayList<>();
     private FundDetailAdapter fundDetailAdapter;
     private CompositeDisposable disposable;
@@ -52,12 +56,15 @@ public class FundDetailListFragment extends BaseFragment {
         inflater.inflate(R.layout.fund_detail_list_fragment, container, true);
         types = getArguments().getString("type");
         ButterKnife.bind(this, contentView);
+        refreshLayout.setEnableLoadMore(false);
+        refreshLayout.setEnableRefresh(false);
 
     }
 
     @Override
     public void initView() {
         fundDetailAdapter = new FundDetailAdapter(R.layout.fund_details_item, fundDetailBeans);
+        fundDetailAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) fundDetail.getParent(), false));
         fundDetail.setLayoutManager(new LinearLayoutManager(getActivity()));
         fundDetail.setAdapter(fundDetailAdapter);
         fundDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

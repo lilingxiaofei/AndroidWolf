@@ -702,7 +702,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<DepositCashBean>> depositRefund(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token,@Field("bank_id")String bank_id);
+    Flowable<ResultBean<DepositCashBean>> depositRefund(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
 
     @POST("index.php/topapi")
     @FormUrlEncoded

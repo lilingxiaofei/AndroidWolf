@@ -89,6 +89,11 @@ public class SecurityDepositManagerActivity extends BaseActivity {
                 break;
             case R.id.btnNext: {
                 depositRefund();
+//                depositRefund();
+//                Intent intent = new Intent(this, WithDrawActivity.class);
+//                intent.putExtra(WithDrawActivity.WithDrawType, WithDrawActivity.DepositRefund);
+//                startActivity(intent);
+//                finish();
             }
             break;
             case R.id.btnCancel:
@@ -118,42 +123,6 @@ public class SecurityDepositManagerActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 撤销保证金
-     *
-     * @param bankCardId
-     */
-
-    private void depositRefund() {
-        showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().depositRefund((String) SPUtils.get("token", ""),"")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<DepositCashBean>>() {
-                    @Override
-                    public void accept(ResultBean<DepositCashBean> resultBean) throws Exception {
-                        hideLoadingDialog();
-                        DepositCashBean depositCashBean = resultBean.getData();
-                        if (null != depositCashBean) {
-                            ToastUtils.showShort(depositCashBean.getMessage());
-                            EventManager.getInstance().notify(null, ConstantMsg.WITHDRAW_DEPOSIT_REFUND);
-//                            finish();
-                            Intent intent = new Intent(SecurityDepositManagerActivity.this, SecurityDepositManagerActivity.class);
-                            intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
-                            intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.REFUND_SUCCESS);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        hideLoadingDialog();
-                        ToastUtils.showErrorMsg(throwable);
-                    }
-                }));
-    }
-
     @Override
     public void setTitleView() {
         securityDepositType = getIntent().getStringExtra(SECURITY_DEPOSIT_TYPE);
@@ -179,8 +148,42 @@ public class SecurityDepositManagerActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean resultBean) throws Exception {
                         hideLoadingDialog();
+                        EventManager.getInstance().notify(null, ConstantMsg.WITHDRAW_DEPOSIT_REFUND);
                         ToastUtils.showShort("取消撤销成功");
+                        finish();
 
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                }));
+    }
+    /**
+     * 撤销保证金
+     *
+     * @param
+     */
+
+    private void depositRefund( ) {
+        showLoadingDialog();
+        disposable.add(ApiUtils.getInstance().depositRefund((String) SPUtils.get("token", ""))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<DepositCashBean>>() {
+                    @Override
+                    public void accept(ResultBean<DepositCashBean> resultBean) throws Exception {
+                        hideLoadingDialog();
+                        DepositCashBean depositCashBean = resultBean.getData();
+                        if (null != depositCashBean) {
+                            ToastUtils.showShort(depositCashBean.getMessage());
+                            EventManager.getInstance().notify(null, ConstantMsg.WITHDRAW_DEPOSIT_REFUND);
+                            depositStatus = REFUND_SUCCESS;
+                            setViewByType();
+//                            finish();
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
