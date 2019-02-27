@@ -39,6 +39,7 @@ import com.chunlangjiu.app.order.dialog.CancelOrderDialog;
 import com.chunlangjiu.app.order.dialog.ChooseExpressDialog;
 import com.chunlangjiu.app.order.dialog.ChooseExpressSellerDialog;
 import com.chunlangjiu.app.order.dialog.RefundAfterSaleOrderDialog;
+import com.chunlangjiu.app.order.dialog.RefundAmountDialog;
 import com.chunlangjiu.app.order.dialog.SellerCancelOrderDialog;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -112,6 +113,7 @@ public class OrderListFragment extends BaseFragment {
 
     private int position;
     CommonConfirmDialog confirmDialog ;
+    RefundAmountDialog refundAmountDialog ;
     /**
      *  静态工厂方法需要一个int型的值来初始化fragment的参数，
      *  然后返回新的fragment到调用者
@@ -144,6 +146,8 @@ public class OrderListFragment extends BaseFragment {
 
         confirmDialog = new CommonConfirmDialog(activity,"确认删除订单吗？");
         confirmDialog.setDialogStr("取消","删除");
+        refundAmountDialog = new RefundAmountDialog(activity);
+
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -725,7 +729,7 @@ public class OrderListFragment extends BaseFragment {
 
     private BaseQuickAdapter.OnItemChildClickListener onItemChildClickListener = new BaseQuickAdapter.OnItemChildClickListener() {
         @Override
-        public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        public void onItemChildClick(BaseQuickAdapter adapter, View view,final int position) {
             OrderListBean.ListBean orderDetailBean = listBeans.get(position);
             switch (view.getId()) {
                 case R.id.llStore:
@@ -761,8 +765,8 @@ public class OrderListFragment extends BaseFragment {
                                         hideLoadingDialog();
                                         if (0 == resultBean.getErrorcode()) {
                                             ToastUtils.showShort("同意退款成功");
-                                            initData();
-                                            EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+//                                            EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                            refreshLayout.autoRefresh();
                                         } else {
                                             if (TextUtils.isEmpty(resultBean.getMsg())) {
                                                 ToastUtils.showShort("同意退款失败");
@@ -784,39 +788,46 @@ public class OrderListFragment extends BaseFragment {
                                 }));
                         break;
                     } else {
-                        showLoadingDialog();
-                        aftersales_bn = String.valueOf(orderDetailBean.getAftersales_bn());
-                        disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true",
-                                new BigDecimal(orderDetailBean.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString(), "")
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<ResultBean>() {
-                                    @Override
-                                    public void accept(ResultBean resultBean) throws Exception {
-                                        hideLoadingDialog();
-                                        if (0 == resultBean.getErrorcode()) {
-                                            ToastUtils.showShort("商品签单并同意退款成功");
-                                            initData();
-                                            EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
-                                        } else {
-                                            if (TextUtils.isEmpty(resultBean.getMsg())) {
-                                                ToastUtils.showShort("商品签单并同意退款失败");
-                                            } else {
-                                                ToastUtils.showShort(resultBean.getMsg());
+                        refundAmountDialog.show();
+                        refundAmountDialog.setCallBack(new RefundAmountDialog.CallBack() {
+                            @Override
+                            public void confirm(String money) {
+                                showLoadingDialog();
+                                OrderListBean.ListBean orderDetailBean = listBeans.get(position);
+                                aftersales_bn = String.valueOf(orderDetailBean.getAftersales_bn());
+                                disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true",money, "")
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<ResultBean>() {
+                                            @Override
+                                            public void accept(ResultBean resultBean) throws Exception {
+                                                hideLoadingDialog();
+                                                if (0 == resultBean.getErrorcode()) {
+                                                    ToastUtils.showShort("商品签单并同意退款成功");
+//                                                    EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                                    refreshLayout.autoRefresh();
+                                                } else {
+                                                    if (TextUtils.isEmpty(resultBean.getMsg())) {
+                                                        ToastUtils.showShort("商品签单并同意退款失败");
+                                                    } else {
+                                                        ToastUtils.showShort(resultBean.getMsg());
+                                                    }
+                                                }
                                             }
-                                        }
-                                    }
-                                }, new Consumer<Throwable>() {
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-                                        hideLoadingDialog();
-                                        if (TextUtils.isEmpty(throwable.getMessage())) {
-                                            ToastUtils.showShort("商品签单并同意退款失败");
-                                        } else {
-                                            ToastUtils.showShort(throwable.getMessage());
-                                        }
-                                    }
-                                }));
+                                        }, new Consumer<Throwable>() {
+                                            @Override
+                                            public void accept(Throwable throwable) throws Exception {
+                                                hideLoadingDialog();
+                                                if (TextUtils.isEmpty(throwable.getMessage())) {
+                                                    ToastUtils.showShort("商品签单并同意退款失败");
+                                                } else {
+                                                    ToastUtils.showShort(throwable.getMessage());
+                                                }
+                                            }
+                                        }));
+                            }
+                        });
+
                     }
                     break;
                 case R.id.tvRefusedRefund://拒绝退款
@@ -845,8 +856,8 @@ public class OrderListFragment extends BaseFragment {
                                                     hideLoadingDialog();
                                                     if (0 == resultBean.getErrorcode()) {
                                                         ToastUtils.showShort("拒绝申请成功");
-                                                        initData();
-                                                        EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+//                                                        EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                                        refreshLayout.autoRefresh();
                                                     } else {
                                                         if (TextUtils.isEmpty(resultBean.getMsg())) {
                                                             ToastUtils.showShort("拒绝申请失败");
@@ -887,8 +898,7 @@ public class OrderListFragment extends BaseFragment {
                                                     hideLoadingDialog();
                                                     if (0 == resultBean.getErrorcode()) {
                                                         ToastUtils.showShort("拒绝申请成功");
-                                                        initData();
-                                                        EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                                        refreshLayout.autoRefresh();
                                                     } else {
                                                         if (TextUtils.isEmpty(resultBean.getMsg())) {
                                                             ToastUtils.showShort("拒绝申请失败");
@@ -925,8 +935,7 @@ public class OrderListFragment extends BaseFragment {
                                     hideLoadingDialog();
                                     if (0 == resultBean.getErrorcode()) {
                                         ToastUtils.showShort("同意申请成功");
-                                        initData();
-                                        EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                        refreshLayout.autoRefresh();
                                     } else {
                                         if (TextUtils.isEmpty(resultBean.getMsg())) {
                                             ToastUtils.showShort("同意申请失败");
@@ -1343,6 +1352,7 @@ public class OrderListFragment extends BaseFragment {
     }
 
     private void delete() {
+        confirmDialog.show();
         confirmDialog.setCallBack(new CommonConfirmDialog.CallBack() {
             @Override
             public void onConfirm() {

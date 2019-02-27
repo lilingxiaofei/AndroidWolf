@@ -35,8 +35,10 @@ import com.chunlangjiu.app.order.dialog.CancelOrderDialog;
 import com.chunlangjiu.app.order.dialog.ChooseExpressDialog;
 import com.chunlangjiu.app.order.dialog.ChooseExpressSellerDialog;
 import com.chunlangjiu.app.order.dialog.RefundAfterSaleOrderDialog;
+import com.chunlangjiu.app.order.dialog.RefundAmountDialog;
 import com.chunlangjiu.app.order.dialog.SellerCancelOrderDialog;
 import com.chunlangjiu.app.order.params.OrderParams;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
@@ -45,6 +47,7 @@ import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.BeanCopyUitl;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.TimeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.pkqup.commonlibrary.view.countdownview.CountdownView;
@@ -226,6 +229,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     private RefundAfterSaleOrderDialog refundAfterSaleOrderDialog;
     private RefundAfterSaleOrderDialog refundCancelOrderDialog;
+    private RefundAmountDialog refundAmountDialog ;
     private CommonConfirmDialog confirmDialog;
 
     @Override
@@ -248,6 +252,7 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void initView() {
+        refundAmountDialog = new RefundAmountDialog(this);
         tvDelete.setOnClickListener(onClickListener);//删除订单
         tvCancel.setOnClickListener(onClickListener);//取消订单
         tvRefund.setOnClickListener(onClickListener);//申请退款
@@ -623,7 +628,7 @@ public class OrderDetailActivity extends BaseActivity {
             }
 
             if (!TextUtils.isEmpty(orderDetailBean.getAuction().getMax_price())) {
-                tvSendPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getAuction().getMax_price()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+                tvSendPrice.setText(CommonUtils.joinStr("¥",orderDetailBean.getAuction().getMax_price()));
             }
 
 
@@ -638,7 +643,7 @@ public class OrderDetailActivity extends BaseActivity {
             tvTips1.setText("商品起拍价：");
             TextView tvTips2 = findViewById(R.id.tvTips2);
             tvTips2.setText("当前最高出价：");
-            tvPayment.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getAuction().getPledge()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+            tvPayment.setText(CommonUtils.joinStr("¥",BigDecimalUtils.objToStr(orderDetailBean.getAuction().getPledge(),2)));
 
             tvOrderStatus.setText(orderDetailBean.getAuction().getStatus_desc());
 
@@ -1023,39 +1028,45 @@ public class OrderDetailActivity extends BaseActivity {
                                 }));
                         break;
                     } else {
-                        showLoadingDialog();
-                        aftersales_bn = String.valueOf(orderDetailBean.getAftersales_bn());
-                        disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true",
-                                new BigDecimal(orderDetailBean.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString(), "")
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<ResultBean>() {
-                                    @Override
-                                    public void accept(ResultBean resultBean) throws Exception {
-                                        hideLoadingDialog();
-                                        if (0 == resultBean.getErrorcode()) {
-                                            ToastUtils.showShort("商品签单并同意退款成功");
-                                            initData();
-                                            EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
-                                        } else {
-                                            if (TextUtils.isEmpty(resultBean.getMsg())) {
-                                                ToastUtils.showShort("商品签单并同意退款失败");
-                                            } else {
-                                                ToastUtils.showShort(resultBean.getMsg());
+                        refundAmountDialog.show();
+                        refundAmountDialog.setCallBack(new RefundAmountDialog.CallBack() {
+                            @Override
+                            public void confirm(String money) {
+                                showLoadingDialog();
+                                aftersales_bn = String.valueOf(orderDetailBean.getAftersales_bn());
+                                disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true",money, "")
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<ResultBean>() {
+                                            @Override
+                                            public void accept(ResultBean resultBean) throws Exception {
+                                                hideLoadingDialog();
+                                                if (0 == resultBean.getErrorcode()) {
+                                                    ToastUtils.showShort("商品签单并同意退款成功");
+                                                    initData();
+                                                    EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
+                                                } else {
+                                                    if (TextUtils.isEmpty(resultBean.getMsg())) {
+                                                        ToastUtils.showShort("商品签单并同意退款失败");
+                                                    } else {
+                                                        ToastUtils.showShort(resultBean.getMsg());
+                                                    }
+                                                }
                                             }
-                                        }
-                                    }
-                                }, new Consumer<Throwable>() {
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-                                        hideLoadingDialog();
-                                        if (TextUtils.isEmpty(throwable.getMessage())) {
-                                            ToastUtils.showShort("商品签单并同意退款失败");
-                                        } else {
-                                            ToastUtils.showShort(throwable.getMessage());
-                                        }
-                                    }
-                                }));
+                                        }, new Consumer<Throwable>() {
+                                            @Override
+                                            public void accept(Throwable throwable) throws Exception {
+                                                hideLoadingDialog();
+                                                if (TextUtils.isEmpty(throwable.getMessage())) {
+                                                    ToastUtils.showShort("商品签单并同意退款失败");
+                                                } else {
+                                                    ToastUtils.showShort(throwable.getMessage());
+                                                }
+                                            }
+                                        }));
+                            }
+                        });
+
                     }
                     break;
                 case R.id.tvRefusedRefund://拒绝退款
@@ -1606,6 +1617,7 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void delete() {
+        confirmDialog.show();
         confirmDialog.setCallBack(new CommonConfirmDialog.CallBack() {
             @Override
             public void onConfirm() {

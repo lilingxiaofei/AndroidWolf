@@ -233,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
-                        android:text="出钱金额"
+                        android:text="出价金额"
                         android:textColor="@color/t_black"
                         android:textSize="15sp" />
 
@@ -255,7 +255,7 @@
                         android:layout_toRightOf="@id/tvRmb"
                         android:background="@null"
                         android:layout_centerVertical="true"
-                        android:hint="请输入金额"
+                        android:hint="（出价金额需高于起拍价）"
                         android:textColorHint="@color/t_grey"
                         android:singleLine="true"
                         android:textColor="@color/t_red"
@@ -377,7 +377,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="85dp"
-                    android:hint="(若落标，定金则原路返回)"
+                    android:hint="(若落标，定金则原路退回)"
                     android:textColor="@color/t_black"
                     android:textSize="12sp" />
                 <TextView
@@ -396,6 +396,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:text="说明："
+                android:textColor="@color/t_red"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -404,7 +405,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="15dp"
                 android:lineSpacingExtra="5dp"
-                android:text="1、仅第一次对竞拍商品出价需交付定金；\n2、竞拍结束后，定金将会在三个工作日内进行退还；\n3、买家中标后不可申请退款退货，如违约平台将有权不返还定金，请您在出价前务必慎重考虑。"
+                android:textSize="12sp"
+                android:text="1.“出价金额”为竞拍叫价，叫价期间无需进行支付操作，请慎重出 价，若您中标，则需支付扣除定金外的尾款；\n2.买家中标后不支付竞拍尾款，平台将有权不返还定金，\n3.竞拍结束，若落标，定金将在三个工作日内进行退还。"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

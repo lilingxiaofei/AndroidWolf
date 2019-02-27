@@ -10,7 +10,10 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.amain.activity.MainActivity;
 import com.chunlangjiu.app.money.bean.DepositBean;
+import com.chunlangjiu.app.money.bean.DepositCashBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.ConstantMsg;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -85,10 +88,7 @@ public class SecurityDepositManagerActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btnNext: {
-                Intent intent = new Intent(this, WithDrawActivity.class);
-                intent.putExtra(WithDrawActivity.WithDrawType, WithDrawActivity.DepositRefund);
-                startActivity(intent);
-                finish();
+                depositRefund();
             }
             break;
             case R.id.btnCancel:
@@ -116,6 +116,42 @@ public class SecurityDepositManagerActivity extends BaseActivity {
             }
             break;
         }
+    }
+
+    /**
+     * 撤销保证金
+     *
+     * @param bankCardId
+     */
+
+    private void depositRefund() {
+        showLoadingDialog();
+        disposable.add(ApiUtils.getInstance().depositRefund((String) SPUtils.get("token", ""),"")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<DepositCashBean>>() {
+                    @Override
+                    public void accept(ResultBean<DepositCashBean> resultBean) throws Exception {
+                        hideLoadingDialog();
+                        DepositCashBean depositCashBean = resultBean.getData();
+                        if (null != depositCashBean) {
+                            ToastUtils.showShort(depositCashBean.getMessage());
+                            EventManager.getInstance().notify(null, ConstantMsg.WITHDRAW_DEPOSIT_REFUND);
+//                            finish();
+                            Intent intent = new Intent(SecurityDepositManagerActivity.this, SecurityDepositManagerActivity.class);
+                            intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
+                            intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.REFUND_SUCCESS);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                }));
     }
 
     @Override

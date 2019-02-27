@@ -140,7 +140,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/layout_padding_12dp"
                     android:background="@drawable/bg_gray_rectangle"
-                    android:text="下一步"
+                    android:text="撤销"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_15sp" />
 
@@ -152,7 +152,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginBottom="@dimen/layout_padding_12dp"
                     android:background="@drawable/bg_red_rectangle"
-                    android:text="不撤销了"
+                    android:text="不撤销"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_15sp" />
             </LinearLayout>
