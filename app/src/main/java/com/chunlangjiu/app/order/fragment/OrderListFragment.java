@@ -58,7 +58,6 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +110,6 @@ public class OrderListFragment extends BaseFragment {
 
     private InputPriceDialog inputPriceDialog;
 
-    private int position;
     CommonConfirmDialog confirmDialog ;
     RefundAmountDialog refundAmountDialog ;
     /**
@@ -923,6 +921,7 @@ public class OrderListFragment extends BaseFragment {
                         }
                         refundCancelOrderDialog.show();
                     }
+                    break;
                 case R.id.tvConsentApply://同意申请
                     showLoadingDialog();
                     aftersales_bn = String.valueOf(orderDetailBean.getAftersales_bn());
@@ -996,30 +995,32 @@ public class OrderListFragment extends BaseFragment {
 
     private void changeMyPrice(int position) {
         String max_price;
-        if (!TextUtils.isEmpty(listBeans.get(position).getAuction().getAuction_status())
-                && "false".equalsIgnoreCase(listBeans.get(position).getAuction().getAuction_status())) {
+
+        AuctionOrderListBean.AuctionBean auctionBean = listBeans.get(position).getAuction();
+        if ("false".equalsIgnoreCase(auctionBean.getAuction_status())) {
             max_price = "保密出价";
         } else {
-            max_price = listBeans.get(position).getAuction().getMax_price();
+            max_price = auctionBean.getMax_price();
         }
-        String original_bid = listBeans.get(position).getAuction().getOriginal_bid();
+        String original_bid = auctionBean.getOriginal_bid();
         if (inputPriceDialog == null) {
             inputPriceDialog = new InputPriceDialog(activity, max_price, original_bid);
-            inputPriceDialog.setCallBack(new InputPriceDialog.CallBack() {
-                @Override
-                public void editPrice(String price) {
-                    editGivePrice(price);
-                }
-            });
         } else {
             inputPriceDialog.updatePrice(max_price, original_bid);
         }
+        final String auctionItemId = String.valueOf(auctionBean.getAuctionitem_id());
+        inputPriceDialog.setCallBack(new InputPriceDialog.CallBack() {
+            @Override
+            public void editPrice(String price) {
+                editGivePrice(auctionItemId,price);
+            }
+        });
         inputPriceDialog.show();
     }
 
-    private void editGivePrice(String price) {
+    private void editGivePrice(String auctionItemId,String price) {
         showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().auctionAddPrice(String.valueOf(listBeans.get(position).getAuction().getAuctionitem_id()), price)
+        disposable.add(ApiUtils.getInstance().auctionAddPrice(auctionItemId, price)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {
