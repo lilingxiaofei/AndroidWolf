@@ -84,6 +84,9 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     TextView tv_name;
     @BindView(R.id.tv_price)
     TextView tv_price;
+
+    @BindView(R.id.tvPriceHint)
+    TextView tvPriceHint;
     @BindView(R.id.etPrice)
     EditText etPrice;
 
@@ -183,14 +186,14 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
         tv_name.setText(goodsDetailBean.getItem().getTitle());
         tv_price.setText("¥" + goodsDetailBean.getItem().getAuction().getStarting_price());
         tvGivePrice.setText("¥" + goodsDetailBean.getItem().getAuction().getPledge());
-        tvPayPrice.setText("（实付金额：¥"+goodsDetailBean.getItem().getAuction().getPledge()+"）");
+        tvPayPrice.setText("（定金金额 ¥"+goodsDetailBean.getItem().getAuction().getPledge()+"）");
 
         if ("true".equals(goodsDetailBean.getItem().getAuction().getAuction_status())) {
             //明拍
-            etPrice.setHint(CommonUtils.joinStr("目前最高出价为¥",goodsDetailBean.getItem().getAuction().getMax_price()));
+            tvPriceHint.setHint(CommonUtils.joinStr("(目前最高出价为¥",goodsDetailBean.getItem().getAuction().getMax_price(),")"));
         } else {
             //暗拍
-            etPrice.setHint("暗拍商品，其他出价保密");
+            tvPriceHint.setHint("(暗拍商品，其他出价保密)");
         }
     }
 

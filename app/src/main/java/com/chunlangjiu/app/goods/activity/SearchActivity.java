@@ -62,6 +62,9 @@ public class SearchActivity extends BaseActivity {
         titleName.setVisibility(View.GONE);
         titleSearchView.setVisibility(View.VISIBLE);
         titleSearchEdit.setOnEditorActionListener(onEditorActionListener);
+        tvRight.setText("搜索");
+        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setOnClickListener(onClickListener);
     }
 
     private TextView.OnEditorActionListener onEditorActionListener = new
@@ -69,10 +72,7 @@ public class SearchActivity extends BaseActivity {
                 @Override
                 public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                        if (!TextUtils.isEmpty(titleSearchEdit.getText().toString().trim())) {
-                            KeyBoardUtils.hideSoftInput(SearchActivity.this);
-                            searchGoods();
-                        }
+                        checkSearch();
                     }
                     return true;
                 }
@@ -84,6 +84,9 @@ public class SearchActivity extends BaseActivity {
             switch (view.getId()) {
                 case R.id.img_title_left:
                     finish();
+                    break;
+                case R.id.tv_right:
+                    checkSearch();
                     break;
                 case R.id.imgDelete:
                     deleteHistory();
@@ -136,6 +139,15 @@ public class SearchActivity extends BaseActivity {
             historyAdapter.setLists(historyLists);
         } else {
             rlHistory.setVisibility(View.GONE);
+        }
+    }
+
+    private void checkSearch(){
+        if (!TextUtils.isEmpty(titleSearchEdit.getText().toString().trim())) {
+            KeyBoardUtils.hideSoftInput(SearchActivity.this);
+            searchGoods();
+        }else{
+            ToastUtils.showShort("请输入搜索内容");
         }
     }
 

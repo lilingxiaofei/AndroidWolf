@@ -39,9 +39,10 @@
             android:layout_height="@dimen/title_bar_height"
             android:minWidth="@dimen/title_bar_height"
             android:textSize="15sp"
-            android:paddingLeft="5dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:gravity="center"
+            android:text="搜索"
             android:visibility="gone"
             android:textColor="@color/t_white"/>
     </LinearLayout>
@@ -64,7 +65,7 @@
         android:id="@+id/rl_title_search"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="7dp"
         android:layout_toLeftOf="@+id/ll_right_layout"
         android:layout_toRightOf="@+id/img_title_left"
         android:layout_centerHorizontal="true"

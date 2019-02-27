@@ -83,13 +83,11 @@
 
                 <android.support.v7.widget.AppCompatRatingBar
                     android:id="@+id/rbEvaluation"
-                    style="?android:attr/ratingBarStyleIndicator"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?attr/ratingBarStyleIndicator"
-                    android:clickable="false"
                     android:isIndicator="false"
                     android:numStars="5"
                     android:rating="3"
