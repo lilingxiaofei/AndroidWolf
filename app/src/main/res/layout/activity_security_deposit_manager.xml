@@ -136,23 +136,23 @@
                 <Button
                     android:id="@+id/btnNext"
                     android:layout_width="130dp"
-                    android:layout_height="30dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="@dimen/layout_padding_12dp"
                     android:background="@drawable/bg_gray_rectangle"
-                    android:text="下一步"
+                    android:text="撤销"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_15sp" />
 
                 <Button
                     android:id="@+id/btnCancel"
                     android:layout_width="130dp"
-                    android:layout_height="30dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="30dp"
                     android:layout_marginBottom="@dimen/layout_padding_12dp"
                     android:background="@drawable/bg_red_rectangle"
-                    android:text="不撤销了"
+                    android:text="不撤销"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_15sp" />
             </LinearLayout>
@@ -215,7 +215,7 @@
                     <Button
                         android:id="@+id/btnGoPrivilege"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="45dp"
                         android:background="@drawable/bg_gray_rectangle"
                         android:paddingLeft="21dp"
                         android:paddingRight="21dp"
@@ -226,7 +226,7 @@
                     <Button
                         android:id="@+id/btnGoVipCenter"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="45dp"
                         android:layout_marginLeft="20dp"
                         android:background="@drawable/bg_red_rectangle"
                         android:paddingLeft="21dp"
@@ -265,8 +265,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/layout_margin_22dp"
                     android:gravity="center"
-                    android:text="您的撤销保证金申请已提交成功！
-平台处理时间约为1~3个工作日，请您耐心等待！" />
+                    android:text="@string/refund_success_desc" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -278,7 +277,7 @@
                     <Button
                         android:id="@+id/btnCancelApply"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="45dp"
                         android:background="@drawable/bg_gray_rectangle"
                         android:paddingLeft="21dp"
                         android:paddingRight="21dp"
@@ -289,7 +288,7 @@
                     <Button
                         android:id="@+id/btnGoVipCenterS"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="45dp"
                         android:layout_marginLeft="20dp"
                         android:background="@drawable/bg_red_rectangle"
                         android:paddingLeft="21dp"

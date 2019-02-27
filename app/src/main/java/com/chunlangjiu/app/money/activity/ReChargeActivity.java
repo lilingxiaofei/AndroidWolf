@@ -67,7 +67,7 @@ public class ReChargeActivity extends BaseActivity {
     private static RechargeType rechargeType = RechargeType.Balance;
     private List<PaymentBean.PaymentInfo> payList;
     private String paymentId ;
-    private String payMehtodId ;//支付方式类型
+    private String payMehtodId=OrderParams.PAY_APP_WXPAY ;//支付方式类型
 
     private CompositeDisposable disposable;
 
@@ -111,7 +111,7 @@ public class ReChargeActivity extends BaseActivity {
             }else if (eventTag.equals(String.valueOf(RechargeType.SecurityDeposit.ordinal()))){
                 EventManager.getInstance().notify(null,ConstantMsg.DEPOSIT_CREATE);
                 Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
-                intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
+                intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
                 intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
                 startActivity(intent);
                 finish();
@@ -357,6 +357,7 @@ public class ReChargeActivity extends BaseActivity {
         Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
         intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
         intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
+        startActivity(intent);
         finish();
     }
 
@@ -393,8 +394,9 @@ public class ReChargeActivity extends BaseActivity {
                     }else if (rechargeType==RechargeType.SecurityDeposit){
                         EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
                         Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
-                        intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
+                        intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
                         intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
+                        startActivity(intent);
                         finish();
                     }
 
@@ -487,7 +489,7 @@ public class ReChargeActivity extends BaseActivity {
 //    }
 
     public void togglePayType(String payMethodId) {
-        payMehtodId = OrderParams.PAY_APP_DEPOSIT;
+        payMehtodId = payMethodId;
         switch (payMethodId) {
             case OrderParams.PAY_APP_DEPOSIT:
                 rbBalance.setChecked(true);

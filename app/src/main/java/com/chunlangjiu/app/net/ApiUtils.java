@@ -609,8 +609,8 @@ public class ApiUtils {
 
     }
 
-    public Flowable<ResultBean<DepositCashBean>> depositRefund(String token, String bank_id) {
-        return apiService.depositRefund("member.deposit.refund", "v1", token, bank_id);
+    public Flowable<ResultBean<DepositCashBean>> depositRefund(String token) {
+        return apiService.depositRefund("member.deposit.refund", "v1", token);
     }
 
     //    public Flowable<ResultBean> depositPay(String payment_id,String pay_app_id ,String platform,String money,String type){

@@ -113,7 +113,7 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
                     }
                     depositCash(bankCardId, amount);
                 } else if (DepositRefund.equals(type)) {
-                    depositRefund(bankCardId);
+                    depositRefund();
                 }
                 break;
         }
@@ -158,16 +158,18 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
     /**
      * 撤销保证金
      *
-     * @param bankCardId
+     * @param
      */
 
-    private void depositRefund(String bankCardId) {
-        disposable.add(ApiUtils.getInstance().depositRefund((String) SPUtils.get("token", ""), bankCardId)
+    private void depositRefund() {
+        showLoadingDialog();
+        disposable.add(ApiUtils.getInstance().depositRefund((String) SPUtils.get("token", ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<DepositCashBean>>() {
                     @Override
                     public void accept(ResultBean<DepositCashBean> resultBean) throws Exception {
+                        hideLoadingDialog();
                         DepositCashBean depositCashBean = resultBean.getData();
                         if (null != depositCashBean) {
                             ToastUtils.showShort(depositCashBean.getMessage());
@@ -183,6 +185,7 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
                         ToastUtils.showErrorMsg(throwable);
                     }
                 }));
