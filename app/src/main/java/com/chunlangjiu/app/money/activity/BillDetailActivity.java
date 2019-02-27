@@ -107,7 +107,7 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
     private void setView() {
         if (TextUtils.isEmpty(type)) return;
         if ("sell".equals(type)) {
-            lineGoodsName.setVisibility(View.VISIBLE);
+            lineGoodsName.setVisibility(View.GONE);
             lineaBusinessStatus.setVisibility(View.GONE);
             LineaBusinessType.setVisibility(View.VISIBLE);
             lineaPayWay.setVisibility(View.GONE);
@@ -135,7 +135,7 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
             lineaOrderNumber.setVisibility(View.VISIBLE);
             lineaCreateTime.setVisibility(View.GONE);
             lineaApplyTime.setVisibility(View.VISIBLE);
-            lineaArrivalTime.setVisibility(View.VISIBLE);
+            lineaArrivalTime.setVisibility(View.GONE);
         } else if ("refund".equals(type)) {
             lineGoodsName.setVisibility(View.GONE);
             lineaBusinessStatus.setVisibility(View.VISIBLE);
@@ -207,8 +207,8 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
             tvBusinessType.setText(fundInfoBean.getMemo());
             tvWithDrawBank.setText(fundInfoBean.getBank_name());
             tvOrderNumber.setText(fundInfoBean.getId());
-            tvApplyTime.setText("");
-            tvArrivalTime.setText("");
+            tvApplyTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(fundInfoBean.getTime() * 1000)));
+//            tvArrivalTime.setText("");
         } else if ("refund".equals(type)) {
             tvBusinessStatus.setText(fundInfoBean.getStatus());
             tvBusinessType.setText(fundInfoBean.getMemo());
