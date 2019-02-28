@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="25dp"
+            android:visibility="gone"
             android:background="@color/bg_black">
 
             <RelativeLayout
@@ -66,33 +67,38 @@
                     android:src="@mipmap/my_edit"
                     android:visibility="gone" />
 
-                <LinearLayout
-                    android:id="@+id/llAuthStatus"
+                <RelativeLayout
+                    android:id="@+id/rlAuthStatus"
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/imgHead"
                     android:layout_alignLeft="@+id/tvName"
-                    android:background="@drawable/bg_round_red_8dp"
                     android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="6dp">
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="12dp"
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/imgAuthStatus"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:src="@mipmap/my_no_auth" />
+
 
                     <TextView
                         android:id="@+id/tvAuthStatus"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/bg_round_red_8dp"
+                        android:paddingRight="6dp"
+                        android:paddingLeft="15dp"
                         android:textColor="@color/t_white"
                         android:textSize="10sp"
                         tools:text="未认证" />
-                </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imgAuthStatus"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/my_no_auth" />
+                </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>
 
@@ -1330,23 +1336,23 @@
                     android:background="@color/bg_gray" />
             </RelativeLayout>
 
-            <LinearLayout
+            <com.nex3z.flowlayout.FlowLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/bg_white"
-                android:orientation="horizontal">
+                android:background="@color/white"
+                app:flChildSpacingForLastRow="100dp">
 
                 <RelativeLayout
                     android:id="@+id/rlMoneyManager"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/imgMoneyManager"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
+                        android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
                         android:src="@mipmap/my_money" />
@@ -1364,9 +1370,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rlCollect"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
@@ -1391,9 +1396,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rlMyEvaluate"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:id="@+id/img_evaluate"
@@ -1448,9 +1452,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rlVip"
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:visibility="gone">
 
@@ -1472,24 +1475,10 @@
                         android:textColor="@color/t_black"
                         android:textSize="@dimen/sp_small" />
                 </RelativeLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llMyManagerSecond"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:layout_weight="3"
-                android:background="@drawable/bg_round_white_bottom"
-                android:orientation="horizontal">
-
                 <RelativeLayout
                     android:id="@+id/rl_service"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingBottom="12dp"
@@ -1515,7 +1504,7 @@
 
                 <RelativeLayout
                     android:id="@+id/rl_fans_manage"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
@@ -1543,9 +1532,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rl_setting"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingBottom="12dp"
@@ -1568,6 +1556,19 @@
                         android:textColor="@color/t_black"
                         android:textSize="@dimen/text_size_12sp" />
                 </RelativeLayout>
+            </com.nex3z.flowlayout.FlowLayout>
+            <!--</LinearLayout>-->
+
+            <LinearLayout
+                android:id="@+id/llMyManagerSecond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_weight="3"
+                android:background="@drawable/bg_round_white_bottom"
+                android:orientation="horizontal">
+
+
 
                 <!--<RelativeLayout-->
                 <!--android:layout_width="0dp"-->

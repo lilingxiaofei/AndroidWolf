@@ -82,7 +82,7 @@ public class UserFragment extends BaseFragment {
 
     private TextView tvMyTitle;
 
-    private LinearLayout llAuthStatus;
+    private RelativeLayout rlAuthStatus;
     private ImageView imgAuthStatus;
     private TextView tvAuthStatus;
 
@@ -236,7 +236,7 @@ public class UserFragment extends BaseFragment {
                 case R.id.imgEditName://编辑昵称或者店铺名
                     showEditNameDialog();
                     break;
-                case R.id.llAuthStatus:
+                case R.id.rlAuthStatus:
                     if (!AuthStatusBean.AUTH_SUCCESS.equals(personStatus) && !AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
                         startActivity(new Intent(getActivity(), VerifiedActivity.class));
                     }
@@ -406,9 +406,9 @@ public class UserFragment extends BaseFragment {
 
 
         tvMyTitle = rootView.findViewById(R.id.tvUserTitle);
-        llAuthStatus = rootView.findViewById(R.id.llAuthStatus);
-        llAuthStatus.setOnClickListener(onClickListener);
-        llAuthStatus.setVisibility(View.GONE);
+        rlAuthStatus = rootView.findViewById(R.id.rlAuthStatus);
+        rlAuthStatus.setOnClickListener(onClickListener);
+        rlAuthStatus.setVisibility(View.GONE);
         imgAuthStatus = rootView.findViewById(R.id.imgAuthStatus);
         tvAuthStatus = rootView.findViewById(R.id.tvAuthStatus);
 
@@ -826,7 +826,7 @@ public class UserFragment extends BaseFragment {
     }
 
     private void setAuthView() {
-        llAuthStatus.setVisibility(View.VISIBLE);
+        rlAuthStatus.setVisibility(View.VISIBLE);
         if ((AuthStatusBean.AUTH_SUCCESS.equals(personStatus) || AuthStatusBean.AUTH_SUCCESS.equals(companyStatus))) {
             imgAuthStatus.setImageResource(R.mipmap.my_auth);
             tvAuthStatus.setText("已认证");
