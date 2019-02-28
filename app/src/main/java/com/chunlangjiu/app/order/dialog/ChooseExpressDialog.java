@@ -3,6 +3,7 @@ package com.chunlangjiu.app.order.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.bean.LogisticsBean;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SystemUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -64,7 +66,16 @@ public class ChooseExpressDialog extends Dialog {
      * ..<br/>
      */
     private void initView() {
+
+        Window window = getWindow();
+        int padding = (int)baseActivity.getResources().getDimension(R.dimen.layout_padding_12dp);
+        window.getDecorView().setPadding(padding, 0, padding, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        window.setAttributes(params);
+        window.setGravity(Gravity.CENTER);
         setContentView(R.layout.order_dialog_choose_express);
+
+
 
         tvConfirm = findViewById(R.id.tvConfirm);
         tvCancel = findViewById(R.id.tvCancel);

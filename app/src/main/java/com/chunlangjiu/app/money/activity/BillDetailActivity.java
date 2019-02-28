@@ -135,7 +135,7 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
             lineaOrderNumber.setVisibility(View.VISIBLE);
             lineaCreateTime.setVisibility(View.GONE);
             lineaApplyTime.setVisibility(View.VISIBLE);
-            lineaArrivalTime.setVisibility(View.GONE);
+            lineaArrivalTime.setVisibility(View.VISIBLE);
         } else if ("refund".equals(type)) {
             lineGoodsName.setVisibility(View.GONE);
             lineaBusinessStatus.setVisibility(View.VISIBLE);
@@ -145,7 +145,7 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
             lineaOrderNumber.setVisibility(View.VISIBLE);
             lineaCreateTime.setVisibility(View.VISIBLE);
             lineaApplyTime.setVisibility(View.GONE);
-            lineaArrivalTime.setVisibility(View.GONE);
+            lineaArrivalTime.setVisibility(View.VISIBLE);
         }
     }
 

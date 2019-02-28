@@ -284,7 +284,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
-                android:text="--"
+                android:text="预计2-3个工作日"
                 android:textColor="#000000"
                 android:textSize="@dimen/text_size_15sp" />
 

@@ -28,7 +28,7 @@
     <string name="fans_register_app">注册醇狼APP</string>
     <string name="fans_input_invite_code">填写邀请码</string>
     <string name="authenticated">已认证</string>
-    <string name="star_level">星级用户</string>
+    <string name="star_level">星级卖家</string>
     <string name="partner">城市合伙人</string>
     <string name="my_data">我的资料</string>
     <string name="my_authentication">我的认证</string>
@@ -62,7 +62,7 @@
     </string>
     <string name="refund_tips">单笔提现金额最大位50000.00元</string>
     <string name="refund_deposit_security_tips">温馨提示
-    \n 1.撤销保证金后，您不再是星级用户，无法享用海量特权。
+    \n 1.撤销保证金后，您不再是星级卖家，无法享用海量特权。
     \n 2.撤销保证金后，您已发布的商品会自动下架。
     \n 3.撤销保证金后，您最多只能发布3款商品。</string>
     <string name="skip_str">跳过</string>
@@ -82,5 +82,5 @@
        \n 5、比普通卖家更容易卖出藏酒；
        \n 6、新功能优先体验权！
     </string>
-    <string name="refund_success_desc">您的撤销保证金申请已提交成功！\n 平台处理时间约为1~3个工作日，请您耐心等待！</string>
+    <string name="refund_success_desc">您的撤销保证金申请已提交成功！\n 平台处理时间约为1~3个工作日，请您耐心等待！\n撤销的保证金将直接退回到您的可用余额</string>
 </resources>

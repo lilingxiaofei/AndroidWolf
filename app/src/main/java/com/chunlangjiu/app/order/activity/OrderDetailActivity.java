@@ -991,6 +991,8 @@ public class OrderDetailActivity extends BaseActivity {
                 case R.id.tvRefund://申请退款
                     break;
                 case R.id.tvNotGoods://无货
+                    tid = String.valueOf(orderDetailBean.getTid());
+                    getSellerCancelReason();
                     break;
                 case R.id.tvConsentRefund://同意退款
                     if (type == 5) {
