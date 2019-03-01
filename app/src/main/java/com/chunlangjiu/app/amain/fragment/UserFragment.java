@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.amain.activity.LoginActivity;
 import com.chunlangjiu.app.fans.activity.FansHomeActivity;
+import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.dialog.EditAccountNameDialog;
 import com.chunlangjiu.app.money.activity.MoneyManagerActivity;
 import com.chunlangjiu.app.net.ApiUtils;
@@ -51,11 +53,14 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.FileUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
+import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+
+import org.apmem.tools.layouts.FlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +86,7 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlContentLayout;
 
     private TextView tvMyTitle;
-
+    private ImageView ivSetting ;
     private RelativeLayout rlAuthStatus;
     private ImageView imgAuthStatus;
     private TextView tvAuthStatus;
@@ -181,10 +186,12 @@ public class UserFragment extends BaseFragment {
     /*商品管理*/
 
     /*我的管理*/
+    FlowLayout flowLayout;
     private RelativeLayout rlMoneyManager;
     private RelativeLayout rlCollect;
     private RelativeLayout rlShare;
     private RelativeLayout rlVip;
+    private RelativeLayout rlShop ;
     private LinearLayout llMyManagerSecond;
     private RelativeLayout rlMyEvaluate;
     private RelativeLayout rlFansManage;
@@ -208,6 +215,7 @@ public class UserFragment extends BaseFragment {
     private String personName;
     private String companyName;
     private String shopName;
+    private String shopId ;
 
 
     Rotate3dAnimation rotateStart;
@@ -226,6 +234,7 @@ public class UserFragment extends BaseFragment {
                     break;
                 case R.id.tvToLogin:
                     break;
+                case R.id.ivSetting:
                 case R.id.rl_setting:
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SETTING + BaseApplication.getToken(), "设置");
                     SettingActivity.startActivity(getActivity());
@@ -360,6 +369,9 @@ public class UserFragment extends BaseFragment {
                 case R.id.rl_service:// 粉丝管理
                     ServiceActivity.startActivity(activity);
                     break;
+                case R.id.rlShop:
+                    ShopMainActivity.startShopMainActivity(activity,shopId);
+                    break;
 
             }
         }
@@ -395,15 +407,25 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void initView() {
-
-
         MyStatusBarUtils.setTitleBarPadding(getActivity(), rootView.findViewById(R.id.rlUserHead));
+
         rlContentLayout = rootView.findViewById(R.id.rlContentLayout);
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
         tvToLogin.setOnClickListener(onClickListener);
         rlHead = rootView.findViewById(R.id.rlHead);
-
+        ivSetting = rootView.findViewById(R.id.ivSetting);
+        MyStatusBarUtils.setTitleBarPadding(getActivity(), ivSetting);
+        if (Build.VERSION.SDK_INT >= 21) {
+            // 获得状态栏高度
+            int statusBarHeight = MyStatusBarUtils.getStatusBarHeight(activity);
+            int left = ivSetting.getPaddingLeft();
+            int top = statusBarHeight+ivSetting.getPaddingTop()-SizeUtils.dp2px(10);
+            int right = ivSetting.getPaddingRight();
+            int bottom = ivSetting.getPaddingBottom();
+            ivSetting.setPadding(left,top,right,bottom);
+        }
+        ivSetting.setOnClickListener(onClickListener);
 
         tvMyTitle = rootView.findViewById(R.id.tvUserTitle);
         rlAuthStatus = rootView.findViewById(R.id.rlAuthStatus);
@@ -525,14 +547,26 @@ public class UserFragment extends BaseFragment {
         rlWareHouseGoods.setOnClickListener(onClickListener);
         rlCheckGoods.setOnClickListener(onClickListener);
 
+        flowLayout = rootView.findViewById(R.id.flowLayout);
         rlMoneyManager = rootView.findViewById(R.id.rlMoneyManager);
         rlCollect = rootView.findViewById(R.id.rlCollect);
         rlShare = rootView.findViewById(R.id.rlShare);
         rlVip = rootView.findViewById(R.id.rlVip);
+        rlShop = rootView.findViewById(R.id.rlShop);
         rlMoneyManager.setOnClickListener(onClickListener);
         rlCollect.setOnClickListener(onClickListener);
         rlShare.setOnClickListener(onClickListener);
         rlVip.setOnClickListener(onClickListener);
+        rlShop.setOnClickListener(onClickListener);
+        int width = (SizeUtils.getScreenWidth()-SizeUtils.dp2px(20))/3;
+        for (int i = 0; i < flowLayout.getChildCount(); i++) {
+            View view = flowLayout.getChildAt(i);
+            FlowLayout.LayoutParams layoutParams = (FlowLayout.LayoutParams)view.getLayoutParams();
+            layoutParams.width = width ;
+            view.setLayoutParams(layoutParams);
+            view.setMinimumWidth(width);
+        }
+
 
         llMyManagerSecond = rootView.findViewById(R.id.llMyManagerSecond);
         rlMyEvaluate = rootView.findViewById(R.id.rlMyEvaluate);
@@ -690,6 +724,7 @@ public class UserFragment extends BaseFragment {
                         personName = userInfoBeanResultBean.getData().getName();
                         companyName = userInfoBeanResultBean.getData().getCompany_name();
                         shopName = userInfoBeanResultBean.getData().getShop_name();
+                        shopId = userInfoBeanResultBean.getData().getShop_id();
                         tvName.setText(loginAccount);
                         SPUtils.put("account", loginAccount);
                         SPUtils.put("avator", userInfoBeanResultBean.getData().getHead_portrait());

@@ -82,6 +82,47 @@
 
             </LinearLayout>
 
+
+            <LinearLayout android:id="@+id/llApplyReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="@dimen/order_details_padding"
+                android:paddingRight="@dimen/order_details_padding"
+                android:gravity="center_vertical"
+                android:background="@color/bg_white"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/order_left_label"
+                    android:text="申请理由：" />
+
+                <TextView
+                    android:id="@+id/tvApplyReason"
+                    style="@style/order_left_value" />
+
+            </LinearLayout>
+            <LinearLayout android:id="@+id/llRefusalCause"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="@dimen/order_details_padding"
+                android:paddingRight="@dimen/order_details_padding"
+                android:gravity="center_vertical"
+                android:background="@color/bg_white"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/order_left_label"
+                    android:text="拒绝原因：" />
+
+                <TextView
+                    android:id="@+id/tvRefusalCause"
+                    style="@style/order_left_value" />
+
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/llInfo"
                 android:layout_width="match_parent"
@@ -105,8 +146,6 @@
                     android:paddingBottom="8dp"
                     android:textColor="@color/black" />
             </LinearLayout>
-
-
             <LinearLayout
                 android:id="@+id/llStore"
                 android:layout_width="match_parent"

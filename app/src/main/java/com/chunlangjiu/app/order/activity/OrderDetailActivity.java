@@ -129,6 +129,15 @@ public class OrderDetailActivity extends BaseActivity {
     @BindView(R.id.tvRightContent)
     TextView tvRightContent;
 
+    @BindView(R.id.llApplyReason)
+    LinearLayout llApplyReason;
+    @BindView(R.id.tvApplyReason)
+    TextView tvApplyReason;
+    @BindView(R.id.llRefusalCause)
+    LinearLayout llRefusalCause;
+    @BindView(R.id.tvRefusalCause)
+    TextView tvRefusalCause;
+
     @BindView(R.id.llPayType)
     LinearLayout llPayType;
     @BindView(R.id.llAfterSaleTme)
@@ -520,10 +529,41 @@ public class OrderDetailActivity extends BaseActivity {
             tvPayType.setText(orderDetailBean.getPay_name());
         }
         tid = String.valueOf(orderDetailBean.getTid());
+
+
         hideOrderBtn();
         setNormalOrderUi();
         setAuctionOrder();
         setAfterSaleUi();
+
+        OrderDetailBean.LogiBean logi = orderDetailBean.getLogi();
+        if (null != logi) {
+            tvLogiName.setText(logi.getLogi_name());
+            tvLogiNo.setText(logi.getLogi_no());
+            tvLogiNoCopy.setOnClickListener(onClickListener);
+            llLogi.setVisibility(View.VISIBLE);
+        }
+
+        if(orderDetailBean.getReason() != null && !TextUtils.isEmpty(orderDetailBean.getReason().toString())){
+            tvApplyReason.setText(orderDetailBean.getReason().toString());
+            llApplyReason.setVisibility(View.VISIBLE);
+        }else {
+            llApplyReason.setVisibility(View.GONE);
+        }
+
+        if(!TextUtils.isEmpty(orderDetailBean.getShop_explanation())){
+            tvRefusalCause.setText(orderDetailBean.getShop_explanation());
+            llRefusalCause.setVisibility(View.VISIBLE);
+        }else {
+            llRefusalCause.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(orderDetailBean.getInfo())) {
+            llInfo.setVisibility(View.VISIBLE);
+            tvInfo.setText(orderDetailBean.getInfo());
+        }else{
+            llInfo.setVisibility(View.GONE);
+        }
     }
 
 
@@ -822,10 +862,6 @@ public class OrderDetailActivity extends BaseActivity {
             tvOrderStatus.setText(orderDetailBean.getStatus_desc());
             tvOrderId.setText(String.valueOf(orderDetailBean.getTid()));
 
-            if (!TextUtils.isEmpty(orderDetailBean.getInfo())) {
-                llInfo.setVisibility(View.VISIBLE);
-                tvInfo.setText(orderDetailBean.getInfo());
-            }
         }
     }
 

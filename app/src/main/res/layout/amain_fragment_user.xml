@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
@@ -17,8 +22,7 @@
             android:id="@+id/rlUserHead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="25dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:background="@color/bg_black">
 
             <RelativeLayout
@@ -34,7 +38,6 @@
                     android:text="买家中心"
                     android:textColor="@color/bg_white"
                     android:textSize="@dimen/text_size_18sp" />
-
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgHead"
                     android:layout_width="50dp"
@@ -100,6 +103,7 @@
                         android:src="@mipmap/my_no_auth" />
                 </RelativeLayout>
             </RelativeLayout>
+
         </RelativeLayout>
 
         <LinearLayout
@@ -1336,17 +1340,18 @@
                     android:background="@color/bg_gray" />
             </RelativeLayout>
 
-            <com.nex3z.flowlayout.FlowLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
+            <org.apmem.tools.layouts.FlowLayout
+                android:id="@+id/flowLayout"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                app:flChildSpacingForLastRow="100dp">
+                android:background="@color/bg_white"
+                >
 
                 <RelativeLayout
                     android:id="@+id/rlMoneyManager"
                     android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="80dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -1369,9 +1374,34 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rlShop"
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:src="@mipmap/my_collect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imgShop"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:text="我的店铺"
+                        android:textColor="@color/t_black"
+                        android:textSize="@dimen/text_size_12sp" />
+
+                </RelativeLayout>
+                <RelativeLayout
                     android:id="@+id/rlCollect"
                     android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="80dp"
                     android:orientation="vertical">
 
                     <ImageView
@@ -1391,13 +1421,14 @@
                         android:text="我的收藏"
                         android:textColor="@color/t_black"
                         android:textSize="@dimen/text_size_12sp" />
+
                 </RelativeLayout>
 
 
                 <RelativeLayout
                     android:id="@+id/rlMyEvaluate"
                     android:layout_width="100dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="80dp">
 
                     <ImageView
                         android:id="@+id/img_evaluate"
@@ -1478,7 +1509,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_service"
                     android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="80dp"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingBottom="12dp"
@@ -1505,7 +1536,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_fans_manage"
                     android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="80dp"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
@@ -1533,10 +1564,11 @@
                 <RelativeLayout
                     android:id="@+id/rl_setting"
                     android:layout_width="100dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="80dp"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingBottom="12dp"
+                    android:visibility="gone"
                     android:paddingTop="20dp">
 
                     <ImageView
@@ -1556,7 +1588,7 @@
                         android:textColor="@color/t_black"
                         android:textSize="@dimen/text_size_12sp" />
                 </RelativeLayout>
-            </com.nex3z.flowlayout.FlowLayout>
+            </org.apmem.tools.layouts.FlowLayout>
             <!--</LinearLayout>-->
 
             <LinearLayout
@@ -1594,27 +1626,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
-
-            <!--<de.hdodenhof.circleimageview.CircleImageView-->
-            <!--android:id="@+id/imgHead"-->
-            <!--android:layout_width="70dp"-->
-            <!--android:layout_height="70dp"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_marginTop="60dp"-->
-            <!--android:src="@mipmap/common_head_icon"-->
-            <!--app:civ_border_color="@color/bg_white"-->
-            <!--app:civ_border_width="2dp" />-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/tvName"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignTop="@id/imgHead"-->
-            <!--android:layout_marginLeft="15dp"-->
-            <!--android:layout_toRightOf="@id/imgHead"-->
-            <!--android:textColor="@color/t_white"-->
-            <!--android:textSize="17sp"-->
-            <!--tools:text="姓名" />-->
 
             <TextView
                 android:id="@+id/tvAccountType"
@@ -1771,6 +1782,14 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
+
     </RelativeLayout>
 </ScrollView>
-
+    <ImageView
+        android:id="@+id/ivSetting"
+        android:layout_width="44dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/setting" />
+</RelativeLayout>

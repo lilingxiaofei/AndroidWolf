@@ -13,6 +13,7 @@ public class UserInfoBean {
     private String shop_name;
     private String company_name;
     private String head_portrait;
+    private String shop_id;
 
     public String getShop_name() {
         return shop_name;
@@ -60,5 +61,13 @@ public class UserInfoBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(String shop_id) {
+        this.shop_id = shop_id;
     }
 }

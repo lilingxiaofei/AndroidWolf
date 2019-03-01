@@ -383,7 +383,7 @@ public class AddGoodsActivity extends BaseActivity {
         starLevelDialog.setCallBack(new StarLevelDialog.CallBack() {
             @Override
             public void cancel() {
-                finish();
+
             }
 
             @Override
@@ -466,7 +466,6 @@ public class AddGoodsActivity extends BaseActivity {
                         if(null != checkGoodsBean ){
                             hideLoadingDialog();
                             if("true".equals(checkGoodsBean.getStatus())){
-                                showContentView();
                             }else{
                                 starLevelDialog.updateTips(checkGoodsBean.getTips());
                                 starLevelDialog.show();
@@ -501,6 +500,7 @@ public class AddGoodsActivity extends BaseActivity {
                         public void accept(List<AuthStatusBean> authStatusBeans) throws Exception {
                             if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeans.get(1).getStatus())) {
                                 checkUploadGoods();
+                                showContentView();
                             } else if (AuthStatusBean.AUTH_LOCKED.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_LOCKED.equals(authStatusBeans.get(1).getStatus())) {
                                 ToastUtils.showShort("您的认证正在审核中，我们会尽快处理");
                                 finish();

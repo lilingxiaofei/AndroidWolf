@@ -133,6 +133,7 @@ public class OrderDetailBean {
     private String parameter;
     private String approve_status;
     private Object reason;
+    private String shop_explanation;
     private Object list_time;
     private Object delist_time;
     private int sold_quantity;
@@ -441,6 +442,14 @@ public class OrderDetailBean {
 
     public void setCancel_reason(String cancel_reason) {
         this.cancel_reason = cancel_reason;
+    }
+
+    public String getShop_explanation() {
+        return shop_explanation;
+    }
+
+    public void setShop_explanation(String shop_explanation) {
+        this.shop_explanation = shop_explanation;
     }
 
     public String getRefund_fee() {
