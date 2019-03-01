@@ -152,6 +152,7 @@ public class OrderDetailBean {
     private PaymentsBean payments;
     private String paymentId;
     private String info;
+    private String trade_ststus ;
 
     private String commission ;//平台佣金
     private String shop_payment ;//店铺实收
@@ -190,6 +191,14 @@ public class OrderDetailBean {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getTrade_ststus() {
+        return trade_ststus;
+    }
+
+    public void setTrade_ststus(String trade_ststus) {
+        this.trade_ststus = trade_ststus;
     }
 
     public void setStatus(String status) {

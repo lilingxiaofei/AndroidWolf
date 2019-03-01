@@ -69,6 +69,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         TextView tvConsentRefund = helper.getView(R.id.tvConsentRefund);//同意退款
         TextView tvRefusedRefund = helper.getView(R.id.tvRefusedRefund);//拒绝退款
         TextView tvReturnSend = helper.getView(R.id.tvReturnSend);//退货发货
+        TextView tvServerInto = helper.getView(R.id.tvServerInto);//服务介入
         TextView tvBackOutApply = helper.getView(R.id.tvBackOutApply);//撤销申请
         TextView tvRefusedApply = helper.getView(R.id.tvRefusedApply);//拒绝申请
         TextView tvConsentApply = helper.getView(R.id.tvConsentApply);//同意申请
@@ -89,6 +90,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         tvRefusedRefund.setVisibility(View.GONE);//拒绝退款
         tvReturnSend.setVisibility(View.GONE);//退货发货
         tvBackOutApply.setVisibility(View.GONE);//撤销申请
+        tvServerInto.setVisibility(View.GONE);//服务介入
         tvRefusedApply.setVisibility(View.GONE);//拒绝申请
         tvConsentApply.setVisibility(View.GONE);//同意申请
         tvSendGoods.setVisibility(View.GONE);//发货
@@ -145,6 +147,9 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         helper.setVisible(R.id.ivAuctionBid, true);
                         helper.setImageResource(R.id.ivAuctionBid, R.mipmap.bid_already);
                         tvStatus.setText("");
+                        if("WAIT_BUYER_PAY".equals(item.getTrade_ststus())){
+                            tvPay.setVisibility(View.VISIBLE);
+                        }
                         break;
                     case OrderParams.AUCTION_OUTBID:
                         helper.setVisible(R.id.ivAuctionBid, true);
@@ -175,6 +180,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         break;
                     case "3":
                         tvDelete.setVisibility(View.GONE);
+                        tvServerInto.setVisibility(View.VISIBLE);
                         break;
                 }
                 break;
@@ -217,6 +223,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         }
 
         helper.addOnClickListener(R.id.tvDelete);//删除订单
+        helper.addOnClickListener(R.id.tvServerInto);
         helper.addOnClickListener(R.id.tvCancel);//取消订单
         helper.addOnClickListener(R.id.tvRefund);//申请退款
         helper.addOnClickListener(R.id.tvNotGoods);//无货

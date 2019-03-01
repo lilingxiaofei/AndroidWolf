@@ -130,6 +130,7 @@ public class OrderListBean {
         private long aftersales_bn;
         private String paymentId;
         private int auctionitem_id;
+        private String trade_ststus;
         private AuctionOrderListBean.AuctionBean auction;
 
         public long getTid() {
@@ -154,6 +155,14 @@ public class OrderListBean {
 
         public void setShop_id(int shop_id) {
             this.shop_id = shop_id;
+        }
+
+        public String getTrade_ststus() {
+            return trade_ststus;
+        }
+
+        public void setTrade_ststus(String trade_ststus) {
+            this.trade_ststus = trade_ststus;
         }
 
         public int getUser_id() {

@@ -52,7 +52,10 @@
         android:id="@+id/tvConsentApply"
         style="@style/order_btn_gray"
         android:text="同意申请" />
-
+    <TextView
+        android:id="@+id/tvServerInto"
+        style="@style/order_btn_gray"
+        android:text="平台介入" />
 
     <TextView
         android:id="@+id/tvSendGoods"
