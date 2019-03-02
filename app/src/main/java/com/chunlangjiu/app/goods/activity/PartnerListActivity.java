@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
@@ -19,6 +18,7 @@ import com.chunlangjiu.app.goods.bean.PartnerBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
+import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
 import java.util.ArrayList;
@@ -109,8 +109,8 @@ public class PartnerListActivity extends BaseActivity {
         @Override
         protected void convert(BaseViewHolder helper, PartnerBean item) {
             ImageView iv = helper.getView(R.id.ivStoreLogo);
-            Glide.with(PartnerListActivity.this).load(item.getShop_logo()).into(iv);
-
+//            Glide.with(PartnerListActivity.this).load(item.getShop_logo()).into(iv);
+            GlideUtils.loadImageShop(PartnerListActivity.this,item.getShop_logo(),iv);
             helper.setText(R.id.tv_store_name, item.getShop_name());
             helper.setText(R.id.tvAddress, item.getShop_addr());
 

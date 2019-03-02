@@ -182,6 +182,8 @@ public class OrderDetailActivity extends BaseActivity {
 
     @BindView(R.id.tvDelete)
     TextView tvDelete;//删除订单
+    @BindView(R.id.tvServerInto)
+    TextView tvServerInto;//服务介入
     @BindView(R.id.tvCancel)
     TextView tvCancel;//取消订单
     @BindView(R.id.tvRefund)
@@ -263,6 +265,7 @@ public class OrderDetailActivity extends BaseActivity {
     private void initView() {
         refundAmountDialog = new RefundAmountDialog(this);
         tvDelete.setOnClickListener(onClickListener);//删除订单
+        tvServerInto.setOnClickListener(onClickListener);
         tvCancel.setOnClickListener(onClickListener);//取消订单
         tvRefund.setOnClickListener(onClickListener);//申请退款
         tvNotGoods.setOnClickListener(onClickListener);//无货
@@ -600,7 +603,10 @@ public class OrderDetailActivity extends BaseActivity {
                     tvPaymentTips = findViewById(R.id.tvPaymentTips);
                     tvPaymentTips.setText("已付定金：");
                     break;
-//                    case "2":
+                    case "2":
+                        if("WAIT_BUYER_PAY".equals(orderDetailBean.getTrade_ststus())){
+                            tvPay.setVisibility(View.VISIBLE);
+                        }
 //                        tvRightContentDesc.setText("剩余支付时间：");
 //                        close_time = orderDetailBean.getClose_time();
 //                        try {
@@ -617,7 +623,7 @@ public class OrderDetailActivity extends BaseActivity {
 //                        llFinishTime.setVisibility(View.GONE);
 //                        tvPaymentTips = findViewById(R.id.tvPaymentTips);
 //                        tvPaymentTips.setText("应付定金：");
-//                        break;
+                        break;
 //                    case "3":
 //                        break;
                 default:
@@ -912,6 +918,7 @@ public class OrderDetailActivity extends BaseActivity {
                 case "3":
                     if (2 == type) {
                         tvDelete.setVisibility(View.GONE);
+                        tvServerInto.setVisibility(View.VISIBLE);
                     }
                     break;
             }
@@ -1264,6 +1271,9 @@ public class OrderDetailActivity extends BaseActivity {
                 case R.id.tvPayDeposit://去付定金
                     paymentId = orderDetailBean.getPaymentId();
                     getPayment();
+                case R.id.tvServerInto:
+                    CommonUtils.callPhone("4007889550");
+                    break;
             }
         }
     };

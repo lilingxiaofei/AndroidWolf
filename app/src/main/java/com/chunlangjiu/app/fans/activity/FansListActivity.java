@@ -12,7 +12,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.amain.bean.ListBean;
-import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.fans.bean.FansNumBean;
@@ -36,7 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class FansListActivity extends BaseActivity {
 
-    private View llHead;
+//    private View llHead;
     private TextView tvFansNum;
     private TextView tvTotalPrice;
     private RecyclerView rvFansList;
@@ -59,16 +58,15 @@ public class FansListActivity extends BaseActivity {
         disposable = new CompositeDisposable();
 
 
-        llHead = getLayoutInflater().inflate(R.layout.fans_list_head, null);
-        tvFansNum = llHead.findViewById(R.id.tvFansNum);
-        tvTotalPrice = llHead.findViewById(R.id.tvTotalPrice);
+//        llHead = getLayoutInflater().inflate(R.layout.fans_list_head, null);
+        tvFansNum = findViewById(R.id.tvFansNum);
+        tvTotalPrice = findViewById(R.id.tvTotalPrice);
         rvFansList = findViewById(R.id.rv_fans_list);
         tvShare = findViewById(R.id.tvShare);
         tvShare.setOnClickListener(onClickListener);
         rvFansList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         list = new ArrayList<>();
         fansAdapter = new FansListAdapter(R.layout.fans_list_item, list);
-        fansAdapter.addHeaderView(llHead);
         rvFansList.setAdapter(fansAdapter);
         fansAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) rvFansList.getParent(), false));
     }

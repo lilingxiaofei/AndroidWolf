@@ -42,6 +42,7 @@ import com.chunlangjiu.app.order.dialog.RefundAfterSaleOrderDialog;
 import com.chunlangjiu.app.order.dialog.RefundAmountDialog;
 import com.chunlangjiu.app.order.dialog.SellerCancelOrderDialog;
 import com.chunlangjiu.app.order.params.OrderParams;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.lzy.imagepicker.util.Utils;
@@ -990,6 +991,8 @@ public class OrderListFragment extends BaseFragment {
                     //删除订单
                     tid = String.valueOf(listBeans.get(position).getTid());
                     delete();
+                case R.id.tvServerInto:
+                    CommonUtils.callPhone("4007889550");
                     break;
             }
         }
