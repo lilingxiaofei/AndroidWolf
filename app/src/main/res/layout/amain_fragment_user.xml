@@ -1385,7 +1385,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
-                        android:src="@mipmap/my_collect" />
+                        android:src="@mipmap/my_shop_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
