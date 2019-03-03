@@ -285,13 +285,13 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- 支付宝支付 -->
 
         <activity android:name=".money.activity.MoneyManagerActivity" />
@@ -317,7 +317,16 @@
         <activity android:name=".user.activity.VerifiedActivity" />
         <activity android:name=".user.activity.BankCardActivity" />
         <activity android:name=".user.activity.AddBankCardActivity" />
-        <activity android:name=".money.activity.StarSellerPrivilegeActivity"></activity>
+        <activity android:name=".money.activity.StarSellerPrivilegeActivity" />
+        <activity
+            android:name=".goodsmanage.activity.GoodsManageActivity"
+            android:label="@string/title_activity_goods_audit"
+            android:parentActivityName="com.awen.photo.BaseActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.awen.photo.BaseActivity" />
+        </activity>
     </application>
 
 </manifest>

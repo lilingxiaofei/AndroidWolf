@@ -84,4 +84,5 @@
        \n 6、新功能优先体验权！
     </string>
     <string name="refund_success_desc">您的撤销保证金申请已提交成功！\n 平台处理时间约为1~3个工作日，请您耐心等待！\n撤销的保证金将直接退回到您的可用余额</string>
+    <string name="title_activity_goods_audit">GoodsAuditActivity</string>
 </resources>

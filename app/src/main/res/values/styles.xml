@@ -1,4 +1,5 @@
 <resources>
+
     <style name="roomRatingBar" parent="Widget.AppCompat.RatingBar">
         <item name="android:minHeight">24dp</item>
         <item name="android:maxHeight">24dp</item>
@@ -24,6 +25,7 @@
         <item name="android:textColor">@color/t_black</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="auctionValue">
         <item name="android:layout_weight">3.5</item>
         <item name="android:layout_width">0dp</item>
@@ -118,4 +120,8 @@
         <item name="colorControlNormal">@color/t_gray</item>
         <item name="colorControlActivated">@color/bg_yellow</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

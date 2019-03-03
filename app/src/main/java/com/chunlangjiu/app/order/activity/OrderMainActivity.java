@@ -56,7 +56,6 @@ public class OrderMainActivity extends BaseActivity {
         myFragmentAdapter.setLists(fragments);
         vpContent.setAdapter(myFragmentAdapter);
         vpContent.addOnPageChangeListener(onPageChangeListener);
-
         tabLayout.addOnTabSelectedListener(onTabSelectedListener);
         fillTab(type, target);
 

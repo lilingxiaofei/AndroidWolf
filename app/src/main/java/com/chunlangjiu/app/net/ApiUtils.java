@@ -31,6 +31,7 @@ import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
 import com.chunlangjiu.app.goods.bean.StoreActivityBean;
+import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
 import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.money.bean.DepositCashBean;
@@ -60,7 +61,6 @@ import com.chunlangjiu.app.user.bean.ShopCatIdList;
 import com.chunlangjiu.app.user.bean.ShopClassList;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
-import com.chunlangjiu.app.util.PayResult;
 import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
@@ -215,6 +215,10 @@ public class ApiUtils {
 
     public Flowable<ResultBean<EvaluateListBean>> getEvaluateList(String item_id, int page_no) {
         return apiService.getEvaluateList("item.rate.list", "v1", 0, item_id, page_no, 10);
+    }
+
+    public Flowable<ResultBean<ListBean<GoodsBean>>> getManageGoodsList( String status, int page, int pageSize) {
+        return apiService.getManageGoodsList("item.rate.list", "v1",  status, page, pageSize);
     }
 
     public Flowable<ResultBean<ShopInfoBean>> getShopInfo(String shopId) {

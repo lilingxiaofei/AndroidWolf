@@ -11,6 +11,11 @@ import com.pkqup.commonlibrary.util.AppUtils;
  */
 public class CommonUtils {
 
+    public static final String GOODS_STATUS_AUDIT_PENDING = "pending";//审核中
+    public static final String GOODS_STATUS_AUDIT_REFUSE = "refuse";//审核拒绝
+    public static final String GOODS_STATUS_SELL = "onsale";//出售中
+    public static final String GOODS_STATUS_INSTOCK = "instock";//仓库中
+
     public static String joinStr(Object... obj) {
         String joinStr = "";
         if(obj == null){

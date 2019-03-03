@@ -31,6 +31,7 @@ import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
 import com.chunlangjiu.app.goods.bean.StoreActivityBean;
+import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
 import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.money.bean.DepositCashBean;
@@ -225,6 +226,12 @@ public interface ApiService {
     Flowable<ResultBean<EvaluateListBean>> getEvaluateList(@Field("method") String method, @Field("v") String v,
                                                            @Field("rate_type") int rate_type, @Field("item_id") String item_id,
                                                            @Field("page_no") int page_no, @Field("page_size") int page_size);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<ListBean<GoodsBean>>> getManageGoodsList(@Field("method") String method, @Field("v") String v,
+                                                    @Field("status") String status,
+                                                    @Field("page_no") int page_no, @Field("page_size") int page_size);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
