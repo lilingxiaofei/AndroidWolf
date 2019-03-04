@@ -44,7 +44,7 @@ public class RefundAmountDialog extends Dialog {
      * ..<br/>
      */
     private void initView() {
-        setContentView(R.layout.order_dialog_refund_aftersale);
+        setContentView(R.layout.order_dialog_refund_agree);
         etContent = findViewById(R.id.etContent);
         tvOk = findViewById(R.id.tvOk);
         tvCancel = findViewById(R.id.tvCancel);

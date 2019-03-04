@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
     private TextView tvOpenPic;
     private ImageView ivOpenPic;
     private String openPic;
-    private int loadTime = 2000;
+    private int loadTime = 5000;
     private final int WHAT_COUNT_DOWN = 88;
 
     HomeModulesBean.Params params ;

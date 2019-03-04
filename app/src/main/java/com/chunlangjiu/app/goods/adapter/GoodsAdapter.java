@@ -168,9 +168,15 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             LinearLayout labelLayout = helper.getView(R.id.llLabel);
             setLabelList(labelLayout,item.getLabel());
 
-            helper.setText(R.id.tvAttention, item.getView_count() + "人关注");
-            helper.setText(R.id.tvEvaluate, item.getRate_count() + "条评价");
-            helper.setText(R.id.tv_good_evaluate, item.getRate_count() + "好评");
+
+
+            String viewCount = item.getView_count() ;
+            String  rateCount =  item.getRate_count() ;
+            String  rate =  item.getRate() ;
+            helper.setText(R.id.tvAttention, (TextUtils.isEmpty(viewCount) ? "0" :viewCount ) + "人关注");
+            helper.setText(R.id.tvEvaluate, (TextUtils.isEmpty(rateCount) ? "0" :rateCount) + "条评价");
+            helper.setText(R.id.tv_good_evaluate, TextUtils.isEmpty(rate) ? "0%" :rate+"%"+ "好评");
+
 
             helper.setText(R.id.tv_store_into, R.string.into_store);
 

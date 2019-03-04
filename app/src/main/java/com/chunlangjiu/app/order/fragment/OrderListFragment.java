@@ -848,7 +848,7 @@ public class OrderListFragment extends BaseFragment {
                                 @Override
                                 public void confirm(String reason) {
                                     showLoadingDialog();
-                                    disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true", "", reason)
+                                    disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "false", "", reason)
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .subscribe(new Consumer<ResultBean>() {
@@ -991,6 +991,7 @@ public class OrderListFragment extends BaseFragment {
                     //删除订单
                     tid = String.valueOf(listBeans.get(position).getTid());
                     delete();
+                    break;
                 case R.id.tvServerInto:
                     CommonUtils.callPhone("4007889550");
                     break;

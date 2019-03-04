@@ -1131,7 +1131,7 @@ public class OrderDetailActivity extends BaseActivity {
                                 @Override
                                 public void confirm(String reason) {
                                     showLoadingDialog();
-                                    disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "true", "", reason)
+                                    disposable.add(ApiUtils.getInstance().applySellerAfterSale(aftersales_bn, "false", "", reason)
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .subscribe(new Consumer<ResultBean>() {

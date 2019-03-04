@@ -56,7 +56,7 @@ public class GoodsManageActivity extends BaseActivity {
     }
 
     public static void startGoodsManageActivity(Activity activity, String goodsStatus) {
-        Intent intent = new Intent(activity, ShopMainActivity.class);
+        Intent intent = new Intent(activity, GoodsManageActivity.class);
         intent.putExtra("goodsStatus", goodsStatus);
         activity.startActivity(intent);
     }

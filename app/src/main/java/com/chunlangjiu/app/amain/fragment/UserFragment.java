@@ -331,19 +331,19 @@ public class UserFragment extends BaseFragment {
                     startActivity(new Intent(getActivity(), AddGoodsActivity.class));
                     break;
                 case R.id.rlSellGoods:// 在售商品
-                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_SELL);
-//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SELL_GOODS + BaseApplication.getToken(), "在售商品");
+//                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_SELL);
+                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SELL_GOODS + BaseApplication.getToken(), "在售商品");
                     break;
                 case R.id.rlAuctionGoods:// 竞拍商品
-//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_ACTION_GOODS + BaseApplication.getToken(), "竞拍商品");
+                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_ACTION_GOODS + BaseApplication.getToken(), "竞拍商品");
                     break;
                 case R.id.rlWareHouseGoods:// 仓库商品
-                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_INSTOCK);
-//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_STORE_GOODS + BaseApplication.getToken(), "仓库商品");
+//                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_INSTOCK);
+                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_STORE_GOODS + BaseApplication.getToken(), "仓库商品");
                     break;
                 case R.id.rlCheckGoods:// 审核商品
-                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_AUDIT_PENDING);
-//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
+//                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_AUDIT_PENDING);
+                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
                     break;
                 case R.id.rlMoneyManager:// 资金管理
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_MONEY_MANAGER + BaseApplication.getToken(), "资金管理");
@@ -820,14 +820,14 @@ public class UserFragment extends BaseFragment {
 
                             tvCheckGoodsNum.setText(data.getPending_num());
                             tvWareHouseGoodsNum.setText(data.getInstock_num());
-                            tvSellGoodsNum.setText(data.getNotrate_num());
-                            tvAuctionGoodsNum.setText(data.getAuction_num());
+//                            tvSellGoodsNum.setText(data.getNotrate_num());
+//                            tvAuctionGoodsNum.setText(data.getAuction_num());
 
                             tvCheckGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getPending_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
                             tvWareHouseGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getInstock_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
-                            tvAuctionGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getAuction_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
-                            tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getNotrate_num()).intValue() > 0 ? View.VISIBLE
-                                    : View.GONE);
+//                            tvAuctionGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getAuction_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
+//                            tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getNotrate_num()).intValue() > 0 ? View.VISIBLE
+//                                    : View.GONE);
                         }
                     }
                 }, new Consumer<Throwable>() {
