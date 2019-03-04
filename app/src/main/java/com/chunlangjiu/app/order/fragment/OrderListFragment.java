@@ -441,7 +441,7 @@ public class OrderListFragment extends BaseFragment {
                                     listBean.setAuctionitem_id(bean.getAuctionitem_id());
                                     listBean.setAuction(bean.getAuction());
                                     listBean.setStatus_desc(bean.getStatus_desc());
-
+                                    listBean.setTrade_ststus(bean.getTrade_ststus());
                                     List<OrderListBean.ListBean.OrderBean> order = new ArrayList<>();
                                     OrderListBean.ListBean.OrderBean orderBean = new OrderListBean.ListBean.OrderBean();
                                     orderBean.setNum(1);
@@ -976,7 +976,12 @@ public class OrderListFragment extends BaseFragment {
                 case R.id.tvPay://去支付
                     payBean = listBeans.get(position);
                     tid = payBean.getTid()+"";
-                    repay();
+                    paymentId = payBean.getPaymentId();
+                    if(TextUtils.isEmpty(paymentId)){
+                        repay ();
+                    }else{
+                        getPayment();
+                    }
                     break;
                 case R.id.tvEditPrice://修改出价
                     changeMyPrice(position);

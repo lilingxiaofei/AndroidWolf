@@ -1,15 +1,11 @@
 package com.chunlangjiu.app.amain.activity;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +22,7 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.store.activity.StoreListActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.util.ConstantMsg;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -38,20 +35,22 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends Activity {
 
 
     private CompositeDisposable disposable;
     private TextView tvOpenPic;
     private ImageView ivOpenPic;
     private String openPic;
-    private int loadTime = 5000;
+    private int loadTime = 4000;
     private final int WHAT_COUNT_DOWN = 88;
 
     HomeModulesBean.Params params ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         /**
          * View.SYSTEM_UI_FLAG_VISIBLE：显示状态栏，Activity不全屏显示(恢复到有状态的正常情况)。
          View.INVISIBLE：隐藏状态栏，同时Activity会伸展全屏显示。
@@ -62,12 +61,10 @@ public class SplashActivity extends AppCompatActivity {
          View.SYSTEM_UI_FLAG_HIDE_NAVIGATION：隐藏虚拟按键(导航栏)。有些手机会用虚拟按键来代替物理按键。
          View.SYSTEM_UI_FLAG_LOW_PROFILE：状态栏显示处于低能显示状态(low profile模式)，状态栏上一些图标显示会被隐藏。
          */
-        if(Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
-        getWindow().getDecorView().setSystemUiVisibility(View.INVISIBLE|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        setContentView(R.layout.splash_activity);
 
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        MyStatusBarUtils.setNavigationBarStatusBarTranslucent(this);
+        setContentView(R.layout.splash_activity);
         initView();
         initData();
     }
@@ -234,6 +231,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disposable.dispose();
+        if(null != disposable){
+            disposable.dispose();
+        }
     }
 }

@@ -7,12 +7,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 
 import java.util.ArrayList;
 
@@ -29,7 +28,8 @@ public class GuideActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        MyStatusBarUtils.setNavigationBarStatusBarTranslucent(this);
         setContentView(R.layout.gride_activity);
         tvSkip = findViewById(R.id.tvSkip);
         vpGuide = findViewById(R.id.vpGuide);

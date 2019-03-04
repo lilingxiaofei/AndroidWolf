@@ -1,7 +1,6 @@
 package com.chunlangjiu.app.order.bean;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class AuctionOrderListBean {
     /**
@@ -26,6 +25,7 @@ public class AuctionOrderListBean {
     private String status;
     private String type;
     private String status_desc;
+    private String trade_ststus;
 
     public String getPayment_id() {
         return payment_id;
@@ -101,6 +101,14 @@ public class AuctionOrderListBean {
 
     public String getStatus_desc() {
         return status_desc;
+    }
+
+    public String getTrade_ststus() {
+        return trade_ststus;
+    }
+
+    public void setTrade_ststus(String trade_ststus) {
+        this.trade_ststus = trade_ststus;
     }
 
     public void setStatus_desc(String status_desc) {
