@@ -197,7 +197,7 @@ public class FestivalActivity extends BaseActivity {
         }
         goodsAdapter.setListType(GoodsAdapter.LIST_LINEAR);
         goodsAdapter.setNewData(productList);
-        goodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recycleView.getParent(), false));
+//        goodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recycleView.getParent(), false));
     }
 
     protected void onDestroy() {
