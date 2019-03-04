@@ -644,6 +644,7 @@ public class UserFragment extends BaseFragment {
             llGoodsContent.setVisibility(View.GONE);
 
             rlCollect.setVisibility(View.VISIBLE);
+            rlShop.setVisibility(View.GONE);
             llMyManagerSecond.setVisibility(View.VISIBLE);
         } else {
             //卖家中心
@@ -680,7 +681,7 @@ public class UserFragment extends BaseFragment {
 
             rlGoodsManager.setVisibility(View.VISIBLE);
             llGoodsContent.setVisibility(View.VISIBLE);
-
+            rlShop.setVisibility(View.VISIBLE);
             rlCollect.setVisibility(View.VISIBLE);
             rlMyEvaluate.setVisibility(View.VISIBLE);
 
