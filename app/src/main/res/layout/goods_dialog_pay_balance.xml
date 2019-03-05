@@ -40,16 +40,19 @@
         </RelativeLayout>
         <TextView android:id="@+id/tvMoney"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:gravity="center"
             android:textSize="25sp"
             android:text="￥56"
+            android:visibility="gone"
             android:textColor="@color/t_red"/>
 
         <EditText
             android:id="@+id/etPsd"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="12dp"
             android:layout_toLeftOf="@id/tvGetCode"
             android:layout_toRightOf="@id/imgAuthCode"
             android:background="@drawable/bg_white_soild_gray_stroke_round"

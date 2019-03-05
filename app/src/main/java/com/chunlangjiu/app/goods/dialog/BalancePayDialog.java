@@ -108,6 +108,7 @@ public class BalancePayDialog extends Dialog {
         imgClose = findViewById(R.id.imgClose);
 
         tvMoney.setText(context.getString(R.string.rmb)+payMoney);
+        tvMoney.setVisibility(View.GONE);
         imgClose.setOnClickListener(onClickListener);
         tvCancel.setOnClickListener(onClickListener);
         tvConfirm.setOnClickListener(onClickListener);

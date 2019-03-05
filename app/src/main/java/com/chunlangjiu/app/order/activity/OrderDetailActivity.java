@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -614,11 +615,9 @@ public class OrderDetailActivity extends BaseActivity {
                         if(OrderParams.WAIT_BUYER_PAY.equals(orderDetailBean.getTrade_ststus())){
                             tvPaymentBtn.setVisibility(View.VISIBLE);
                         }else if(OrderParams.WAIT_BUYER_CONFIRM_GOODS.equals(orderDetailBean.getTrade_ststus())){
-//                            tvSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getConsign_time())));
                             tvGoodsSignBill.setVisibility(View.VISIBLE);
                         }else if(OrderParams.WAIT_SELLER_SEND_GOODS.equals(orderDetailBean.getTrade_ststus())){
                         }else if(OrderParams.TRADE_FINISHED.equals(orderDetailBean.getTrade_ststus())){
-//                            tvFinishTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getEnd_time())));
                         }
 
 
@@ -649,11 +648,17 @@ public class OrderDetailActivity extends BaseActivity {
                     llSendTime.setVisibility(View.GONE);
                     llFinishTime.setVisibility(View.GONE);
                     countdownView.setVisibility(View.GONE);
-                    tvOrderId.setText(orderDetailBean.getPayments().getPayment_id());
                     tvPaymentTips = findViewById(R.id.tvPaymentTips);
                     tvPaymentTips.setText("已付定金：");
                     break;
             }
+
+            if(!TextUtils.isEmpty(orderDetailBean.getPayments().getPayment_id())){
+                tvOrderId.setText(orderDetailBean.getPayments().getPayment_id());
+            }else{
+                tvOrderId.setText(tid);
+            }
+
             llAfterSaleTme.setVisibility(View.GONE);
 
             llProducts.removeAllViews();
@@ -664,9 +669,33 @@ public class OrderDetailActivity extends BaseActivity {
             TextView tvProductName = inflate.findViewById(R.id.tvProductName);
             tvProductName.setText(orderDetailBean.getTitle());
             TextView tvProductPrice = inflate.findViewById(R.id.tvProductPrice);
-            if (!TextUtils.isEmpty(orderDetailBean.getCost_price())) {
+            TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
+            tvProductNum.setText("x1");
+
+            if ("false".equalsIgnoreCase(orderDetailBean.getAuction().getAuction_status())) {
+                tvProductPrice.setText("保密出价");
+            } else if (!TextUtils.isEmpty(orderDetailBean.getCost_price())) {
                 tvProductPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getCost_price()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
             }
+
+            tvProductPrice.setVisibility(View.GONE);
+            tvProductNum.setVisibility(View.GONE);
+            TextView tvAuctionPrice = inflate.findViewById(R.id.tvAuctionPrice);
+            String startPrice = "";
+            if (!TextUtils.isEmpty(orderDetailBean.getAuction().getStarting_price())) {
+                startPrice = String.format("起拍价：%s", String.format("¥%s", BigDecimalUtils.objToStr(orderDetailBean.getAuction().getStarting_price(), 2)));
+            }
+
+            tvProductNum.setGravity(Gravity.CENTER_VERTICAL);
+            String maxPrice = "";
+            if ("false".equalsIgnoreCase(orderDetailBean.getAuction().getAuction_status())) {
+                maxPrice ="最高出价：保密出价";
+            } else {
+                maxPrice = CommonUtils.joinStr("最高出价：¥",BigDecimalUtils.objToStr(orderDetailBean.getAuction().getMax_price(),2));
+            }
+            tvAuctionPrice.setText(startPrice + "\n" + maxPrice);
+            tvAuctionPrice.setVisibility(View.VISIBLE);
+
 
 //            switch (orderDetailBean.getStatus()) {
 //                case OrderParams.TRADE_FINISHED:
@@ -679,9 +708,25 @@ public class OrderDetailActivity extends BaseActivity {
 //                    break;
 //            }
 
-            TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
-            tvProductNum.setText("x1");
+
+
             llProducts.addView(inflate);
+
+
+
+            if(orderDetailBean.getConsign_time()>0){
+                llSendTime.setVisibility(View.VISIBLE);
+                tvSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getConsign_time())));
+            }else{
+                llSendTime.setVisibility(View.GONE);
+            }
+
+            if(orderDetailBean.getEnd_time()>0){
+                llFinishTime.setVisibility(View.VISIBLE);
+                tvFinishTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getEnd_time())));
+            }else{
+                llFinishTime.setVisibility(View.GONE);
+            }
 
             if (!TextUtils.isEmpty(orderDetailBean.getAuction().getStarting_price())) {
                 tvTotalPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getAuction().getStarting_price()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
@@ -701,7 +746,9 @@ public class OrderDetailActivity extends BaseActivity {
                 llShopPayment.setVisibility(View.GONE);
             }
 
-            if (!TextUtils.isEmpty(orderDetailBean.getAuction().getMax_price())) {
+            if ("false".equalsIgnoreCase(orderDetailBean.getAuction().getAuction_status())) {
+                tvSendPrice.setText("保密出价");
+            } else if (!TextUtils.isEmpty(orderDetailBean.getCost_price())) {
                 tvSendPrice.setText(CommonUtils.joinStr("¥",orderDetailBean.getAuction().getMax_price()));
             }
 
@@ -1320,6 +1367,7 @@ public class OrderDetailActivity extends BaseActivity {
                 case R.id.tvPayDeposit://去付定金
                     paymentId = orderDetailBean.getPaymentId();
                     getPayment();
+                    break;
                 case R.id.tvServerInto:
                     CommonUtils.callPhone("4007889550");
                     break;

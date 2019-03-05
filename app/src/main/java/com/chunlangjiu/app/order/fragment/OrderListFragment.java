@@ -375,9 +375,6 @@ public class OrderListFragment extends BaseFragment {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         rlLoading.setVisibility(View.GONE);
-                        if (1 == pageNo) {
-                            listBeans.clear();
-                        }
                         if (listBeans.isEmpty()) {
                             rlEmptyView.setVisibility(View.VISIBLE);
                             listView.setVisibility(View.GONE);
@@ -432,8 +429,7 @@ public class OrderListFragment extends BaseFragment {
                                     orderBean.setTitle(bean.getItem().getTitle());
                                     orderBean.setPrice(bean.getAuction().getStarting_price());
                                     orderBean.setPic_path(bean.getItem().getImage_default_id());
-                                    if (!TextUtils.isEmpty(bean.getAuction().getAuction_status())
-                                            && "false".equalsIgnoreCase(bean.getAuction().getAuction_status())) {
+                                    if ("false".equalsIgnoreCase(bean.getAuction().getAuction_status())) {
                                         orderBean.setSpec_nature_info("保密出价");
                                     } else {
                                         orderBean.setSpec_nature_info(bean.getAuction().getMax_price());
@@ -465,9 +461,6 @@ public class OrderListFragment extends BaseFragment {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         rlLoading.setVisibility(View.GONE);
-                        if (1 == pageNo) {
-                            listBeans.clear();
-                        }
                         if (listBeans.isEmpty()) {
                             rlEmptyView.setVisibility(View.VISIBLE);
                             listView.setVisibility(View.GONE);
@@ -533,9 +526,6 @@ public class OrderListFragment extends BaseFragment {
                         }
                         refreshLayout.finishLoadMore();
                         refreshLayout.finishRefresh();
-                        if (1 == pageNo) {
-                            listBeans.clear();
-                        }
                         if (1 < pageNo) {
                             pageNo--;
                         }
@@ -596,9 +586,6 @@ public class OrderListFragment extends BaseFragment {
                         }
                         refreshLayout.finishLoadMore();
                         refreshLayout.finishRefresh();
-                        if (1 == pageNo) {
-                            listBeans.clear();
-                        }
                         if (1 < pageNo) {
                             pageNo--;
                         }
@@ -655,9 +642,6 @@ public class OrderListFragment extends BaseFragment {
                         }
                         refreshLayout.finishLoadMore();
                         refreshLayout.finishRefresh();
-                        if (1 == pageNo) {
-                            listBeans.clear();
-                        }
                         if (1 < pageNo) {
                             pageNo--;
                         }
@@ -714,9 +698,6 @@ public class OrderListFragment extends BaseFragment {
                         }
                         refreshLayout.finishLoadMore();
                         refreshLayout.finishRefresh();
-                        if (1 == pageNo) {
-                            listBeans.clear();
-                        }
                         if (1 < pageNo) {
                             pageNo--;
                         }

@@ -307,7 +307,11 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
 
                     tvProductNum.setGravity(Gravity.CENTER_VERTICAL);
                     String maxPrice = "";
-                    maxPrice = CommonUtils.joinStr("最高出价：¥",BigDecimalUtils.objToStr(orderBean.getSpec_nature_info(),2));
+                    if ("false".equalsIgnoreCase(item.getAuction().getAuction_status())) {
+                        maxPrice ="最高出价：保密出价";
+                    } else {
+                        maxPrice = CommonUtils.joinStr("最高出价：¥",BigDecimalUtils.objToStr(item.getAuction().getMax_price(),2));
+                    }
                     tvAuctionPrice.setText(startPrice + "\n" + maxPrice);
                     tvAuctionPrice.setVisibility(View.VISIBLE);
                     llProducts.addView(inflate);
