@@ -212,6 +212,9 @@ public class OrderDetailActivity extends BaseActivity {
     TextView tvEvaluate;//去评价
     @BindView(R.id.tvPay)
     TextView tvPay;//去支付
+    @BindView(R.id.tvPaymentBtn)
+    TextView tvPaymentBtn;//去支付
+
     @BindView(R.id.tvEditPrice)
     TextView tvEditPrice;//修改出价
     @BindView(R.id.tvPayDeposit)
@@ -280,6 +283,7 @@ public class OrderDetailActivity extends BaseActivity {
         tvConfirmReceipt.setOnClickListener(onClickListener);//确认收货
         tvEvaluate.setOnClickListener(onClickListener);//去评价
         tvPay.setOnClickListener(onClickListener);//去支付
+        tvPaymentBtn.setOnClickListener(onClickListener);
         tvEditPrice.setOnClickListener(onClickListener);//修改出价
         tvPayDeposit.setOnClickListener(onClickListener);//去付定金
     }
@@ -300,11 +304,13 @@ public class OrderDetailActivity extends BaseActivity {
         tvConfirmReceipt.setVisibility(View.GONE);//确认收货
         tvEvaluate.setVisibility(View.GONE);//去评价
         tvPay.setVisibility(View.GONE);//去支付
+        tvPaymentBtn.setVisibility(View.GONE);
         tvEditPrice.setVisibility(View.GONE);//修改出价
         tvPayDeposit.setVisibility(View.GONE);//去付定金
     }
 
     private void initData() {
+        tid = getIntent().getLongExtra(OrderParams.ORDERID, 0)+"";
         if (null == wxapi) {
             wxapi = WXAPIFactory.createWXAPI(this, null);
             wxapi.registerApp("wx0e1869b241d7234f");
@@ -317,7 +323,7 @@ public class OrderDetailActivity extends BaseActivity {
         }
         switch (type) {
             case 0:
-                disposable.add(ApiUtils.getInstance().getOrderDetail(String.valueOf(getIntent().getLongExtra(OrderParams.ORDERID, 0)))
+                disposable.add(ApiUtils.getInstance().getOrderDetail(tid)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Consumer<ResultBean<OrderDetailBean>>() {
@@ -525,13 +531,14 @@ public class OrderDetailActivity extends BaseActivity {
         tvStore.setText(orderDetailBean.getShopname());
 
         tvCopy.setOnClickListener(onClickListener);
-        tvCreateTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getCreated_time() + "000")));
-        if (TextUtils.isEmpty(orderDetailBean.getPay_name())) {
+        tvCreateTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getCreated_time())));
+
+        if(TextUtils.isEmpty(orderDetailBean.getPay_name())){
             llPayType.setVisibility(View.GONE);
-        } else {
+        }else{
+            llPayType.setVisibility(View.VISIBLE);
             tvPayType.setText(orderDetailBean.getPay_name());
         }
-        tid = String.valueOf(orderDetailBean.getTid());
 
 
         hideOrderBtn();
@@ -604,9 +611,18 @@ public class OrderDetailActivity extends BaseActivity {
                     tvPaymentTips.setText("已付定金：");
                     break;
                     case "2":
-                        if("WAIT_BUYER_PAY".equals(orderDetailBean.getTrade_ststus())){
-                            tvPay.setVisibility(View.VISIBLE);
+                        if(OrderParams.WAIT_BUYER_PAY.equals(orderDetailBean.getTrade_ststus())){
+                            tvPaymentBtn.setVisibility(View.VISIBLE);
+                        }else if(OrderParams.WAIT_BUYER_CONFIRM_GOODS.equals(orderDetailBean.getTrade_ststus())){
+//                            tvSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getConsign_time())));
+                            tvGoodsSignBill.setVisibility(View.VISIBLE);
+                        }else if(OrderParams.WAIT_SELLER_SEND_GOODS.equals(orderDetailBean.getTrade_ststus())){
+                        }else if(OrderParams.TRADE_FINISHED.equals(orderDetailBean.getTrade_ststus())){
+//                            tvFinishTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getEnd_time())));
                         }
+
+
+
 //                        tvRightContentDesc.setText("剩余支付时间：");
 //                        close_time = orderDetailBean.getClose_time();
 //                        try {
@@ -651,6 +667,18 @@ public class OrderDetailActivity extends BaseActivity {
             if (!TextUtils.isEmpty(orderDetailBean.getCost_price())) {
                 tvProductPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getCost_price()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
             }
+
+//            switch (orderDetailBean.getStatus()) {
+//                case OrderParams.TRADE_FINISHED:
+//                    if (TextUtils.isEmpty(orderBean.getAftersales_status()) && orderBean.isRefund_enabled()) {
+//                        TextView tvAfterSale = inflate.findViewById(R.id.tvAfterSale);
+//                        tvAfterSale.setTag(i);
+//                        tvAfterSale.setOnClickListener(onClickListener);
+//                        tvAfterSale.setVisibility(View.VISIBLE);
+//                    }
+//                    break;
+//            }
+
             TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
             tvProductNum.setText("x1");
             llProducts.addView(inflate);
@@ -697,6 +725,23 @@ public class OrderDetailActivity extends BaseActivity {
                 llInfo.setVisibility(View.VISIBLE);
                 tvInfo.setText(orderDetailBean.getInfo());
             }
+
+            if(null != orderDetailBean.getPayments()){
+                String payName = orderDetailBean.getPayments().getPay_name();
+                String payed_time = orderDetailBean.getPayments().getPayed_time();
+
+                if (payName ==null || TextUtils.isEmpty(payName)) {
+                    llPayType.setVisibility(View.GONE);
+                } else {
+                    tvPayType.setText(payName.toString());
+                }
+
+                if (payed_time ==null || TextUtils.isEmpty(payed_time.toString())) {
+                    llPayTime.setVisibility(View.GONE);
+                } else {
+                    tvPayTime.setText(TimeUtils.millisToDate(String.valueOf(payed_time )));
+                }
+            }
         }
     }
 
@@ -741,7 +786,7 @@ public class OrderDetailActivity extends BaseActivity {
                     }
                     tvRightContentDesc.setVisibility(View.GONE);
                     tvRightContent.setVisibility(View.GONE);
-                    tvPayTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getPay_time() + "000")));
+                    tvPayTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getPay_time())));
                     llSendTime.setVisibility(View.GONE);
                     llFinishTime.setVisibility(View.GONE);
                     countdownView.setVisibility(View.GONE);
@@ -753,8 +798,8 @@ public class OrderDetailActivity extends BaseActivity {
                     }
                     tvRightContentDesc.setVisibility(View.GONE);
                     tvRightContent.setVisibility(View.GONE);
-                    tvPayTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getPay_time() + "000")));
-                    tvSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getConsign_time() + "000")));
+                    tvPayTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getPay_time() )));
+                    tvSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getConsign_time())));
                     llFinishTime.setVisibility(View.GONE);
                     countdownView.setVisibility(View.GONE);
                     break;
@@ -768,9 +813,9 @@ public class OrderDetailActivity extends BaseActivity {
                     tvRightContentDesc.setVisibility(View.GONE);
                     tvRightContent.setVisibility(View.GONE);
                     countdownView.setVisibility(View.GONE);
-                    tvPayTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getPay_time() + "000")));
-                    tvSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getConsign_time() + "000")));
-                    tvFinishTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getEnd_time() + "000")));
+                    tvPayTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getPay_time())));
+                    tvSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getConsign_time())));
+                    tvFinishTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getEnd_time())));
                     break;
                 case OrderParams.TRADE_CLOSED_BY_SYSTEM://已关闭
                     if (0 == type) {
@@ -866,7 +911,7 @@ public class OrderDetailActivity extends BaseActivity {
 
 
             tvOrderStatus.setText(orderDetailBean.getStatus_desc());
-            tvOrderId.setText(String.valueOf(orderDetailBean.getTid()));
+            tvOrderId.setText(tid);
 
         }
     }
@@ -924,7 +969,7 @@ public class OrderDetailActivity extends BaseActivity {
             }
             llPayType.setVisibility(View.GONE);
             tvRightContentDesc.setVisibility(View.GONE);
-            tvAfterSaleCreateTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getModified_time() + "000")));
+            tvAfterSaleCreateTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getModified_time() )));
 
             llProducts.removeAllViews();
             LayoutInflater inflater = LayoutInflater.from(this);
@@ -974,21 +1019,21 @@ public class OrderDetailActivity extends BaseActivity {
                 llSendPrice.setVisibility(View.GONE);
             }
             tvOrderStatus.setText(orderDetailBean.getStatus_desc());
-            tvOrderId.setText(String.valueOf(orderDetailBean.getTid()));
+            tvOrderId.setText(String.valueOf(tid));
             if (!TextUtils.isEmpty(orderDetailBean.getOrder().getPay_time())) {
-                tvAfterSaleCreateTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getOrder().getPay_time() + "000")));
+                tvAfterSaleCreateTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getOrder().getPay_time() )));
                 llAfterSaleTme.setVisibility(View.VISIBLE);
             } else {
                 llAfterSaleTme.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(orderDetailBean.getOrder().getConsign_time())) {
-                tvAfterSaleSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getOrder().getConsign_time() + "000")));
+                tvAfterSaleSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getOrder().getConsign_time())));
                 llAfterSaleSendTime.setVisibility(View.VISIBLE);
             } else {
                 llAfterSaleSendTime.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(orderDetailBean.getOrder().getEnd_time())) {
-                tvAfterSalePayTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getOrder().getEnd_time() + "000")));
+                tvAfterSalePayTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getOrder().getEnd_time())));
                 llAfterSalePayTime.setVisibility(View.VISIBLE);
             } else {
                 llAfterSalePayTime.setVisibility(View.GONE);
@@ -1014,27 +1059,27 @@ public class OrderDetailActivity extends BaseActivity {
                     int position = Integer.parseInt(view.getTag().toString());
                     Intent intent = new Intent(OrderDetailActivity.this, OrderApplyForAfterSaleActivity.class);
                     intent.putExtra(OrderParams.PRODUCTS, orderDetailBean.getOrders().get(position));
-                    intent.putExtra(OrderParams.ORDERID, String.valueOf(orderDetailBean.getTid()));
+                    intent.putExtra(OrderParams.ORDERID, String.valueOf(tid));
                     startActivity(intent);
                     break;
                 case R.id.tvDelete://删除订单
                     //删除订单
-                    tid = String.valueOf(orderDetailBean.getTid());
+//                    tid = String.valueOf(orderDetailBean.getTid());
                     delete();
                     break;
                 case R.id.tvCancel://取消订单
                     if (type == 3) {
-                        tid = String.valueOf(orderDetailBean.getTid());
+//                        tid = String.valueOf(orderDetailBean.getTid());
                         getSellerCancelReason();
                     } else {
-                        tid = String.valueOf(orderDetailBean.getTid());
+//                        tid = String.valueOf(orderDetailBean.getTid());
                         getCancelReason();
                     }
                     break;
                 case R.id.tvRefund://申请退款
                     break;
                 case R.id.tvNotGoods://无货
-                    tid = String.valueOf(orderDetailBean.getTid());
+//                    tid = String.valueOf(orderDetailBean.getTid());
                     getSellerCancelReason();
                     break;
                 case R.id.tvConsentRefund://同意退款
@@ -1244,15 +1289,15 @@ public class OrderDetailActivity extends BaseActivity {
                             }));
                     break;
                 case R.id.tvSendGoods://发货
-                    tid = String.valueOf(orderDetailBean.getTid());
+//                    tid = String.valueOf(orderDetailBean.getTid());
                     getSellerLogisticsList();
                     break;
                 case R.id.tvGoodsSignBill://商品签单
-                    tid = String.valueOf(orderDetailBean.getTid());
+//                    tid = String.valueOf(orderDetailBean.getTid());
                     confirmReceipt();
                     break;
                 case R.id.tvConfirmReceipt://确认收货
-                    tid = String.valueOf(orderDetailBean.getTid());
+//                    tid = String.valueOf(orderDetailBean.getTid());
                     confirmReceipt();
                     break;
                 case R.id.tvEvaluate://去评价
@@ -1262,8 +1307,12 @@ public class OrderDetailActivity extends BaseActivity {
                     startActivity(intent);
                     break;
                 case R.id.tvPay://去支付
-                    tid = String.valueOf(orderDetailBean.getTid());
-                    repay();
+//                    tid = String.valueOf(orderDetailBean.getTid());
+                    repay("true");
+                    break;
+                case R.id.tvPaymentBtn://去支付
+//                    tid = String.valueOf(orderDetailBean.getTid());
+                    repay("");
                     break;
                 case R.id.tvEditPrice://修改出价
                     changeMyPrice();
@@ -1335,9 +1384,9 @@ public class OrderDetailActivity extends BaseActivity {
                 }));
     }
 
-    private void repay() {
+    private void repay(String merge) {
         showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().repay(tid, "true")
+        disposable.add(ApiUtils.getInstance().repay(tid, merge)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<CreateOrderBean>>() {
@@ -1421,6 +1470,9 @@ public class OrderDetailActivity extends BaseActivity {
     private void confirmPayMode(final String payMethodId) {
         if (OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)) {
             String payMoney = orderDetailBean.getPayment();
+            if(TextUtils.isEmpty(payMoney)){
+                payMoney = orderDetailBean.getCost_price();
+            }
             BalancePayDialog balancePayDialog = new BalancePayDialog(this, payMoney);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
                 @Override

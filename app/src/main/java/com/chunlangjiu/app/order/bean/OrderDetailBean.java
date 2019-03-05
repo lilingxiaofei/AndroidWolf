@@ -1581,28 +1581,28 @@ public class OrderDetailBean {
         private int user_id;
         private int auctionitem_id;
         private String user_name;
-        private Object pay_app_id;
-        private Object pay_name;
-        private Object payed_time;
-        private Object account;
-        private Object bank;
-        private Object pay_account;
-        private Object currency;
-        private Object paycost;
-        private Object pay_ver;
-        private Object ip;
+        private String pay_app_id;
+        private String pay_name;
+        private String payed_time;
+        private String account;
+        private String bank;
+        private String pay_account;
+        private String currency;
+        private String paycost;
+        private String pay_ver;
+        private String ip;
         private int created_time;
         private int modified_time;
         private String memo;
-        private Object return_url;
-        private Object next_page;
+        private String return_url;
+        private String next_page;
         private int disabled;
-        private Object trade_no;
-        private Object thirdparty_account;
+        private String trade_no;
+        private String thirdparty_account;
         private String type;
         private String addr_id;
-        private Object next_url;
-        private Object groomcode;
+        private String next_url;
+        private String groomcode;
         private String price;
 
         public String getPayment_id() {
@@ -1661,83 +1661,83 @@ public class OrderDetailBean {
             this.user_name = user_name;
         }
 
-        public Object getPay_app_id() {
+        public String getPay_app_id() {
             return pay_app_id;
         }
 
-        public void setPay_app_id(Object pay_app_id) {
+        public void setPay_app_id(String pay_app_id) {
             this.pay_app_id = pay_app_id;
         }
 
-        public Object getPay_name() {
+        public String getPay_name() {
             return pay_name;
         }
 
-        public void setPay_name(Object pay_name) {
+        public void setPay_name(String pay_name) {
             this.pay_name = pay_name;
         }
 
-        public Object getPayed_time() {
+        public String getPayed_time() {
             return payed_time;
         }
 
-        public void setPayed_time(Object payed_time) {
+        public void setPayed_time(String payed_time) {
             this.payed_time = payed_time;
         }
 
-        public Object getAccount() {
+        public String getAccount() {
             return account;
         }
 
-        public void setAccount(Object account) {
+        public void setAccount(String account) {
             this.account = account;
         }
 
-        public Object getBank() {
+        public String getBank() {
             return bank;
         }
 
-        public void setBank(Object bank) {
+        public void setBank(String bank) {
             this.bank = bank;
         }
 
-        public Object getPay_account() {
+        public String getPay_account() {
             return pay_account;
         }
 
-        public void setPay_account(Object pay_account) {
+        public void setPay_account(String pay_account) {
             this.pay_account = pay_account;
         }
 
-        public Object getCurrency() {
+        public String getCurrency() {
             return currency;
         }
 
-        public void setCurrency(Object currency) {
+        public void setCurrency(String currency) {
             this.currency = currency;
         }
 
-        public Object getPaycost() {
+        public String getPaycost() {
             return paycost;
         }
 
-        public void setPaycost(Object paycost) {
+        public void setPaycost(String paycost) {
             this.paycost = paycost;
         }
 
-        public Object getPay_ver() {
+        public String getPay_ver() {
             return pay_ver;
         }
 
-        public void setPay_ver(Object pay_ver) {
+        public void setPay_ver(String pay_ver) {
             this.pay_ver = pay_ver;
         }
 
-        public Object getIp() {
+        public String getIp() {
             return ip;
         }
 
-        public void setIp(Object ip) {
+        public void setIp(String ip) {
             this.ip = ip;
         }
 
@@ -1765,19 +1765,19 @@ public class OrderDetailBean {
             this.memo = memo;
         }
 
-        public Object getReturn_url() {
+        public String getReturn_url() {
             return return_url;
         }
 
-        public void setReturn_url(Object return_url) {
+        public void setReturn_url(String return_url) {
             this.return_url = return_url;
         }
 
-        public Object getNext_page() {
+        public String getNext_page() {
             return next_page;
         }
 
-        public void setNext_page(Object next_page) {
+        public void setNext_page(String next_page) {
             this.next_page = next_page;
         }
 
@@ -1789,19 +1789,19 @@ public class OrderDetailBean {
             this.disabled = disabled;
         }
 
-        public Object getTrade_no() {
+        public String getTrade_no() {
             return trade_no;
         }
 
-        public void setTrade_no(Object trade_no) {
+        public void setTrade_no(String trade_no) {
             this.trade_no = trade_no;
         }
 
-        public Object getThirdparty_account() {
+        public String getThirdparty_account() {
             return thirdparty_account;
         }
 
-        public void setThirdparty_account(Object thirdparty_account) {
+        public void setThirdparty_account(String thirdparty_account) {
             this.thirdparty_account = thirdparty_account;
         }
 
@@ -1821,19 +1821,19 @@ public class OrderDetailBean {
             this.addr_id = addr_id;
         }
 
-        public Object getNext_url() {
+        public String getNext_url() {
             return next_url;
         }
 
-        public void setNext_url(Object next_url) {
+        public void setNext_url(String next_url) {
             this.next_url = next_url;
         }
 
-        public Object getGroomcode() {
+        public String getGroomcode() {
             return groomcode;
         }
 
-        public void setGroomcode(Object groomcode) {
+        public void setGroomcode(String groomcode) {
             this.groomcode = groomcode;
         }
 

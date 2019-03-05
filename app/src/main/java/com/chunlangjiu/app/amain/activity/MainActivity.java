@@ -19,12 +19,14 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragmentAdapter;
 import com.chunlangjiu.app.amain.bean.CheckUpdateBean;
+import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.amain.fragment.AuctionFragment;
 import com.chunlangjiu.app.amain.fragment.CartFragment;
 import com.chunlangjiu.app.amain.fragment.ClassifyFragment;
 import com.chunlangjiu.app.amain.fragment.HomeFragment;
 import com.chunlangjiu.app.amain.fragment.UserFragment;
 import com.chunlangjiu.app.dialog.AppUpdateDialog;
+import com.chunlangjiu.app.dialog.OpenDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GeTuiIntentService;
@@ -108,7 +110,7 @@ public class MainActivity extends BaseActivity {
 
     private long exitTime;
 
-
+    HomeModulesBean.Params params ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -217,6 +219,26 @@ public class MainActivity extends BaseActivity {
         myFragmentAdapter.setLists(fragments);
         viewPager.setAdapter(myFragmentAdapter);
         setPageFragment(0);
+        loadOpen();
+    }
+
+
+    private void loadOpen() {
+        disposable.add(ApiUtils.getInstance().getOpenAd()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<HomeModulesBean>>() {
+                    @Override
+                    public void accept(ResultBean<HomeModulesBean> brandsListBeanResultBean) throws Exception {
+                        params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
+                        OpenDialog dialog = new OpenDialog(MainActivity.this,params);
+                        dialog.show();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                    }
+                }));
     }
 
     @Override

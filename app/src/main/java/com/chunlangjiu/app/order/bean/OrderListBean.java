@@ -131,6 +131,10 @@ public class OrderListBean {
         private String paymentId;
         private int auctionitem_id;
         private String trade_ststus;
+
+
+
+
         private AuctionOrderListBean.AuctionBean auction;
 
         public long getTid() {

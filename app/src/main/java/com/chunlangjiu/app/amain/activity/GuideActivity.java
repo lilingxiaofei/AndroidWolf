@@ -29,7 +29,7 @@ public class GuideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        MyStatusBarUtils.setNavigationBarStatusBarTranslucent(this);
+        MyStatusBarUtils.setStatusBar(this,R.color.bg_red);
         setContentView(R.layout.gride_activity);
         tvSkip = findViewById(R.id.tvSkip);
         vpGuide = findViewById(R.id.vpGuide);
@@ -79,17 +79,17 @@ public class GuideActivity extends AppCompatActivity {
             iv.setImageResource(imgs[i]);//为ImageView添加图片资源
             iv.setScaleType(ImageView.ScaleType.FIT_XY);//这里也是一个图片的适配
             imageViews.add(iv);
-            if (i == imgs.length - 1) {
+//            if (i == imgs.length - 1) {
                 //为最后一张图片添加点击事件
-                iv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(GuideActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-            }
+//                iv.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent intent = new Intent(GuideActivity.this, MainActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    }
+//                });
+//            }
         }
         vpAdapter = new VpAdapter(imageViews);
         vpGuide.setAdapter(vpAdapter);

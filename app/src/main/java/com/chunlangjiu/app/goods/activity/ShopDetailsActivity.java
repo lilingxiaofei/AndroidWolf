@@ -154,7 +154,7 @@ public class ShopDetailsActivity extends BaseActivity {
             tvCompanyStatus.setText("个人认证");
         }
 
-        tvOpenShopTime.setText(TimeUtils.millisToDate(data.getShopInfo().getOpen_time()+"000"));
+        tvOpenShopTime.setText(TimeUtils.millisToDate(data.getShopInfo().getOpen_time()));
         tvAddress.setText(data.getShopInfo().getShop_addr());
 
         if ("2".equals(shopType)) {

@@ -78,6 +78,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         TextView tvConfirmReceipt = helper.getView(R.id.tvConfirmReceipt);//确认收货
         TextView tvEvaluate = helper.getView(R.id.tvEvaluate);//去评价
         TextView tvPay = helper.getView(R.id.tvPay);//去支付
+        TextView tvPayment = helper.getView(R.id.tvPaymentBtn);//去付款
+
         TextView tvEditPrice = helper.getView(R.id.tvEditPrice);//修改出价
         TextView tvPayDeposit = helper.getView(R.id.tvPayDeposit);//去付定金
 
@@ -98,6 +100,8 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         tvConfirmReceipt.setVisibility(View.GONE);//确认收货
         tvEvaluate.setVisibility(View.GONE);//去评价
         tvPay.setVisibility(View.GONE);//去支付
+        tvPayment.setVisibility(View.GONE);
+
         tvEditPrice.setVisibility(View.GONE);//修改出价
         tvPayDeposit.setVisibility(View.GONE);//去付定金
 
@@ -148,7 +152,9 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         helper.setImageResource(R.id.ivAuctionBid, R.mipmap.bid_already);
                         tvStatus.setText("");
                         if("WAIT_BUYER_PAY".equals(item.getTrade_ststus())){
-                            tvPay.setVisibility(View.VISIBLE);
+                            tvPayment.setVisibility(View.VISIBLE);
+                        }else if("WAIT_BUYER_CONFIRM_GOODS".equals(item.getTrade_ststus())){
+                            tvGoodsSignBill.setVisibility(View.VISIBLE);
                         }
                         break;
                     case OrderParams.AUCTION_OUTBID:
@@ -238,6 +244,7 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
         helper.addOnClickListener(R.id.tvConfirmReceipt);//确认收货
         helper.addOnClickListener(R.id.tvEvaluate);//去评价
         helper.addOnClickListener(R.id.tvPay);//去支付
+        helper.addOnClickListener(R.id.tvPaymentBtn);
         helper.addOnClickListener(R.id.tvEditPrice);//修改出价
         helper.addOnClickListener(R.id.tvPayDeposit);//去付定金
 

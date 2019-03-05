@@ -29,7 +29,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:visibility="gone"
                 android:layout_marginBottom="40dp"
                 android:nestedScrollingEnabled="false" />
 
@@ -65,6 +64,7 @@
             android:layout_marginRight="@dimen/title_bar_height"
             android:text="标题"
             android:gravity="center"
+            android:visibility="gone"
             android:textColor="@color/t_white"
             android:textSize="18sp" />
 

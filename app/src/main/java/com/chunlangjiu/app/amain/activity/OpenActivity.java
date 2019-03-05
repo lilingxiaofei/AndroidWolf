@@ -18,7 +18,6 @@ import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.activity.ValuationActivity;
-import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.store.activity.StoreListActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -26,16 +25,12 @@ import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
-import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 
-public class SplashActivity extends Activity {
+public class OpenActivity extends Activity {
 
 
     private CompositeDisposable disposable;
@@ -65,7 +60,7 @@ public class SplashActivity extends Activity {
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         MyStatusBarUtils.setNavigationBarStatusBarTranslucent(this);
         setContentView(R.layout.splash_activity);
-//        params = (HomeModulesBean.Params)getIntent().getSerializableExtra("openParams");
+        params = (HomeModulesBean.Params)getIntent().getSerializableExtra("openParams");
         initView();
         initData();
     }
@@ -77,14 +72,14 @@ public class SplashActivity extends Activity {
 
     private void initData() {
         disposable = new CompositeDisposable();
-//        if (null != params) {
-//            loadTime = 5000;
-//            openPic = params.getImagesrc();
-//            tvOpenPic.setVisibility(View.VISIBLE);
-//            tvOpenPic.setOnClickListener(onClickListener);
-//            ivOpenPic.setOnClickListener(onClickListener);
-//            setOpenPic();
-//        }
+        if (null != params) {
+            loadTime = 5000;
+            openPic = params.getImagesrc();
+            tvOpenPic.setVisibility(View.VISIBLE);
+            tvOpenPic.setOnClickListener(onClickListener);
+            ivOpenPic.setOnClickListener(onClickListener);
+            setOpenPic();
+        }
         startCountDown();
     }
 
@@ -104,7 +99,7 @@ public class SplashActivity extends Activity {
                     break;
                 default:
                     functionJump();
-                    SplashActivity.this.finish();
+                    OpenActivity.this.finish();
                     break;
             }
         }
@@ -117,18 +112,18 @@ public class SplashActivity extends Activity {
     }
 
     private void startNextActivity() {
-//        if(params == null){
+        if(params == null){
             boolean isFirstStart = (boolean) SPUtils.get("firstStart", true);
             if (isFirstStart) {
-                Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
+                Intent intent = new Intent(OpenActivity.this, GuideActivity.class);
                 startActivity(intent);
             } else {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(OpenActivity.this, MainActivity.class);
                 startActivity(intent);
             }
             SPUtils.put("firstStart", false);
-//        }
-        SplashActivity.this.finish();
+        }
+        OpenActivity.this.finish();
     }
 
 
@@ -137,7 +132,7 @@ public class SplashActivity extends Activity {
         public void onClick(View v) {
             if (v.getId() == R.id.tvOpenPic) {
                 startNextActivity();
-                SplashActivity.this.finish();
+                OpenActivity.this.finish();
             } else if (v.getId() == R.id.ivOpenPic) {
                 handler.removeMessages(WHAT_COUNT_DOWN);
                 startNextActivity();
@@ -154,56 +149,56 @@ public class SplashActivity extends Activity {
         if(type != null) {
             switch (type) {
                 case HomeModulesBean.ITEM_GOODS:
-                    GoodsDetailslNewActivity.startActivity(SplashActivity.this, value);
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "商品");
+                    GoodsDetailslNewActivity.startActivity(OpenActivity.this, value);
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "商品");
                     break;
                 case HomeModulesBean.ITEM_SHOP:
-                    ShopMainActivity.startShopMainActivity(SplashActivity.this, value);
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "店铺");
+                    ShopMainActivity.startShopMainActivity(OpenActivity.this, value);
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "店铺");
                     break;
                 case HomeModulesBean.ITEM_CLASS:
                     EventManager.getInstance().notify(null, ConstantMsg.MSG_PAGE_CLASS);
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "全部");
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "全部");
                     break;
                 case HomeModulesBean.ITEM_BRAND:
-                    GoodsListNewActivity.startGoodsListNewActivity(SplashActivity.this,"","", value, "", "");
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "品牌");
+                    GoodsListNewActivity.startGoodsListNewActivity(OpenActivity.this,"","", value, "", "");
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "品牌");
                     break;
                 case HomeModulesBean.ITEM_AUCTION:
                     EventManager.getInstance().notify(null, BaseApplication.HIDE_AUCTION ? ConstantMsg.MSG_PAGE_CLASS : ConstantMsg.MSG_PAGE_AUCTION);
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "竞拍专区");
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "竞拍专区");
                     break;
                 case HomeModulesBean.ITEM_ACTIVITY:
-                    FestivalActivity.startActivity(SplashActivity.this);
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "店铺活动");
+                    FestivalActivity.startActivity(OpenActivity.this);
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "店铺活动");
                     break;
                 case HomeModulesBean.ITEM_WINERY:
-                    startActivity(new Intent(SplashActivity.this, StoreListActivity.class));
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "名庄查询");
+                    startActivity(new Intent(OpenActivity.this, StoreListActivity.class));
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "名庄查询");
                     break;
                 case HomeModulesBean.ITEM_EVALUATION:
                     if (BaseApplication.isLogin()) {
-                        startActivity(new Intent(SplashActivity.this, ValuationActivity.class));
+                        startActivity(new Intent(OpenActivity.this, ValuationActivity.class));
                     } else {
-                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                        startActivity(new Intent(OpenActivity.this, LoginActivity.class));
                     }
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "名酒估价");
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "名酒估价");
                     break;
                 case HomeModulesBean.ITEM_MEMBER:
                     EventManager.getInstance().notify(null, ConstantMsg.MSG_PAGE_MY);
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "我的");
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "我的");
                     break;
                 case HomeModulesBean.ITEM_CART:
                     EventManager.getInstance().notify(null, ConstantMsg.MSG_PAGE_CART);
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "我要买酒");
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "我要买酒");
                     break;
                 case HomeModulesBean.ITEM_H5:
-                    WebViewActivity.startWebViewActivity(SplashActivity.this, value, "");
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "H5");
+                    WebViewActivity.startWebViewActivity(OpenActivity.this, value, "");
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "H5");
                     break;
                 case HomeModulesBean.ITEM_SELLWINE:
-                    startActivity(new Intent(SplashActivity.this, AddGoodsActivity.class));
-                    UmengEventUtil.bannerEvent(SplashActivity.this, "我要卖酒");
+                    startActivity(new Intent(OpenActivity.this, AddGoodsActivity.class));
+                    UmengEventUtil.bannerEvent(OpenActivity.this, "我要卖酒");
                     break;
             }
         }

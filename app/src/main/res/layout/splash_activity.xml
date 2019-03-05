@@ -6,7 +6,6 @@
         android:id="@+id/ivOpenPic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/splash"
         android:scaleType="fitXY"/>
     
     <TextView android:id="@+id/tvOpenPic"
@@ -14,7 +13,6 @@
         android:layout_height="30dp"
         android:visibility="gone"
         android:textColor="@color/white"
-        android:text="@string/openPicStr"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:layout_alignParentRight="true"

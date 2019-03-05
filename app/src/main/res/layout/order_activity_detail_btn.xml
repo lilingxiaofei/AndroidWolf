@@ -79,7 +79,10 @@
         android:id="@+id/tvPay"
         style="@style/order_btn_red"
         android:text="去支付" />
-
+    <TextView
+        android:id="@+id/tvPaymentBtn"
+        style="@style/order_btn_red"
+        android:text="付款" />
     <TextView
         android:id="@+id/tvEditPrice"
         style="@style/order_btn_red"

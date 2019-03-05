@@ -229,26 +229,6 @@ public class OrderListFragment extends BaseFragment {
                         status = OrderParams.TRADE_FINISHED;
                         getNormalOrderList();
                         break;
-//                    case 5:
-//                        status = OrderParams.AUCTION_WAIT_PAY;
-//                        getAuctionOrderLists();
-//                        break;
-//                    case 6:
-//                        status = OrderParams.AUCTION_BIDDING;
-//                        getAuctionOrderLists();
-//                        break;
-//                    case 7:
-//                        status = OrderParams.AUCTION_WON_BID;
-//                        getAuctionOrderLists();
-//                        break;
-//                    case 8:
-//                        status = OrderParams.AUCTION_DELIVERY;
-//                        getAuctionOrderLists();
-//                        break;
-//                    case 9:
-//                        status = OrderParams.AUCTION_OUTBID;
-//                        getAuctionOrderLists();
-//                        break;
 
                 }
 
@@ -395,6 +375,9 @@ public class OrderListFragment extends BaseFragment {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         rlLoading.setVisibility(View.GONE);
+                        if (1 == pageNo) {
+                            listBeans.clear();
+                        }
                         if (listBeans.isEmpty()) {
                             rlEmptyView.setVisibility(View.VISIBLE);
                             listView.setVisibility(View.GONE);
@@ -431,6 +414,7 @@ public class OrderListFragment extends BaseFragment {
                             if (null != data && !data.isEmpty()) {
                                 for (AuctionOrderListBean bean : data) {
                                     OrderListBean.ListBean listBean = new OrderListBean.ListBean();
+                                    listBean.setTid(bean.getTid());
                                     listBean.setShopname(bean.getItem().getShopname());
                                     listBean.setShop_logo(bean.getItem().getShoplogo());
                                     listBean.setShop_id(bean.getItem().getShop_id());
@@ -481,6 +465,9 @@ public class OrderListFragment extends BaseFragment {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         rlLoading.setVisibility(View.GONE);
+                        if (1 == pageNo) {
+                            listBeans.clear();
+                        }
                         if (listBeans.isEmpty()) {
                             rlEmptyView.setVisibility(View.VISIBLE);
                             listView.setVisibility(View.GONE);
@@ -546,6 +533,9 @@ public class OrderListFragment extends BaseFragment {
                         }
                         refreshLayout.finishLoadMore();
                         refreshLayout.finishRefresh();
+                        if (1 == pageNo) {
+                            listBeans.clear();
+                        }
                         if (1 < pageNo) {
                             pageNo--;
                         }
@@ -606,6 +596,9 @@ public class OrderListFragment extends BaseFragment {
                         }
                         refreshLayout.finishLoadMore();
                         refreshLayout.finishRefresh();
+                        if (1 == pageNo) {
+                            listBeans.clear();
+                        }
                         if (1 < pageNo) {
                             pageNo--;
                         }
@@ -662,6 +655,9 @@ public class OrderListFragment extends BaseFragment {
                         }
                         refreshLayout.finishLoadMore();
                         refreshLayout.finishRefresh();
+                        if (1 == pageNo) {
+                            listBeans.clear();
+                        }
                         if (1 < pageNo) {
                             pageNo--;
                         }
@@ -718,6 +714,9 @@ public class OrderListFragment extends BaseFragment {
                         }
                         refreshLayout.finishLoadMore();
                         refreshLayout.finishRefresh();
+                        if (1 == pageNo) {
+                            listBeans.clear();
+                        }
                         if (1 < pageNo) {
                             pageNo--;
                         }
@@ -976,13 +975,13 @@ public class OrderListFragment extends BaseFragment {
                 case R.id.tvPay://去支付
                     payBean = listBeans.get(position);
                     tid = payBean.getTid()+"";
-                    paymentId = payBean.getPaymentId();
-                    if(TextUtils.isEmpty(paymentId)){
-                        repay ();
-                    }else{
-                        getPayment();
-                    }
+                    repay("true");
                     break;
+                case R.id.tvPaymentBtn://去支付
+                    payBean = listBeans.get(position);
+                    tid = payBean.getTid()+"";
+                    repay("");
+                break;
                 case R.id.tvEditPrice://修改出价
                     changeMyPrice(position);
                     break;
@@ -1062,9 +1061,9 @@ public class OrderListFragment extends BaseFragment {
                 }));
     }
 
-    private void repay() {
+    private void repay(String merge) {
         activity.showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().repay(tid, "true")
+        disposable.add(ApiUtils.getInstance().repay(tid, merge)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<CreateOrderBean>>() {

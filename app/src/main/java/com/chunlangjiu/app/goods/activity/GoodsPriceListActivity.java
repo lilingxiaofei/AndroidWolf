@@ -132,7 +132,7 @@ public class GoodsPriceListActivity extends BaseActivity {
                 helper.setTextColor(R.id.tvMaxPrice, ContextCompat.getColor(GoodsPriceListActivity.this,R.color.t_gray));
                 helper.setText(R.id.tvMaxPrice,"落后");
             }
-            helper.setText(R.id.tvTime, TimeUtils.millisToDate(item.getTime()+"000"));
+            helper.setText(R.id.tvTime, TimeUtils.millisToDate(item.getTime()));
             helper.setText(R.id.tvPrice, "" + "¥" + item.getPrice() + "");
         }
     }

@@ -1,12 +1,13 @@
 package com.chunlangjiu.app.amain.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @CreatedbBy: liucun on 2018/8/27.
  * @Describe:
  */
-public class HomeModulesBean {
+public class HomeModulesBean implements Serializable{
 
     public static final String ITEM_GOODS = "item";//商品详情
     public static final String ITEM_SHOP = "shop";//店铺详情
@@ -32,7 +33,7 @@ public class HomeModulesBean {
         this.modules = modules;
     }
 
-    public class Modules {
+    public class Modules implements Serializable{
         private String tmpl;
         private String widget;
         private String order_sort;
@@ -71,7 +72,7 @@ public class HomeModulesBean {
         }
     }
 
-    public class Params {
+    public class Params implements Serializable{
         private String image;
         private String linktype;
         private String link;
@@ -132,7 +133,7 @@ public class HomeModulesBean {
 
     }
 
-    public class Pic {
+    public class Pic implements Serializable{
         private String tag;
         private String link;
         private String linktarget;

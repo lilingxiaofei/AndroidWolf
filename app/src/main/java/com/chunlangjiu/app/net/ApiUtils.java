@@ -1,5 +1,7 @@
 package com.chunlangjiu.app.net;
 
+import android.text.TextUtils;
+
 import com.chunlangjiu.app.amain.bean.AuctionListBean;
 import com.chunlangjiu.app.amain.bean.CartCountBean;
 import com.chunlangjiu.app.amain.bean.CartListBean;
@@ -436,7 +438,12 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<CreateOrderBean>> repay(String tid, String merge) {
-        return apiService.repay("payment.pay.create", "v1", tid, merge);
+
+        if(TextUtils.isEmpty(merge)){
+            return apiService.repay("payment.pay.create", "v1", tid);
+        }else{
+            return apiService.repay("payment.pay.create", "v1", tid, merge);
+        }
     }
 
     public Flowable<ResultBean<OrderListBean>> getSellerOrderLists(String status, int pageNo) {

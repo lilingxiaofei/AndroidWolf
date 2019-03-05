@@ -502,6 +502,10 @@ public interface ApiService {
     @FormUrlEncoded
     Flowable<ResultBean<CreateOrderBean>> repay(@Field("method") String method, @Field("v") String v, @Field("tid") String tid, @Field("merge") String merge);
 
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<CreateOrderBean>> repay(@Field("method") String method, @Field("v") String v, @Field("tid") String tid);
+
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<OrderListBean>> getSellerOrderLists(@Field("method") String method, @Field("v") String v,

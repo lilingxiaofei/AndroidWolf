@@ -14,7 +14,7 @@ public class AuctionOrderListBean {
      * status : 0
      * type : auction
      */
-
+    private long tid;
     private String payment_id;
     private String cur_money;
     private int auctionitem_id;
@@ -26,6 +26,14 @@ public class AuctionOrderListBean {
     private String type;
     private String status_desc;
     private String trade_ststus;
+
+    public long getTid() {
+        return tid;
+    }
+
+    public void setTid(long tid) {
+        this.tid = tid;
+    }
 
     public String getPayment_id() {
         return payment_id;

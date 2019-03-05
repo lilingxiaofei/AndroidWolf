@@ -50,6 +50,7 @@ import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.BannerGlideLoader;
+import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.PermissionUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -548,34 +549,33 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void updateIconData(HomeModulesBean.Params params) {
-//
-//        iconPicLists = params.getPic();
-//        if (iconPicLists != null && iconPicLists.size() > 0) {
-//            for (int i = 0; i < iconPicLists.size(); i++) {
-//                switch (i) {
-//                    case 0:
-//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconOne);
-//                        setIconText(tvStrOne, i);
-//                        break;
-//                    case 1:
-//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconTwo);
-//                        setIconText(tvStrTwo, i);
-//                        break;
-//                    case 2:
-//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconThree);
-//                        setIconText(tvStrThree, i);
-//                        break;
-//                    case 3:
-//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFour);
-//                        setIconText(tvStrFour, i);
-//                        break;
-//                    case 4:
-//                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFive);
-//                        setIconText(tvStrFive, i);
-//                        break;
-//                }
-//            }
-//        }
+        iconPicLists = params.getPic();
+        if (iconPicLists != null && iconPicLists.size() > 0) {
+            for (int i = 0; i < iconPicLists.size(); i++) {
+                switch (i) {
+                    case 0:
+                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconOne);
+                        setIconText(tvStrOne, i);
+                        break;
+                    case 1:
+                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconTwo);
+                        setIconText(tvStrTwo, i);
+                        break;
+                    case 2:
+                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconThree);
+                        setIconText(tvStrThree, i);
+                        break;
+                    case 3:
+                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFour);
+                        setIconText(tvStrFour, i);
+                        break;
+                    case 4:
+                        GlideUtils.loadImage(getActivity(), iconPicLists.get(i).getImagesrc(), imgIconFive);
+                        setIconText(tvStrFive, i);
+                        break;
+                }
+            }
+        }
     }
 
     /**
