@@ -198,7 +198,7 @@
                         android:layout_height="wrap_content"
                         android:text="交纳金额：" />
 
-                    <TextView
+                    <TextView android:id="@+id/tvPaymentMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="--"

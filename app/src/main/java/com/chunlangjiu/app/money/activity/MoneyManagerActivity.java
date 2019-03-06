@@ -152,7 +152,7 @@ public class MoneyManagerActivity extends BaseActivity {
                                 btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_gray_rectangle);
                                 btnDepositCancel.setVisibility(View.GONE);
-                                tvDepositLabel.setText("保证金金额（已缴纳）");
+                                tvDepositLabel.setText("保证金金额（已交纳）");
                             } else if ("2".equals(depositBean.getDeposit_status())) {
                                 btnDepositCancel.setVisibility(View.VISIBLE);
                                 btnPaySecurityDeposit.setText("撤销保证金中");
@@ -161,8 +161,8 @@ public class MoneyManagerActivity extends BaseActivity {
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
                             } else if ("0".equals(depositBean.getDeposit_status())) {
                                 btnDepositCancel.setVisibility(View.GONE);
-                                btnPaySecurityDeposit.setText("缴纳保证金");
-                                tvDepositLabel.setText("保证金金额（未缴纳）");
+                                btnPaySecurityDeposit.setText("交纳保证金");
+                                tvDepositLabel.setText("保证金金额（未交纳）");
                                 btnPaySecurityDeposit.setEnabled(true);
                                 btnPaySecurityDeposit.setBackgroundResource(R.drawable.bg_red_rectangle);
                             }

@@ -926,6 +926,15 @@ public class HomeFragment extends BaseFragment {
                     UmengEventUtil.iconEvent(getActivity(), "我要卖酒");
                 }
                 break;
+            case HomeModulesBean.ITEM_PARTNER:
+                startActivity(new Intent(getActivity(), PartnerListActivity.class));
+                if ("banner".equals(type)) {
+                    UmengEventUtil.bannerEvent(getActivity(), "城市合伙人");
+                } else {
+                    UmengEventUtil.iconEvent(getActivity(), "城市合伙人");
+                }
+                break;
+
         }
     }
 

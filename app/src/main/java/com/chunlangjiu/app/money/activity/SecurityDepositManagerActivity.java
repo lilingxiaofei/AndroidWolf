@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
@@ -15,6 +16,7 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
@@ -35,6 +37,8 @@ public class SecurityDepositManagerActivity extends BaseActivity {
     LinearLayout lineaPayDepositSuccess;
     @BindView(R.id.lineaRefundDeposit)
     LinearLayout lineaRefundDeposit;
+    @BindView(R.id.tvPaymentMoney)
+    TextView tvPaymentMoney;
 
 
     public static final String SECURITY_DEPOSIT_TYPE = "SECURITY_DEPOSIT_TYPE";
@@ -42,8 +46,10 @@ public class SecurityDepositManagerActivity extends BaseActivity {
     public static final String REFUND_DEPOSIT = "REFUND_DEPOSIT";
     public static final String STATUS = "status";
     public static final String PAY_SUCCESS = "pay_success";
+    public static final String PAYMENT_MONEY = "paymentMoney";
     public static final String REFUND_SUCCESS = "refund_success";
     private String depositStatus = "";
+    private String paymentMoney = "" ;
 
 
     private String securityDepositType = PAYING_DEPOSIT;
@@ -58,6 +64,8 @@ public class SecurityDepositManagerActivity extends BaseActivity {
         if (null == securityDepositType) {
             securityDepositType = PAYING_DEPOSIT;
         }
+
+        paymentMoney = getIntent().getStringExtra(PAYMENT_MONEY);
         depositStatus = getIntent().getStringExtra(STATUS);
         if (null==depositStatus){
             depositStatus ="";
@@ -70,6 +78,9 @@ public class SecurityDepositManagerActivity extends BaseActivity {
             lineaCancelDeposit.setVisibility(View.GONE);
             lineaPayDepositSuccess.setVisibility(View.VISIBLE);
             lineaRefundDeposit.setVisibility(View.GONE);
+            if(BigDecimalUtils.objToBigDecimal(paymentMoney).doubleValue()>0){
+                tvPaymentMoney.setText(getResources().getString(R.string.rmb)+BigDecimalUtils.objToStr(paymentMoney));
+            }
         } else if (depositStatus.equals(REFUND_SUCCESS)) {
             lineaCancelDeposit.setVisibility(View.GONE);
             lineaPayDepositSuccess.setVisibility(View.GONE);

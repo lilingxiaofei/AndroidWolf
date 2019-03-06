@@ -384,11 +384,12 @@ public class AddGoodsActivity extends BaseActivity {
         starLevelDialog.setCallBack(new StarLevelDialog.CallBack() {
             @Override
             public void cancel() {
-
+                starLevelDialog.dismiss();
             }
 
             @Override
             public void confirm() {
+                starLevelDialog.dismiss();
                 if(checkGoodsBean!=null){
                     Intent intent = new Intent(AddGoodsActivity.this, ReChargeActivity.class);
                     intent.putExtra(ReChargeActivity.ReChargeType, ReChargeActivity.RechargeType.SecurityDeposit);

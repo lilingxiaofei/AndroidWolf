@@ -138,11 +138,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                     showPayMethodDialog();
                     break;
                 case R.id.tvCommit:
-                    if(createOrderBean == null){
-                        createOrder();
-                    }else{
-                        confirmPayMode();
-                    }
+                    confirmPayMode();
                     break;
             }
         }
@@ -335,19 +331,21 @@ public class ConfirmOrderActivity extends BaseActivity {
                     @Override
                     public void confirmPay(String pwd) {
                         showLoadingDialog();
-                        createSuccess(pwd);
+//                        createSuccess();
+                        createOrder(pwd);
                     }
                 });
                 balancePayDialog.show();
             } else {
-                createSuccess("");
+                createOrder("");
+//                createSuccess("");
             }
         } else {
             ToastUtils.showShort("请选择地址");
         }
     }
 
-    private void createOrder() {
+    private void createOrder(final String pwd) {
         if (!TextUtils.isEmpty(addressId)) {
             showLoadingDialog();
             List<ConfirmOrderBean.CartData> resultCartData = confirmOrderBean.getCartInfo().getResultCartData();
@@ -372,7 +370,8 @@ public class ConfirmOrderActivity extends BaseActivity {
                         @Override
                         public void accept(ResultBean<CreateOrderBean> resultBean) throws Exception {
                             createOrderBean= resultBean.getData();
-                            confirmPayMode();
+                            createSuccess(pwd);
+//                            confirmPayMode();
                         }
                     }, new Consumer<Throwable>() {
                         @Override
@@ -402,6 +401,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
+                            toOrderMainActivity();
                             hideLoadingDialog();
                             ToastUtils.showErrorMsg(throwable);
                         }
@@ -539,7 +539,6 @@ public class ConfirmOrderActivity extends BaseActivity {
                 //支付取消
                 ToastUtils.showShort("支付取消");
             }
-            finish();
             toOrderMainActivity();
         }
     }
@@ -549,5 +548,6 @@ public class ConfirmOrderActivity extends BaseActivity {
         intent.putExtra(OrderParams.TYPE, 0);
         intent.putExtra(OrderParams.TARGET, 0);
         startActivity(intent);
+        finish();
     }
 }

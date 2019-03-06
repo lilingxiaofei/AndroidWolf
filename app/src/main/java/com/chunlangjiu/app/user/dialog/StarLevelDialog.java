@@ -28,7 +28,7 @@ public class StarLevelDialog extends Dialog {
     public StarLevelDialog(Activity context) {
         super(context, R.style.dialog_transparent);
         this.context = context;
-        setCancelable(false);
+        setCancelable(true);
         setCanceledOnTouchOutside(false);
         initView();
     }

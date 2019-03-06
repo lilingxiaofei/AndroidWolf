@@ -113,6 +113,7 @@ public class ReChargeActivity extends BaseActivity {
                 Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
                 intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
                 intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
+                intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY,edtMoney.getText().toString());
                 startActivity(intent);
                 finish();
 
@@ -355,7 +356,8 @@ public class ReChargeActivity extends BaseActivity {
         EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
         EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
         Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
-        intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.REFUND_DEPOSIT);
+        intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
+        intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY,edtMoney.getText().toString());
         intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
         startActivity(intent);
         finish();
@@ -396,6 +398,7 @@ public class ReChargeActivity extends BaseActivity {
                         Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
                         intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
                         intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
+                        intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY,edtMoney.getText().toString());
                         startActivity(intent);
                         finish();
                     }

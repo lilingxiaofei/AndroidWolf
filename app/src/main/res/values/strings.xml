@@ -85,4 +85,5 @@
     </string>
     <string name="refund_success_desc">您的撤销保证金申请已提交成功！\n 平台处理时间约为1~3个工作日，请您耐心等待！\n撤销的保证金将直接退回到您的可用余额</string>
     <string name="title_activity_goods_audit">GoodsAuditActivity</string>
+    <string name="person_one_tips">认证说明： \n1、实名认证后，用户可发布酒类商品进行销售(最大数量为3件)； \n2、订单成交成功后，平台将抽取交易总额的3%作为平台佣金。\n3、升级成为星级卖家及城市合伙人，将获得更多的权益及优惠。</string>
 </resources>

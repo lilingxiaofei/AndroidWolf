@@ -21,6 +21,9 @@ public class HomeModulesBean implements Serializable{
     public static final String ITEM_H5 = "h5";//网页
     public static final String ITEM_SELLWINE = "sellwine";//我要卖酒
     public static final String ITEM_AUCTION = "auction";//竞拍列表
+    public static final String ITEM_PARTNER = "partner";//竞拍列表
+
+
 
 
     private List<Modules> modules;
