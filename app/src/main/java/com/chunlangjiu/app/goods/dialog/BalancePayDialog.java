@@ -77,7 +77,7 @@ public class BalancePayDialog extends Dialog {
         if(null != balanceBean){
             BigDecimal bigDecimal = BigDecimalUtils.substractObj(balanceBean.getDeposit(),payMoney);
             if(!balanceBean.isPassword()){
-                etPsd.setHint("未设置支付密码，请先设置支付密码");
+                etPsd.setHint("未设置支付密码，请先设置");
                 etPsd.setEnabled(false);
                 tvConfirm.setText("设置密码");
             }else if(bigDecimal!=null && bigDecimal.doubleValue()<=0){

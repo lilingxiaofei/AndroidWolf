@@ -29,7 +29,6 @@ import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.bean.AddressListDetailBean;
-import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -477,5 +476,6 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
         intent.putExtra(OrderParams.TYPE, 1);
         intent.putExtra(OrderParams.TARGET, 0);
         startActivity(intent);
+        finish();
     }
 }

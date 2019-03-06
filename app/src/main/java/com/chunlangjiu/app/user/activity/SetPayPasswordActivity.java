@@ -151,11 +151,11 @@ public class SetPayPasswordActivity extends BaseActivity {
             @Override
             public void onFinish() {
                 tvSendCode.setText(R.string.reset_send);
-                tvSendCode.setClickable(true);
+                tvSendCode.setEnabled(true);
             }
         };
         countDownTimer.start();
-        tvSendCode.setClickable(false);
+        tvSendCode.setEnabled(false);
     }
 
 
