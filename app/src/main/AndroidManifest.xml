@@ -340,13 +340,14 @@
         <activity android:name=".user.activity.AddBankCardActivity" />
         <activity android:name=".money.activity.StarSellerPrivilegeActivity" />
         <activity
-            android:name=".goodsmanage.activity.GoodsManageActivity"
+            android:name=".goodsmanage.activity.GoodsManageListActivity"
             android:label="@string/title_activity_goods_audit"
-            android:parentActivityName="com.awen.photo.BaseActivity"
             android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.awen.photo.BaseActivity" />
+        </activity>
+        <activity
+            android:name=".goodsmanage.activity.GoodsManageHomeActivity"
+            android:label="@string/title_activity_goods_audit"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseFragmentAdapter;
-import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goodsmanage.fragment.GoodsManageFragment;
 import com.chunlangjiu.app.util.CommonUtils;
 
@@ -22,7 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class GoodsManageActivity extends BaseActivity {
+public class GoodsManageListActivity extends BaseActivity {
 
     @BindView(R.id.tabTitle)
     TabLayout tabLayout;
@@ -57,7 +56,7 @@ public class GoodsManageActivity extends BaseActivity {
     }
 
     public static void startGoodsManageActivity(Activity activity, String goodsStatus) {
-        Intent intent = new Intent(activity, GoodsManageActivity.class);
+        Intent intent = new Intent(activity, GoodsManageListActivity.class);
         intent.putExtra("goodsStatus", goodsStatus);
         activity.startActivity(intent);
     }
@@ -91,6 +90,11 @@ public class GoodsManageActivity extends BaseActivity {
                 fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_SELL));
                 break;
             case  CommonUtils.GOODS_STATUS_INSTOCK:
+                titleName.setText("仓库商品");
+                tabLayout.setVisibility(View.GONE);
+                fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_INSTOCK));
+                break;
+            case  CommonUtils.GOODS_STATUS_AUCTION_ACTIVE:
                 titleName.setText("仓库商品");
                 tabLayout.setVisibility(View.GONE);
                 fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_INSTOCK));
