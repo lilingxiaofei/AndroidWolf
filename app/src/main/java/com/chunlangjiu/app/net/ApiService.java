@@ -6,6 +6,7 @@ import com.chunlangjiu.app.amain.bean.CartListBean;
 import com.chunlangjiu.app.amain.bean.CheckUpdateBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.amain.bean.ItemListBean;
 import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
@@ -389,9 +390,9 @@ public interface ApiService {
                                                             @Field("image_type") String image_type, @Field("image_cat_id") String image_cat_id);
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<ListBean<GoodsBean>>> getManageGoodsList(@Field("method") String method, @Field("v") String v,
-                                                                 @Field("status") String status,@Field("created_time") String created_time,
-                                                                 @Field("page_no") int page_no, @Field("page_size") int page_size);
+    Flowable<ResultBean<ItemListBean<GoodsBean>>> getManageGoodsList(@Field("method") String method, @Field("v") String v,
+                                                                     @Field("status") String status, @Field("created_time") String created_time,
+                                                                     @Field("page_no") int page_no, @Field("page_size") int page_size);
 
 
     @POST("index.php/topapi")

@@ -8,6 +8,7 @@ import com.chunlangjiu.app.amain.bean.CartListBean;
 import com.chunlangjiu.app.amain.bean.CheckUpdateBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.amain.bean.ItemListBean;
 import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
@@ -220,12 +221,12 @@ public class ApiUtils {
         return apiService.getEvaluateList("item.rate.list", "v1", 0, item_id, page_no, 10);
     }
 
-    public Flowable<ResultBean<ListBean<GoodsBean>>> getManageGoodsList( String status,String createTime, int page, int pageSize) {
-        boolean isAuction = status == CommonUtils.GOODS_STATUS_AUCTION_ACTIVE || status == CommonUtils.GOODS_STATUS_AUCTION_ACTIVE?true:false;
+    public Flowable<ResultBean<ItemListBean<GoodsBean>>> getManageGoodsList(String status, String createTime, int page, int pageSize) {
+        boolean isAuction = status == CommonUtils.GOODS_STATUS_AUCTION_ACTIVE || status == CommonUtils.GOODS_STATUS_AUCTION_STOP?true:false;
         if(isAuction){
-            return apiService.getManageGoodsList("item.list", "v1",  status,createTime, page, pageSize);
-        }else{
             return apiService.getManageGoodsList("item.auction.list", "v1",  status,createTime, page, pageSize);
+        }else{
+            return apiService.getManageGoodsList("item.list", "v1",  status,createTime, page, pageSize);
         }
 
     }
