@@ -12,6 +12,7 @@ import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.goodsmanage.adapter.GoodsManageAdapter;
 import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.PageUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -35,7 +36,9 @@ public class GoodsManageFragment extends BaseFragment {
 
     private CompositeDisposable disposable;
     private PageUtils<GoodsBean> pageUtils ;
-    String status = "";
+    private String status = "";
+    private String time ;
+
 
     public static GoodsManageFragment newInstance(String status) {
         GoodsManageFragment auctionDetailFragment = new GoodsManageFragment();
@@ -80,7 +83,7 @@ public class GoodsManageFragment extends BaseFragment {
     }
 
     public void getGoodsList(final int page) {
-        disposable.add(ApiUtils.getInstance().getManageGoodsList(status,page,pageUtils.getPageSize())
+        disposable.add(ApiUtils.getInstance().getManageGoodsList(status,time,page,pageUtils.getPageSize())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<ListBean<GoodsBean>>>() {

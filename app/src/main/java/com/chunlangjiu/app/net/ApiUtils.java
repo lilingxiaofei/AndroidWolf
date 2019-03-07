@@ -63,6 +63,7 @@ import com.chunlangjiu.app.user.bean.ShopCatIdList;
 import com.chunlangjiu.app.user.bean.ShopClassList;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
@@ -219,8 +220,14 @@ public class ApiUtils {
         return apiService.getEvaluateList("item.rate.list", "v1", 0, item_id, page_no, 10);
     }
 
-    public Flowable<ResultBean<ListBean<GoodsBean>>> getManageGoodsList( String status, int page, int pageSize) {
-        return apiService.getManageGoodsList("item.rate.list", "v1",  status, page, pageSize);
+    public Flowable<ResultBean<ListBean<GoodsBean>>> getManageGoodsList( String status,String createTime, int page, int pageSize) {
+        boolean isAuction = status == CommonUtils.GOODS_STATUS_AUCTION_ACTIVE || status == CommonUtils.GOODS_STATUS_AUCTION_ACTIVE?true:false;
+        if(isAuction){
+            return apiService.getManageGoodsList("item.list", "v1",  status,createTime, page, pageSize);
+        }else{
+            return apiService.getManageGoodsList("item.auction.list", "v1",  status,createTime, page, pageSize);
+        }
+
     }
 
     public Flowable<ResultBean<ShopInfoBean>> getShopInfo(String shopId) {

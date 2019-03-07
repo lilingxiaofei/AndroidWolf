@@ -63,7 +63,6 @@ public class FansHomeActivity extends BaseActivity {
     private void createEnglishQRCodeWithLogo() {
 
         if (fansBean != null) {
-
             tvMyCode.setText(fansBean.getCode());
             new AsyncTask<Void, Void, Bitmap>() {
                 @Override

@@ -19,6 +19,7 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ShareUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.TimeUtils;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -109,7 +110,7 @@ public class FansListActivity extends BaseActivity {
                     public void accept(ResultBean<FansNumBean> result) throws Exception {
                         if (result != null && result.getData() != null) {
                             tvFansNum.setText(result.getData().getFans_sum());
-                            tvTotalPrice.setText(result.getData().getCommission_sum());
+                            tvTotalPrice.setText(BigDecimalUtils.objToStr(result.getData().getCommission_sum()));
                         }
                     }
                 }, new Consumer<Throwable>() {

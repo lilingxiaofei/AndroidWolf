@@ -1,5 +1,6 @@
 package com.chunlangjiu.app.amain.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -219,7 +220,6 @@ public class MainActivity extends BaseActivity {
         myFragmentAdapter.setLists(fragments);
         viewPager.setAdapter(myFragmentAdapter);
         setPageFragment(0);
-        loadOpen();
     }
 
 
@@ -389,12 +389,17 @@ public class MainActivity extends BaseActivity {
                             int versionCode = AppUtils.getVersionCode();
                             if (versionCode < newVersionCode) {
                                 showUpdateDialog(checkUpdateBean);
+                            }else{
+                                loadOpen();
                             }
+                        }else{
+                            loadOpen();
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        loadOpen();
                     }
                 }));
     }
@@ -416,6 +421,12 @@ public class MainActivity extends BaseActivity {
         if (!"true".equals(checkUpdateBean.getCoerciveness())) {
             appUpdateDialog.notForceUpdate();
         }
+        appUpdateDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                loadOpen();
+            }
+        });
         appUpdateDialog.show();
     }
 

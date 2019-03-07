@@ -227,11 +227,6 @@ public interface ApiService {
                                                            @Field("rate_type") int rate_type, @Field("item_id") String item_id,
                                                            @Field("page_no") int page_no, @Field("page_size") int page_size);
 
-    @POST("index.php/topapi")
-    @FormUrlEncoded
-    Flowable<ResultBean<ListBean<GoodsBean>>> getManageGoodsList(@Field("method") String method, @Field("v") String v,
-                                                    @Field("status") String status,
-                                                    @Field("page_no") int page_no, @Field("page_size") int page_size);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
@@ -392,6 +387,12 @@ public interface ApiService {
                                                             @Field("upload_type") String upload_type, @Field("image") String image,
                                                             @Field("image_input_title") String image_input_title,
                                                             @Field("image_type") String image_type, @Field("image_cat_id") String image_cat_id);
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<ListBean<GoodsBean>>> getManageGoodsList(@Field("method") String method, @Field("v") String v,
+                                                                 @Field("status") String status,@Field("created_time") String created_time,
+                                                                 @Field("page_no") int page_no, @Field("page_size") int page_size);
+
 
     @POST("index.php/topapi")
     @FormUrlEncoded

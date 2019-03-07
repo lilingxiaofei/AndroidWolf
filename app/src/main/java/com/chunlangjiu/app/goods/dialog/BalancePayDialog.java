@@ -80,7 +80,7 @@ public class BalancePayDialog extends Dialog {
                 etPsd.setHint("未设置支付密码，请先设置");
                 etPsd.setEnabled(false);
                 tvConfirm.setText("设置密码");
-            }else if(bigDecimal!=null && bigDecimal.doubleValue()<=0){
+            }else if(bigDecimal!=null && bigDecimal.doubleValue()<0){
                 etPsd.setHint("余额不足，请先去充值");
                 etPsd.setEnabled(false);
                 tvConfirm.setText("余额充值");

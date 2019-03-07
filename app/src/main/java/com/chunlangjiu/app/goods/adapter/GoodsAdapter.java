@@ -124,20 +124,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
 
             GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
             helper.setText(R.id.tv_name, item.getTitle());
-            if (!item.isAuction()) {
-                //普通商品
-                imgAuction.setVisibility(View.GONE);
-                llStartPrice.setVisibility(View.GONE);
-                llHighPrice.setVisibility(View.VISIBLE);
-                tvAnPaiStr.setVisibility(View.GONE);
-                helper.setText(R.id.tvSellPriceStr, "");
-                helper.setText(R.id.tvSellPrice, "");
-                helper.setText(R.id.tvGoodsPrice, "¥" + item.getPrice());
-                helper.setVisible(R.id.tvGoodsPrice, true);
-                helper.setText(R.id.tvStartPriceStr, "原价：");
-                tvStartPrice.setText(item.getMkt_price());
-                tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
-            } else {
+            if (item.getAuction()!=null && "true".equals(item.getAuction().getAuction_status())) {
                 //竞拍
                 imgAuction.setVisibility(View.VISIBLE);
                 llStartPrice.setVisibility(View.VISIBLE);
@@ -158,6 +145,19 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                     llHighPrice.setVisibility(View.GONE);
                     tvAnPaiStr.setVisibility(View.VISIBLE);
                 }
+            } else {
+                //普通商品
+                imgAuction.setVisibility(View.GONE);
+                llStartPrice.setVisibility(View.GONE);
+                llHighPrice.setVisibility(View.VISIBLE);
+                tvAnPaiStr.setVisibility(View.GONE);
+                helper.setText(R.id.tvSellPriceStr, "");
+                helper.setText(R.id.tvSellPrice, "");
+                helper.setText(R.id.tvGoodsPrice, "¥" + item.getPrice());
+                helper.setVisible(R.id.tvGoodsPrice, true);
+                helper.setText(R.id.tvStartPriceStr, "原价：");
+                tvStartPrice.setText(item.getMkt_price());
+                tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
             }
 
             RelativeLayout llTime = helper.getView(R.id.llTime);

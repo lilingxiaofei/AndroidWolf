@@ -704,19 +704,6 @@ public class OrderDetailActivity extends BaseActivity {
                 tvTotalPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getAuction().getStarting_price()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
             }
 
-            if (!TextUtils.isEmpty(orderDetailBean.getCommission())) {
-                llCommission.setVisibility(View.VISIBLE);
-                tvCommission.setText("¥" + new BigDecimal(orderDetailBean.getCommission()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-            } else {
-                llCommission.setVisibility(View.GONE);
-            }
-
-            if (!TextUtils.isEmpty(orderDetailBean.getShop_payment())) {
-                llShopPayment.setVisibility(View.VISIBLE);
-                tvShopPayment.setText("¥" + new BigDecimal(orderDetailBean.getShop_payment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-            } else {
-                llShopPayment.setVisibility(View.GONE);
-            }
 
             if ("false".equalsIgnoreCase(orderDetailBean.getAuction().getAuction_status())) {
                 tvSendPrice.setText("保密出价");
@@ -792,6 +779,7 @@ public class OrderDetailActivity extends BaseActivity {
             switch (status) {
                 case OrderParams.WAIT_BUYER_PAY://等待付款
                     if (0 == type) {
+                        llOrderTitleRightContent.setVisibility(View.VISIBLE);
                         tvRightContentDesc.setText("剩余支付时间：");
                         int close_time = orderDetailBean.getClose_time();
                         try {
@@ -931,18 +919,16 @@ public class OrderDetailActivity extends BaseActivity {
             tvTotalPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getTotal_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
             tvSendPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getPost_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
 
-            String commission = orderDetailBean.getCommission();
-            if (!TextUtils.isEmpty(commission) && new BigDecimal(commission).doubleValue() > 0) {
+            if (type ==3) {
                 llCommission.setVisibility(View.VISIBLE);
-                tvCommission.setText("¥" + new BigDecimal(orderDetailBean.getCommission()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                tvCommission.setText("¥" +  BigDecimalUtils.objToStr(orderDetailBean.getCommission()));
             } else {
                 llCommission.setVisibility(View.GONE);
             }
 
-            String shopPayment = orderDetailBean.getShop_payment();
-            if (!TextUtils.isEmpty(shopPayment) && new BigDecimal(shopPayment).doubleValue() > 0) {
+            if (type ==3) {
                 llShopPayment.setVisibility(View.VISIBLE);
-                tvShopPayment.setText("¥" + new BigDecimal(orderDetailBean.getShop_payment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                tvShopPayment.setText("¥" + BigDecimalUtils.objToStr(orderDetailBean.getShop_payment()));
             } else {
                 llShopPayment.setVisibility(View.GONE);
             }
@@ -1036,19 +1022,6 @@ public class OrderDetailActivity extends BaseActivity {
                 llTotalPrice.setVisibility(View.GONE);
             }
 
-            if (!TextUtils.isEmpty(orderDetailBean.getCommission())) {
-                llCommission.setVisibility(View.VISIBLE);
-                tvCommission.setText("¥" + new BigDecimal(orderDetailBean.getCommission()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-            } else {
-                llCommission.setVisibility(View.GONE);
-            }
-
-            if (!TextUtils.isEmpty(orderDetailBean.getShop_payment())) {
-                llShopPayment.setVisibility(View.VISIBLE);
-                tvShopPayment.setText("¥" + new BigDecimal(orderDetailBean.getShop_payment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-            } else {
-                llShopPayment.setVisibility(View.GONE);
-            }
 
             if (!TextUtils.isEmpty(orderDetailBean.getPost_fee())) {
                 tvSendPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getPost_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
@@ -1375,6 +1348,8 @@ public class OrderDetailActivity extends BaseActivity {
             max_price = orderDetailBean.getAuction().getMax_price();
         }
         String original_bid = orderDetailBean.getAuction().getOriginal_bid();
+        String moneyPrice = orderDetailBean.getPayments().getPrice();
+        original_bid = BigDecimalUtils.objToBigDecimal(original_bid).doubleValue()>0?original_bid:moneyPrice;
         if (inputPriceDialog == null) {
             inputPriceDialog = new InputPriceDialog(this, max_price, original_bid);
             inputPriceDialog.setCallBack(new InputPriceDialog.CallBack() {

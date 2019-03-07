@@ -331,19 +331,19 @@ public class UserFragment extends BaseFragment {
                     startActivity(new Intent(getActivity(), AddGoodsActivity.class));
                     break;
                 case R.id.rlSellGoods:// 在售商品
-//                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_SELL);
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SELL_GOODS + BaseApplication.getToken(), "在售商品");
+                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_SELL);
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SELL_GOODS + BaseApplication.getToken(), "在售商品");
                     break;
                 case R.id.rlAuctionGoods:// 竞拍商品
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_ACTION_GOODS + BaseApplication.getToken(), "竞拍商品");
                     break;
                 case R.id.rlWareHouseGoods:// 仓库商品
-//                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_INSTOCK);
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_STORE_GOODS + BaseApplication.getToken(), "仓库商品");
+                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_INSTOCK);
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_STORE_GOODS + BaseApplication.getToken(), "仓库商品");
                     break;
                 case R.id.rlCheckGoods:// 审核商品
-//                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_AUDIT_PENDING);
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
+                    GoodsManageActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_AUDIT_PENDING);
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
                     break;
                 case R.id.rlMoneyManager:// 资金管理
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_MONEY_MANAGER + BaseApplication.getToken(), "资金管理");

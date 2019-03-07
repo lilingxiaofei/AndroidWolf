@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
@@ -27,7 +28,7 @@ public class GoodsManageActivity extends BaseActivity {
     TabLayout tabLayout;
 
     @BindView(R.id.tvTime)
-    ViewPager tvTime;
+    TextView tvTime;
     @BindView(R.id.vpContent)
     ViewPager vpContent;
 
@@ -72,19 +73,17 @@ public class GoodsManageActivity extends BaseActivity {
         switch (goodsStatus) {
             case CommonUtils.GOODS_STATUS_AUDIT_PENDING:
                 titleName.setText("审核商品");
-                tabLayout.addTab(tabLayout.newTab().setText("审核中"));
-                tabLayout.addTab(tabLayout.newTab().setText("审核驳回"));
-                tabLayout.setVisibility(View.VISIBLE);
                 fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_AUDIT_PENDING));
                 fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_AUDIT_REFUSE));
+                initFragmentAdapter("审核中","审核驳回");
+                tabLayout.setVisibility(View.VISIBLE);
                 break;
             case  CommonUtils.GOODS_STATUS_AUDIT_REFUSE:
                 titleName.setText("审核商品");
-                tabLayout.addTab(tabLayout.newTab().setText("审核中"));
-                tabLayout.addTab(tabLayout.newTab().setText("审核驳回"));
-                tabLayout.setVisibility(View.VISIBLE);
                 fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_AUDIT_PENDING));
                 fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_AUDIT_REFUSE));
+                initFragmentAdapter("审核中","审核驳回");
+                tabLayout.setVisibility(View.VISIBLE);
                 break;
             case  CommonUtils.GOODS_STATUS_SELL:
                 titleName.setText("在售商品");
@@ -97,10 +96,20 @@ public class GoodsManageActivity extends BaseActivity {
                 fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_INSTOCK));
                 break;
         }
+
+    }
+
+    private void initFragmentAdapter(String... title){
         myFragmentAdapter = new BaseFragmentAdapter(getSupportFragmentManager());
         myFragmentAdapter.setLists(fragments);
         vpContent.setAdapter(myFragmentAdapter);
         tabLayout.setupWithViewPager(vpContent);
+        //手动添加标题 ,必须在setupwidthViewPager之后否则不行
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            if(i<title.length){
+                tabLayout.getTabAt(i).setText(title[i]);
+            }
+        }
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
