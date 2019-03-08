@@ -15,6 +15,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.pkqup.commonlibrary.glide.GlideUtils;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 
 import java.util.List;
 
@@ -25,9 +26,11 @@ import java.util.List;
 public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
 
     private Context context;
+    private String goodsStatus ;
 
-    public GoodsManageAdapter(Context context, List<GoodsBean> data) {
+    public GoodsManageAdapter(Context context,String goodsStatus, List<GoodsBean> data) {
         super(R.layout.user_item_goods_manage, data);
+        this.goodsStatus = goodsStatus ;
         this.context = context;
     }
 
@@ -49,41 +52,39 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
             helper.addOnClickListener(R.id.tvPutaway);
             helper.addOnClickListener(R.id.tvSetAuction);
             helper.addOnClickListener(R.id.tvUnShelve);
+            helper.addOnClickListener(R.id.tvEditTwo);
 
 
             GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
             helper.setText(R.id.tv_name, item.getTitle());
 
 
-            helper.setGone(R.id.llAuditStatus,false);
-            helper.setGone(R.id.tvFindCause,false);
-            helper.setGone(R.id.llDepot,false);
-            helper.setGone(R.id.llSell,false);
+            helper.setGone(R.id.llAuditStatus, false);
+            helper.setGone(R.id.tvFindCause, false);
+            helper.setGone(R.id.llDepot, false);
+            helper.setGone(R.id.llSell, false);
 
             String status = item.getApprove_status();
             status = status == null ? "" : status;
-            switch (status) {
-                case CommonUtils.GOODS_STATUS_AUDIT_PENDING:
-                    helper.setGone(R.id.llAuditStatus,true);
-                    helper.setText(R.id.tvAuditStatus,"审核中");
-                    break;
-                case CommonUtils.GOODS_STATUS_AUDIT_REFUSE:
-                    helper.setGone(R.id.llAuditStatus,true);
-                    helper.setGone(R.id.tvFindCause,true);
-                    helper.setText(R.id.tvAuditStatus,"审核驳回");
-                    break;
-                case CommonUtils.GOODS_STATUS_INSTOCK:
-                    helper.setGone(R.id.llDepot,true);
-                    break;
-                case CommonUtils.GOODS_STATUS_SELL:
-                    helper.setText(R.id.tvStock,item.getStore());
-                    helper.setGone(R.id.llSell,true);
-                    break;
-
-            }
 
 
-            if (true) {
+            if (CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(goodsStatus) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(goodsStatus)) {
+                //竞拍
+                imgAuction.setVisibility(View.VISIBLE);
+                llStartPrice.setVisibility(View.VISIBLE);
+                helper.setText(R.id.tvStartPriceStr, "起拍价：");
+                tvStartPrice.setText("¥" + item.getAuction_starting_price());
+                helper.setText(R.id.tvGoodsPrice, "");
+                //明拍
+                llHighPrice.setVisibility(View.VISIBLE);
+                tvAnPaiStr.setVisibility(View.GONE);
+                helper.setText(R.id.tvSellPriceStr, "最高出价：");
+                if (BigDecimalUtils.objToBigDecimal(item.getMax_price()).doubleValue() > 0) {
+                    helper.setText(R.id.tvSellPrice, "¥" + item.getMax_price());
+                } else {
+                    helper.setText(R.id.tvSellPrice, "暂无出价");
+                }
+            } else {
                 //普通商品
                 imgAuction.setVisibility(View.GONE);
                 llStartPrice.setVisibility(View.GONE);
@@ -94,28 +95,29 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
                 helper.setText(R.id.tvGoodsPrice, "¥" + item.getPrice());
                 helper.setVisible(R.id.tvGoodsPrice, true);
                 helper.setText(R.id.tvStartPriceStr, "原价：");
+                helper.setText(R.id.tvStock, item.getStore());
                 tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
-            } else {
-//                //竞拍
-//                imgAuction.setVisibility(View.VISIBLE);
-//                llStartPrice.setVisibility(View.VISIBLE);
-//                helper.setText(R.id.tvStartPriceStr, "起拍价：");
-//                tvStartPrice.setText("¥" + item.getAuction().getStarting_price());
-//                helper.setText(R.id.tvGoodsPrice, "");
-//                if ("true".equals(item.getAuction().getAuction_status())) {
-//                    //明拍
-//                    llHighPrice.setVisibility(View.VISIBLE);
-//                    tvAnPaiStr.setVisibility(View.GONE);
-//                    helper.setText(R.id.tvSellPriceStr, "最高出价：");
-//                    if (TextUtils.isEmpty(item.getAuction().getMax_price())) {
-//                        helper.setText(R.id.tvSellPrice, "暂无出价");
-//                    } else {
-//                        helper.setText(R.id.tvSellPrice, "¥" + item.getAuction().getMax_price());
-//                    }
-//                } else {
-//                    llHighPrice.setVisibility(View.GONE);
-//                    tvAnPaiStr.setVisibility(View.VISIBLE);
-//                }
+                switch (status) {
+                    case CommonUtils.GOODS_STATUS_AUDIT_PENDING:
+                        helper.setGone(R.id.llAuditStatus, true);
+                        helper.setText(R.id.tvAuditStatus, "审核中");
+                        break;
+                    case CommonUtils.GOODS_STATUS_AUDIT_REFUSE:
+                        helper.setGone(R.id.llAuditStatus, true);
+                        helper.setGone(R.id.tvFindCause, true);
+                        helper.setText(R.id.tvAuditStatus, "审核驳回");
+                        break;
+                    case CommonUtils.GOODS_STATUS_INSTOCK:
+                        helper.setGone(R.id.llSell, true);
+                        helper.setGone(R.id.tvUnShelve,false);
+                        helper.setGone(R.id.llDepot, true);
+                        break;
+                    case CommonUtils.GOODS_STATUS_SELL:
+                        helper.setGone(R.id.tvUnShelve,true);
+                        helper.setGone(R.id.llSell, true);
+                        break;
+
+                }
             }
 
             RelativeLayout llTime = helper.getView(R.id.llTime);

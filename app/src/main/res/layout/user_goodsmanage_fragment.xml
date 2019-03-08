@@ -5,12 +5,25 @@
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
     android:orientation="vertical">
-
+    <TextView android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:hint="时间"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_round_white_black_border"
+        android:drawablePadding="5dp"
+        android:textColor="@color/t_black"
+        android:textSize="@dimen/text_size_15sp"
+        android:drawableRight="@mipmap/choice_arrow"/>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_gray"
         app:srlEnableFooterFollowWhenLoadFinished="true"
         app:srlEnableScrollContentWhenLoaded="true">
 
@@ -19,6 +32,6 @@
             android:layout_margin="12dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white" />
+            android:background="@color/bg_gray" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

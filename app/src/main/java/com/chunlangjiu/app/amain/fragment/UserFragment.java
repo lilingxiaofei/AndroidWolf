@@ -22,6 +22,8 @@ import com.chunlangjiu.app.amain.activity.LoginActivity;
 import com.chunlangjiu.app.fans.activity.FansHomeActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.dialog.EditAccountNameDialog;
+import com.chunlangjiu.app.goodsmanage.activity.GoodsManageHomeActivity;
+import com.chunlangjiu.app.goodsmanage.activity.GoodsManageListActivity;
 import com.chunlangjiu.app.money.activity.MoneyManagerActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
@@ -36,6 +38,7 @@ import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
@@ -323,26 +326,27 @@ public class UserFragment extends BaseFragment {
                 case R.id.rlSellAuctionFour:// 卖家竞拍订单-全部订单
                     break;
                 case R.id.rlGoodsManager:// 商品管理
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_GOODS_MANAGER + BaseApplication.getToken(), "商品管理");
-//                    GoodsManageHomeActivity.startShopMainActivity(activity,shopId);
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_GOODS_MANAGER + BaseApplication.getToken(), "商品管理");
+                    GoodsManageHomeActivity.startShopMainActivity(activity,shopId);
                     break;
                 case R.id.rlAddGoods:// 添加商品
                     startActivity(new Intent(getActivity(), AddGoodsActivity.class));
                     break;
                 case R.id.rlSellGoods:// 在售商品
-//                    GoodsManageListActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_SELL);
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SELL_GOODS + BaseApplication.getToken(), "在售商品");
+                    GoodsManageListActivity.startGoodsManageActivity(activity, CommonUtils.GOODS_STATUS_SELL);
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SELL_GOODS + BaseApplication.getToken(), "在售商品");
                     break;
                 case R.id.rlAuctionGoods:// 竞拍商品
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_ACTION_GOODS + BaseApplication.getToken(), "竞拍商品");
+                    GoodsManageListActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_AUCTION_ACTIVE);
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_ACTION_GOODS + BaseApplication.getToken(), "竞拍商品");
                     break;
                 case R.id.rlWareHouseGoods:// 仓库商品
-//                    GoodsManageListActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_INSTOCK);
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_STORE_GOODS + BaseApplication.getToken(), "仓库商品");
+                    GoodsManageListActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_INSTOCK);
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_STORE_GOODS + BaseApplication.getToken(), "仓库商品");
                     break;
                 case R.id.rlCheckGoods:// 审核商品
-//                    GoodsManageListActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_AUDIT_PENDING);
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
+                    GoodsManageListActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_AUDIT_PENDING);
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
                     break;
                 case R.id.rlMoneyManager:// 资金管理
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_MONEY_MANAGER + BaseApplication.getToken(), "资金管理");
@@ -819,14 +823,14 @@ public class UserFragment extends BaseFragment {
 
                             tvCheckGoodsNum.setText(data.getPending_num());
                             tvWareHouseGoodsNum.setText(data.getInstock_num());
-//                            tvSellGoodsNum.setText(data.getNotrate_num());
-//                            tvAuctionGoodsNum.setText(data.getAuction_num());
+                            tvSellGoodsNum.setText(data.getOnsale_num());
+                            tvAuctionGoodsNum.setText(data.getAuction_num());
 
                             tvCheckGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getPending_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
                             tvWareHouseGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getInstock_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
-//                            tvAuctionGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getAuction_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
-//                            tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getNotrate_num()).intValue() > 0 ? View.VISIBLE
-//                                    : View.GONE);
+                            tvAuctionGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getAuction_num()).intValue() > 0 ? View.VISIBLE : View.GONE);
+                            tvSellGoodsNum.setVisibility(BigDecimalUtils.objToBigDecimal(data.getOnsale_num()).intValue() > 0 ? View.VISIBLE
+                                    : View.GONE);
                         }
                     }
                 }, new Consumer<Throwable>() {

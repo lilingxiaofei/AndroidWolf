@@ -17,9 +17,11 @@ public class MyNumBean {
     private String money_frozen;//冻结金额
     private String information;//消息
 
+    private String onsale_num;
     private String pending_num;
     private String instock_num;
     private String auction_num;
+
 
     private String coupon_num;
     private String voucher_num;
@@ -144,5 +146,13 @@ public class MyNumBean {
 
     public void setPoint(String point) {
         this.point = point;
+    }
+
+    public String getOnsale_num() {
+        return onsale_num;
+    }
+
+    public void setOnsale_num(String onsale_num) {
+        this.onsale_num = onsale_num;
     }
 }

@@ -18,8 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:src="@mipmap/festival_bg_top" />
+                android:adjustViewBounds="true" />
 
 
             <android.support.v7.widget.RecyclerView
@@ -29,7 +28,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:layout_marginBottom="40dp"
                 android:nestedScrollingEnabled="false" />
 
             <ImageView
@@ -37,8 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:src="@mipmap/festival_bg_bottom" />
+                android:adjustViewBounds="true" />
         </LinearLayout>
     </ScrollView>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

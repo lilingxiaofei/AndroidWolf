@@ -16,7 +16,9 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.util.CommonUtils;
+import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
@@ -34,6 +36,8 @@ import io.reactivex.schedulers.Schedulers;
 public class GoodsManageHomeActivity extends BaseActivity {
 
 
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
     @BindView(R.id.imgHead)
     CircleImageView imgHead;
     @BindView(R.id.tvShopName)
@@ -99,7 +103,7 @@ public class GoodsManageHomeActivity extends BaseActivity {
                     GoodsManageListActivity.startGoodsManageActivity(GoodsManageHomeActivity.this, CommonUtils.GOODS_STATUS_INSTOCK);
                     break;
                 case R.id.llAuditLayout:
-                    GoodsManageListActivity.startGoodsManageActivity(GoodsManageHomeActivity.this, CommonUtils.GOODS_STATUS_AUCTION_ACTIVE);
+                    GoodsManageListActivity.startGoodsManageActivity(GoodsManageHomeActivity.this, CommonUtils.GOODS_STATUS_AUDIT_PENDING);
                     break;
 
             }
@@ -127,7 +131,7 @@ public class GoodsManageHomeActivity extends BaseActivity {
     private void initView() {
         MyStatusBarUtils.setStatusBar(this,ContextCompat.getColor(this, R.color.bg_red));
         MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlShopTitle),true);
-
+        ivBack.setOnClickListener(onClickListener);
          llSaleLayout.setOnClickListener(onClickListener);
         llWareHouseLayout.setOnClickListener(onClickListener);
         llAuditLayout.setOnClickListener(onClickListener);
@@ -135,7 +139,20 @@ public class GoodsManageHomeActivity extends BaseActivity {
         ivAddGoods.setOnClickListener(onClickListener);
     }
 
+    private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
+        @Override
+        public void onNotify(Object object, String eventTag) {
+            eventTag = eventTag == null ? "" : eventTag;
+            switch (eventTag) {
+                case ConstantMsg.SHOP_DATA_CHANGE:
+                    getSellerOrderNumIndex();
+                    break;
+            }
+        }
+    };
+
     private void initData() {
+        EventManager.getInstance().registerListener(onNotifyListener);
         disposable = new CompositeDisposable();
         shopId = getIntent().getStringExtra("shopId");
         getShopInfo();
@@ -176,8 +193,8 @@ public class GoodsManageHomeActivity extends BaseActivity {
                         if (data != null) {
                             tvAuditNum.setText(data.getPending_num());
                             tvWareHouseNum.setText(data.getInstock_num());
-//                            tvSaleNum.setText("0");
-//                            tvAuctionNum.setText("0");
+                            tvSaleNum.setText(data.getOnsale_num());
+                            tvAuctionNum.setText(data.getAuction_num());
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -189,4 +206,10 @@ public class GoodsManageHomeActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
+        EventManager.getInstance().unRegisterListener(onNotifyListener);
+    }
 }

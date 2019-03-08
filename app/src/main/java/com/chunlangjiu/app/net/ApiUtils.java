@@ -231,6 +231,14 @@ public class ApiUtils {
 
     }
 
+    public Flowable<ResultBean> editGoodsShelves(String itemId, String type) {
+        return apiService.editGoodsShelves("item.status", "v1",  itemId,type);
+    }
+
+    public Flowable<ResultBean> setAuctionGoods(String itemId, String starting_price,String status,String store,long begin_time,long end_time) {
+        return apiService.setAuctionGoods("item.auction", "v1",  itemId, starting_price,status,store,begin_time,end_time);
+    }
+
     public Flowable<ResultBean<ShopInfoBean>> getShopInfo(String shopId) {
         return apiService.getShopInfo("shop.basic", "v1", shopId);
     }

@@ -4,8 +4,8 @@ package com.chunlangjiu.app.amain.bean;
 import java.util.List;
 
 public class ItemListBean<T> {
-
-    private List<T> item_list;
+    private List<T> list;//竞拍列表
+    private List<T> item_list;//普通商品 列表
     private int total;
     private int totalPage;
 
@@ -31,5 +31,13 @@ public class ItemListBean<T> {
 
     public void setTotalPage(int totalPage) {
         this.totalPage = totalPage;
+    }
+
+    public List<T> getList() {
+        return list;
+    }
+
+    public void setList(List<T> list) {
+        this.list = list;
     }
 }

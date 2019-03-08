@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/imgPic"
-        android:paddingRight="10dp"
         android:background="@color/bg_white"
         android:layout_toRightOf="@id/imgPic"
         android:orientation="vertical">
@@ -225,7 +224,7 @@
                 android:layout_weight="1"
                 android:textSize="13sp"
                 android:gravity="center_vertical"
-                android:text="上架"/>
+                android:text="0"/>
             <TextView
                 android:id="@+id/tvUnShelve"
                 android:layout_width="wrap_content"
@@ -241,22 +240,23 @@
         </LinearLayout>
         <LinearLayout android:id="@+id/llDepot"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
             <TextView android:id="@+id/tvEdit"
                 android:layout_width="wrap_content"
-                android:minWidth="50dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:minWidth="43dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:layout_height="20dp"
                 android:textColor="@color/t_red"
                 android:textSize="13sp"
                 android:background="@drawable/bg_round_white_red_border"
                 android:gravity="center"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:text="修改"/>
             <TextView android:id="@+id/tvPutaway"
                 android:layout_width="wrap_content"
-                android:minWidth="50dp"
+                android:minWidth="43dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:layout_height="20dp"
@@ -264,15 +264,17 @@
                 android:textSize="13sp"
                 android:background="@drawable/bg_round_white_red_border"
                 android:gravity="center"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:text="上架"/>
             <TextView android:id="@+id/tvSetAuction"
                 android:layout_width="wrap_content"
-                android:minWidth="50dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:minWidth="45dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
                 android:layout_height="20dp"
                 android:textColor="@color/t_red"
+                android:singleLine="true"
+                android:ellipsize="none"
                 android:textSize="13sp"
                 android:background="@drawable/bg_round_white_red_border"
                 android:gravity="center"
@@ -281,12 +283,13 @@
 
         <LinearLayout android:id="@+id/llAuditStatus"
             android:layout_width="match_parent"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:textColor="@color/t_red"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:gravity="center"
                 android:text="审核状态："/>
             <TextView android:id="@+id/tvAuditStatus"
@@ -294,21 +297,31 @@
                 android:layout_height="20dp"
                 android:textColor="@color/t_grey"
                 android:layout_weight="1"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:gravity="center_vertical"
-                android:text="上架"/>
+                android:text="审核驳回"/>
             <TextView android:id="@+id/tvFindCause"
                 android:layout_width="wrap_content"
-                android:minWidth="60dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:layout_height="20dp"
+                android:layout_height="15dp"
                 android:textColor="@color/t_red"
-                android:layout_gravity="right"
                 android:textSize="10sp"
                 android:background="@drawable/bg_round_white_red_border_8dp"
                 android:gravity="center"
                 android:text="查看原因"/>
+            <TextView android:id="@+id/tvEditTwo"
+                android:layout_width="wrap_content"
+                android:minWidth="40dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_height="15dp"
+                android:textColor="@color/t_red"
+                android:layout_marginLeft="5dp"
+                android:textSize="10sp"
+                android:background="@drawable/bg_round_white_red_border_8dp"
+                android:gravity="center"
+                android:text="修改"/>
         </LinearLayout>
     </LinearLayout>
 

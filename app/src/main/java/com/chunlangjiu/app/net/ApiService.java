@@ -109,15 +109,15 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> updateLoginPassword(@Field("method") String method, @Field("v") String v, @Field("password") String password,@Field("password_confirmation") String password_confirmation, @Field("login_password") String loginPassword );
+    Flowable<ResultBean> updateLoginPassword(@Field("method") String method, @Field("v") String v, @Field("password") String password, @Field("password_confirmation") String password_confirmation, @Field("login_password") String loginPassword);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> setPayPwd(@Field("method") String method, @Field("v") String v, @Field("password") String password,@Field("password_confirmation") String password_confirmation, @Field("verifycode") String vCode );
+    Flowable<ResultBean> setPayPwd(@Field("method") String method, @Field("v") String v, @Field("password") String password, @Field("password_confirmation") String password_confirmation, @Field("verifycode") String vCode);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> sendSmsCode(@Field("method") String method, @Field("v") String v, @Field("password") String password,@Field("password_confirmation") String password_confirmation, @Field("verifycode") String vCode );
+    Flowable<ResultBean> sendSmsCode(@Field("method") String method, @Field("v") String v, @Field("password") String password, @Field("password_confirmation") String password_confirmation, @Field("verifycode") String vCode);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
@@ -140,7 +140,7 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> personAuth(@Field("method") String method, @Field("v") String v,
-                                    @Field("name") String name,@Field ("mobile")String mobile, @Field("idcard") String idcard,
+                                    @Field("name") String name, @Field("mobile") String mobile, @Field("idcard") String idcard,
                                     @Field("dentity") String dentity, @Field("dentity_front") String dentity_front,
                                     @Field("dentity_reverse") String dentity_reverse);
 
@@ -156,7 +156,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> companyAuth(@Field("method") String method, @Field("v") String v,@Field("accessToken") String token,
+    Flowable<ResultBean> companyAuth(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token,
                                      @Field("company_name") String company_name, @Field("representative") String representative,
                                      @Field("idcard") String idCard, @Field("license_img") String license_img,
                                      @Field("shopuser_identity_img_z") String shopuser_identity_img_z,
@@ -263,7 +263,7 @@ public interface ApiService {
     //获取我的页面数据个数的统计
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<MyNumBean>> getMyNumFlag(@Field("method") String method, @Field("v") String v,@Field("type") String type);
+    Flowable<ResultBean<MyNumBean>> getMyNumFlag(@Field("method") String method, @Field("v") String v, @Field("type") String type);
 
 
     //获取名庄分类
@@ -388,12 +388,24 @@ public interface ApiService {
                                                             @Field("upload_type") String upload_type, @Field("image") String image,
                                                             @Field("image_input_title") String image_input_title,
                                                             @Field("image_type") String image_type, @Field("image_cat_id") String image_cat_id);
+
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<ItemListBean<GoodsBean>>> getManageGoodsList(@Field("method") String method, @Field("v") String v,
                                                                      @Field("status") String status, @Field("created_time") String created_time,
                                                                      @Field("page_no") int page_no, @Field("page_size") int page_size);
 
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> editGoodsShelves(@Field("method") String method, @Field("v") String v,
+                                          @Field("item_id") String item_id, @Field("type") String type);
+
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> setAuctionGoods(@Field("method") String method, @Field("v") String v,
+                                         @Field("item_id") String item_id, @Field("starting_price") String starting_price,
+                                         @Field("status") String status, @Field("store") String store,
+                                         @Field("begin_time") long begin_time, @Field("end_time") long end_time);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
@@ -643,11 +655,11 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<List<PartnerBean>>>  getPartnerList(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<List<PartnerBean>>> getPartnerList(@Field("method") String method, @Field("v") String v);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<ListBean<FansItemBean>>>  getFansList(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<ListBean<FansItemBean>>> getFansList(@Field("method") String method, @Field("v") String v);
 
 
     @POST("index.php/topapi")
@@ -660,76 +672,76 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<FansBean>> setInvitationCode(@Field("method") String method, @Field("v") String v,@Field("referrer") String inviteCode);
+    Flowable<ResultBean<FansBean>> setInvitationCode(@Field("method") String method, @Field("v") String v, @Field("referrer") String inviteCode);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> submitInviteCode(@Field("method") String method, @Field("v") String v,@Field("inviteCode") String inviteCode);
+    Flowable<ResultBean> submitInviteCode(@Field("method") String method, @Field("v") String v, @Field("inviteCode") String inviteCode);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<BankCardListBean>> getBankCardList(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+    Flowable<ResultBean<BankCardListBean>> getBankCardList(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> addBankCardList(@Field("method")String method,@Field("v")String v,@Field("accessToken")String token,@Field("name")String name,@Field("bank")String bank,@Field("card")String card
-    ,@Field("bank_branch")String bank_branch,@Field("idcard")String idcard,@Field("mobile")String mobile,@Field("verifycode") String verifycode);
-
-
-    @POST("index.php/topapi")
-    @FormUrlEncoded
-    Flowable<ResultBean> deleteBankCard(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("bank_id")String bankId);
-
-    @POST("index.php/topapi")
-    @FormUrlEncoded
-    Flowable<ResultBean<DepositCashBean>> depositCash(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("bank_id")String bankId , @Field("amount")String amount);
-
-   @POST("index.php/topapi")
-   @FormUrlEncoded
-   Flowable<ResultBean<UserMoneyBean>> getUserMoney(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
-
-    @POST("index.php/topapi")
-    @FormUrlEncoded
-    Flowable<ResultBean<FundDetailListBean>> getFundDetails(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token,@Field("type")String type);
+    Flowable<ResultBean> addBankCardList(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token, @Field("name") String name, @Field("bank") String bank, @Field("card") String card
+            , @Field("bank_branch") String bank_branch, @Field("idcard") String idcard, @Field("mobile") String mobile, @Field("verifycode") String verifycode);
 
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> sendSms(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+    Flowable<ResultBean> deleteBankCard(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token, @Field("bank_id") String bankId);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<CreateRechargeOrderBean>> reCharge(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("money")String money);
+    Flowable<ResultBean<DepositCashBean>> depositCash(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token, @Field("bank_id") String bankId, @Field("amount") String amount);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<UserMoneyBean>> getUserMoney(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FundDetailListBean>> getFundDetails(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token, @Field("type") String type);
+
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> sendSms(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<CreateRechargeOrderBean>> reCharge(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token, @Field("money") String money);
 
     @POST("index.php/api")//payment.stored.pay
     @FormUrlEncoded
-    Flowable<ResultBean> storedPay(@Field("method")String method, @Field("v")String v,@Field("payment_id")String payment_id,@Field("pay_app_id")String pay_app_id ,@Field("platform")String platform,@Field("money")String money,@Field("type")String type);
+    Flowable<ResultBean> storedPay(@Field("method") String method, @Field("v") String v, @Field("payment_id") String payment_id, @Field("pay_app_id") String pay_app_id, @Field("platform") String platform, @Field("money") String money, @Field("type") String type);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<CreateRechargeOrderBean>> depositCreate(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+    Flowable<ResultBean<CreateRechargeOrderBean>> depositCreate(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<DepositBean>> getDeposit(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+    Flowable<ResultBean<DepositBean>> getDeposit(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<DepositCashBean>> depositRefund(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+    Flowable<ResultBean<DepositCashBean>> depositRefund(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> depositCancel(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token);
+    Flowable<ResultBean> depositCancel(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> depositPay(@Field("method")String method, @Field("v")String v,@Field("payment_id")String payment_id,@Field("pay_app_id")String pay_app_id ,@Field("platform")String platform,@Field("money")String money,@Field("type")String type);
+    Flowable<ResultBean> depositPay(@Field("method") String method, @Field("v") String v, @Field("payment_id") String payment_id, @Field("pay_app_id") String pay_app_id, @Field("platform") String platform, @Field("money") String money, @Field("type") String type);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<BankCardInfoBean>> bankCardGet(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("card")String bank_id);
+    Flowable<ResultBean<BankCardInfoBean>> bankCardGet(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token, @Field("card") String bank_id);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<FundInfoBean>> fundInfo(@Field("method")String method, @Field("v")String v, @Field("accessToken")String token, @Field("log_id")String logid);
+    Flowable<ResultBean<FundInfoBean>> fundInfo(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token, @Field("log_id") String logid);
 }

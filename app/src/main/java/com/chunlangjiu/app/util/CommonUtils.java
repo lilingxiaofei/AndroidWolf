@@ -15,6 +15,7 @@ public class CommonUtils {
     public static final String GOODS_STATUS_AUDIT_REFUSE = "refuse";//审核拒绝
     public static final String GOODS_STATUS_SELL = "onsale";//出售中
     public static final String GOODS_STATUS_INSTOCK = "instock";//仓库中
+    public static final String GOODS_STATUS_AUCTION_NOT_START = "notstart";//竞拍进行时
     public static final String GOODS_STATUS_AUCTION_ACTIVE = "active";//竞拍进行时
     public static final String GOODS_STATUS_AUCTION_STOP = "stop";//竞拍结束后
 

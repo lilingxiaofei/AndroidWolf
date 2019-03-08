@@ -26,8 +26,6 @@ public class GoodsManageListActivity extends BaseActivity {
     @BindView(R.id.tabTitle)
     TabLayout tabLayout;
 
-    @BindView(R.id.tvTime)
-    TextView tvTime;
     @BindView(R.id.vpContent)
     ViewPager vpContent;
 
@@ -63,7 +61,6 @@ public class GoodsManageListActivity extends BaseActivity {
 
 
     private void initView() {
-        tvTime.setOnClickListener(onClickListener);
         goodsStatus = getIntent().getStringExtra("goodsStatus");
         if (TextUtils.isEmpty(goodsStatus)) {
             finish();
@@ -88,16 +85,22 @@ public class GoodsManageListActivity extends BaseActivity {
                 titleName.setText("在售商品");
                 tabLayout.setVisibility(View.GONE);
                 fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_SELL));
+                initFragmentAdapter();
                 break;
             case  CommonUtils.GOODS_STATUS_INSTOCK:
                 titleName.setText("仓库商品");
                 tabLayout.setVisibility(View.GONE);
                 fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_INSTOCK));
+                initFragmentAdapter();
                 break;
             case  CommonUtils.GOODS_STATUS_AUCTION_ACTIVE:
-                titleName.setText("仓库商品");
-                tabLayout.setVisibility(View.GONE);
-                fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_INSTOCK));
+                titleName.setText("竞拍商品");
+
+                fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_AUCTION_NOT_START));
+                fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_AUCTION_ACTIVE));
+                fragments.add(GoodsManageFragment.newInstance( CommonUtils.GOODS_STATUS_AUCTION_STOP));
+                initFragmentAdapter("未开始","竞拍中","竞拍结束");
+                tabLayout.setVisibility(View.VISIBLE);
                 break;
         }
 
@@ -109,9 +112,11 @@ public class GoodsManageListActivity extends BaseActivity {
         vpContent.setAdapter(myFragmentAdapter);
         tabLayout.setupWithViewPager(vpContent);
         //手动添加标题 ,必须在setupwidthViewPager之后否则不行
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            if(i<title.length){
-                tabLayout.getTabAt(i).setText(title[i]);
+        if(null != title && title.length>0){
+            for (int i = 0; i < tabLayout.getTabCount(); i++) {
+                if(i<title.length){
+                    tabLayout.getTabAt(i).setText(title[i]);
+                }
             }
         }
     }
