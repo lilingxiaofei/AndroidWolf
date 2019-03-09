@@ -330,6 +330,7 @@ public class GoodsFragment extends BaseFragment {
 //                return spanCount;
 //            }
 //        });
+        goodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(goodsAdapter);
 
         refreshLayout.setEnableAutoLoadMore(false);//关闭自动加载更多

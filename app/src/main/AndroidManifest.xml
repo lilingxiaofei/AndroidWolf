@@ -170,6 +170,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
+            android:name=".user.activity.MyInfoEditActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
             android:name=".user.activity.AddressListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -324,6 +328,7 @@
         <activity android:name=".money.activity.ReChargeActivity" />
         <activity android:name=".money.activity.WithDrawActivity" />
         <activity android:name=".money.activity.FundDetailsListActivity" />
+        <activity android:name=".money.activity.FreezeListActivity" />
         <activity android:name=".money.activity.BillDetailActivity" />
         <activity android:name=".user.activity.ServiceActivity" />
         <activity android:name=".user.activity.AboutActivity" />

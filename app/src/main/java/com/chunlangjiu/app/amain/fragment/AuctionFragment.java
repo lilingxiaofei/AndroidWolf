@@ -1,6 +1,7 @@
 package com.chunlangjiu.app.amain.fragment;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -38,6 +39,7 @@ import com.chunlangjiu.app.user.dialog.ChoiceOrdoPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoicePricePopWindow;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
+import com.chunlangjiu.app.util.PageUtils;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -45,9 +47,10 @@ import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -81,7 +84,7 @@ public class AuctionFragment extends BaseFragment {
     //商品列表
     private SmartRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private List<AuctionListBean.AuctionBean> lists;
+    private PageUtils<AuctionListBean.AuctionBean> pageUtils;
     private AuctionListAdapter linearAdapter;
 
     private CompositeDisposable disposable;
@@ -149,7 +152,7 @@ public class AuctionFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.title_view));
+        MyStatusBarUtils.setTitleBarPadding(getActivity(), rootView.findViewById(R.id.title_view));
         disposable = new CompositeDisposable();
         titleView.setVisibility(View.VISIBLE);
         tvTitleF.setText("竞拍专区");
@@ -160,34 +163,40 @@ public class AuctionFragment extends BaseFragment {
         refreshLayout.setEnableRefresh(true);//设置可以下拉刷新
         refreshLayout.setEnableLoadMore(false);//设置不能加载更多
         recyclerView = rootView.findViewById(R.id.recycle_view);
-        lists = new ArrayList<>();
-        linearAdapter = new AuctionListAdapter(getActivity(), R.layout.amain_item_goods_list_linear, lists);
+        pageUtils = new PageUtils<>();
+        linearAdapter = new AuctionListAdapter(getActivity(), R.layout.amain_item_goods_list_linear, pageUtils.getList());
         linearAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (BaseApplication.isLogin()) {
 //                    AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
-                    GoodsDetailslNewActivity.startActivity(getActivity(),lists.get(position).getItem_id());
+                    GoodsDetailslNewActivity.startActivity(getActivity(), pageUtils.get(position).getItem_id());
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
             }
         });
+        linearAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recyclerView.getParent(), false));
         linearAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if(view.getId() == R.id.tv_store_into){
-                    ShopMainActivity.startShopMainActivity(getActivity(),lists.get(position).getShop_id());
+                if (view.getId() == R.id.tv_store_into) {
+                    ShopMainActivity.startShopMainActivity(getActivity(), pageUtils.get(position).getShop_id());
                 }
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, Utils.dp2px(getActivity(), 5), false));
         recyclerView.setAdapter(linearAdapter);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onRefresh(final RefreshLayout refreshLayout) {
-                getListData();
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getListData(pageUtils.nextPage());
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getListData(pageUtils.firstPage());
             }
         });
 
@@ -222,7 +231,7 @@ public class AuctionFragment extends BaseFragment {
                 selectClassId = classLists.get(position).getCat_id();
                 classAdapter.notifyDataSetChanged();
                 clearSelectFilterData();
-                getListData();
+                getListData(pageUtils.firstPage());
             }
         });
     }
@@ -237,7 +246,7 @@ public class AuctionFragment extends BaseFragment {
         getAreaLists();
         getInsenceLists();
         getAlcLists();
-        getListData();
+        getListData(pageUtils.firstPage());
     }
 
     private void initPriceLists() {
@@ -360,8 +369,8 @@ public class AuctionFragment extends BaseFragment {
                 }));
     }
 
-    private void getListData() {
-        disposable.add(ApiUtils.getInstance().getAuctionList()
+    private void getListData(int page) {
+        disposable.add(ApiUtils.getInstance().getAuctionList(brandId, areaId, ordoId, minPrice, maxPrice, page, 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<AuctionListBean>>() {
@@ -381,18 +390,20 @@ public class AuctionFragment extends BaseFragment {
 
     private void getListSuccess(List<AuctionListBean.AuctionBean> list) {
         if (list != null) {
-            lists.clear();
-            for (int i = 0; i < list.size(); i++) {
-                String end_time = list.get(i).getAuction_end_time();
+            Iterator< AuctionListBean.AuctionBean> it = list.iterator();
+            while(it.hasNext()){
+                AuctionListBean.AuctionBean bean = it.next();
+                String end_time = bean.getAuction_end_time();
                 long endTime = 0;
                 if (!TextUtils.isEmpty(end_time)) {
                     endTime = Long.parseLong(end_time);
                 }
-                if ((endTime * 1000 - System.currentTimeMillis()) > 0) {
-                    lists.add(list.get(i));
+                if ((endTime * 1000 - System.currentTimeMillis()) <= 0) {
+                    it.remove();
                 }
             }
-            linearAdapter.setNewData(lists);
+            pageUtils.loadListSuccess(list);
+            linearAdapter.setNewData(pageUtils.getList());
         }
     }
 
@@ -407,10 +418,11 @@ public class AuctionFragment extends BaseFragment {
                     public void choiceBrand(String brandName, String brandIdC) {
                         brandId = brandIdC;
                         tvBrand.setText(TextUtils.isEmpty(brandId) ? "品牌" : brandName);
+                        getListData(pageUtils.firstPage());
                     }
                 });
             }
-            choiceBrandPopWindow.setBrandList(brandLists,brandId);
+            choiceBrandPopWindow.setBrandList(brandLists, brandId);
             choiceBrandPopWindow.showAsDropDown(rlBrand, 0, 1);
         }
     }
@@ -427,10 +439,11 @@ public class AuctionFragment extends BaseFragment {
                     public void choiceBrand(String brandName, String brandId) {
                         areaId = brandId;
                         tvArea.setText(TextUtils.isEmpty(areaId) ? "产地" : brandName);
+                        getListData(pageUtils.firstPage());
                     }
                 });
             }
-            choiceAreaPopWindow.setBrandList(areaLists,areaId);
+            choiceAreaPopWindow.setBrandList(areaLists, areaId);
             choiceAreaPopWindow.showAsDropDown(rlBrand, 0, 1);
         }
     }
@@ -446,10 +459,11 @@ public class AuctionFragment extends BaseFragment {
                     public void choiceBrand(String brandName, String brandId) {
                         ordoId = brandId;
                         tvIncense.setText(TextUtils.isEmpty(ordoId) ? "类型" : brandName);
+                        getListData(pageUtils.firstPage());
                     }
                 });
             }
-            choiceOrdoPopWindow.setBrandList(ordoLists,ordoId);
+            choiceOrdoPopWindow.setBrandList(ordoLists, ordoId);
             choiceOrdoPopWindow.showAsDropDown(rlBrand, 0, 1);
         }
     }
@@ -465,10 +479,11 @@ public class AuctionFragment extends BaseFragment {
                     public void choiceBrand(String brandName, String brandId) {
                         alcoholId = brandId;
                         tvAlc.setText(TextUtils.isEmpty(alcoholId) ? "酒精度" : brandName);
+                        getListData(pageUtils.firstPage());
                     }
                 });
             }
-            choiceAlcPopWindow.setBrandList(alcLists,alcoholId);
+            choiceAlcPopWindow.setBrandList(alcLists, alcoholId);
             choiceAlcPopWindow.showAsDropDown(rlBrand, 0, 1);
         }
     }
@@ -487,12 +502,14 @@ public class AuctionFragment extends BaseFragment {
                         priceId = id;
                         tvPrice.setText(content);
                         tvPrice.setText(TextUtils.isEmpty(priceId) ? "价格区间" : content);
+                        getListData(pageUtils.firstPage());
                     }
                 });
             }
             choicePricePopWindow.showAsDropDown(rlBrand, 0, 1);
         }
     }
+
     //重置品牌、产地、香型、酒精度
     private void clearSelectFilterData() {
         brandId = "";
@@ -537,7 +554,7 @@ public class AuctionFragment extends BaseFragment {
 
     private void auctionCountEnd(String eventTag) {
         if (eventTag.equals(ConstantMsg.AUCTION_COUNT_END)) {
-            getListData();
+            getListData(pageUtils.firstPage());
         }
     }
 

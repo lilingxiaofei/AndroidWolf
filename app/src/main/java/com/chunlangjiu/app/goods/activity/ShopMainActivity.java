@@ -308,6 +308,7 @@ public class ShopMainActivity extends BaseActivity {
         recycleView.setLayoutManager(new GridLayoutManager(this, 2));
         GridSpacingItemDecoration decoration2 = new GridSpacingItemDecoration(2, Utils.dp2px(this, 5), false);
         recycleView.addItemDecoration(decoration2);
+        goodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recycleView.getParent(), false));
         recycleView.setAdapter(goodsAdapter);
 
         refreshLayout.setEnableAutoLoadMore(false);//关闭自动加载更多

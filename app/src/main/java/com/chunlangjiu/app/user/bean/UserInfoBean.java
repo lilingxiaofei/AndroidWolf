@@ -10,10 +10,22 @@ public class UserInfoBean {
     private String login_account;
     private String username;
     private String name;
+    private String sex;
+    private String birthday;
     private String shop_name;
     private String company_name;
     private String head_portrait;
     private String shop_id;
+
+    private String bulletin;   //店铺简介
+    private String company_area;// 经营地址
+    private String representative;// 法人名称
+    private String establish_date;//成立时间
+    private String idcard;//身份证号码
+    private String phone; //联系方式
+    private String area; //店铺地址
+    private String company_phone;
+
 
     public String getShop_name() {
         return shop_name;
@@ -43,6 +55,62 @@ public class UserInfoBean {
         return login_account;
     }
 
+    public String getBulletin() {
+        return bulletin;
+    }
+
+    public void setBulletin(String bulletin) {
+        this.bulletin = bulletin;
+    }
+
+    public String getCompany_area() {
+        return company_area;
+    }
+
+    public void setCompany_area(String company_area) {
+        this.company_area = company_area;
+    }
+
+    public String getRepresentative() {
+        return representative;
+    }
+
+    public void setRepresentative(String representative) {
+        this.representative = representative;
+    }
+
+    public String getEstablish_date() {
+        return establish_date;
+    }
+
+    public void setEstablish_date(String establish_date) {
+        this.establish_date = establish_date;
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
     public void setLogin_account(String login_account) {
         this.login_account = login_account;
     }
@@ -69,5 +137,29 @@ public class UserInfoBean {
 
     public void setShop_id(String shop_id) {
         this.shop_id = shop_id;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getCompany_phone() {
+        return company_phone;
+    }
+
+    public void setCompany_phone(String company_phone) {
+        this.company_phone = company_phone;
     }
 }

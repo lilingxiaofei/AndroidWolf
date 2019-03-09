@@ -1,6 +1,5 @@
 package com.chunlangjiu.app.money.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,11 +8,9 @@ import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.money.bean.FundInfoBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
-import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.text.SimpleDateFormat;
@@ -106,7 +103,7 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
 
     private void setView() {
         if (TextUtils.isEmpty(type)) return;
-        if ("sell".equals(type)) {
+        if ("sell".equals(type) || "freeze".equals(type)) {
             lineGoodsName.setVisibility(View.GONE);
             lineaBusinessStatus.setVisibility(View.GONE);
             LineaBusinessType.setVisibility(View.VISIBLE);
@@ -146,6 +143,16 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
             lineaCreateTime.setVisibility(View.VISIBLE);
             lineaApplyTime.setVisibility(View.GONE);
             lineaArrivalTime.setVisibility(View.VISIBLE);
+        }else {
+            lineGoodsName.setVisibility(View.GONE);
+            lineaBusinessStatus.setVisibility(View.GONE);
+            LineaBusinessType.setVisibility(View.VISIBLE);
+            lineaPayWay.setVisibility(View.GONE);
+            lineWithDrawBank.setVisibility(View.GONE);
+            lineaOrderNumber.setVisibility(View.VISIBLE);
+            lineaCreateTime.setVisibility(View.VISIBLE);
+            lineaApplyTime.setVisibility(View.GONE);
+            lineaArrivalTime.setVisibility(View.GONE);
         }
     }
 
@@ -169,24 +176,46 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
 
     private void getFundInfo() {
         showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().getfundInfo((String) SPUtils.get("token", ""), log_id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<FundInfoBean>>() {
-                    @Override
-                    public void accept(ResultBean<FundInfoBean> resultBean) throws Exception {
-                        hideLoadingDialog();
-                        FundInfoBean fundInfoBean = resultBean.getData();
-                        setFundInfoData(fundInfoBean);
+        if("freeze".equals(type)){
+            disposable.add(ApiUtils.getInstance().getFreezeInf( log_id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResultBean<FundInfoBean>>() {
+                        @Override
+                        public void accept(ResultBean<FundInfoBean> resultBean) throws Exception {
+                            hideLoadingDialog();
+                            FundInfoBean fundInfoBean = resultBean.getData();
+                            setFundInfoData(fundInfoBean);
 
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        hideLoadingDialog();
-                        ToastUtils.showErrorMsg(throwable);
-                    }
-                }));
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            hideLoadingDialog();
+                            ToastUtils.showErrorMsg(throwable);
+                        }
+                    }));
+        }else{
+            disposable.add(ApiUtils.getInstance().getfundInfo(log_id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResultBean<FundInfoBean>>() {
+                        @Override
+                        public void accept(ResultBean<FundInfoBean> resultBean) throws Exception {
+                            hideLoadingDialog();
+                            FundInfoBean fundInfoBean = resultBean.getData();
+                            setFundInfoData(fundInfoBean);
+
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            hideLoadingDialog();
+                            ToastUtils.showErrorMsg(throwable);
+                        }
+                    }));
+        }
+
     }
 
     private void setFundInfoData(FundInfoBean fundInfoBean) {
@@ -211,6 +240,11 @@ public class BillDetailActivity extends BaseActivity {//1551084183 //1551084183
 //            tvArrivalTime.setText("");
         } else if ("refund".equals(type)) {
             tvBusinessStatus.setText(fundInfoBean.getStatus());
+            tvBusinessType.setText(fundInfoBean.getMemo());
+            tvOrderNumber.setText(fundInfoBean.getId());
+            tvCreateTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(fundInfoBean.getTime() * 1000)));
+        }else if("freeze".equals(type)) {
+            tvGoodsName.setText("");
             tvBusinessType.setText(fundInfoBean.getMemo());
             tvOrderNumber.setText(fundInfoBean.getId());
             tvCreateTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(fundInfoBean.getTime() * 1000)));

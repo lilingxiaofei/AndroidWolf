@@ -7,8 +7,6 @@ import android.view.View;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.abase.BaseApplication;
-import com.chunlangjiu.app.amain.fragment.UserFragment;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -49,11 +47,12 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }else if(resId == R.id.tvPayPwd){
             SetPayPasswordActivity.startActivity(SettingActivity.this);
         }else if(resId == R.id.tvMyData){
-            if (UserFragment.userType == UserFragment.TYPE_BUYER) {
-                WebViewActivity.startWebViewActivity(this, ConstantMsg.WEB_URL_VIP_INFO + BaseApplication.getToken(), "会员资料");
-            } else {
-                WebViewActivity.startWebViewActivity(this, ConstantMsg.WEB_URL_SHOP_INFO + BaseApplication.getToken(), "店铺资料");
-            }
+//            if (UserFragment.userType == UserFragment.TYPE_BUYER) {
+//                WebViewActivity.startWebViewActivity(this, ConstantMsg.WEB_URL_VIP_INFO + BaseApplication.getToken(), "会员资料");
+//            } else {
+//                WebViewActivity.startWebViewActivity(this, ConstantMsg.WEB_URL_SHOP_INFO + BaseApplication.getToken(), "店铺资料");
+//            }
+            MyInfoActivity.startActivity(SettingActivity.this);
         }else if(resId == R.id.tvMyAttestation){
             startActivity(new Intent(this,VerifiedActivity.class));
         }else if(resId == R.id.tvAddressManager){

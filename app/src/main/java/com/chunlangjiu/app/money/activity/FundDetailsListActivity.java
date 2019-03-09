@@ -1,5 +1,7 @@
 package com.chunlangjiu.app.money.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,21 +14,14 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.money.bean.FundDetailListBean;
 import com.chunlangjiu.app.money.fragment.FundDetailListFragment;
-import com.chunlangjiu.app.net.ApiUtils;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.pkqup.commonlibrary.net.bean.ResultBean;
-import com.pkqup.commonlibrary.util.SPUtils;
-import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 public class FundDetailsListActivity extends BaseActivity {
 
@@ -40,8 +35,10 @@ public class FundDetailsListActivity extends BaseActivity {
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     private List<FundDetailListBean.FundDetailBean> fundDetailBeans = new ArrayList<>();
 
-    private final String[] mTitles = {"销售记录", "充值", "提现","退款"};
-    private final String[] types = {"sell", "add", "expense","refund"};
+    private final String[] mTitles = {"销售记录", "充值", "提现", "退款"};
+    private final String[] types = {"sell", "add", "expense", "refund"};
+    public static final String TYPE_FREEZE = "freeze";
+    private String type = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +47,12 @@ public class FundDetailsListActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         initView();
         initData();
+    }
+
+    public static void startFundListActivity(Activity activity, String type) {
+        Intent intent = new Intent(activity, FundDetailsListActivity.class);
+        intent.putExtra("type", type);
+        activity.startActivity(intent);
     }
 
     private void initData() {
@@ -71,17 +74,29 @@ public class FundDetailsListActivity extends BaseActivity {
     }
 
     private void initView() {
+        type = getIntent().getStringExtra("type");
         fundDetailViewPageAdapter = new FundDetailViewPageAdapter(getSupportFragmentManager());
         vpFundDetail.setAdapter(fundDetailViewPageAdapter);
-        for (int i = 0; i < mTitles.length; i++) {
+        if (!TYPE_FREEZE.equals(type)) {
+            for (int i = 0; i < mTitles.length; i++) {
+                FundDetailListFragment fundDetailListFragment = new FundDetailListFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("type", types[i]);
+                fundDetailListFragment.setArguments(bundle);
+                fragmentList.add(fundDetailListFragment);
+            }
+            fundDetailViewPageAdapter.notifyDataSetChanged();
+            titleTabLayout.setViewPager(vpFundDetail, mTitles);
+        } else {
+            titleTabLayout.setVisibility(View.GONE);
             FundDetailListFragment fundDetailListFragment = new FundDetailListFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("type",types[i]);
+            bundle.putString("type", type);
             fundDetailListFragment.setArguments(bundle);
             fragmentList.add(fundDetailListFragment);
+            fundDetailViewPageAdapter.notifyDataSetChanged();
         }
-        fundDetailViewPageAdapter.notifyDataSetChanged();
-        titleTabLayout.setViewPager(vpFundDetail, mTitles);
+
     }
 
     ;

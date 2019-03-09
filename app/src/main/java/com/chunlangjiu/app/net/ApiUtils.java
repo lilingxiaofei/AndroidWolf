@@ -153,6 +153,12 @@ public class ApiUtils {
         return apiService.getUserInfo("member.basics.get", "v1");
     }
 
+
+    public Flowable<ResultBean> editUserInfo(String shopname, String bulletin, String sex, String area, String phone) {
+        return apiService.editUserInfo("member.basics.update", "v1", shopname, bulletin, sex, area, phone);
+    }
+
+
     public Flowable<ResultBean> setHeadImg(String url) {
         return apiService.setHeadImg("member.setImg", "v1", url);
     }
@@ -178,9 +184,10 @@ public class ApiUtils {
         return apiService.valuationGoods("member.evaluate", "v1", title, name, imgs, series);
     }
 
-    public Flowable<ResultBean<AuctionListBean>> getAuctionList() {
-        return apiService.getAuctionList("item.auction.list", "v1");
+    public Flowable<ResultBean<AuctionListBean>> getAuctionList(String brand_id, String area_id, String odor_id, String min_price, String max_price, int page_no, int page_size) {
+        return apiService.getAuctionList("item.auction.list", "v1", brand_id, area_id, odor_id, min_price, max_price, page_no, page_size);
     }
+
 
     public Flowable<ResultBean> auctionGivePrice(String itemId, String price) {
         return apiService.auctionGivePrice("item.auction.userAdd", "v1", itemId, price);
@@ -222,21 +229,22 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<ItemListBean<GoodsBean>>> getManageGoodsList(String status, String createTime, int page, int pageSize) {
-        boolean isAuction = status == CommonUtils.GOODS_STATUS_AUCTION_ACTIVE || status == CommonUtils.GOODS_STATUS_AUCTION_STOP?true:false;
-        if(isAuction){
-            return apiService.getManageGoodsList("item.auction.list", "v1",  status,createTime, page, pageSize);
-        }else{
-            return apiService.getManageGoodsList("item.list", "v1",  status,createTime, page, pageSize);
+        boolean isAuction = CommonUtils.GOODS_STATUS_AUCTION_NOT_START.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(status) ? true : false;
+        if (isAuction) {
+            String tempStatus = status.replaceAll(CommonUtils.AUCTION_STATUS_SUB, "");
+            return apiService.getManageGoodsList("item.auction.list", "v1", tempStatus, createTime, page, pageSize);
+        } else {
+            return apiService.getManageGoodsList("item.list", "v1", status, createTime, page, pageSize);
         }
 
     }
 
     public Flowable<ResultBean> editGoodsShelves(String itemId, String type) {
-        return apiService.editGoodsShelves("item.status", "v1",  itemId,type);
+        return apiService.editGoodsShelves("item.status", "v1", itemId, type);
     }
 
-    public Flowable<ResultBean> setAuctionGoods(String itemId, String starting_price,String status,String store,long begin_time,long end_time) {
-        return apiService.setAuctionGoods("item.auction", "v1",  itemId, starting_price,status,store,begin_time,end_time);
+    public Flowable<ResultBean> setAuctionGoods(String itemId, String starting_price, String status, String store, long begin_time, long end_time) {
+        return apiService.setAuctionGoods("item.auction", "v1", itemId, starting_price, status, store, begin_time, end_time);
     }
 
     public Flowable<ResultBean<ShopInfoBean>> getShopInfo(String shopId) {
@@ -455,9 +463,9 @@ public class ApiUtils {
 
     public Flowable<ResultBean<CreateOrderBean>> repay(String tid, String merge) {
 
-        if(TextUtils.isEmpty(merge)){
+        if (TextUtils.isEmpty(merge)) {
             return apiService.repay("payment.pay.create", "v1", tid);
-        }else{
+        } else {
             return apiService.repay("payment.pay.create", "v1", tid, merge);
         }
     }
@@ -616,6 +624,10 @@ public class ApiUtils {
         return apiService.getFundDetails("member.fund", "v1", token, type);
     }
 
+    public Flowable<ResultBean<FundDetailListBean>> getFreezeList(int page, int pageSize) {
+        return apiService.getFreezeList("member.freeze", "v1", page, pageSize);
+    }
+
     public Flowable<ResultBean> sendSms(String token) {
         return apiService.sendSms("user.resetSendSms", "v1", token);
     }
@@ -646,11 +658,17 @@ public class ApiUtils {
     public Flowable<ResultBean<BankCardInfoBean>> getBankCardInfo(String token, String bank_id) {//member.bank.get
         return apiService.bankCardGet("member.bank.get", "v1", token, bank_id);
     }
-    public Flowable<ResultBean> cancelDeposit(String token){
-       return apiService.depositCancel("member.deposit.cancel","v1",token);
+
+    public Flowable<ResultBean> cancelDeposit(String token) {
+        return apiService.depositCancel("member.deposit.cancel", "v1", token);
     }
-    public Flowable<ResultBean<FundInfoBean>> getfundInfo(String token, String log_id){
-        return apiService.fundInfo("member.fundInfo","v1",token,log_id);
+
+    public Flowable<ResultBean<FundInfoBean>> getfundInfo(String log_id) {
+        return apiService.fundInfo("member.fundInfo", "v1", log_id);
+    }
+
+    public Flowable<ResultBean<FundInfoBean>> getFreezeInf(String log_id) {
+        return apiService.fundInfo("member.freezeInfo", "v1", log_id);
     }
 
 }

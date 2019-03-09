@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,6 +45,9 @@ public class MoneyManagerActivity extends BaseActivity {
 
     @BindView(R.id.tvBalance)
     TextView tvBalance;
+
+    @BindView(R.id.llFreezeBalance)
+    LinearLayout llFreezeBalance;
     @BindView(R.id.tvAvailableBalance)
     TextView tvAvailableBalance;
     @BindView(R.id.tvFreezeBalance)
@@ -187,12 +191,15 @@ public class MoneyManagerActivity extends BaseActivity {
         setRightText();
     }
 
-    @OnClick({R.id.img_title_left, R.id.relSelectBalance, R.id.relSelectSecurityDeposit, R.id.btnWithdraw, R.id.btnRecharge, R.id.btnPaySecurityDeposit,R.id.btnDepositCancel})
+    @OnClick({R.id.img_title_left, R.id.relSelectBalance, R.id.relSelectSecurityDeposit, R.id.btnWithdraw, R.id.btnRecharge, R.id.btnPaySecurityDeposit,R.id.btnDepositCancel,R.id.llFreezeBalance})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_title_left:
                 finish();
                 break;
+            case R.id.llFreezeBalance:
+             FreezeListActivity.startFundListActivity(MoneyManagerActivity.this);
+             break;
             case R.id.relSelectBalance:
                 setViewByType(MoneyType.Balance);
                 break;

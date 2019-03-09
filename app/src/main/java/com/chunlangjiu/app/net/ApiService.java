@@ -134,6 +134,10 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
+    Flowable<ResultBean> editUserInfo(@Field("method") String method, @Field("v") String v, @Field("shopname") String shopname, @Field("bulletin") String bulletin, @Field("sex") String sex, @Field("area") String area, @Field("phone") String phone);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
     Flowable<ResultBean> setHeadImg(@Field("method") String method, @Field("v") String v,
                                     @Field("img_url") String img_url);
 
@@ -179,7 +183,12 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<AuctionListBean>> getAuctionList(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<AuctionListBean>> getAuctionList(@Field("method") String method, @Field("v") String v,
+                                                         @Field("brand_id") String brand_id, @Field("area_id") String area_id,
+                                                         @Field("odor_id") String odor_id, @Field("min_price") String min_price,
+                                                         @Field("max_price") String max_price, @Field("page_no") int page_no,
+                                                         @Field("page_size") int page_size);
+
 
     @POST("index.php/topapi")
     @FormUrlEncoded
@@ -704,6 +713,9 @@ public interface ApiService {
     @FormUrlEncoded
     Flowable<ResultBean<FundDetailListBean>> getFundDetails(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token, @Field("type") String type);
 
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<FundDetailListBean>> getFreezeList(@Field("method") String method, @Field("v") String v, @Field("page_no") int page_no, @Field("page_size") int page_size);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
@@ -743,5 +755,5 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<FundInfoBean>> fundInfo(@Field("method") String method, @Field("v") String v, @Field("accessToken") String token, @Field("log_id") String logid);
+    Flowable<ResultBean<FundInfoBean>> fundInfo(@Field("method") String method, @Field("v") String v, @Field("log_id") String logid);
 }

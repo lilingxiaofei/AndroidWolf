@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llShopRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
+    android:paddingBottom="20dp"
     android:orientation="vertical">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,14 +38,17 @@
             android:textSize="18sp" />
 
     </RelativeLayout>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@mipmap/goods_manage_bg"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgHead"
         android:layout_width="83dp"
         android:layout_height="83dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="150dp"
         android:src="@mipmap/logo" />
 
     <TextView
@@ -74,7 +81,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="95dp"
+            android:layout_height="85dp"
             android:divider="@drawable/line_vertical"
             android:orientation="horizontal"
             android:showDividers="middle">
@@ -96,7 +103,7 @@
                         android:id="@+id/ivSaleLabel"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@mipmap/home_sell_goods" />
+                        android:src="@mipmap/my_goods_selling_" />
 
 
                     <TextView
@@ -139,7 +146,7 @@
                         android:layout_height="20dp"
                         android:layout_toLeftOf="@+id/tvSaleLabel"
                         android:gravity="center"
-                        android:src="@mipmap/home_sell_goods"
+                        android:src="@mipmap/my_goods_warehouse_"
                         android:textColor="@color/t_black"
                         android:textSize="15sp"
                         tools:text="店铺名" />
@@ -168,7 +175,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="95dp"
+            android:layout_height="85dp"
             android:layout_below="@+id/tvShopName"
             android:layout_centerInParent="true"
             android:layout_marginBottom="5dp"
@@ -194,7 +201,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_toLeftOf="@+id/tvSaleLabel"
-                        android:src="@mipmap/home_sell_goods" />
+                        android:src="@mipmap/my_goods_audit_" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -234,7 +241,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@mipmap/home_sell_goods" />
+                        android:src="@mipmap/my_goods_selling" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -281,3 +288,4 @@
 
 
 </RelativeLayout>
+</ScrollView>

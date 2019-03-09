@@ -68,7 +68,7 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
             status = status == null ? "" : status;
 
 
-            if (CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(goodsStatus) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(goodsStatus)) {
+            if (CommonUtils.GOODS_STATUS_AUCTION_NOT_START.equals(goodsStatus) || CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(goodsStatus) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(goodsStatus)) {
                 //竞拍
                 imgAuction.setVisibility(View.VISIBLE);
                 llStartPrice.setVisibility(View.VISIBLE);
