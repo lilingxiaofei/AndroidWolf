@@ -15,6 +15,7 @@ import com.chunlangjiu.app.goods.bean.ShopInfoBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.bean.MyNumBean;
+import com.chunlangjiu.app.user.bean.UserInfoBean;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
@@ -73,12 +74,10 @@ public class GoodsManageHomeActivity extends BaseActivity {
     private CompositeDisposable disposable;
 
 
-    private String shopId;
 
 
-    public static void startShopMainActivity(Activity activity, String shopId) {
+    public static void startShopMainActivity(Activity activity) {
         Intent intent = new Intent(activity, GoodsManageHomeActivity.class);
-        intent.putExtra("shopId", shopId);
         activity.startActivity(intent);
     }
 
@@ -154,21 +153,22 @@ public class GoodsManageHomeActivity extends BaseActivity {
     private void initData() {
         EventManager.getInstance().registerListener(onNotifyListener);
         disposable = new CompositeDisposable();
-        shopId = getIntent().getStringExtra("shopId");
-        getShopInfo();
+        getUserInfo();
         getSellerOrderNumIndex();
     }
 
-
-
-    private void getShopInfo() {
-        disposable.add(ApiUtils.getInstance().getShopInfo(shopId)
+    private void getUserInfo() {
+        disposable.add(ApiUtils.getInstance().getUserInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<ShopInfoBean>>() {
+                .subscribe(new Consumer<ResultBean<UserInfoBean>>() {
                     @Override
-                    public void accept(ResultBean<ShopInfoBean> shopInfoBeanResultBean) throws Exception {
-                        getShopInfoSuccess(shopInfoBeanResultBean.getData());
+                    public void accept(ResultBean<UserInfoBean> userInfoBeanResultBean) throws Exception {
+                        UserInfoBean userInfoBean = userInfoBeanResultBean.getData();
+                        if(userInfoBean!=null){
+                            GlideUtils.loadImageShop(GoodsManageHomeActivity.this,userInfoBean.getHead_portrait(), imgHead);
+                            tvShopName.setText(userInfoBean.getShop_name());
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -176,6 +176,23 @@ public class GoodsManageHomeActivity extends BaseActivity {
                     }
                 }));
     }
+
+
+//    private void getShopInfo() {
+//        disposable.add(ApiUtils.getInstance().getShopInfo(shopId)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<ResultBean<ShopInfoBean>>() {
+//                    @Override
+//                    public void accept(ResultBean<ShopInfoBean> shopInfoBeanResultBean) throws Exception {
+//                        getShopInfoSuccess(shopInfoBeanResultBean.getData());
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) throws Exception {
+//                    }
+//                }));
+//    }
 
     private void getShopInfoSuccess(ShopInfoBean data) {
         GlideUtils.loadImageShop(this, data.getShopInfo().getShop_logo(), imgHead);

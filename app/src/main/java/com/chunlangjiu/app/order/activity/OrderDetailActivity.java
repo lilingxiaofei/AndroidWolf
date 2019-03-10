@@ -982,9 +982,12 @@ public class OrderDetailActivity extends BaseActivity {
                     }
                     break;
                 case "2":
+                    llAfterSaleSendTime.setVisibility(View.VISIBLE);
                     llAfterSalePayTime.setVisibility(View.GONE);
                     break;
                 case "3":
+                    llAfterSaleSendTime.setVisibility(View.VISIBLE);
+                    tvAfterSalePayTime.setVisibility(View.VISIBLE);
                     if (2 == type) {
                         tvDelete.setVisibility(View.GONE);
                         tvServerInto.setVisibility(View.VISIBLE);
@@ -1033,21 +1036,12 @@ public class OrderDetailActivity extends BaseActivity {
             tvOrderId.setText(String.valueOf(tid));
             if (!TextUtils.isEmpty(orderDetailBean.getOrder().getPay_time())) {
                 tvAfterSaleCreateTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getOrder().getPay_time())));
-                llAfterSaleTme.setVisibility(View.VISIBLE);
-            } else {
-                llAfterSaleTme.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(orderDetailBean.getOrder().getConsign_time())) {
                 tvAfterSaleSendTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getOrder().getConsign_time())));
-                llAfterSaleSendTime.setVisibility(View.VISIBLE);
-            } else {
-                llAfterSaleSendTime.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(orderDetailBean.getOrder().getEnd_time())) {
                 tvAfterSalePayTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getOrder().getEnd_time())));
-                llAfterSalePayTime.setVisibility(View.VISIBLE);
-            } else {
-                llAfterSalePayTime.setVisibility(View.GONE);
             }
         }
     }

@@ -24,6 +24,12 @@ public class CommonUtils {
     public static final String GOODS_STATUS_AUCTION_ACTIVE = AUCTION_STATUS_SUB + "active";//竞拍进行时
     public static final String GOODS_STATUS_AUCTION_STOP = AUCTION_STATUS_SUB + "stop";//竞拍结束后
 
+
+    public static  boolean isAuctionGoods(String status) {
+        boolean isAuction = GOODS_STATUS_AUCTION_NOT_START.equals(status) || GOODS_STATUS_AUCTION_ACTIVE.equals(status) || GOODS_STATUS_AUCTION_STOP.equals(status) ? true : false;
+        return isAuction;
+    }
+
     public static String joinStr(Object... obj) {
         String joinStr = "";
         if (obj == null) {

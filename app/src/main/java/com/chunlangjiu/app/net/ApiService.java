@@ -402,7 +402,17 @@ public interface ApiService {
     @FormUrlEncoded
     Flowable<ResultBean<ItemListBean<GoodsBean>>> getManageGoodsList(@Field("method") String method, @Field("v") String v,
                                                                      @Field("status") String status, @Field("created_time") String created_time,
-                                                                     @Field("page_no") int page_no, @Field("page_size") int page_size);
+                                                                     @Field("pages_no") int page_no, @Field("page_size") int page_size);
+
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> deleteCommonGoods(@Field("method") String method, @Field("v") String v,
+                                          @Field("item_id") String item_id);
+
+    @POST("index.php/shop/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> deleteAuctionGoods(@Field("method") String method, @Field("v") String v,
+                                           @Field("auctionitem_id") String auctionitem_id);
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded

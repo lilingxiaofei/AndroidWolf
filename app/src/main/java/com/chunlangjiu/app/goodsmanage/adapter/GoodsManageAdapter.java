@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
 import com.chunlangjiu.app.util.CommonUtils;
+import com.daimajia.swipe.SwipeLayout;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.util.BigDecimalUtils;
 
@@ -26,11 +27,11 @@ import java.util.List;
 public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
 
     private Context context;
-    private String goodsStatus ;
+    private String goodsStatus;
 
-    public GoodsManageAdapter(Context context,String goodsStatus, List<GoodsBean> data) {
+    public GoodsManageAdapter(Context context, String goodsStatus, List<GoodsBean> data) {
         super(R.layout.user_item_goods_manage, data);
-        this.goodsStatus = goodsStatus ;
+        this.goodsStatus = goodsStatus;
         this.context = context;
     }
 
@@ -53,7 +54,7 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
             helper.addOnClickListener(R.id.tvSetAuction);
             helper.addOnClickListener(R.id.tvUnShelve);
             helper.addOnClickListener(R.id.tvEditTwo);
-
+            helper.addOnClickListener(R.id.tvDelete);
 
             GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
             helper.setText(R.id.tv_name, item.getTitle());
@@ -66,7 +67,12 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
 
             String status = item.getApprove_status();
             status = status == null ? "" : status;
-
+            SwipeLayout swipeLayout = helper.getView(R.id.swipeLayout);
+            if (CommonUtils.GOODS_STATUS_AUCTION_NOT_START.equals(goodsStatus) || CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(goodsStatus) || CommonUtils.GOODS_STATUS_INSTOCK.equals(goodsStatus)) {
+                swipeLayout.setSwipeEnabled(true);
+            } else {
+                swipeLayout.setSwipeEnabled(false);
+            }
 
             if (CommonUtils.GOODS_STATUS_AUCTION_NOT_START.equals(goodsStatus) || CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(goodsStatus) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(goodsStatus)) {
                 //竞拍
@@ -109,11 +115,11 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
                         break;
                     case CommonUtils.GOODS_STATUS_INSTOCK:
                         helper.setGone(R.id.llSell, true);
-                        helper.setGone(R.id.tvUnShelve,false);
+                        helper.setGone(R.id.tvUnShelve, false);
                         helper.setGone(R.id.llDepot, true);
                         break;
                     case CommonUtils.GOODS_STATUS_SELL:
-                        helper.setGone(R.id.tvUnShelve,true);
+                        helper.setGone(R.id.tvUnShelve, true);
                         helper.setGone(R.id.llSell, true);
                         break;
 
@@ -146,8 +152,10 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
             }
             for (int i = 0; i < labelList.length; i++) {
                 TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.amain_item_goods_list_label, null);
-                textView.setText(labelList[i]);
-                layout.addView(textView);
+                if(labelList[i].trim().length()>0){
+                    textView.setText(labelList[i]);
+                    layout.addView(textView);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

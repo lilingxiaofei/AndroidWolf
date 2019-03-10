@@ -13,7 +13,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.amain.bean.ItemListBean;
-import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.goodsmanage.activity.GoodsManageSetAuctionActivity;
 import com.chunlangjiu.app.goodsmanage.adapter.GoodsManageAdapter;
 import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
@@ -37,7 +36,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -57,7 +55,7 @@ public class GoodsManageFragment extends BaseFragment {
     private PageUtils<GoodsBean> pageUtils;
     private String status = "";
     private TimePickerDialog startTimeDialog;
-    private long startTime ;
+    private long startTime;
 
     public static GoodsManageFragment newInstance(String status) {
         GoodsManageFragment auctionDetailFragment = new GoodsManageFragment();
@@ -91,7 +89,7 @@ public class GoodsManageFragment extends BaseFragment {
         pageUtils = new PageUtils<>();
         disposable = new CompositeDisposable();
         status = getArguments().getString("status");
-        tvTime =  rootView.findViewById(R.id.tvTime);
+        tvTime = rootView.findViewById(R.id.tvTime);
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         recyclerView = rootView.findViewById(R.id.recyclerView);
         goodsManageAdapter = new GoodsManageAdapter(getActivity(), status, pageUtils.getList());
@@ -133,17 +131,17 @@ public class GoodsManageFragment extends BaseFragment {
                     EditGoodsActivity.startEditGoodsDetailsActivity(activity, goods.getItem_id());
                     break;
                 case R.id.tvPutaway:
-                    if(BigDecimalUtils.objToBigDecimal(goods.getStore()).intValue()>0){
+                    if (BigDecimalUtils.objToBigDecimal(goods.getStore()).intValue() > 0) {
                         editGoodsShelves(goods.getItem_id(), "tosale");
-                    }else{
+                    } else {
                         ToastUtils.showShort("库存为0，请先设置库存再上架此商品");
                     }
 
                     break;
                 case R.id.tvSetAuction:
-                    if(BigDecimalUtils.objToBigDecimal(goods.getStore()).intValue()>0){
-                        GoodsManageSetAuctionActivity.startSetAuctionActivity(activity,goods);
-                    }else{
+                    if (BigDecimalUtils.objToBigDecimal(goods.getStore()).intValue() > 0) {
+                        GoodsManageSetAuctionActivity.startSetAuctionActivity(activity, goods);
+                    } else {
                         ToastUtils.showShort("库存为0，请先设置库存再设置为竞拍商品");
                     }
                     break;
@@ -161,7 +159,25 @@ public class GoodsManageFragment extends BaseFragment {
                         }
                     });
                     confirmDialog.show();
+                    break;
+                case R.id.tvDelete:
+                    if (CommonUtils.GOODS_STATUS_AUCTION_NOT_START.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(status) || CommonUtils.GOODS_STATUS_INSTOCK.equals(status)) {
+                        CommonConfirmDialog deleteDialog = new CommonConfirmDialog(activity, "您确定要下架此商品吗？");
+                        deleteDialog.setCallBack(new CommonConfirmDialog.CallBack() {
+                            @Override
+                            public void onConfirm() {
+                                deleteGoodsShelves(goods);
+                            }
 
+                            @Override
+                            public void onCancel() {
+
+                            }
+                        });
+                        deleteDialog.show();
+                    } else {
+                        ToastUtils.showShort("目前只能删除竞拍未开始，竞拍结束，和仓库中的商品");
+                    }
                     break;
             }
         }
@@ -195,8 +211,56 @@ public class GoodsManageFragment extends BaseFragment {
                 }));
     }
 
+    public void deleteGoodsShelves(GoodsBean goodsBean) {
+        showLoadingDialog();
+        boolean isAuction = CommonUtils.GOODS_STATUS_AUCTION_NOT_START.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(status) ? true : false;
+        if (isAuction) {
+            disposable.add(ApiUtils.getInstance().deleteAuctionGoods(goodsBean.getAuctionitem_id())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResultBean>() {
+                        @Override
+                        public void accept(ResultBean result) throws Exception {
+                            hideLoadingDialog();
+                            if (result.getErrorcode() == 0) {
+                                refreshLayout.autoRefresh();
+                                EventManager.getInstance().notify(null, ConstantMsg.SHOP_DATA_CHANGE);
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            hideLoadingDialog();
+                            ToastUtils.showErrorMsg(throwable);
+                        }
+                    }));
+        } else {
+            disposable.add(ApiUtils.getInstance().deleteCommonGoods(goodsBean.getItem_id())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResultBean>() {
+                        @Override
+                        public void accept(ResultBean result) throws Exception {
+                            hideLoadingDialog();
+                            if (result.getErrorcode() == 0) {
+                                refreshLayout.autoRefresh();
+                                EventManager.getInstance().notify(null, ConstantMsg.SHOP_DATA_CHANGE);
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            hideLoadingDialog();
+                            ToastUtils.showErrorMsg(throwable);
+                        }
+                    }));
+        }
+
+
+    }
+
     public void getGoodsList(int page) {
-        disposable.add(ApiUtils.getInstance().getManageGoodsList(status, startTime+"", page, pageUtils.getPageSize())
+        disposable.add(ApiUtils.getInstance().getManageGoodsList(status, startTime + "", page, pageUtils.getPageSize())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<ItemListBean<GoodsBean>>>() {
@@ -204,7 +268,7 @@ public class GoodsManageFragment extends BaseFragment {
                     public void accept(ResultBean<ItemListBean<GoodsBean>> result) throws Exception {
                         resetGoodsList();
                         if (result.getErrorcode() == 0) {
-                            boolean isAuction = status == CommonUtils.GOODS_STATUS_AUCTION_ACTIVE || status == CommonUtils.GOODS_STATUS_AUCTION_STOP ? true : false;
+                            boolean isAuction = CommonUtils.isAuctionGoods(status);
                             if (isAuction) {
                                 pageUtils.loadListSuccess(result.getData().getList());
                                 pageUtils.setTotalPage(result.getData().getTotalPage());
@@ -231,12 +295,11 @@ public class GoodsManageFragment extends BaseFragment {
 
     private void updateLListUi() {
         goodsManageAdapter.setNewData(pageUtils.getList());
-        boolean isAuction = status == CommonUtils.GOODS_STATUS_AUCTION_ACTIVE || status == CommonUtils.GOODS_STATUS_AUCTION_STOP ? true : false;
-        if(!isAuction){
+        boolean isAuction = CommonUtils.isAuctionGoods(status);
+        if (!isAuction) {
             refreshLayout.setEnableLoadMore(pageUtils.isNextPage());
         }
     }
-
 
 
     public void showStartTime() {
@@ -267,7 +330,7 @@ public class GoodsManageFragment extends BaseFragment {
         @Override
         public void onDateSet(TimePickerDialog timePickerView, long millSeconds) {
             startTime = millSeconds / 1000;
-            tvTime.setText(TimeUtils.millisToDate(startTime+""));
+            tvTime.setText(TimeUtils.millisToDate(startTime + ""));
             getGoodsList(pageUtils.firstPage());
         }
     };

@@ -21,6 +21,7 @@ public class GoodsBean implements Serializable {
     private String freez;
 
     //竞拍参数
+
     private String shop_id;
     private String brand_id;
     private String shop_cat_id;
@@ -70,6 +71,7 @@ public class GoodsBean implements Serializable {
     private String auction_begin_time;
     private String auction_end_time;
     private String auction_number;
+    private String auctionitem_id;
     private String max_price;
 
     public String getItem_id() {
@@ -590,5 +592,13 @@ public class GoodsBean implements Serializable {
 
     public void setMax_price(String max_price) {
         this.max_price = max_price;
+    }
+
+    public String getAuctionitem_id() {
+        return auctionitem_id;
+    }
+
+    public void setAuctionitem_id(String auctionitem_id) {
+        this.auctionitem_id = auctionitem_id;
     }
 }

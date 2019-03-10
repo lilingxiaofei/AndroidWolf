@@ -10,7 +10,6 @@
     <TextView
         android:id="@+id/tvDelete"
         style="@style/order_btn_gray"
-        android:visibility="visible"
         android:text="删除订单" />
     <TextView
         android:id="@+id/tvCancel"
@@ -39,7 +38,7 @@
     <TextView
         android:id="@+id/tvReturnSend"
         style="@style/order_btn_gray"
-        android:text="退货发货" />
+        android:text="退货" />
     <TextView
         android:id="@+id/tvBackOutApply"
         style="@style/order_btn_gray"

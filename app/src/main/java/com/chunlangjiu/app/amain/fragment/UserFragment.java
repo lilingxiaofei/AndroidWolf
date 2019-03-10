@@ -327,7 +327,7 @@ public class UserFragment extends BaseFragment {
                     break;
                 case R.id.rlGoodsManager:// 商品管理
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_GOODS_MANAGER + BaseApplication.getToken(), "商品管理");
-                    GoodsManageHomeActivity.startShopMainActivity(activity,shopId);
+                    GoodsManageHomeActivity.startShopMainActivity(activity);
                     break;
                 case R.id.rlAddGoods:// 添加商品
                     startActivity(new Intent(getActivity(), AddGoodsActivity.class));

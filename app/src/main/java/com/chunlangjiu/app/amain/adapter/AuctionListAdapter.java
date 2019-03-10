@@ -130,8 +130,10 @@ public class AuctionListAdapter extends BaseQuickAdapter<AuctionListBean.Auction
             }
             for (int i = 0; i < labelList.length; i++) {
                 TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.amain_item_goods_list_label, null);
-                textView.setText(labelList[i]);
-                layout.addView(textView);
+                if(labelList[i].trim().length()>0){
+                    textView.setText(labelList[i]);
+                    layout.addView(textView);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package com.chunlangjiu.app.goods.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,7 +13,6 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.TimeUtils;
@@ -147,12 +147,18 @@ public class ShopDetailsActivity extends BaseActivity {
         tvDesc.setText(data.getShopInfo().getShop_descript());
         String shopType = data.getShopInfo().getGrade();
 
-        String companyStatus = data.getShopInfo().getStatus();
-        if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-            tvCompanyStatus.setText("企业认证");
-        } else {
+        if(!TextUtils.isEmpty(data.getShopInfo().getAuthentication())){
+            tvCompanyStatus.setText(data.getShopInfo().getAuthentication());
+        }else{
             tvCompanyStatus.setText("个人认证");
         }
+
+//        String companyStatus = data.getShopInfo().getStatus();
+//        if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+//            tvCompanyStatus.setText("企业认证");
+//        } else {
+//            tvCompanyStatus.setText("个人认证");
+//        }
 
         tvOpenShopTime.setText(TimeUtils.millisToDate(data.getShopInfo().getOpen_time()));
         tvAddress.setText(data.getShopInfo().getShop_addr());

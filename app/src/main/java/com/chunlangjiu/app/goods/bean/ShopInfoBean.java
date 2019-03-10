@@ -31,6 +31,7 @@ public class ShopInfoBean {
         private String shop_logo;
         private String mobile;
         private String shopname;
+        private String authentication ;
         private String grade ;//店铺等级 0普通店铺，1,星级卖家，2城市合伙人
 
         public String getShopname() {
@@ -51,6 +52,14 @@ public class ShopInfoBean {
 
         public String getShop_name() {
             return shop_name;
+        }
+
+        public String getAuthentication() {
+            return authentication;
+        }
+
+        public void setAuthentication(String authentication) {
+            this.authentication = authentication;
         }
 
         public void setShop_name(String shop_name) {

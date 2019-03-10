@@ -229,7 +229,7 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<ItemListBean<GoodsBean>>> getManageGoodsList(String status, String createTime, int page, int pageSize) {
-        boolean isAuction = CommonUtils.GOODS_STATUS_AUCTION_NOT_START.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(status) ? true : false;
+        boolean isAuction = CommonUtils.isAuctionGoods(status);
         if (isAuction) {
             String tempStatus = status.replaceAll(CommonUtils.AUCTION_STATUS_SUB, "");
             return apiService.getManageGoodsList("item.auction.list", "v1", tempStatus, createTime, page, pageSize);
@@ -237,6 +237,14 @@ public class ApiUtils {
             return apiService.getManageGoodsList("item.list", "v1", status, createTime, page, pageSize);
         }
 
+    }
+
+
+    public Flowable<ResultBean> deleteCommonGoods(String item_id) {
+            return apiService.deleteCommonGoods("item.delete", "v1", item_id);
+    }
+    public Flowable<ResultBean> deleteAuctionGoods(String auctionitem_id) {
+            return apiService.deleteAuctionGoods("item.auction.delete", "v1", auctionitem_id);
     }
 
     public Flowable<ResultBean> editGoodsShelves(String itemId, String type) {

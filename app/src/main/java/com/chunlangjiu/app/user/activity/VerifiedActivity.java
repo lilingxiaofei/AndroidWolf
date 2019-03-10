@@ -1,7 +1,6 @@
 package com.chunlangjiu.app.user.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -39,8 +38,12 @@ public class VerifiedActivity extends BaseActivity {
     TextView tvDesc;
     @BindView(R.id.btnPerson)
     Button btnPerson;
+    @BindView(R.id.tvUpdatePerson)
+    TextView tvUpdatePerson;
     @BindView(R.id.btnCompany)
     Button btnCompany;
+    @BindView(R.id.tvUpdateCompany)
+    TextView tvUpdateCompany;
 
     private CompositeDisposable disposable;
     private String personStatus;
@@ -68,12 +71,18 @@ public class VerifiedActivity extends BaseActivity {
         titleName.setText("实名认证");
     }
 
-    @OnClick({R.id.btnPerson, R.id.btnCompany, R.id.img_title_left})
+    @OnClick({R.id.btnPerson, R.id.btnCompany, R.id.img_title_left,R.id.tvUpdatePerson,R.id.tvUpdateCompany})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tvUpdatePerson:
+                toAuthActivity();
+                break;
             case R.id.btnPerson:
                 checkPersonStatus();
 //                startActivity(new Intent(this,PersonAuthActivity.class));
+                break;
+            case R.id.tvUpdateCompany:
+                toAuthCompanyActivity();
                 break;
             case R.id.btnCompany:
                 checkCompanyStatus();
@@ -212,10 +221,12 @@ public class VerifiedActivity extends BaseActivity {
         if (AuthStatusBean.AUTH_SUCCESS.equals(personStatus)) {
             tvDesc.setText("已认证");
             btnPerson.setText("已认证");
-            btnCompany.setSelected(false);
+            btnPerson.setSelected(false);
+            tvUpdatePerson.setVisibility(View.INVISIBLE);
             btnPerson.setEnabled(false);
             authed = true;
         }else {
+            tvUpdatePerson.setVisibility(View.INVISIBLE);
             btnPerson.setSelected(true);
             btnPerson.setEnabled(true);
         }
@@ -224,8 +235,10 @@ public class VerifiedActivity extends BaseActivity {
             btnCompany.setText("已认证");
             btnCompany.setSelected(false);
             btnCompany.setEnabled(false);
+            tvUpdateCompany.setVisibility(View.INVISIBLE);
             authed = true;
         }else {
+            tvUpdateCompany.setVisibility(View.INVISIBLE);
             btnCompany.setSelected(true);
             btnCompany.setEnabled(true);
         }

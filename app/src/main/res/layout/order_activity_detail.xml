@@ -387,7 +387,7 @@
                     android:paddingRight="@dimen/order_details_padding"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/order_left_label"
@@ -407,7 +407,7 @@
                     android:paddingRight="@dimen/order_details_padding"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         style="@style/order_left_label"

@@ -31,7 +31,6 @@ import com.chunlangjiu.app.goods.bean.OrdoListBean;
 import com.chunlangjiu.app.goods.bean.PriceBean;
 import com.chunlangjiu.app.goods.bean.ShopInfoBean;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.dialog.ChoiceAlcPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceAreaPopWindow;
 import com.chunlangjiu.app.user.dialog.ChoiceBrandPopWindow;
@@ -485,12 +484,18 @@ public class ShopMainActivity extends BaseActivity {
         tvDesc.setText(data.getShopInfo().getShop_descript());
         String shopType = data.getShopInfo().getGrade();
 
-        String companyStatus = data.getShopInfo().getStatus();
-        if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-            tvCompanyStatus.setText("企业认证");
-        } else {
+        if(!TextUtils.isEmpty(data.getShopInfo().getAuthentication())){
+            tvCompanyStatus.setText(data.getShopInfo().getAuthentication());
+        }else{
             tvCompanyStatus.setText("个人认证");
         }
+
+//        String companyStatus = data.getShopInfo().getStatus();
+//        if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+//            tvCompanyStatus.setText("企业认证");
+//        } else {
+//            tvCompanyStatus.setText("个人认证");
+//        }
 
         if ("2".equals(shopType)) {
             llRootLayout.setBackgroundResource(R.mipmap.store_bg_partner);

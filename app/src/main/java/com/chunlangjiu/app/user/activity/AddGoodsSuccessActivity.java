@@ -5,9 +5,9 @@ import android.view.View;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.abase.BaseApplication;
-import com.chunlangjiu.app.util.ConstantMsg;
-import com.chunlangjiu.app.web.WebViewActivity;
+import com.chunlangjiu.app.goodsmanage.activity.GoodsManageHomeActivity;
+import com.chunlangjiu.app.goodsmanage.activity.GoodsManageListActivity;
+import com.chunlangjiu.app.util.CommonUtils;
 
 /**
  * @CreatedbBy: liucun on 2018/9/17
@@ -23,10 +23,12 @@ public class AddGoodsSuccessActivity extends BaseActivity {
                     finish();
                     break;
                 case R.id.tvGoodsManager:
-                    WebViewActivity.startWebViewActivity(AddGoodsSuccessActivity.this, ConstantMsg.WEB_URL_GOODS_MANAGER + BaseApplication.getToken(), "商品管理");
+                    GoodsManageHomeActivity.startShopMainActivity(AddGoodsSuccessActivity.this);
+//                    WebViewActivity.startWebViewActivity(AddGoodsSuccessActivity.this, ConstantMsg.WEB_URL_GOODS_MANAGER + BaseApplication.getToken(), "商品管理");
                     break;
                 case R.id.tvCheckGoodsManager:
-                    WebViewActivity.startWebViewActivity(AddGoodsSuccessActivity.this, ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
+                    GoodsManageListActivity.startGoodsManageActivity(AddGoodsSuccessActivity.this, CommonUtils.GOODS_STATUS_AUDIT_PENDING);
+//                    WebViewActivity.startWebViewActivity(AddGoodsSuccessActivity.this, ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
                     break;
             }
         }

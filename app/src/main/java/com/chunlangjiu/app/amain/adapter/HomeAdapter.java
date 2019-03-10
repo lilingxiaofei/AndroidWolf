@@ -2,9 +2,7 @@ package com.chunlangjiu.app.amain.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -223,8 +221,10 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
             }
             for (int i = 0; i < labelList.length; i++) {
                 TextView textView = (TextView) LayoutInflater.from(context).inflate(R.layout.amain_item_goods_list_label,null);
-                textView.setText(labelList[i]);
-                layout.addView(textView);
+                if(labelList[i].trim().length()>0){
+                    textView.setText(labelList[i]);
+                    layout.addView(textView);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

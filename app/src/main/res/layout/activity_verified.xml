@@ -98,6 +98,13 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_14sp" />
 
+                <TextView
+                    android:id="@+id/tvUpdatePerson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="更新>>"
+                    android:textColor="@color/t_blue" />
             </LinearLayout>
 
             <LinearLayout
@@ -128,7 +135,12 @@
                     android:text="申请"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_14sp" />
-
+                <TextView android:id="@+id/tvUpdateCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textColor="@color/t_blue"
+                    android:text="更新>>"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
