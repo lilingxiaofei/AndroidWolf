@@ -54,6 +54,7 @@ import com.chunlangjiu.app.store.bean.StoreClassListBean;
 import com.chunlangjiu.app.store.bean.StoreDetailBean;
 import com.chunlangjiu.app.store.bean.StoreListBean;
 import com.chunlangjiu.app.user.bean.AddressListBean;
+import com.chunlangjiu.app.user.bean.AuthInfoBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.BankCardInfoBean;
 import com.chunlangjiu.app.user.bean.BankCardListBean;
@@ -179,6 +180,9 @@ public class ApiUtils {
         return apiService.getCompanyAuthStatus("member.get.enterprise", "v1");
     }
 
+    public Flowable<ResultBean<AuthInfoBean>> getCompanyAuthInfo() {
+        return apiService.getCompanyAuthInfo("member.enterprise.detail", "v1");
+    }
 
     public Flowable<ResultBean> valuationGoods(String title, String name, String imgs, String series) {
         return apiService.valuationGoods("member.evaluate", "v1", title, name, imgs, series);

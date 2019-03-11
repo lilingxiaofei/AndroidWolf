@@ -256,7 +256,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     //开启定位
-    private void locationCity() {
+    public void locationCity() {
         if (PermissionUtils.hasPermissionForLocation(getActivity())) {
             //开启定位
             new LocationUtils().startLocation(new LocationUtils.LocationCallBack() {
@@ -743,6 +743,9 @@ public class HomeFragment extends BaseFragment {
         public void onNotify(Object object, String eventTag) {
             if(null != eventTag){
                 switch (eventTag){
+                    case ConstantMsg.APPLY_LOCATION_SUCCESS:
+                        locationCity();
+                        break;
                     case ConstantMsg.HOME_COUNT_END:
                         getHomeList(1, true);
                         break;

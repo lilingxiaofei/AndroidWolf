@@ -13,10 +13,13 @@ import android.widget.TextView;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.user.bean.AuthInfoBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.LocalAreaBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
+import com.chunlangjiu.app.user.bean.UserInfoBean;
 import com.chunlangjiu.app.util.AreaUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
 import com.jzxiang.pickerview.TimePickerDialog;
@@ -30,6 +33,7 @@ import com.pkqup.commonlibrary.dialog.ChoicePhotoDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.FileUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
@@ -40,6 +44,7 @@ import com.pkqup.commonlibrary.view.choicearea.DataProvider;
 import com.pkqup.commonlibrary.view.choicearea.ISelectAble;
 import com.pkqup.commonlibrary.view.choicearea.SelectedListener;
 import com.pkqup.commonlibrary.view.choicearea.Selector;
+import com.umeng.socialize.sina.auth.AuthInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,13 +54,17 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
 import io.reactivex.functions.Function4;
+import io.reactivex.internal.operators.observable.ObservableRefCount;
+import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -136,10 +145,13 @@ public class CompanyAuthActivity extends BaseActivity {
     private ArrayList<ImageItem> cardBLists;
     private ArrayList<ImageItem> foodLisenceLists;
     private String base64ZhiZhao;
+    private String urlZhiZhao;
     private String base64IdCardF;
+    private String urlIdCardF;
     private String base64IdCardB;
+    private String urlIdCardB;
     private String base64FoodLicense;
-
+    private String urlFoodLicense;
 //    private View.OnClickListener onClickListener = new View.OnClickListener() {
 //        @Override
 //        public void onClick(View view) {
@@ -227,7 +239,7 @@ public class CompanyAuthActivity extends BaseActivity {
 //        tvCommit.setOnClickListener(onClickListener);
     }
 
-    @OnClick({R.id.img_title_left,R.id.btnLicense, R.id.btnIdCardFront, R.id.btnIdCardBehind, R.id.tvCommit,R.id.btnFoodCertificate})
+    @OnClick({R.id.img_title_left, R.id.btnLicense, R.id.btnIdCardFront, R.id.btnIdCardBehind, R.id.tvCommit, R.id.btnFoodCertificate})
     public void Onclick(View view) {
         switch (view.getId()) {
             case R.id.img_title_left:
@@ -263,6 +275,45 @@ public class CompanyAuthActivity extends BaseActivity {
     private void initData() {
 //        getAreaData();
 //        getAuthStatus();
+        getUserInfo();
+    }
+
+    private void getUserInfo() {
+        disposable.add(ApiUtils.getInstance().getCompanyAuthInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<AuthInfoBean>>() {
+                    @Override
+                    public void accept(ResultBean<AuthInfoBean> userInfoBeanResultBean) throws Exception {
+                        AuthInfoBean authInfoBean = userInfoBeanResultBean.getData();
+                        if (authInfoBean != null) {
+                            etCompany.setText(authInfoBean.getCompany_name());
+                            etPersonName.setText(authInfoBean.getRepresentative());
+                            edtIdCard.setText(authInfoBean.getIdcard());
+
+                            urlZhiZhao = authInfoBean.getLicense_img();
+                            urlIdCardF = authInfoBean.getShopuser_identity_img_z();
+                            urlIdCardB = authInfoBean.getShopuser_identity_img_f();
+                            urlFoodLicense = authInfoBean.getFood_or_wine_img();
+                            if (CommonUtils.isNetworkPic(urlZhiZhao)) {
+                                GlideUtils.loadImageOptions(CompanyAuthActivity.this, urlZhiZhao, imgLicense);
+                            }
+                            if (CommonUtils.isNetworkPic(urlIdCardF)) {
+                                GlideUtils.loadImageOptions(CompanyAuthActivity.this, urlIdCardF, imgIdCardFront);
+                            }
+                            if (CommonUtils.isNetworkPic(urlIdCardB)) {
+                                GlideUtils.loadImageOptions(CompanyAuthActivity.this, urlIdCardB, imgIdCardBehind);
+                            }
+                            if (CommonUtils.isNetworkPic(urlFoodLicense)) {
+                                GlideUtils.loadImageOptions(CompanyAuthActivity.this, urlFoodLicense, imgFoodCertificate);
+                            }
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                    }
+                }));
     }
 
     private void getAuthStatus() {
@@ -516,6 +567,7 @@ public class CompanyAuthActivity extends BaseActivity {
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64ZhiZhao = FileUtils.imgToBase64(ZhiZhaoLists.get(0).path);
+                    urlZhiZhao = "" ;
 //                    GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgSellCard);
                     GlideUtils.loadImage(CompanyAuthActivity.this, ZhiZhaoLists.get(0).path, imgLicense);
                 } else if (requestCode == REQUEST_CODE_SELECT_TWO) {
@@ -524,6 +576,7 @@ public class CompanyAuthActivity extends BaseActivity {
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64IdCardF = FileUtils.imgToBase64(cardFLists.get(0).path);
+                    urlIdCardF = "";
 //                    GlideUtils.loadImage(CompanyAuthActivity.this, cardLists.get(0).path, imgIDCard);
                     GlideUtils.loadImage(CompanyAuthActivity.this, cardFLists.get(0).path, imgIdCardFront);
                 } else if (requestCode == REQUEST_CODE_SELECT_ALLOW_CARD) {
@@ -532,14 +585,16 @@ public class CompanyAuthActivity extends BaseActivity {
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64IdCardB = FileUtils.imgToBase64(cardBLists.get(0).path);
+                    urlIdCardB = "";
 //                    GlideUtils.loadImage(CompanyAuthActivity.this, allowLists.get(0).path, imgAllowCard);
                     GlideUtils.loadImage(CompanyAuthActivity.this, cardBLists.get(0).path, imgIdCardBehind);
-                }else if (requestCode==REQUEST_CODE_SELECT_FOOD_LISENCE){
+                } else if (requestCode == REQUEST_CODE_SELECT_FOOD_LISENCE) {
                     foodLisenceLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                     ImageItem imageItem = foodLisenceLists.get(0);
                     int index = imageItem.path.lastIndexOf("/");
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64FoodLicense = FileUtils.imgToBase64(foodLisenceLists.get(0).path);
+                    urlFoodLicense = "";
 //                    GlideUtils.loadImage(CompanyAuthActivity.this, allowLists.get(0).path, imgAllowCard);
                     GlideUtils.loadImage(CompanyAuthActivity.this, foodLisenceLists.get(0).path, imgFoodCertificate);
                 }
@@ -552,7 +607,7 @@ public class CompanyAuthActivity extends BaseActivity {
             ToastUtils.showShort("请输入企业名称");
         } else if (TextUtils.isEmpty(etPersonName.getText().toString().trim())) {
             ToastUtils.showShort("请输入法人名称");
-        }else if (TextUtils.isEmpty(edtIdCard.getText().toString().trim())){
+        } else if (TextUtils.isEmpty(edtIdCard.getText().toString().trim())) {
             ToastUtils.showShort("请输入身份证号");
         }
 //        else if (TextUtils.isEmpty(etCardNum.getText().toString().trim())) {
@@ -566,15 +621,15 @@ public class CompanyAuthActivity extends BaseActivity {
 //        } else if (TextUtils.isEmpty(etPhone.getText().toString())) {
 //            ToastUtils.showShort("请输入固定电话");
 //        }
-        else if (base64ZhiZhao == null) {
+        else if (base64ZhiZhao == null && !CommonUtils.isNetworkPic(urlZhiZhao)) {
             ToastUtils.showShort("请上传营业执照图片");
-        } else if (base64IdCardF == null) {
+        } else if (base64IdCardF == null && !CommonUtils.isNetworkPic(urlIdCardF)) {
             ToastUtils.showShort("请上传法人身份证正面图片");
-        } else if (base64IdCardB == null) {
+        } else if (base64IdCardB == null && !CommonUtils.isNetworkPic(urlIdCardB)) {
             ToastUtils.showShort("请上传法人身份证反面图片");
-        } else if (base64FoodLicense==null){
+        } else if (base64FoodLicense == null && !CommonUtils.isNetworkPic(urlFoodLicense)) {
             ToastUtils.showShort("请上传食品流通许可证/酒类经营许可证");
-        }else {
+        } else {
             uploadImage();
 
         }
@@ -582,18 +637,118 @@ public class CompanyAuthActivity extends BaseActivity {
 
     private void uploadImage() {
         showLoadingDialog();
-        Observable<ResultBean<UploadImageBean>> front = ApiUtils.getInstance().userUploadImage(base64ZhiZhao, ZhiZhaoLists.get(0).name, "rate");
-        Observable<ResultBean<UploadImageBean>> behind = ApiUtils.getInstance().userUploadImage(base64IdCardF, cardFLists.get(0).name, "rate");
-        Observable<ResultBean<UploadImageBean>> allow = ApiUtils.getInstance().userUploadImage(base64IdCardB, cardBLists.get(0).name, "rate");
-        Observable<ResultBean<UploadImageBean>> food = ApiUtils.getInstance().userUploadImage(base64FoodLicense, foodLisenceLists.get(0).name, "rate");
-        disposable.add(Observable.zip(front, behind, allow, food,new Function4<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>,ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, List<String>>() {
+        List<Observable> uploadList = new ArrayList();
+        Observable<ResultBean<UploadImageBean>> front = null;
+        if (!TextUtils.isEmpty(base64ZhiZhao) && ZhiZhaoLists != null && ZhiZhaoLists.size() > 0) {
+            front = ApiUtils.getInstance().userUploadImage(base64ZhiZhao, ZhiZhaoLists.get(0).name, "rate");
+
+        }else{
+            front = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
+                    ResultBean<UploadImageBean> bean = new ResultBean<>();
+                    UploadImageBean uploadImageBean = new UploadImageBean();
+                    uploadImageBean.setUrl(urlZhiZhao);
+                    bean.setData(uploadImageBean);
+                    emitter.onNext(bean);
+                }
+            });
+        }
+        uploadList.add(front);
+
+        Observable<ResultBean<UploadImageBean>> behind = null;
+        if (!TextUtils.isEmpty(base64IdCardF) && cardFLists != null && cardFLists.size() > 0) {
+            behind = ApiUtils.getInstance().userUploadImage(base64IdCardF, cardFLists.get(0).name, "rate");
+        }else{
+            behind = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
+                    ResultBean<UploadImageBean> bean = new ResultBean<>();
+                    UploadImageBean uploadImageBean = new UploadImageBean();
+                    uploadImageBean.setUrl(urlIdCardF);
+                    bean.setData(uploadImageBean);
+                    emitter.onNext(bean);
+                }
+            });
+        }
+        uploadList.add(behind);
+
+
+
+        Observable<ResultBean<UploadImageBean>> allow = null;
+        if (!TextUtils.isEmpty(base64IdCardB) && cardBLists != null && cardBLists.size() > 0) {
+            allow = ApiUtils.getInstance().userUploadImage(base64IdCardB, cardBLists.get(0).name, "rate");
+        }else{
+            allow = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
+                    ResultBean<UploadImageBean> bean = new ResultBean<>();
+                    UploadImageBean uploadImageBean = new UploadImageBean();
+                    uploadImageBean.setUrl(urlIdCardB);
+                    bean.setData(uploadImageBean);
+                    emitter.onNext(bean);
+                }
+            });
+        }
+        uploadList.add(allow);
+
+        Observable<ResultBean<UploadImageBean>> food = null;
+        if (!TextUtils.isEmpty(base64FoodLicense) && foodLisenceLists != null && foodLisenceLists.size() > 0) {
+            food = ApiUtils.getInstance().userUploadImage(base64FoodLicense, foodLisenceLists.get(0).name, "rate");
+        }else{
+            food = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
+                    ResultBean<UploadImageBean> bean = new ResultBean<>();
+                    UploadImageBean uploadImageBean = new UploadImageBean();
+                    uploadImageBean.setUrl(urlFoodLicense);
+                    bean.setData(uploadImageBean);
+                    emitter.onNext(bean);
+                }
+            });
+        }
+        uploadList.add(food);
+
+//        Observable[] observables = new Observable[uploadList.size()];
+//        for (int i = 0; i < uploadList.size(); i++) {
+//            observables[i] = uploadList.get(i);
+//        }
+//        Observable.zip(observables, new Function<ResultBean<UploadImageBean>[], Object>() {
+//            @Override
+//            public Object apply(ResultBean<UploadImageBean>[] resultBeans) throws Exception {
+//                List<String> imageLists = new ArrayList<>();
+//                int index  =0 ;
+//                if(CommonUtils.isNetworkPic(urlZhiZhao)){
+//                    imageLists.add(urlZhiZhao);
+//                }else{
+//                    imageLists.add()
+//                }
+//                return imageLists;
+//            }
+//        }).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<List<String>>() {
+//                    @Override
+//                    public void accept(List<String> strings) throws Exception {
+//                        commitAuth(strings);
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) throws Exception {
+//                        hideLoadingDialog();
+//                        ToastUtils.showShort("上传图片失败");
+//                    }
+//                }));
+
+
+        disposable.add(Observable.zip(front, behind, allow, food, new Function4<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, List<String>>() {
             @Override
-            public List<String> apply(ResultBean<UploadImageBean> uploadImageBeanResultBean, ResultBean<UploadImageBean> uploadImageBeanResultBean2, ResultBean<UploadImageBean> uploadImageBeanResultBean3,ResultBean<UploadImageBean> uploadImageBeanResultBean4) throws Exception {
+            public List<String> apply(ResultBean<UploadImageBean> uploadImageBeanResultBean, ResultBean<UploadImageBean> uploadImageBeanResultBean2, ResultBean<UploadImageBean> uploadImageBeanResultBean3, ResultBean<UploadImageBean> uploadImageBeanResultBean4) throws Exception {
                 List<String> imageLists = new ArrayList<>();
                 imageLists.add(uploadImageBeanResultBean.getData().getUrl());
                 imageLists.add(uploadImageBeanResultBean2.getData().getUrl());
                 imageLists.add(uploadImageBeanResultBean3.getData().getUrl());
-                imageLists.add(uploadImageBeanResultBean4.getData().getT_url());
+                imageLists.add(uploadImageBeanResultBean4.getData().getUrl());
                 return imageLists;
             }
         }).subscribeOn(Schedulers.io())
@@ -613,8 +768,8 @@ public class CompanyAuthActivity extends BaseActivity {
     }
 
     private void commitAuth(List<String> strings) {
-        disposable.add(ApiUtils.getInstance().companyAuth((String) SPUtils.get("token", ""),etCompany.getText().toString().trim(), etPersonName.getText().toString().trim(),edtIdCard.getText().toString().trim()
-               , strings.get(0), strings.get(1), strings.get(2),strings.get(3))
+        disposable.add(ApiUtils.getInstance().companyAuth((String) SPUtils.get("token", ""), etCompany.getText().toString().trim(), etPersonName.getText().toString().trim(), edtIdCard.getText().toString().trim()
+                , strings.get(0), strings.get(1), strings.get(2), strings.get(3))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {
@@ -633,6 +788,9 @@ public class CompanyAuthActivity extends BaseActivity {
                     }
                 }));
     }
+
+
+
 
 
     @Override

@@ -81,20 +81,15 @@
                     android:layout_height="wrap_content"
                     android:background="@mipmap/certify_person" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="个人实名认证"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
-
                 <Button
                     android:id="@+id/btnPerson"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="6dp"
-                    android:background="@drawable/verified_btn_select"
-                    android:text="申请"
+                    android:background="@drawable/bg_round_blue"
+                    android:text="个人实名认证"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_14sp" />
 
@@ -102,7 +97,7 @@
                     android:id="@+id/tvUpdatePerson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:text="更新>>"
                     android:textColor="@color/t_blue" />
             </LinearLayout>
@@ -119,26 +114,22 @@
                     android:layout_height="wrap_content"
                     android:background="@mipmap/certify_company" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="企业实名认证"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_15sp" />
 
                 <Button
                     android:id="@+id/btnCompany"
-                    android:layout_width="50dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_marginTop="6dp"
-                    android:background="@drawable/verified_btn_select"
-                    android:text="申请"
+                    android:background="@drawable/bg_round_blue"
+                    android:text="企业实名认证"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_14sp" />
                 <TextView android:id="@+id/tvUpdateCompany"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:textColor="@color/t_blue"
                     android:text="更新>>"/>
             </LinearLayout>

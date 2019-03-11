@@ -1,5 +1,6 @@
 package com.chunlangjiu.app.amain.activity;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -134,6 +135,14 @@ public class MainActivity extends BaseActivity {
         PermissionUtils.PermissionForStart(this, new PermissionListener() {
             @Override
             public void onSucceed(int requestCode, List<String> grantPermissions) {
+                if(grantPermissions!=null){
+                    for (String perm:grantPermissions) {
+                        if(Manifest.permission.ACCESS_FINE_LOCATION.equals(perm) || Manifest.permission.ACCESS_COARSE_LOCATION.equals(perm)){
+                            EventManager.getInstance().notify(null, ConstantMsg.APPLY_LOCATION_SUCCESS);
+                        }
+                    }
+                }
+
             }
 
             @Override

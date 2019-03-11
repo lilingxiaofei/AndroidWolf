@@ -16,6 +16,7 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
+import com.chunlangjiu.app.user.bean.UserInfoBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
 import com.lzy.imagepicker.ImagePicker;
@@ -212,6 +213,29 @@ public class PersonAuthActivity extends BaseActivity {
 
     private void initData() {
 //        getStatus();
+        getUserInfo();
+    }
+
+    private void getUserInfo() {
+        disposable.add(ApiUtils.getInstance().getUserInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<UserInfoBean>>() {
+                    @Override
+                    public void accept(ResultBean<UserInfoBean> userInfoBeanResultBean) throws Exception {
+                        UserInfoBean userInfoBean = userInfoBeanResultBean.getData();
+                        if(userInfoBean!=null && !TextUtils.isEmpty(userInfoBean.getIdcard())){
+                            etCardNum.setText(userInfoBean.getIdcard());
+                            etName.setText(userInfoBean.getName());
+                            etPhone.setText(userInfoBean.getPhone());
+                        }
+//                        getShopInfo(userInfoBean.getShop_id());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                    }
+                }));
     }
 
     private void getStatus() {

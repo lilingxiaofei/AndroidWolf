@@ -436,7 +436,10 @@ public class GoodsDetailslNewActivity extends BaseActivity {
             tvDesc.setText(goodsDetailBean.getItem().getExplain());
             GlideUtils.loadImageShop(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_logo(), imgStore);
             tvStoreName.setText(goodsDetailBean.getShop().getShop_name());
-            tvStoreDesc.setText("店铺简介："+goodsDetailBean.getShop().getShop_descript());
+
+            String shopDesc = goodsDetailBean.getShop().getShop_descript();
+            shopDesc = TextUtils.isEmpty(shopDesc)?goodsDetailBean.getShop().getBulletin():shopDesc;
+            tvStoreDesc.setText("店铺简介："+shopDesc);
 
             String level = goodsDetailBean.getShop().getGrade();
             if("2".equals(level)){

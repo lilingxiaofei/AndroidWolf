@@ -25,7 +25,16 @@ public class CommonUtils {
     public static final String GOODS_STATUS_AUCTION_STOP = AUCTION_STATUS_SUB + "stop";//竞拍结束后
 
 
-    public static  boolean isAuctionGoods(String status) {
+    public static boolean isNetworkPic(String picPath) {
+        if (TextUtils.isEmpty(picPath)) {
+            return false;
+        } else if (picPath.startsWith("http://") || picPath.startsWith("https://")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isAuctionGoods(String status) {
         boolean isAuction = GOODS_STATUS_AUCTION_NOT_START.equals(status) || GOODS_STATUS_AUCTION_ACTIVE.equals(status) || GOODS_STATUS_AUCTION_STOP.equals(status) ? true : false;
         return isAuction;
     }

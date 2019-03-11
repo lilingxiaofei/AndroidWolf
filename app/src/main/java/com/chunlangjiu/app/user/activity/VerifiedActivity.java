@@ -12,6 +12,8 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
+import com.chunlangjiu.app.util.ConstantMsg;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
@@ -59,6 +61,7 @@ public class VerifiedActivity extends BaseActivity {
     }
 
     private void initView() {
+        EventManager.getInstance().registerListener(onNotifyListener);
         String headUrl = (String) SPUtils.get("avator", "");
         if (!TextUtils.isEmpty(headUrl)) {
             GlideUtils.loadImageHead(this, headUrl, imgHead);
@@ -75,17 +78,17 @@ public class VerifiedActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvUpdatePerson:
-                toAuthActivity();
+                checkPersonStatus();
                 break;
             case R.id.btnPerson:
                 checkPersonStatus();
 //                startActivity(new Intent(this,PersonAuthActivity.class));
                 break;
             case R.id.tvUpdateCompany:
-                toAuthCompanyActivity();
+                checkCompanyStatus("edit");
                 break;
             case R.id.btnCompany:
-                checkCompanyStatus();
+                checkCompanyStatus("add");
 //                startActivity(new Intent(this,CompanyAuthActivity.class));
                 break;
             case R.id.img_title_left:
@@ -98,6 +101,8 @@ public class VerifiedActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        disposable.dispose();
+        EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
 
     private void checkPersonStatus() {
@@ -120,6 +125,7 @@ public class VerifiedActivity extends BaseActivity {
                             toAuthActivity();
                         } else if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeanResultBean.getData().getStatus())) {
                             ToastUtils.showShort("您的认证已成功");
+                            toAuthActivity();
 //                            tvAuthPerson.setVisibility(View.GONE);
 //                            imgAuthStatus.setImageResource(R.mipmap.my_auth);
 //                            tvAuthStatus.setText("已认证");
@@ -134,7 +140,7 @@ public class VerifiedActivity extends BaseActivity {
     }
 
 
-    private void checkCompanyStatus() {
+    private void checkCompanyStatus(String type) {
         showLoadingDialog();
         disposable.add(ApiUtils.getInstance().getCompanyAuthStatus()
                 .subscribeOn(Schedulers.io())
@@ -152,8 +158,32 @@ public class VerifiedActivity extends BaseActivity {
                         } else if ("failing".equals(authStatusBeanResultBean.getData().getStatus())) {
                             ToastUtils.showShort("您的认证被驳回，请重新提交资料审核");
                             toAuthCompanyActivity();
-                        } else if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeanResultBean.getData().getStatus())) {
+                        } else if (AuthStatusBean.AUTH_MODIFIER.equals(authStatusBeanResultBean.getData().getStatus())) {
+                            toAuthCompanyActivity();
+//                            tvAuthPerson.setVisibility(View.GONE);
+//                            tvAuthCompany.setVisibility(View.GONE);
+//                            imgAuthStatus.setImageResource(R.mipmap.my_auth);
+//                            tvAuthStatus.setText("已认证");
+//                            if (userType == TYPE_BUYER) {
+//                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+//                                    tvMyTitle.setText("企业买家");
+//                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
+//                                } else {
+//                                    tvMyTitle.setText("个人买家");
+//                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
+//                                }
+//                            } else {
+//                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
+//                                    tvMyTitle.setText("企业卖家");
+//                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
+//                                } else {
+//                                    tvMyTitle.setText("个人卖家");
+//                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
+//                                }
+//                            }
+                        }else if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeanResultBean.getData().getStatus())) {
                             ToastUtils.showShort("您的认证已成功");
+                            toAuthCompanyActivity();
 //                            tvAuthPerson.setVisibility(View.GONE);
 //                            tvAuthCompany.setVisibility(View.GONE);
 //                            imgAuthStatus.setImageResource(R.mipmap.my_auth);
@@ -218,34 +248,52 @@ public class VerifiedActivity extends BaseActivity {
 
     private void setAuthView() {
         boolean authed = false;
-        if (AuthStatusBean.AUTH_SUCCESS.equals(personStatus)) {
-            tvDesc.setText("已认证");
-            btnPerson.setText("已认证");
-            btnPerson.setSelected(false);
-            tvUpdatePerson.setVisibility(View.INVISIBLE);
-            btnPerson.setEnabled(false);
-            authed = true;
-        }else {
-            tvUpdatePerson.setVisibility(View.INVISIBLE);
-            btnPerson.setSelected(true);
-            btnPerson.setEnabled(true);
-        }
         if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-            tvDesc.setText("已认证");
-            btnCompany.setText("已认证");
-            btnCompany.setSelected(false);
-            btnCompany.setEnabled(false);
-            tvUpdateCompany.setVisibility(View.INVISIBLE);
+            tvDesc.setText("企业实名已认证");
+//            btnCompany.setText("已认证");
+            btnCompany.setClickable(false);
+            btnPerson.setEnabled(false);
+            tvUpdatePerson.setVisibility(View.INVISIBLE);
             authed = true;
+        }else if (AuthStatusBean.AUTH_MODIFIER.equals(companyStatus)) {
+            tvDesc.setText("企业实名认证审核中");
+            btnCompany.setClickable(false);
+            btnPerson.setEnabled(false);
+            tvUpdatePerson.setVisibility(View.INVISIBLE);
         }else {
-            tvUpdateCompany.setVisibility(View.INVISIBLE);
-            btnCompany.setSelected(true);
+            btnCompany.setClickable(true);
             btnCompany.setEnabled(true);
+            tvUpdatePerson.setVisibility(View.VISIBLE);
+            if (AuthStatusBean.AUTH_SUCCESS.equals(personStatus)) {
+                tvDesc.setText("个人实名已认证");
+//                btnPerson.setText("已认证");
+                btnPerson.setClickable(false);
+                authed = true;
+            }else {
+                btnPerson.setClickable(true);
+            }
         }
         if (!authed) {
             tvDesc.setText("立即实名认证享受更多特权服务");
         }
     }
+
+    private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
+        @Override
+        public void onNotify(Object object, String eventTag) {
+            eventTag = eventTag == null ? "" : eventTag;
+            switch (eventTag) {
+                case ConstantMsg.PERSON_COMPANY_AUTH_SUCCESS:
+                    getPersonAndCompanyAuthStatus();
+                    break;
+            }
+
+
+//            authSuccess(eventTag);
+        }
+    };
+
+
 
     private void toAuthActivity() {
         startActivity(new Intent(this, PersonAuthActivity.class));
