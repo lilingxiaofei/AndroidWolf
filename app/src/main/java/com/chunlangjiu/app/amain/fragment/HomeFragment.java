@@ -64,6 +64,7 @@ import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.AccordionTransformer;
 import com.zaaach.citypicker.CityPicker;
 import com.zaaach.citypicker.adapter.OnPickListener;
+import com.zaaach.citypicker.adapter.decoration.GridItemDecoration;
 import com.zaaach.citypicker.model.City;
 import com.zaaach.citypicker.model.HotCity;
 import com.zaaach.citypicker.model.LocatedCity;
@@ -419,7 +420,8 @@ public class HomeFragment extends BaseFragment {
             }
         });
         recyclerView.setAdapter(homeAdapter);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(getActivity(), 5), false));
+        recyclerView.addItemDecoration(new GridItemDecoration(1, Utils.dp2px(activity, 5)));
+
         recyclerView.setLayoutManager(gridLayoutManager);
         refreshLayout.setEnableAutoLoadMore(true);//开启滑到底部自动加载
         refreshLayout.setFooterHeight(30);

@@ -25,6 +25,23 @@ public class AuthInfoBean {
     private String  shopuser_identity_img_f;
     private String  food_or_wine_img;
 
+
+    /**
+     * 个人认证信息
+     "name": "吴申飞",
+     "mobile": null,
+     "idcard": "430281199101039116",
+     "dentity": "http:\/\/chunlang.oss-cn-shenzhen.aliyuncs.com\/ea643e894eaf891afc511339f247cf0f.jpg",
+     "dentity_front": "http:\/\/chunlang.oss-cn-shenzhen.aliyuncs.com\/c5fa528b0f3fdb5995ca20fa80214f5f.jpg",
+     "dentity_reverse": "http:\/\/chunlang.oss-cn-shenzhen.aliyuncs.com\/5bf94a9a0055d7c3e58eb1ce935dff45.jpg"
+     */
+
+    private String name;
+    private String  mobile;
+    private String dentity;
+    private String dentity_front;
+    private String dentity_reverse;
+
     public String getCompany_name() {
         return company_name;
     }
@@ -79,5 +96,45 @@ public class AuthInfoBean {
 
     public void setFood_or_wine_img(String food_or_wine_img) {
         this.food_or_wine_img = food_or_wine_img;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getDentity() {
+        return dentity;
+    }
+
+    public void setDentity(String dentity) {
+        this.dentity = dentity;
+    }
+
+    public String getDentity_front() {
+        return dentity_front;
+    }
+
+    public void setDentity_front(String dentity_front) {
+        this.dentity_front = dentity_front;
+    }
+
+    public String getDentity_reverse() {
+        return dentity_reverse;
+    }
+
+    public void setDentity_reverse(String dentity_reverse) {
+        this.dentity_reverse = dentity_reverse;
     }
 }

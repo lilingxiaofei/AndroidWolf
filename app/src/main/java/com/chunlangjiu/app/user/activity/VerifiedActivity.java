@@ -123,7 +123,12 @@ public class VerifiedActivity extends BaseActivity {
                         } else if ("failing".equals(authStatusBeanResultBean.getData().getStatus())) {
                             ToastUtils.showShort("您的认证被驳回，请重新提交资料审核");
                             toAuthActivity();
-                        } else if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeanResultBean.getData().getStatus())) {
+                        } else if (AuthStatusBean.AUTH_MODIFIER.equals(authStatusBeanResultBean.getData().getStatus())) {
+                            toAuthActivity();
+//                            tvAuthPerson.setVisibility(View.GONE);
+//                            imgAuthStatus.setImageResource(R.mipmap.my_auth);
+//                            tvAuthStatus.setText("已认证");
+                        }else if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeanResultBean.getData().getStatus())) {
                             ToastUtils.showShort("您的认证已成功");
                             toAuthActivity();
 //                            tvAuthPerson.setVisibility(View.GONE);

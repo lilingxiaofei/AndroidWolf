@@ -184,6 +184,11 @@ public class ApiUtils {
         return apiService.getCompanyAuthInfo("member.enterprise.detail", "v1");
     }
 
+    public Flowable<ResultBean<AuthInfoBean>> getPersonAuthInfo() {
+        return apiService.getCompanyAuthInfo("member.autonym.detail", "v1");
+    }
+
+
     public Flowable<ResultBean> valuationGoods(String title, String name, String imgs, String series) {
         return apiService.valuationGoods("member.evaluate", "v1", title, name, imgs, series);
     }
