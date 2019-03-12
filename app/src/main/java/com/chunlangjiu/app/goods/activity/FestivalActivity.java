@@ -185,7 +185,10 @@ public class FestivalActivity extends BaseActivity {
                 GoodsListDetailBean detailBean = new GoodsListDetailBean();
                 detailBean.setItemType(GoodsListDetailBean.ITEM_JINGPAI);
                 productList.add(detailBean);
-                productList.addAll(auctionItems);
+                for (GoodsListDetailBean bean:auctionItems) {
+                    bean.setAuction(true);
+                    productList.add(bean);
+                }
             }
 
             if (dataLists != null && dataLists.size()>0) {

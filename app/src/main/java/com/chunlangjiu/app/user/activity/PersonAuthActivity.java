@@ -1,7 +1,9 @@
 package com.chunlangjiu.app.user.activity;
 
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -88,6 +90,9 @@ public class PersonAuthActivity extends BaseActivity {
     ImageView imgBehind;
     @BindView(R.id.imgPerson)
     ImageView imgPerson;
+
+    @BindView(R.id.tvTips)
+    TextView tvTips;
 
     @BindView(R.id.tvCommit)
     TextView tvCommit;
@@ -210,11 +215,14 @@ public class PersonAuthActivity extends BaseActivity {
 //        rlBehind.setOnClickListener(onClickListener);
 //        rlPerson.setOnClickListener(onClickListener);
 //        tvCommit.setOnClickListener(onClickListener);
+        String str  = getString(R.string.person_one_tips);
+        String key = "3.5%";
+        int color = ContextCompat.getColor(this,R.color.t_red);
+        tvTips.setText(CommonUtils.setSpecifiedTextsColor(str,key,color));
     }
 
     private void initData() {
-//        getStatus();
-        getUserInfo();
+        getStatus();
     }
 
     private void getUserInfo() {
@@ -268,6 +276,11 @@ public class PersonAuthActivity extends BaseActivity {
     }
 
     private void getStatusSuccess(AuthStatusBean data) {
+        if (!"active".equals(data.getStatus())) {
+            getUserInfo();
+        }
+
+
         if ("active".equals(data.getStatus())) {
             //未认证
             tvCommit.setText("提交审核");
@@ -279,9 +292,13 @@ public class PersonAuthActivity extends BaseActivity {
             tvCommit.setText("审核未通过，请重新提交资料审核");
             tvCommit.setClickable(true);
             updateView(data);
+        } else if (AuthStatusBean.AUTH_MODIFIER.equals(data.getStatus())) {
+            tvCommit.setText("更新审核资料");
+            tvCommit.setClickable(true);
+            updateView(data);
         } else if ("finish".equals(data.getStatus())) {
-            tvCommit.setText("认证成功");
-            tvCommit.setClickable(false);
+            tvCommit.setText("更新审核资料");
+            tvCommit.setClickable(true);
             updateView(data);
         }
     }
@@ -402,11 +419,11 @@ public class PersonAuthActivity extends BaseActivity {
             ToastUtils.showShort("请填手机号码");
         } else if (TextUtils.isEmpty(etCardNum.getText().toString().trim())) {
             ToastUtils.showShort("请填写身份证号码");
-        } else if (base64Front == null  && !CommonUtils.isNetworkPic(urlFront)) {
+        } else if (base64Front == null && !CommonUtils.isNetworkPic(urlFront)) {
             ToastUtils.showShort("请上传身份证正面图片");
-        } else if (base64Reverse == null  && !CommonUtils.isNetworkPic(urlReverse)) {
+        } else if (base64Reverse == null && !CommonUtils.isNetworkPic(urlReverse)) {
             ToastUtils.showShort("请上传身份证反面图片");
-        } else if (base64HandCard == null  && !CommonUtils.isNetworkPic(urlHandCard)) {
+        } else if (base64HandCard == null && !CommonUtils.isNetworkPic(urlHandCard)) {
             ToastUtils.showShort("请上传手持身份证图片");
         } else {
             uploadImage();
@@ -416,11 +433,11 @@ public class PersonAuthActivity extends BaseActivity {
 
     private void uploadImage() {
         showLoadingDialog();
-        Observable<ResultBean<UploadImageBean>> front ;
+        Observable<ResultBean<UploadImageBean>> front;
         if (!TextUtils.isEmpty(base64Front) && frontLists != null && frontLists.size() > 0) {
             front = ApiUtils.getInstance().userUploadImage(base64Front, frontLists.get(0).name, "rate");
 
-        }else{
+        } else {
             front = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
                 @Override
                 public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
@@ -432,10 +449,10 @@ public class PersonAuthActivity extends BaseActivity {
                 }
             });
         }
-        Observable<ResultBean<UploadImageBean>> behind ;
+        Observable<ResultBean<UploadImageBean>> behind;
         if (!TextUtils.isEmpty(base64Reverse) && behindLists != null && behindLists.size() > 0) {
             behind = ApiUtils.getInstance().userUploadImage(base64Reverse, behindLists.get(0).name, "rate");
-        }else{
+        } else {
             behind = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
                 @Override
                 public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
@@ -447,11 +464,11 @@ public class PersonAuthActivity extends BaseActivity {
                 }
             });
         }
-        Observable<ResultBean<UploadImageBean>> handCard ;
+        Observable<ResultBean<UploadImageBean>> handCard;
         if (!TextUtils.isEmpty(base64HandCard) && personLists != null && personLists.size() > 0) {
             handCard = ApiUtils.getInstance().userUploadImage(base64HandCard, personLists.get(0).name, "rate");
 
-        }else{
+        } else {
             handCard = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
                 @Override
                 public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {

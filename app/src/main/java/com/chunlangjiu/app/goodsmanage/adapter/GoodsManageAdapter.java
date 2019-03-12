@@ -70,6 +70,7 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
             helper.setGone(R.id.tvFindCause, false);
             helper.setGone(R.id.llDepot, false);
             helper.setGone(R.id.llSell, false);
+            helper.setGone(R.id.llSellPrice,false);
 
             String status = item.getApprove_status();
             status = status == null ? "" : status;
@@ -82,11 +83,11 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
 
             if (CommonUtils.GOODS_STATUS_AUCTION_NOT_START.equals(goodsStatus) || CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(goodsStatus) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(goodsStatus)) {
                 //竞拍
+                llHighPrice.setVisibility(View.VISIBLE);
                 imgAuction.setVisibility(View.VISIBLE);
                 llStartPrice.setVisibility(View.VISIBLE);
                 helper.setText(R.id.tvStartPriceStr, "起拍价：");
                 tvStartPrice.setText("¥" + item.getAuction_starting_price());
-                helper.setText(R.id.tvGoodsPrice, "");
                 //明拍
                 llHighPrice.setVisibility(View.VISIBLE);
                 tvAnPaiStr.setVisibility(View.GONE);
@@ -100,8 +101,9 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
                 //普通商品
                 imgAuction.setVisibility(View.GONE);
                 llStartPrice.setVisibility(View.GONE);
-                llHighPrice.setVisibility(View.VISIBLE);
+                llHighPrice.setVisibility(View.GONE);
                 tvAnPaiStr.setVisibility(View.GONE);
+                helper.setGone(R.id.llSellPrice,true);
                 helper.setText(R.id.tvSellPriceStr, "");
                 helper.setText(R.id.tvSellPrice, "");
                 helper.setText(R.id.tvGoodsPrice, "¥" + item.getPrice());
@@ -134,7 +136,7 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
 
             RelativeLayout llTime = helper.getView(R.id.llTime);
             CountdownView countdownView = helper.getView(R.id.countdownView);
-            if (CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(status)) {
+            if (CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(goodsStatus)) {
                 llTime.setVisibility(View.VISIBLE);
                 String end_time = item.getAuction_end_time();
                 long endTime = 0;

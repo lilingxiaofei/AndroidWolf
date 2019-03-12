@@ -46,6 +46,7 @@ import com.chunlangjiu.app.goods.dialog.PriceListDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
 import com.chunlangjiu.app.order.params.OrderParams;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.chunlangjiu.app.util.ShareUtils;
@@ -111,6 +112,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private LinearLayout llEvaluate;
 
     private LinearLayout llAuctionInfo;//拍品详情
+    private TextView auctionInfoTitle ;
     private LinearLayout llInfoList;
 
     private ImageView ivSafeguard;
@@ -300,6 +302,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
 
         llAuctionInfo = findViewById(R.id.llAuctionInfo);//拍品详情
+        auctionInfoTitle = findViewById(R.id.auctionInfoTitle);
         llInfoList = findViewById(R.id.llInfoList);
 
         ivSafeguard = findViewById(R.id.ivSafeguard);
@@ -439,7 +442,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
             String shopDesc = goodsDetailBean.getShop().getShop_descript();
             shopDesc = TextUtils.isEmpty(shopDesc)?goodsDetailBean.getShop().getBulletin():shopDesc;
-            tvStoreDesc.setText("店铺简介："+shopDesc);
+            tvStoreDesc.setText(CommonUtils.joinStr("店铺简介：",shopDesc));
 
             String level = goodsDetailBean.getShop().getGrade();
             if("2".equals(level)){
@@ -675,6 +678,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         if (auction != null && !TextUtils.isEmpty(auction.getAuctionitem_id())) {
             getPaymentList();
             getPriceList();
+            auctionInfoTitle.setText("拍品详情");
             String check = goodsDetailBean.getItem().getAuction().getCheck();
             String isPay = goodsDetailBean.getItem().getAuction().getIs_pay();
             if ("true".equals(check)) {

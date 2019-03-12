@@ -127,8 +127,10 @@ public class GoodsManageFragment extends BaseFragment {
             final GoodsBean goods = pageUtils.get(position);
             switch (view.getId()) {
                 case R.id.rl_item_layout:
-                    if(CommonUtils.GOODS_STATUS_SELL.equals(status)){
-                        GoodsManageDetailsActivity.startActivity(activity,goods.getItem_id());
+                    if(CommonUtils.GOODS_STATUS_SELL.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(status)){
+                        GoodsManageDetailsActivity.startActivity(activity,goods.getItem_id(),"");
+                    }else if(CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(status)){
+                        GoodsManageDetailsActivity.startActivity(activity,goods.getItem_id(),goods.getAuctionitem_id());
                     }
                     break;
                 case R.id.tvFindCause:
@@ -329,7 +331,7 @@ public class GoodsManageFragment extends BaseFragment {
                     .setWheelItemTextNormalColor(
                             getResources().getColor(R.color.timetimepicker_default_text_color))
                     .setWheelItemTextSelectorColor(
-                            getResources().getColor(R.color.timepicker_toolbar_bg))
+                            getResources().getColor(R.color.bg_white))
                     .setWheelItemTextSize(12).build();
         }
         startTimeDialog.show(getFragmentManager(), "all");

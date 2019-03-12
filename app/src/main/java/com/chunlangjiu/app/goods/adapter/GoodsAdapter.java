@@ -17,8 +17,12 @@ import com.chad.library.adapter.base.util.MultiTypeDelegate;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.goods.bean.GoodsListDetailBean;
+import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
+import com.chunlangjiu.app.util.ConstantMsg;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
+import com.pkqup.commonlibrary.view.countdownview.CountdownView;
 
 import java.util.List;
 
@@ -122,8 +126,16 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             }
 
 
+
             GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
             helper.setText(R.id.tv_name, item.getTitle());
+
+
+            RelativeLayout llTime = helper.getView(R.id.llTime);
+            CountdownView countdownView = helper.getView(R.id.countdownView);
+            if (llTime != null) {
+                llTime.setVisibility(View.GONE);
+            }
             if (item.getAuction()!=null && "true".equals(item.getAuction().getAuction_status())) {
                 //竞拍
                 imgAuction.setVisibility(View.VISIBLE);
@@ -145,7 +157,48 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                     llHighPrice.setVisibility(View.GONE);
                     tvAnPaiStr.setVisibility(View.VISIBLE);
                 }
-            } else {
+            } else if (item.isAuction()) {
+                llTime.setVisibility(View.VISIBLE);
+                //竞拍
+                imgAuction.setVisibility(View.VISIBLE);
+                llStartPrice.setVisibility(View.VISIBLE);
+                helper.setText(R.id.tvStartPriceStr, "起拍价：");
+
+                String actionNumStr = context.getString(R.string.action_number,item.getAuction_number());
+                helper.setText(R.id.tvActionNum,actionNumStr);
+                tvStartPrice.setText("¥" + item.getAuction_starting_price());
+                helper.setText(R.id.tvGoodsPrice, "");
+                if ("true".equals(item.getAuction_status())) {
+                    //明拍
+                    llHighPrice.setVisibility(View.VISIBLE);
+                    tvAnPaiStr.setVisibility(View.GONE);
+                    helper.setText(R.id.tvSellPriceStr, "最高出价：");
+                    if (TextUtils.isEmpty(item.getMax_price())) {
+                        helper.setText(R.id.tvSellPrice, "暂无出价");
+                    } else {
+                        helper.setText(R.id.tvSellPrice, "¥" + item.getMax_price());
+                    }
+                } else {
+                    llHighPrice.setVisibility(View.GONE);
+                    tvAnPaiStr.setVisibility(View.VISIBLE);
+                }
+
+                String end_time = item.getAuction_end_time();
+                long endTime = 0;
+                if (!TextUtils.isEmpty(end_time)) {
+                    endTime = Long.parseLong(end_time);
+                }
+                if ((endTime * 1000 - System.currentTimeMillis()) > 0) {
+                    countdownView.start(endTime * 1000 - System.currentTimeMillis());
+                    countdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+                        @Override
+                        public void onEnd(CountdownView cv) {
+                            EventManager.getInstance().notify(null, ConstantMsg.HOME_COUNT_END);
+                        }
+                    });
+                    dealWithLifeCycle(helper, helper.getAdapterPosition(), item);
+                }
+            }else {
                 //普通商品
                 imgAuction.setVisibility(View.GONE);
                 llStartPrice.setVisibility(View.GONE);
@@ -160,10 +213,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 tvStartPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
             }
 
-            RelativeLayout llTime = helper.getView(R.id.llTime);
-            if (llTime != null) {
-                llTime.setVisibility(View.GONE);
-            }
+
 
             LinearLayout labelLayout = helper.getView(R.id.llLabel);
             setLabelList(labelLayout,item.getLabel());
@@ -198,6 +248,42 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * 以下两个接口代替 activity.onStart() 和 activity.onStop(), 控制 timer 的开关
+     */
+    private void dealWithLifeCycle(final BaseViewHolder viewHolder, final int position, final GoodsListDetailBean item) {
+        final CountdownView countdownView = viewHolder.getView(R.id.countdownView);
+        countdownView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View view) {
+                String end_time = item.getAuction_end_time();
+                try {
+                    long endTime = 0;
+                    if (!TextUtils.isEmpty(end_time)) {
+                        endTime = Long.parseLong(end_time);
+                    }
+                    if ((endTime * 1000 - System.currentTimeMillis()) > 0) {
+                        countdownView.start(endTime * 1000 - System.currentTimeMillis());
+                        countdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+                            @Override
+                            public void onEnd(CountdownView cv) {
+                                EventManager.getInstance().notify(null, ConstantMsg.HOME_COUNT_END);
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View view) {
+                countdownView.stop();
+            }
+        });
     }
 
 

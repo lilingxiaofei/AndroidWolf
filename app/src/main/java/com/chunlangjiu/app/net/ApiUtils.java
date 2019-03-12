@@ -220,7 +220,7 @@ public class ApiUtils {
         return apiService.getGoodsDetailWithToken("item.detail", "v1", token, item_id);
     }
 
-    public Flowable<ResultBean<GoodsDetailBean>> getAuctionGoodsDetail(String auctionitem_id) {
+    public Flowable<ResultBean<GoodsDetailBean.ItemBean>> getAuctionGoodsDetail(String auctionitem_id) {
         return apiService.getAuctionGoodsDetail("item.auction.detail", "v1", auctionitem_id);
     }
 

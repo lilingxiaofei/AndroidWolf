@@ -274,8 +274,7 @@ public class CompanyAuthActivity extends BaseActivity {
 
     private void initData() {
 //        getAreaData();
-//        getAuthStatus();
-        getUserInfo();
+        getAuthStatus();
     }
 
     private void getUserInfo() {
@@ -333,6 +332,10 @@ public class CompanyAuthActivity extends BaseActivity {
     }
 
     private void getStatusSuccess(AuthStatusBean data) {
+        if(!"active".equals(data.getStatus())){
+            getUserInfo();
+        }
+
         if ("active".equals(data.getStatus())) {
             //未认证
             tvCommit.setText("提交审核");
@@ -344,9 +347,13 @@ public class CompanyAuthActivity extends BaseActivity {
             tvCommit.setText("审核未通过，请重新提交资料审核");
             tvCommit.setClickable(true);
             updateView(data);
-        } else if ("finish".equals(data.getStatus())) {
-            tvCommit.setText("认证成功");
-            tvCommit.setClickable(false);
+        } else if(AuthStatusBean.AUTH_MODIFIER.equals(data.getStatus())){
+            tvCommit.setText("更新审核资料");
+            tvCommit.setClickable(true);
+            updateView(data);
+        }else if ("finish".equals(data.getStatus())) {
+            tvCommit.setText("更新审核资料");
+            tvCommit.setClickable(true);
             updateView(data);
         }
     }
@@ -708,38 +715,6 @@ public class CompanyAuthActivity extends BaseActivity {
             });
         }
         uploadList.add(food);
-
-//        Observable[] observables = new Observable[uploadList.size()];
-//        for (int i = 0; i < uploadList.size(); i++) {
-//            observables[i] = uploadList.get(i);
-//        }
-//        Observable.zip(observables, new Function<ResultBean<UploadImageBean>[], Object>() {
-//            @Override
-//            public Object apply(ResultBean<UploadImageBean>[] resultBeans) throws Exception {
-//                List<String> imageLists = new ArrayList<>();
-//                int index  =0 ;
-//                if(CommonUtils.isNetworkPic(urlZhiZhao)){
-//                    imageLists.add(urlZhiZhao);
-//                }else{
-//                    imageLists.add()
-//                }
-//                return imageLists;
-//            }
-//        }).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<List<String>>() {
-//                    @Override
-//                    public void accept(List<String> strings) throws Exception {
-//                        commitAuth(strings);
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//                        hideLoadingDialog();
-//                        ToastUtils.showShort("上传图片失败");
-//                    }
-//                }));
-
 
         disposable.add(Observable.zip(front, behind, allow, food, new Function4<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, List<String>>() {
             @Override

@@ -228,7 +228,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<GoodsDetailBean>> getAuctionGoodsDetail(@Field("method") String method, @Field("v") String v,
+    Flowable<ResultBean<GoodsDetailBean.ItemBean>> getAuctionGoodsDetail(@Field("method") String method, @Field("v") String v,
                                                                 @Field("auctionitem_id") String auctionitem_id);
 
     @POST("index.php/topapi")

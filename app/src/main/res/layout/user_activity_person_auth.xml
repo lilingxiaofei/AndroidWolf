@@ -381,7 +381,7 @@
                     android:textSize="@dimen/sp_12"
                     android:layout_marginTop="20dp"
                     android:textColor="#999999"/>
-                <TextView
+                <TextView android:id="@+id/tvTips"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#999999"

@@ -2,9 +2,19 @@ package com.chunlangjiu.app.util;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 
 import com.pkqup.commonlibrary.util.AppUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @CreatedbBy: liucun on 2018/8/12.
@@ -23,6 +33,37 @@ public class CommonUtils {
     public static final String GOODS_STATUS_AUCTION_NOT_START = AUCTION_STATUS_SUB + "pending";//竞拍进行时
     public static final String GOODS_STATUS_AUCTION_ACTIVE = AUCTION_STATUS_SUB + "active";//竞拍进行时
     public static final String GOODS_STATUS_AUCTION_STOP = AUCTION_STATUS_SUB + "stop";//竞拍结束后
+
+
+
+    public static SpannableStringBuilder setSpecifiedTextsColor(String text, String specifiedTexts,int colorId) {
+        List<Integer> sTextsStartList = new ArrayList<>();
+
+        int sTextLength = specifiedTexts.length();
+        String temp = text;
+        int lengthFront = 0;//记录被找出后前面的字段的长度
+        int start = -1;
+        do {
+            start = temp.indexOf(specifiedTexts);
+
+            if (start != -1) {
+                start = start + lengthFront;
+                sTextsStartList.add(start);
+                lengthFront = start + sTextLength;
+                temp = text.substring(lengthFront);
+            }
+        } while (start != -1);
+
+        SpannableStringBuilder styledText = new SpannableStringBuilder(text);
+        for (Integer i : sTextsStartList) {
+            styledText.setSpan(
+                    new ForegroundColorSpan(colorId),
+                    i,
+                    i + sTextLength,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return styledText;
+    }
 
 
     public static boolean isNetworkPic(String picPath) {

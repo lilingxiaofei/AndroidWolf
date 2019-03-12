@@ -209,32 +209,23 @@
                     android:textColor="@color/t_red"
                     android:textSize="12sp" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSellPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tvGoodsPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¥5000.00"
                     android:textColor="@color/t_red"
-                    android:textSize="18sp"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvAnPaiStr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="暗拍商品，保密出价"
-                android:textColor="@color/t_orange"
-                android:textSize="12sp"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/llSell"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                    android:layout_marginRight="10dp"
+                    android:textSize="18sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
@@ -252,7 +243,30 @@
                     android:text="0"
                     android:textColor="@color/t_grey"
                     android:textSize="13sp" />
+            </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvAnPaiStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="暗拍商品，保密出价"
+                android:textColor="@color/t_orange"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_toRightOf="@+id/imgPic"
+            android:layout_alignBottom="@+id/imgPic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/llSell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
                 <TextView
                     android:id="@+id/tvUnShelve"
                     android:layout_width="wrap_content"
@@ -263,6 +277,7 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:text="下架"
+                    android:layout_gravity="right"
                     android:textColor="@color/t_red"
                     android:textSize="13sp" />
             </LinearLayout>

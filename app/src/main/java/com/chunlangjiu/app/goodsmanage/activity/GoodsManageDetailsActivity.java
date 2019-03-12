@@ -109,7 +109,7 @@ public class GoodsManageDetailsActivity extends BaseActivity {
 
     private CircleImageView imgStore;
     private TextView tvStoreName;
-    private ImageView ivStoreLevel ;
+    private ImageView ivStoreLevel;
     private TextView tvStoreDesc;
     private TextView tvLookAll;
 
@@ -118,6 +118,7 @@ public class GoodsManageDetailsActivity extends BaseActivity {
     private LinearLayout llEvaluate;
 
     private LinearLayout llAuctionInfo;//拍品详情
+    private TextView auctionInfoTitle;
     private LinearLayout llInfoList;
 
     private ImageView ivSafeguard;
@@ -157,6 +158,7 @@ public class GoodsManageDetailsActivity extends BaseActivity {
     private GoodsDetailBean goodsDetailBean;//商品详情数据
     private GoodsDetailBean.Auction auction;//竞拍信息
     private String itemId;
+    private String auctionId;
     private String skuId;
     private int cartCount;//购物车数量
     private int realStock = 1;//库存
@@ -193,17 +195,17 @@ public class GoodsManageDetailsActivity extends BaseActivity {
                     break;
                 case R.id.tvPriceList://查看出价
 //                    showPriceListDialog();
-                    GoodsPriceListActivity.startActivity(GoodsManageDetailsActivity.this,goodsDetailBean.getItem().getAuction().getAuctionitem_id());
+                    GoodsPriceListActivity.startActivity(GoodsManageDetailsActivity.this, goodsDetailBean.getItem().getAuction().getAuctionitem_id());
                     break;
                 case R.id.tvLookAll://查看店铺
                     ShopMainActivity.startShopMainActivity(GoodsManageDetailsActivity.this, goodsDetailBean.getShop().getShop_id());
                     break;
                 case R.id.rlEvaluate://评价
 //                    EventManager.getInstance().notify(null, ConstantMsg.CHANGE_TO_EVALUATE);
-                    GoodsEvaluateActivity.startActivity(GoodsManageDetailsActivity.this,itemId);
+                    GoodsEvaluateActivity.startActivity(GoodsManageDetailsActivity.this, itemId);
                     break;
                 case R.id.llSeeMore://查看更多
-                    GoodsListNewActivity.startGoodsListNewActivity(GoodsManageDetailsActivity.this,"","", "", "", "");
+                    GoodsListNewActivity.startGoodsListNewActivity(GoodsManageDetailsActivity.this, "", "", "", "", "");
                     break;
                 case R.id.tvMoreExplain:
                     AuctionExplainActivity.startActivity(GoodsManageDetailsActivity.this);
@@ -244,9 +246,10 @@ public class GoodsManageDetailsActivity extends BaseActivity {
     };
 
 
-    public static void startActivity(Activity activity, String goodsId) {
+    public static void startActivity(Activity activity, String goodsId, String auctionitemId) {
         Intent intent = new Intent(activity, GoodsManageDetailsActivity.class);
         intent.putExtra("goodsId", goodsId);
+        intent.putExtra("auctionId", auctionitemId);
         activity.startActivity(intent);
     }
 
@@ -311,6 +314,7 @@ public class GoodsManageDetailsActivity extends BaseActivity {
 
 
         llAuctionInfo = findViewById(R.id.llAuctionInfo);//拍品详情
+        auctionInfoTitle = findViewById(R.id.auctionInfoTitle);
         llInfoList = findViewById(R.id.llInfoList);
 
         ivSafeguard = findViewById(R.id.ivSafeguard);
@@ -349,6 +353,7 @@ public class GoodsManageDetailsActivity extends BaseActivity {
         rlCart.setOnClickListener(onClickListenerLogin);
         tvAuctionBuy.setOnClickListener(onClickListenerLogin);
         itemId = getIntent().getStringExtra("goodsId");
+        auctionId = getIntent().getStringExtra("auctionId");
         disposable = new CompositeDisposable();
     }
 
@@ -449,20 +454,20 @@ public class GoodsManageDetailsActivity extends BaseActivity {
             tvStoreName.setText(goodsDetailBean.getShop().getShop_name());
 
             String shopDesc = goodsDetailBean.getShop().getShop_descript();
-            shopDesc = TextUtils.isEmpty(shopDesc)?goodsDetailBean.getShop().getBulletin():shopDesc;
-            tvStoreDesc.setText("店铺简介："+shopDesc);
+            shopDesc = TextUtils.isEmpty(shopDesc) ? goodsDetailBean.getShop().getBulletin() : shopDesc;
+            tvStoreDesc.setText("店铺简介：" + shopDesc);
 
             String level = goodsDetailBean.getShop().getGrade();
-            if("2".equals(level)){
+            if ("2".equals(level)) {
                 ivStoreLevel.setImageResource(R.mipmap.store_partner);
-            }else if("1".equals(level)){
+            } else if ("1".equals(level)) {
                 ivStoreLevel.setImageResource(R.mipmap.store_star);
-            }else{
+            } else {
                 ivStoreLevel.setImageResource(R.mipmap.store_common);
             }
 
             Object parameter = goodsDetailBean.getItem().getParameter();
-            String arrayStr = parameter == null?"":parameter.toString();
+            String arrayStr = parameter == null ? "" : parameter.toString();
             JSONArray jsonArray = new JSONArray(arrayStr);
             if (jsonArray != null && jsonArray.length() > 0) {
                 for (int i = -1; i < jsonArray.length(); i++) {
@@ -470,18 +475,18 @@ public class GoodsManageDetailsActivity extends BaseActivity {
                     TextView tvLabel = infoView.findViewById(R.id.tvLabel);
                     TextView tvValue = infoView.findViewById(R.id.tvValue);
 
-                    if(i==-1){
+                    if (i == -1) {
                         tvLabel.setText("商品名称：");
                         tvValue.setText(goodsDetailBean.getItem().getTitle());
                         llInfoList.addView(infoView);
-                    }else{
+                    } else {
                         JSONObject objItem = jsonArray.getJSONObject(i);
-                        if(!TextUtils.isEmpty(objItem.optString("value"))&& !TextUtils.isEmpty(objItem.optString("value"))){
+                        if (!TextUtils.isEmpty(objItem.optString("value")) && !TextUtils.isEmpty(objItem.optString("value"))) {
                             String title = objItem.optString("title");
-                            if(title.length() ==2){
-                                title = title.substring(0,1)+"\u3000\u3000"+title.substring(1,2);
+                            if (title.length() == 2) {
+                                title = title.substring(0, 1) + "\u3000\u3000" + title.substring(1, 2);
                             }
-                            tvLabel.setText(title+"：");
+                            tvLabel.setText(title + "：");
                             tvValue.setText(objItem.optString("value"));
                             llInfoList.addView(infoView);
                         }
@@ -584,7 +589,7 @@ public class GoodsManageDetailsActivity extends BaseActivity {
                     AuctionDetailActivity.startAuctionDetailsActivity(GoodsDetailsNewActivity.this, recommendLists.get(position).getGoodsDetailslNewActivity     } else {
                     GoodsDetailsActivity.startGoodsDetailsActivity(GoodsDetailslNewActivity.this, recommendLists.get(position).getItem_id());
                 }*/
-                GoodsManageDetailsActivity.startActivity(GoodsManageDetailsActivity.this, recommendLists.get(position).getItem_id());
+//                GoodsManageDetailsActivity.startActivity(GoodsManageDetailsActivity.this, recommendLists.get(position).getItem_id());
             }
         });
     }
@@ -642,6 +647,8 @@ public class GoodsManageDetailsActivity extends BaseActivity {
 
     private void getGoodsDetail() {
         showLoadingDialog();
+
+
         disposable.add(ApiUtils.getInstance().getGoodsDetailWithToken(itemId, (String) SPUtils.get("token", ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -649,6 +656,7 @@ public class GoodsManageDetailsActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean<GoodsDetailBean> goodsDetailBeanResultBean) throws Exception {
                         hideLoadingDialog();
+                        updaateAuction();
                         goodsDetailBean = goodsDetailBeanResultBean.getData();
                         auction = goodsDetailBean.getItem().getAuction();
                         skuId = goodsDetailBean.getItem().getDefault_sku_id();
@@ -664,6 +672,29 @@ public class GoodsManageDetailsActivity extends BaseActivity {
                         hideLoadingDialog();
                     }
                 }));
+    }
+
+    private void updaateAuction(){
+        if (!TextUtils.isEmpty(auctionId)) {
+            disposable.add(ApiUtils.getInstance().getAuctionGoodsDetail(auctionId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResultBean<GoodsDetailBean.ItemBean>>() {
+                        @Override
+                        public void accept(ResultBean<GoodsDetailBean.ItemBean> goodsDetailBeanResultBean) throws Exception {
+                            hideLoadingDialog();
+                            GoodsDetailBean.ItemBean itemBean = goodsDetailBeanResultBean.getData();
+                            goodsDetailBean.getItem().setAuction(itemBean.getAuction());
+                            auction = itemBean.getAuction();
+                            updateView();
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            hideLoadingDialog();
+                        }
+                    }));
+        }
     }
 
     private void updateView() {
@@ -688,6 +719,7 @@ public class GoodsManageDetailsActivity extends BaseActivity {
             getPriceList();
             String check = goodsDetailBean.getItem().getAuction().getCheck();
             String isPay = goodsDetailBean.getItem().getAuction().getIs_pay();
+            auctionInfoTitle.setText("拍品详情");
             if ("true".equals(check)) {
                 if ("true".equals(isPay)) {
                     //已经出过价并且已支付
@@ -991,8 +1023,8 @@ public class GoodsManageDetailsActivity extends BaseActivity {
             ToastUtils.showShort("获取支付方式失败");
         } else {
             if (payDialog == null) {
-                String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
-                payDialog = new PayDialog(this, payList,payMoney);
+                String payMoney = goodsDetailBean.getItem().getAuction().getPledge();
+                payDialog = new PayDialog(this, payList, payMoney);
                 payDialog.setCallBack(new PayDialog.CallBack() {
                     @Override
                     public void choicePayMethod(String payMethodId) {
@@ -1007,27 +1039,28 @@ public class GoodsManageDetailsActivity extends BaseActivity {
     /**
      * 确认支付方式
      */
-    private void confirmPayMode(final String payMethodId){
-        if(OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)){
-            String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
-            BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
+    private void confirmPayMode(final String payMethodId) {
+        if (OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)) {
+            String payMoney = goodsDetailBean.getItem().getAuction().getPledge();
+            BalancePayDialog balancePayDialog = new BalancePayDialog(this, payMoney);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
                 @Override
                 public void cancelPay() {
                 }
+
                 @Override
                 public void confirmPay(String pwd) {
-                    payMoney(payMethodId,pwd);
+                    payMoney(payMethodId, pwd);
                 }
             });
             balancePayDialog.show();
-        }else{
-            payMoney(payMethodId,"");
+        } else {
+            payMoney(payMethodId, "");
         }
     }
 
-    private void payMoney( final String payMethodId, String payPwd) {
-        disposable.add(ApiUtils.getInstance().payDo(payment_id, payMethodId,payPwd)
+    private void payMoney(final String payMethodId, String payPwd) {
+        disposable.add(ApiUtils.getInstance().payDo(payment_id, payMethodId, payPwd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {

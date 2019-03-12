@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.dialog.OpenDialog;
 import com.chunlangjiu.app.goods.activity.FestivalActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
@@ -86,8 +87,25 @@ public class SplashActivity extends Activity {
 //            setOpenPic();
 //        }
         startCountDown();
+        loadOpen();
     }
 
+
+    private void loadOpen() {
+        disposable.add(ApiUtils.getInstance().getOpenAd()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<HomeModulesBean>>() {
+                    @Override
+                    public void accept(ResultBean<HomeModulesBean> brandsListBeanResultBean) throws Exception {
+                        params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                    }
+                }));
+    }
 
     private Handler handler = new Handler() {
         @Override
@@ -121,9 +139,11 @@ public class SplashActivity extends Activity {
             boolean isFirstStart = (boolean) SPUtils.get("firstStart", true);
             if (isFirstStart) {
                 Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
+                intent.putExtra("openParams",params);
                 startActivity(intent);
             } else {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                intent.putExtra("openParams",params);
                 startActivity(intent);
             }
             SPUtils.put("firstStart", false);

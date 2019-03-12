@@ -598,8 +598,7 @@ public class OrderDetailActivity extends BaseActivity {
                     llPayTime.setVisibility(View.GONE);
                     llSendTime.setVisibility(View.GONE);
                     llFinishTime.setVisibility(View.GONE);
-                    TextView tvPaymentTips = findViewById(R.id.tvPaymentTips);
-                    tvPaymentTips.setText("应付定金：");
+
                     break;
                 case OrderParams.AUCTION_BIDDING:
                     tvRightContentDesc.setVisibility(View.GONE);
@@ -611,8 +610,6 @@ public class OrderDetailActivity extends BaseActivity {
                     llPayTime.setVisibility(View.GONE);
                     llSendTime.setVisibility(View.GONE);
                     llFinishTime.setVisibility(View.GONE);
-                    tvPaymentTips = findViewById(R.id.tvPaymentTips);
-                    tvPaymentTips.setText("已付定金：");
                     break;
                 case OrderParams.AUCTION_WON_BID:
                     if (OrderParams.WAIT_BUYER_PAY.equals(orderDetailBean.getTrade_ststus())) {
@@ -636,10 +633,17 @@ public class OrderDetailActivity extends BaseActivity {
                     llSendTime.setVisibility(View.GONE);
                     llFinishTime.setVisibility(View.GONE);
                     countdownView.setVisibility(View.GONE);
-                    tvPaymentTips = findViewById(R.id.tvPaymentTips);
-                    tvPaymentTips.setText("已付定金：");
+
                     break;
             }
+
+            TextView tvPaymentTips = findViewById(R.id.tvPaymentTips);
+            if(OrderParams.AUCTION_WAIT_PAY.equals(orderDetailBean.getAuction().getStatus())){
+                tvPaymentTips.setText("应付定金：");
+            }else{
+                tvPaymentTips.setText("已付定金：");
+            }
+
 
             if (!TextUtils.isEmpty(orderDetailBean.getPayments().getPayment_id())) {
                 tvOrderId.setText(orderDetailBean.getPayments().getPayment_id());
@@ -684,22 +688,7 @@ public class OrderDetailActivity extends BaseActivity {
             tvAuctionPrice.setText(startPrice + "\n" + maxPrice);
             tvAuctionPrice.setVisibility(View.VISIBLE);
 
-
-//            switch (orderDetailBean.getStatus()) {
-//                case OrderParams.TRADE_FINISHED:
-//                    if (TextUtils.isEmpty(orderBean.getAftersales_status()) && orderBean.isRefund_enabled()) {
-//                        TextView tvAfterSale = inflate.findViewById(R.id.tvAfterSale);
-//                        tvAfterSale.setTag(i);
-//                        tvAfterSale.setOnClickListener(onClickListener);
-//                        tvAfterSale.setVisibility(View.VISIBLE);
-//                    }
-//                    break;
-//            }
-
-
             llProducts.addView(inflate);
-
-
             if (!TextUtils.isEmpty(orderDetailBean.getAuction().getStarting_price())) {
                 tvTotalPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getAuction().getStarting_price()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
             }

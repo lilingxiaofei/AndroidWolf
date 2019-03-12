@@ -64,6 +64,7 @@ public class GuideActivity extends AppCompatActivity {
 
     private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtras(getIntent());
         startActivity(intent);
         finish();
     }

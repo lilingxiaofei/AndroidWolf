@@ -406,7 +406,7 @@
                 android:layout_marginRight="15dp"
                 android:lineSpacingExtra="5dp"
                 android:textSize="12sp"
-                android:text="1.“出价金额”为竞拍叫价，叫价期间无需进行支付操作，请慎重出 价，若您中标，则需支付扣除定金外的尾款；\n2.买家中标后不支付竞拍尾款，平台将有权不返还定金，\n3.竞拍结束，若落标，定金将在三个工作日内进行退还。"
+                android:text="1.“出价金额”为竞拍叫价，叫价期间无需进行支付操作，请慎重出价；\n2.若您中标，则需支付商品货款，支付完成，定金退回至您的【可用余额】；\n3.买家中标后不支付竞拍货款，平台将有权不返还定金；\n4.竞拍结束，若落标，定金将及时退还到您的【可用余额】。\n"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

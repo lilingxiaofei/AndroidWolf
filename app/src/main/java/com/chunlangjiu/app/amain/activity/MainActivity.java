@@ -233,21 +233,27 @@ public class MainActivity extends BaseActivity {
 
 
     private void loadOpen() {
-        disposable.add(ApiUtils.getInstance().getOpenAd()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<HomeModulesBean>>() {
-                    @Override
-                    public void accept(ResultBean<HomeModulesBean> brandsListBeanResultBean) throws Exception {
-                        params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
-                        OpenDialog dialog = new OpenDialog(MainActivity.this,params);
-                        dialog.show();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                    }
-                }));
+        params = (HomeModulesBean.Params)getIntent().getSerializableExtra("openParams");
+        if(params!= null){
+            OpenDialog dialog = new OpenDialog(MainActivity.this,params);
+            dialog.show();
+        }else{
+            disposable.add(ApiUtils.getInstance().getOpenAd()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResultBean<HomeModulesBean>>() {
+                        @Override
+                        public void accept(ResultBean<HomeModulesBean> brandsListBeanResultBean) throws Exception {
+                            params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
+                            OpenDialog dialog = new OpenDialog(MainActivity.this,params);
+                            dialog.show();
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                        }
+                    }));
+        }
     }
 
     @Override

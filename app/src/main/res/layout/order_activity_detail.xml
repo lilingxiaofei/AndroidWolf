@@ -630,12 +630,11 @@
                 <TextView
                     style="@style/order_left_label"
                     android:text="当前我的出价：" />
-
-                <View
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tvContent3"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
+                    android:gravity="center_vertical|end" />
                 <TextView
                     android:id="@+id/tvChangePrice"
                     android:layout_width="70dp"
@@ -649,25 +648,17 @@
                     android:text="修改出价"
                     android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/tvContent3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|end" />
+
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:paddingLeft="@dimen/order_details_padding"
                 android:paddingRight="@dimen/order_details_padding"
-                android:gravity="center_vertical|end"
+                android:gravity="center_vertical"
                 android:background="@color/bg_white"
                 android:orientation="horizontal">
 
