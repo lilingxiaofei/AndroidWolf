@@ -28,6 +28,7 @@ public class ConstantMsg {
 
     public static final String APPLY_LOCATION_SUCCESS = "apply_location_success" ;//申请定位成功
     public static final String SET_INVITATION_CODE = "setInvitationCode";//设置邀请码
+    public static final String GOODS_MANAGE_COUNT_END = "goods_manage_count_end";//商品管理倒计时完成
     public static final String HOME_COUNT_END = "home_count_end";//首页倒计时完成
     public static final String AUCTION_COUNT_END = "auction_count_end";//竞拍倒计时完成
     public static final String DETAIL_COUNT_END = "detail_count_end";//详情倒计时完成
@@ -37,6 +38,9 @@ public class ConstantMsg {
     public static final String WITHDRAW_DEPOSIT_CASH="withdraw_deposit_cash";//提现
     public static final String WITHDRAW_DEPOSIT_REFUND="withdraw_deposit_refund";//撤销保证金
     public static final String BANKCARD_CHANGE="bank_card_change";//撤销保证金
+
+
+    public static final String APP_DOWNLOAD_URL = HttpUtils.BASE_URL+"/appdownload/index.html";
 
     public static final String WEB_URL_MESSAGE = HttpUtils.BASE_URL+ "index.php/wap/app-information.html?apitoken=";//消息
     public static final String WEB_URL_SETTING = HttpUtils.BASE_URL+ "index.php/wap/app-setting.html?apitoken=";//设置

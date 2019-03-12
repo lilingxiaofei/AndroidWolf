@@ -522,29 +522,31 @@
 
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/bg_gray">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="猜你喜欢"
-                    android:textColor="@color/t_black"
-                    android:textSize="@dimen/sp_small" />
-            </RelativeLayout>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <RelativeLayout android:id="@+id/rlRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:background="@color/bg_gray"
-                android:layout_marginBottom="12dp"/>
+                android:background="@color/bg_gray">
+
+                <TextView android:id="@+id/tvRecyclerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="猜你喜欢"
+                    android:gravity="center"
+                    android:textColor="@color/t_black"
+                    android:textSize="@dimen/sp_small" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_below="@+id/tvRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:background="@color/bg_gray"
+                    android:layout_marginBottom="12dp"/>
+            </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/llSeeMore"
                 android:layout_width="match_parent"

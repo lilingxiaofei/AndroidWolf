@@ -2,6 +2,7 @@ package com.chunlangjiu.app.goodsmanage.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,11 +13,15 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
+import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
 import com.chunlangjiu.app.util.CommonUtils;
+import com.chunlangjiu.app.util.ConstantMsg;
 import com.daimajia.swipe.SwipeLayout;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.util.BigDecimalUtils;
+import com.pkqup.commonlibrary.view.countdownview.CountdownView;
 
 import java.util.List;
 
@@ -55,6 +60,7 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
             helper.addOnClickListener(R.id.tvUnShelve);
             helper.addOnClickListener(R.id.tvEditTwo);
             helper.addOnClickListener(R.id.tvDelete);
+            helper.addOnClickListener(R.id.rl_item_layout);
 
             GlideUtils.loadImage(context, item.getImage_default_id(), imgPic);
             helper.setText(R.id.tv_name, item.getTitle());
@@ -127,7 +133,25 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
             }
 
             RelativeLayout llTime = helper.getView(R.id.llTime);
-            if (llTime != null) {
+            CountdownView countdownView = helper.getView(R.id.countdownView);
+            if (CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(status)) {
+                llTime.setVisibility(View.VISIBLE);
+                String end_time = item.getAuction_end_time();
+                long endTime = 0;
+                if (!TextUtils.isEmpty(end_time)) {
+                    endTime = Long.parseLong(end_time);
+                }
+                if ((endTime * 1000 - System.currentTimeMillis()) > 0) {
+                    countdownView.start(endTime * 1000 - System.currentTimeMillis());
+                    countdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+                        @Override
+                        public void onEnd(CountdownView cv) {
+                            EventManager.getInstance().notify(null, ConstantMsg.HOME_COUNT_END);
+                        }
+                    });
+                    dealWithLifeCycle(helper, helper.getAdapterPosition(), item);
+                }
+            }else{
                 llTime.setVisibility(View.GONE);
             }
 
@@ -138,6 +162,41 @@ public class GoodsManageAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
         }
     }
 
+
+    /**
+     * 以下两个接口代替 activity.onStart() 和 activity.onStop(), 控制 timer 的开关
+     */
+    private void dealWithLifeCycle(final BaseViewHolder viewHolder, final int position, final GoodsBean item) {
+        final CountdownView countdownView = viewHolder.getView(R.id.countdownView);
+        countdownView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View view) {
+                String end_time = item.getAuction_end_time();
+                try {
+                    long endTime = 0;
+                    if (!TextUtils.isEmpty(end_time)) {
+                        endTime = Long.parseLong(end_time);
+                    }
+                    if ((endTime * 1000 - System.currentTimeMillis()) > 0) {
+                        countdownView.start(endTime * 1000 - System.currentTimeMillis());
+                        countdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+                            @Override
+                            public void onEnd(CountdownView cv) {
+                                EventManager.getInstance().notify(null, ConstantMsg.SHOP_DATA_CHANGE);
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View view) {
+                countdownView.stop();
+            }
+        });
+    }
 
     private void setLabelList(LinearLayout layout, String label) {
         //设置标签显示

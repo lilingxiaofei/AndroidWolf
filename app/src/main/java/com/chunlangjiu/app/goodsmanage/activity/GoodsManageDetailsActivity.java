@@ -1,4 +1,4 @@
-package com.chunlangjiu.app.goods.activity;
+package com.chunlangjiu.app.goodsmanage.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -32,6 +32,13 @@ import com.chunlangjiu.app.amain.activity.LoginActivity;
 import com.chunlangjiu.app.amain.bean.CartCountBean;
 import com.chunlangjiu.app.cart.CartActivity;
 import com.chunlangjiu.app.cart.ChoiceNumDialog;
+import com.chunlangjiu.app.goods.activity.AuctionConfirmOrderActivity;
+import com.chunlangjiu.app.goods.activity.AuctionExplainActivity;
+import com.chunlangjiu.app.goods.activity.ConfirmOrderActivity;
+import com.chunlangjiu.app.goods.activity.GoodsEvaluateActivity;
+import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
+import com.chunlangjiu.app.goods.activity.GoodsPriceListActivity;
+import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.bean.ConfirmOrderBean;
 import com.chunlangjiu.app.goods.bean.EvaluateListBean;
 import com.chunlangjiu.app.goods.bean.GivePriceBean;
@@ -87,7 +94,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class GoodsDetailslNewActivity extends BaseActivity {
+public class GoodsManageDetailsActivity extends BaseActivity {
     private static final int SDK_PAY_FLAG = 1;
     //竞拍和普通商品公用的UI
     private RelativeLayout rlBanner;
@@ -115,6 +122,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
     private ImageView ivSafeguard;
 
+    private RelativeLayout rlRecyclerView;
     private LinearLayout llSeeMore;
     private RecyclerView recyclerView;//推荐商品列表
 
@@ -185,20 +193,20 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     break;
                 case R.id.tvPriceList://查看出价
 //                    showPriceListDialog();
-                    GoodsPriceListActivity.startActivity(GoodsDetailslNewActivity.this,goodsDetailBean.getItem().getAuction().getAuctionitem_id());
+                    GoodsPriceListActivity.startActivity(GoodsManageDetailsActivity.this,goodsDetailBean.getItem().getAuction().getAuctionitem_id());
                     break;
                 case R.id.tvLookAll://查看店铺
-                    ShopMainActivity.startShopMainActivity(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_id());
+                    ShopMainActivity.startShopMainActivity(GoodsManageDetailsActivity.this, goodsDetailBean.getShop().getShop_id());
                     break;
                 case R.id.rlEvaluate://评价
 //                    EventManager.getInstance().notify(null, ConstantMsg.CHANGE_TO_EVALUATE);
-                    GoodsEvaluateActivity.startActivity(GoodsDetailslNewActivity.this,itemId);
+                    GoodsEvaluateActivity.startActivity(GoodsManageDetailsActivity.this,itemId);
                     break;
                 case R.id.llSeeMore://查看更多
-                    GoodsListNewActivity.startGoodsListNewActivity(GoodsDetailslNewActivity.this,"","", "", "", "");
+                    GoodsListNewActivity.startGoodsListNewActivity(GoodsManageDetailsActivity.this,"","", "", "", "");
                     break;
                 case R.id.tvMoreExplain:
-                    AuctionExplainActivity.startActivity(GoodsDetailslNewActivity.this);
+                    AuctionExplainActivity.startActivity(GoodsManageDetailsActivity.this);
                     break;
             }
         }
@@ -226,18 +234,18 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                         changeCollectStatus();
                         break;
                     case R.id.rlCart://跳转到购物车
-                        startActivity(new Intent(GoodsDetailslNewActivity.this, CartActivity.class));
+                        startActivity(new Intent(GoodsManageDetailsActivity.this, CartActivity.class));
                         break;
                 }
             } else {
-                startActivity(new Intent(GoodsDetailslNewActivity.this, LoginActivity.class));
+                startActivity(new Intent(GoodsManageDetailsActivity.this, LoginActivity.class));
             }
         }
     };
 
 
     public static void startActivity(Activity activity, String goodsId) {
-        Intent intent = new Intent(activity, GoodsDetailslNewActivity.class);
+        Intent intent = new Intent(activity, GoodsManageDetailsActivity.class);
         intent.putExtra("goodsId", goodsId);
         activity.startActivity(intent);
     }
@@ -296,7 +304,10 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         llEvaluate = findViewById(R.id.llEvaluate);
         llSeeMore = findViewById(R.id.llSeeMore);
         llSeeMore.setOnClickListener(onClickListener);
+        rlRecyclerView = findViewById(R.id.rlRecyclerView);
         recyclerView = findViewById(R.id.recyclerView);
+        rlRecyclerView.setVisibility(View.GONE);
+        llSeeMore.setVisibility(View.GONE);
 
 
         llAuctionInfo = findViewById(R.id.llAuctionInfo);//拍品详情
@@ -345,7 +356,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         getCartNum();
         getGoodsDetail();
         getEvaluateData();
-        getRecommendGoods();
+//        getRecommendGoods();
     }
 
 
@@ -365,7 +376,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
             imageViews.clear();
             indicator.removeAllViews();
             for (int i = 0; i < bannerUrls.size(); i++) {
-                ImageView imageView = new ImageView(GoodsDetailslNewActivity.this);
+                ImageView imageView = new ImageView(GoodsManageDetailsActivity.this);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -413,7 +424,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     }
 
     private void toLargeImage(int position) {
-        new PhotoPagerConfig.Builder(GoodsDetailslNewActivity.this)
+        new PhotoPagerConfig.Builder(GoodsManageDetailsActivity.this)
                 .setBigImageUrls((ArrayList<String>) bannerUrls)
                 .setSavaImage(false)
                 .setPosition(position)
@@ -434,7 +445,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
             Glide.with(this).load(goodsDetailBean.getItem().getService_url()).into(ivSafeguard);
             tvCountry.setText(goodsDetailBean.getItem().getLabel());
             tvDesc.setText(goodsDetailBean.getItem().getExplain());
-            GlideUtils.loadImageShop(GoodsDetailslNewActivity.this, goodsDetailBean.getShop().getShop_logo(), imgStore);
+            GlideUtils.loadImageShop(GoodsManageDetailsActivity.this, goodsDetailBean.getShop().getShop_logo(), imgStore);
             tvStoreName.setText(goodsDetailBean.getShop().getShop_name());
 
             String shopDesc = goodsDetailBean.getShop().getShop_descript();
@@ -515,7 +526,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         for (int i = 0; i < list.size(); i++) {
             if (i < 2) {
                 EvaluateListBean.EvaluateDetailBean bean = list.get(i);
-                View evaluateView = View.inflate(GoodsDetailslNewActivity.this, R.layout.goods_item_details_evaluate, null);
+                View evaluateView = View.inflate(GoodsManageDetailsActivity.this, R.layout.goods_item_details_evaluate, null);
                 TextView tvName = evaluateView.findViewById(R.id.tvName);
                 RatingBar ratingBar = evaluateView.findViewById(R.id.ratingBar);
                 TextView tvContent = evaluateView.findViewById(R.id.tvContent);
@@ -573,7 +584,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     AuctionDetailActivity.startAuctionDetailsActivity(GoodsDetailsNewActivity.this, recommendLists.get(position).getGoodsDetailslNewActivity     } else {
                     GoodsDetailsActivity.startGoodsDetailsActivity(GoodsDetailslNewActivity.this, recommendLists.get(position).getItem_id());
                 }*/
-                GoodsDetailslNewActivity.startActivity(GoodsDetailslNewActivity.this, recommendLists.get(position).getItem_id());
+                GoodsManageDetailsActivity.startActivity(GoodsManageDetailsActivity.this, recommendLists.get(position).getItem_id());
             }
         });
     }
@@ -601,7 +612,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
             tv_name.setLayoutParams(nameLayoutParams);
             helper.setText(R.id.tv_name, item.getTitle());
             helper.setText(R.id.tv_price, "¥" + item.getPrice());
-            GlideUtils.loadImage(GoodsDetailslNewActivity.this, item.getImage_default_id(), imgPic);
+            GlideUtils.loadImage(GoodsManageDetailsActivity.this, item.getImage_default_id(), imgPic);
         }
     }
 
@@ -658,7 +669,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private void updateView() {
         initBannerData();
         initCommonView();
-        rlBottom.setVisibility(View.VISIBLE);
+        rlBottom.setVisibility(View.GONE);
 
 
         if ("true".equals(goodsDetailBean.getItem().getIs_collect())) {
@@ -891,7 +902,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean<ConfirmOrderBean> resultBean) throws Exception {
                         hideLoadingDialog();
-                        ConfirmOrderActivity.startConfirmOrderActivity(GoodsDetailslNewActivity.this, resultBean.getData(), "fastbuy");
+                        ConfirmOrderActivity.startConfirmOrderActivity(GoodsManageDetailsActivity.this, resultBean.getData(), "fastbuy");
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -1109,11 +1120,11 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                 // 判断resultStatus 为9000则代表支付成功
                 if (TextUtils.equals(resultStatus, "9000")) {
                     // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                    Toast.makeText(GoodsDetailslNewActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GoodsManageDetailsActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                    Toast.makeText(GoodsDetailslNewActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GoodsManageDetailsActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 toOrderMainActivity();
@@ -1126,7 +1137,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {
-                PayTask alipay = new PayTask(GoodsDetailslNewActivity.this);
+                PayTask alipay = new PayTask(GoodsManageDetailsActivity.this);
                 Map<String, String> stringStringMap = alipay.payV2(url, true);
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;

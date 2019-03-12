@@ -363,6 +363,11 @@
         android:label="@string/title_activity_goods_audit"
         android:theme="@style/AppTheme">
     </activity>
+        <activity
+            android:name=".goodsmanage.activity.GoodsManageDetailsActivity"
+            android:label="@string/title_activity_goods_audit"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.amain.bean.ItemListBean;
+import com.chunlangjiu.app.goodsmanage.activity.GoodsManageDetailsActivity;
 import com.chunlangjiu.app.goodsmanage.activity.GoodsManageSetAuctionActivity;
 import com.chunlangjiu.app.goodsmanage.adapter.GoodsManageAdapter;
 import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
@@ -117,11 +118,19 @@ public class GoodsManageFragment extends BaseFragment {
         });
     }
 
+
+
+
     BaseQuickAdapter.OnItemChildClickListener onItemChildClickListener = new BaseQuickAdapter.OnItemChildClickListener() {
         @Override
         public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
             final GoodsBean goods = pageUtils.get(position);
             switch (view.getId()) {
+                case R.id.rl_item_layout:
+                    if(CommonUtils.GOODS_STATUS_SELL.equals(status)){
+                        GoodsManageDetailsActivity.startActivity(activity,goods.getItem_id());
+                    }
+                    break;
                 case R.id.tvFindCause:
                     CommonConfirmDialog commonConfirmDialog = new CommonConfirmDialog(activity, goods.getReason());
                     commonConfirmDialog.show();
