@@ -2,6 +2,7 @@ package com.chunlangjiu.app.user.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +124,8 @@ public class CompanyAuthActivity extends BaseActivity {
     @BindView(R.id.imgFoodCertificate)
     ImageView imgFoodCertificate;
 
+    @BindView(R.id.tvTips)
+    TextView tvTips;
     @BindView(R.id.tvCommit)
     TextView tvCommit;
 
@@ -231,6 +234,10 @@ public class CompanyAuthActivity extends BaseActivity {
 
     private void initView() {
         disposable = new CompositeDisposable();
+        String str  = getString(R.string.person_one_tips);
+        String key = "3.5%";
+        int color = ContextCompat.getColor(this,R.color.t_red);
+        tvTips.setText(CommonUtils.setSpecifiedTextsColor(str,key,color));
 //        rlOne.setOnClickListener(onClickListener);
 //        rlTwo.setOnClickListener(onClickListener);
 //        rlAllowCard.setOnClickListener(onClickListener);
