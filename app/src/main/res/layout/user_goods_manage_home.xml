@@ -275,7 +275,7 @@
         android:layout_below="@+id/llGoodsManageLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:src="@mipmap/add" />
+        android:src="@mipmap/common_add_red_bg" />
 
     <TextView
         android:layout_below="@+id/ivAddGoods"

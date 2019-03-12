@@ -65,8 +65,10 @@ public class HomeAdapter extends BaseQuickAdapter<HomeBean, BaseViewHolder> {
                 int index = viewHolder.getLayoutPosition()- recommendHead;
                 if (index % 2 == 0) {
                     right = size;
+                    left = (int)SizeUtils.dp2px(2.5f);
                 }else {
                     left = size;
+                    right = (int)SizeUtils.dp2px(2.5f);
                 }
                 RecyclerView.LayoutParams rlItemParams = (RecyclerView.LayoutParams) rlItemLayout.getLayoutParams();
                 rlItemParams.setMargins(left,top,right,bottom);

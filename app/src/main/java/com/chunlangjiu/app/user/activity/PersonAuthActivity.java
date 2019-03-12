@@ -4,19 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.user.bean.AuthInfoBean;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
-import com.chunlangjiu.app.user.bean.UserInfoBean;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
 import com.lzy.imagepicker.ImagePicker;
@@ -28,7 +26,6 @@ import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.FileUtils;
-import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
@@ -37,6 +34,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -102,9 +101,11 @@ public class PersonAuthActivity extends BaseActivity {
     private ArrayList<ImageItem> behindLists;
     private ArrayList<ImageItem> personLists;
     private String base64HandCard;
+    private String urlHandCard;
     private String base64Front;
+    private String urlFront;
     private String base64Reverse;
-
+    private String urlReverse;
 //    private View.OnClickListener onClickListener = new View.OnClickListener() {
 //        @Override
 //        public void onClick(View view) {
@@ -217,19 +218,31 @@ public class PersonAuthActivity extends BaseActivity {
     }
 
     private void getUserInfo() {
-        disposable.add(ApiUtils.getInstance().getUserInfo()
+        disposable.add(ApiUtils.getInstance().getPersonAuthInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<UserInfoBean>>() {
+                .subscribe(new Consumer<ResultBean<AuthInfoBean>>() {
                     @Override
-                    public void accept(ResultBean<UserInfoBean> userInfoBeanResultBean) throws Exception {
-                        UserInfoBean userInfoBean = userInfoBeanResultBean.getData();
-                        if(userInfoBean!=null && !TextUtils.isEmpty(userInfoBean.getIdcard())){
-                            etCardNum.setText(userInfoBean.getIdcard());
-                            etName.setText(userInfoBean.getName());
-                            etPhone.setText(userInfoBean.getPhone());
+                    public void accept(ResultBean<AuthInfoBean> userInfoBeanResultBean) throws Exception {
+                        AuthInfoBean authInfoBean = userInfoBeanResultBean.getData();
+                        if (authInfoBean != null) {
+                            etCardNum.setText(authInfoBean.getIdcard());
+                            etName.setText(authInfoBean.getName());
+                            etPhone.setText(authInfoBean.getMobile());
+
+                            urlHandCard = authInfoBean.getDentity();
+                            urlFront = authInfoBean.getDentity_front();
+                            urlReverse = authInfoBean.getDentity_reverse();
+                            if (CommonUtils.isNetworkPic(urlHandCard)) {
+                                GlideUtils.loadImageOptions(PersonAuthActivity.this, urlHandCard, imgPerson);
+                            }
+                            if (CommonUtils.isNetworkPic(urlFront)) {
+                                GlideUtils.loadImageOptions(PersonAuthActivity.this, urlFront, imgFront);
+                            }
+                            if (CommonUtils.isNetworkPic(urlReverse)) {
+                                GlideUtils.loadImageOptions(PersonAuthActivity.this, urlReverse, imgBehind);
+                            }
                         }
-//                        getShopInfo(userInfoBean.getShop_id());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -367,7 +380,7 @@ public class PersonAuthActivity extends BaseActivity {
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64Reverse = FileUtils.imgToBase64(behindLists.get(0).path);
 //                    GlideUtils.loadImage(PersonAuthActivity.this, behindLists.get(0).path, imgBehindPic);
-                    GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgBehind);
+                    GlideUtils.loadImage(PersonAuthActivity.this, behindLists.get(0).path, imgBehind);
                 } else if (requestCode == REQUEST_CODE_SELECT_PERSON) {
                     personLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                     ImageItem imageItem = personLists.get(0);
@@ -375,7 +388,7 @@ public class PersonAuthActivity extends BaseActivity {
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64HandCard = FileUtils.imgToBase64(personLists.get(0).path);
 //                    GlideUtils.loadImage(PersonAuthActivity.this, personLists.get(0).path, imgCardPic);
-                    GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgPerson);
+                    GlideUtils.loadImage(PersonAuthActivity.this, personLists.get(0).path, imgPerson);
                 }
 
             }
@@ -389,11 +402,11 @@ public class PersonAuthActivity extends BaseActivity {
             ToastUtils.showShort("请填手机号码");
         } else if (TextUtils.isEmpty(etCardNum.getText().toString().trim())) {
             ToastUtils.showShort("请填写身份证号码");
-        } else if (base64Front == null) {
+        } else if (base64Front == null  && !CommonUtils.isNetworkPic(urlFront)) {
             ToastUtils.showShort("请上传身份证正面图片");
-        } else if (base64Reverse == null) {
+        } else if (base64Reverse == null  && !CommonUtils.isNetworkPic(urlReverse)) {
             ToastUtils.showShort("请上传身份证反面图片");
-        } else if (base64HandCard == null) {
+        } else if (base64HandCard == null  && !CommonUtils.isNetworkPic(urlHandCard)) {
             ToastUtils.showShort("请上传手持身份证图片");
         } else {
             uploadImage();
@@ -403,9 +416,53 @@ public class PersonAuthActivity extends BaseActivity {
 
     private void uploadImage() {
         showLoadingDialog();
-        Observable<ResultBean<UploadImageBean>> front = ApiUtils.getInstance().userUploadImage(base64Front, frontLists.get(0).name, "rate");
-        Observable<ResultBean<UploadImageBean>> behind = ApiUtils.getInstance().userUploadImage(base64Reverse, behindLists.get(0).name, "rate");
-        Observable<ResultBean<UploadImageBean>> handCard = ApiUtils.getInstance().userUploadImage(base64HandCard, personLists.get(0).name, "rate");
+        Observable<ResultBean<UploadImageBean>> front ;
+        if (!TextUtils.isEmpty(base64Front) && frontLists != null && frontLists.size() > 0) {
+            front = ApiUtils.getInstance().userUploadImage(base64Front, frontLists.get(0).name, "rate");
+
+        }else{
+            front = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
+                    ResultBean<UploadImageBean> bean = new ResultBean<>();
+                    UploadImageBean uploadImageBean = new UploadImageBean();
+                    uploadImageBean.setUrl(urlFront);
+                    bean.setData(uploadImageBean);
+                    emitter.onNext(bean);
+                }
+            });
+        }
+        Observable<ResultBean<UploadImageBean>> behind ;
+        if (!TextUtils.isEmpty(base64Reverse) && behindLists != null && behindLists.size() > 0) {
+            behind = ApiUtils.getInstance().userUploadImage(base64Reverse, behindLists.get(0).name, "rate");
+        }else{
+            behind = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
+                    ResultBean<UploadImageBean> bean = new ResultBean<>();
+                    UploadImageBean uploadImageBean = new UploadImageBean();
+                    uploadImageBean.setUrl(urlReverse);
+                    bean.setData(uploadImageBean);
+                    emitter.onNext(bean);
+                }
+            });
+        }
+        Observable<ResultBean<UploadImageBean>> handCard ;
+        if (!TextUtils.isEmpty(base64HandCard) && personLists != null && personLists.size() > 0) {
+            handCard = ApiUtils.getInstance().userUploadImage(base64HandCard, personLists.get(0).name, "rate");
+
+        }else{
+            handCard = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
+                    ResultBean<UploadImageBean> bean = new ResultBean<>();
+                    UploadImageBean uploadImageBean = new UploadImageBean();
+                    uploadImageBean.setUrl(urlHandCard);
+                    bean.setData(uploadImageBean);
+                    emitter.onNext(bean);
+                }
+            });
+        }
         disposable.add(Observable.zip(handCard, front, behind, new Function3<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>,
                 ResultBean<UploadImageBean>, List<String>>() {
             @Override
