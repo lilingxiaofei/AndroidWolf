@@ -30,6 +30,9 @@ import com.chunlangjiu.app.amain.fragment.UserFragment;
 import com.chunlangjiu.app.dialog.AppUpdateDialog;
 import com.chunlangjiu.app.dialog.OpenDialog;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.user.activity.AddGoodsActivity;
+import com.chunlangjiu.app.user.activity.VerifiedActivity;
+import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GeTuiIntentService;
 import com.chunlangjiu.app.util.GeTuiPushService;
@@ -42,6 +45,7 @@ import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.AppUtils;
 import com.pkqup.commonlibrary.util.PermissionUtils;
+import com.pkqup.commonlibrary.util.ToastUtils;
 import com.pkqup.commonlibrary.view.MyViewPager;
 import com.yanzhenjie.permission.PermissionListener;
 
@@ -49,8 +53,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -282,10 +288,54 @@ public class MainActivity extends BaseActivity {
                     break;
                 case R.id.tab_five:
                     setPageFragment(4);
+//                    loadAuthStatus();
                     break;
             }
         }
     };
+
+
+    private void loadAuthStatus(){
+        if (BaseApplication.isLogin()) {
+            Observable<ResultBean<AuthStatusBean>> personAuthStatus = ApiUtils.getInstance().getPersonAuthStatus();
+            Observable<ResultBean<AuthStatusBean>> companyAuthStatus = ApiUtils.getInstance().getCompanyAuthStatus();
+            disposable.add(Observable.zip(personAuthStatus, companyAuthStatus, new BiFunction<ResultBean<AuthStatusBean>, ResultBean<AuthStatusBean>, List<AuthStatusBean>>() {
+                @Override
+                public List<AuthStatusBean> apply(ResultBean<AuthStatusBean> uploadImageBeanResultBean, ResultBean<AuthStatusBean> uploadImageBeanResultBean2) throws Exception {
+                    List<AuthStatusBean> imageLists = new ArrayList<>();
+                    imageLists.add(uploadImageBeanResultBean.getData());
+                    imageLists.add(uploadImageBeanResultBean2.getData());
+                    return imageLists;
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<List<AuthStatusBean>>() {
+                        @Override
+                        public void accept(List<AuthStatusBean> authStatusBeans) throws Exception {
+                            if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeans.get(1).getStatus())) {
+//                                checkUploadGoods();
+                                showContentView();
+                            } else if (AuthStatusBean.AUTH_LOCKED.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_LOCKED.equals(authStatusBeans.get(1).getStatus())) {
+                                ToastUtils.showShort("您的认证正在审核中，我们会尽快处理");
+                                finish();
+                            } else if (AuthStatusBean.AUTH_FAILING.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_FAILING.equals(authStatusBeans.get(1).getStatus())) {
+                                ToastUtils.showShort("您的认证被驳回，请重新提交资料审核");
+                                startActivity(new Intent(MainActivity.this,VerifiedActivity.class));
+                                finish();
+                            } else {
+                                ToastUtils.showShort("您还没有进行实名认证，请先认证");
+                                startActivity(new Intent(MainActivity.this,VerifiedActivity.class));
+                                finish();
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            finish();
+                        }
+                    }));
+        }
+    }
 
     private void setPageFragment(int position) {
 

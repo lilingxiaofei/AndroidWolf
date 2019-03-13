@@ -1,5 +1,6 @@
 package com.chunlangjiu.app.goodsmanage.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +18,12 @@ import com.chunlangjiu.app.goodsmanage.activity.GoodsManageDetailsActivity;
 import com.chunlangjiu.app.goodsmanage.activity.GoodsManageSetAuctionActivity;
 import com.chunlangjiu.app.goodsmanage.adapter.GoodsManageAdapter;
 import com.chunlangjiu.app.goodsmanage.bean.GoodsBean;
+import com.chunlangjiu.app.money.activity.ReChargeActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.activity.EditGoodsActivity;
+import com.chunlangjiu.app.user.bean.CheckGoodsBean;
+import com.chunlangjiu.app.user.dialog.StarLevelDialog;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PageUtils;
@@ -58,6 +63,8 @@ public class GoodsManageFragment extends BaseFragment {
     private TimePickerDialog startTimeDialog;
     private long startTime;
 
+    CheckGoodsBean checkGoodsBean ;
+    StarLevelDialog starLevelDialog = null ;
     public static GoodsManageFragment newInstance(String status) {
         GoodsManageFragment auctionDetailFragment = new GoodsManageFragment();
         Bundle bundle = new Bundle();
@@ -116,6 +123,25 @@ public class GoodsManageFragment extends BaseFragment {
                 getGoodsList(pageUtils.firstPage());
             }
         });
+
+        starLevelDialog = new StarLevelDialog(activity);
+        starLevelDialog.setCallBack(new StarLevelDialog.CallBack() {
+            @Override
+            public void cancel() {
+                starLevelDialog.dismiss();
+            }
+
+            @Override
+            public void confirm() {
+                starLevelDialog.dismiss();
+                if(checkGoodsBean!=null){
+                    Intent intent = new Intent(activity, ReChargeActivity.class);
+                    intent.putExtra(ReChargeActivity.ReChargeType, ReChargeActivity.RechargeType.SecurityDeposit);
+                    intent.putExtra(ReChargeActivity.DepositMoney, checkGoodsBean.getDeposit());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
 
@@ -142,8 +168,10 @@ public class GoodsManageFragment extends BaseFragment {
                     EditGoodsActivity.startEditGoodsDetailsActivity(activity, goods.getItem_id());
                     break;
                 case R.id.tvPutaway:
+
                     if (BigDecimalUtils.objToBigDecimal(goods.getStore()).intValue() > 0) {
-                        editGoodsShelves(goods.getItem_id(), "tosale");
+//                        editGoodsShelves(goods.getItem_id(), "tosale");
+                        checkUploadGoods(goods.getItem_id());//检测是否还能上传商品接口
                     } else {
                         ToastUtils.showShort("库存为0，请先设置库存再上架此商品");
                     }
@@ -173,7 +201,7 @@ public class GoodsManageFragment extends BaseFragment {
                     break;
                 case R.id.tvDelete:
                     if (CommonUtils.GOODS_STATUS_AUCTION_NOT_START.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_STOP.equals(status) || CommonUtils.GOODS_STATUS_INSTOCK.equals(status)) {
-                        CommonConfirmDialog deleteDialog = new CommonConfirmDialog(activity, "您确定要下架此商品吗？");
+                        CommonConfirmDialog deleteDialog = new CommonConfirmDialog(activity, "您确定删除此商品吗？");
                         deleteDialog.setCallBack(new CommonConfirmDialog.CallBack() {
                             @Override
                             public void onConfirm() {
@@ -193,6 +221,35 @@ public class GoodsManageFragment extends BaseFragment {
             }
         }
     };
+
+    private void checkUploadGoods(final String itemId){
+        showLoadingDialog();
+        disposable.add(ApiUtils.getInstance().checkUploadGoods()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<CheckGoodsBean>>() {
+                    @Override
+                    public void accept(ResultBean<CheckGoodsBean> mainClassBeanResultBean) throws Exception {
+                        hideLoadingDialog();
+                        checkGoodsBean = mainClassBeanResultBean.getData() ;
+                        if(null != checkGoodsBean ){
+                            hideLoadingDialog();
+                            if("true".equals(checkGoodsBean.getStatus())){
+                                editGoodsShelves(itemId, "tosale");
+                            }else{
+                                starLevelDialog.updateTips(checkGoodsBean.getTips());
+                                starLevelDialog.show();
+                            }
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
+                    }
+                }));
+    }
+
 
 
     @Override

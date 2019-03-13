@@ -38,6 +38,7 @@ import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.MyNumBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
+import com.chunlangjiu.app.user.dialog.UserCheckAuthDialog;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.GlideImageLoader;
@@ -50,6 +51,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.pkqup.commonlibrary.dialog.ChoicePhotoDialog;
+import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -89,7 +91,7 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlContentLayout;
 
     private TextView tvMyTitle;
-    private ImageView ivSetting ;
+    private ImageView ivSetting;
     private RelativeLayout rlAuthStatus;
     private ImageView imgAuthStatus;
     private TextView tvAuthStatus;
@@ -194,7 +196,7 @@ public class UserFragment extends BaseFragment {
     private RelativeLayout rlCollect;
     private RelativeLayout rlShare;
     private RelativeLayout rlVip;
-    private RelativeLayout rlShop ;
+    private RelativeLayout rlShop;
     private LinearLayout llMyManagerSecond;
     private RelativeLayout rlMyEvaluate;
     private RelativeLayout rlFansManage;
@@ -208,6 +210,7 @@ public class UserFragment extends BaseFragment {
     private String companyStatus;
     private String personStatus;
 
+    private UserCheckAuthDialog userCheckAuthDialog ;
     private ChoicePhotoDialog photoDialog;
     private EditAccountNameDialog editAccountNameDialog;
     public static final int REQUEST_CODE_CHOICE_HEAD = 1001;
@@ -218,7 +221,7 @@ public class UserFragment extends BaseFragment {
     private String personName;
     private String companyName;
     private String shopName;
-    private String shopId ;
+    private String shopId;
 
 
     Rotate3dAnimation rotateStart;
@@ -337,15 +340,15 @@ public class UserFragment extends BaseFragment {
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SELL_GOODS + BaseApplication.getToken(), "在售商品");
                     break;
                 case R.id.rlAuctionGoods:// 竞拍商品
-                    GoodsManageListActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_AUCTION_ACTIVE);
+                    GoodsManageListActivity.startGoodsManageActivity(activity, CommonUtils.GOODS_STATUS_AUCTION_ACTIVE);
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_ACTION_GOODS + BaseApplication.getToken(), "竞拍商品");
                     break;
                 case R.id.rlWareHouseGoods:// 仓库商品
-                    GoodsManageListActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_INSTOCK);
+                    GoodsManageListActivity.startGoodsManageActivity(activity, CommonUtils.GOODS_STATUS_INSTOCK);
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_STORE_GOODS + BaseApplication.getToken(), "仓库商品");
                     break;
                 case R.id.rlCheckGoods:// 审核商品
-                    GoodsManageListActivity.startGoodsManageActivity(activity,CommonUtils.GOODS_STATUS_AUDIT_PENDING);
+                    GoodsManageListActivity.startGoodsManageActivity(activity, CommonUtils.GOODS_STATUS_AUDIT_PENDING);
 //                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_AUTH_GOODS + BaseApplication.getToken(), "审核商品");
                     break;
                 case R.id.rlMoneyManager:// 资金管理
@@ -378,7 +381,7 @@ public class UserFragment extends BaseFragment {
                     ServiceActivity.startActivity(activity);
                     break;
                 case R.id.rlShop:
-                    ShopMainActivity.startShopMainActivity(activity,shopId);
+                    ShopMainActivity.startShopMainActivity(activity, shopId);
                     break;
 
             }
@@ -416,7 +419,7 @@ public class UserFragment extends BaseFragment {
     @Override
     public void initView() {
         MyStatusBarUtils.setTitleBarPadding(getActivity(), rootView.findViewById(R.id.rlUserHead));
-
+        userCheckAuthDialog = new UserCheckAuthDialog(activity);
         rlContentLayout = rootView.findViewById(R.id.rlContentLayout);
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
         tvToLogin = rootView.findViewById(R.id.tvToLogin);
@@ -428,10 +431,10 @@ public class UserFragment extends BaseFragment {
             // 获得状态栏高度
             int statusBarHeight = MyStatusBarUtils.getStatusBarHeight(activity);
             int left = ivSetting.getPaddingLeft();
-            int top = statusBarHeight+ivSetting.getPaddingTop()-SizeUtils.dp2px(10);
+            int top = statusBarHeight + ivSetting.getPaddingTop() - SizeUtils.dp2px(10);
             int right = ivSetting.getPaddingRight();
             int bottom = ivSetting.getPaddingBottom();
-            ivSetting.setPadding(left,top,right,bottom);
+            ivSetting.setPadding(left, top, right, bottom);
         }
         ivSetting.setOnClickListener(onClickListener);
 
@@ -566,11 +569,11 @@ public class UserFragment extends BaseFragment {
         rlShare.setOnClickListener(onClickListener);
         rlVip.setOnClickListener(onClickListener);
         rlShop.setOnClickListener(onClickListener);
-        int width = (SizeUtils.getScreenWidth()-SizeUtils.dp2px(20))/3;
+        int width = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(20)) / 3;
         for (int i = 0; i < flowLayout.getChildCount(); i++) {
             View view = flowLayout.getChildAt(i);
-            FlowLayout.LayoutParams layoutParams = (FlowLayout.LayoutParams)view.getLayoutParams();
-            layoutParams.width = width ;
+            FlowLayout.LayoutParams layoutParams = (FlowLayout.LayoutParams) view.getLayoutParams();
+            layoutParams.width = width;
             view.setLayoutParams(layoutParams);
             view.setMinimumWidth(width);
         }
@@ -737,6 +740,7 @@ public class UserFragment extends BaseFragment {
                         tvName.setText(loginAccount);
                         SPUtils.put("account", loginAccount);
                         SPUtils.put("avator", userInfoBeanResultBean.getData().getHead_portrait());
+                        setLoginAccountAuth();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -869,12 +873,16 @@ public class UserFragment extends BaseFragment {
                 }));
     }
 
+    private void setLoginAccountAuth() {
+        userCheckAuthDialog.updateAuthStatus(personStatus,companyStatus,loginAccount);
+    }
+
     private void setAuthView() {
         rlAuthStatus.setVisibility(View.VISIBLE);
         if ((AuthStatusBean.AUTH_SUCCESS.equals(personStatus) || AuthStatusBean.AUTH_SUCCESS.equals(companyStatus))) {
             imgAuthStatus.setImageResource(R.mipmap.my_auth);
             tvAuthStatus.setText("已认证");
-
+            setLoginAccountAuth();
             if ((AuthStatusBean.AUTH_SUCCESS.equals(personStatus) && AuthStatusBean.AUTH_SUCCESS.equals(companyStatus))) {
                 tvAuthPerson.setVisibility(View.GONE);
                 tvAuthCompany.setVisibility(View.GONE);

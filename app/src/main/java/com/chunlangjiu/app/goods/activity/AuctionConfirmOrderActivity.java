@@ -377,13 +377,15 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
                 if (TextUtils.equals(resultStatus, "9000")) {
                     // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                     Toast.makeText(AuctionConfirmOrderActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                    toOrderMainActivity(true);
                     finish();
                 } else {
                     // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                     Toast.makeText(AuctionConfirmOrderActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                    toOrderMainActivity(false);
                     finish();
                 }
-                toOrderMainActivity();
+
             }
         }
     };
@@ -407,7 +409,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     }
 
     private void invokeYuePay(ResultBean data) {
-        toOrderMainActivity();
+        toOrderMainActivity(true);
     }
 
     private void invokeDaePay(ResultBean data) {
@@ -466,15 +468,15 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
                 //支付取消
                 ToastUtils.showShort("支付取消");
             }
+            toOrderMainActivity(code == 0?true:false);
             finish();
-            toOrderMainActivity();
         }
     }
 
-    private void toOrderMainActivity() {
+    private void toOrderMainActivity(boolean isPaySuccess) {
         Intent intent = new Intent(this, OrderMainNewActivity.class);
         intent.putExtra(OrderParams.TYPE, 1);
-        intent.putExtra(OrderParams.TARGET, 0);
+        intent.putExtra(OrderParams.TARGET, isPaySuccess?1:0);
         startActivity(intent);
         finish();
     }

@@ -88,4 +88,8 @@
     <string name="refund_success_desc">您的撤销保证金申请已提交成功！\n 平台处理时间约为1~3个工作日，请您耐心等待！\n撤销的保证金将直接退回到您的可用余额</string>
     <string name="title_activity_goods_audit">GoodsAuditActivity</string>
     <string name="person_one_tips">认证说明： \n1、为保障双方利益，在平台发布商品需要进行实名认证；\n2、作为卖家若成功售出商品后，平台将收取订单总额的3.5%作为平台佣金！</string>
+    <string name="check_auth_pass_one">您的个人/企业认证已通过！</string>
+    <string name="check_auth_pass_two">恭喜您可以在醇狼平台发布商品啦！ \n若交易成功，平台每单将收取3.5%的佣金。</string>
+    <string name="check_auth_fail_one">您的个人/企业认证未通过！</string>
+    <string name="check_auth_fail_two">距离发布商品还差一点点哦，我们期待您再次提交。</string>
 </resources>

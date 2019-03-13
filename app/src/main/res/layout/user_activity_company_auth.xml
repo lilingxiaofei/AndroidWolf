@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="法人"
+                    android:text="法人姓名"
                     android:textColor="@color/t_black"
                     android:textSize="@dimen/sp_mid" />
 

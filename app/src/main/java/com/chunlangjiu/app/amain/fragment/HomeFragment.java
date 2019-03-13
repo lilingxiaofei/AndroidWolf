@@ -157,7 +157,12 @@ public class HomeFragment extends BaseFragment {
                     choiceCity();
                     break;
                 case R.id.imgMsg:
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_MESSAGE + BaseApplication.getToken(), "消息");
+                    if (!BaseApplication.isLogin()) {
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                    }else{
+                        WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_MESSAGE + BaseApplication.getToken(), "消息");
+                    }
+
 //                    startActivity(new Intent(getActivity(), StoreListActivity.class));
                     break;
                 case R.id.rlTitleSearch:

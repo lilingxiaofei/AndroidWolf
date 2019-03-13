@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:gravity="center"
+            android:background="@drawable/bg_round_white"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -42,8 +43,8 @@
 
                 <ImageView
                     android:id="@+id/imgBank"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_marginLeft="12dp"
                     android:src="@mipmap/logo" />
 
@@ -51,8 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="18dp"
-                    android:layout_toRightOf="@+id/imgBank"
+                    android:layout_marginLeft="68dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_size_15sp"
                         android:text="--"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/t_black" />
 
                     <TextView
                         android:id="@+id/tvCardType"
@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:text="--"
                         android:textSize="@dimen/text_size_12sp"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/t_black" />
 
                 </LinearLayout>
 
@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="62dp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/t_black"
                     android:text="--"
                     android:textSize="24sp"/>
             </LinearLayout>

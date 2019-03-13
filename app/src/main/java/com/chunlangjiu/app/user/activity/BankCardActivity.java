@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
@@ -28,13 +29,16 @@ import com.chunlangjiu.app.user.bean.BankCardInfoBean;
 import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
+import com.pkqup.commonlibrary.glide.GlideApp;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,6 +58,26 @@ public class BankCardActivity extends BaseActivity {
     private List<BankCardListBean.BankCardDetailBean> bankCard = new ArrayList<>();
     private BankCardAdapter bankCardAdapter;
 
+    Map<String, Integer> bankMap = new HashMap<>();
+    public static final String BANK_PA = "95511";//平安银行
+    public static final String BANK_ZG = "95566";//中国银行
+    public static final String BANK_NY = "95599";//农业银行
+    public static final String BANK_JS = "95533";//建设银行
+    public static final String BANK_GS = "95588";//工商银行
+    public static final String BANK_JT = "95559";//交通银行
+    public static final String BANK_XY = "95561";//兴业银行
+    public static final String BANK_GD = "95595";//光大银行
+    public static final String BANK_GF = "95508";//广发银行
+    public static final String BANK_HX = "95577";//华夏银行
+    public static final String BANK_MS = "95568";//民生银行
+    public static final String BANK_PF = "95528";//浦发银行
+    public static final String BANK_ZS = "95555";//招商银行
+    public static final String BANK_ZX = "95558";//中信银行
+    public static final String BANK_YZ = "95580";//邮政储蓄
+    public static final String BANK_BJ = "95526";//北京银行
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +86,27 @@ public class BankCardActivity extends BaseActivity {
         initEvent();
         initView();
         initData();
+        initBankMap();
+    }
+
+    private void initBankMap() {
+        bankMap.put(BANK_PA, R.mipmap.bank_logo_pa);
+        bankMap.put(BANK_ZG, R.mipmap.bank_logo_zg);
+        bankMap.put(BANK_NY, R.mipmap.bank_logo_ny);
+        bankMap.put(BANK_JS, R.mipmap.bank_logo_js);
+        bankMap.put(BANK_GS, R.mipmap.bank_logo_gs);
+        bankMap.put(BANK_JT, R.mipmap.bank_logo_jt);
+        bankMap.put(BANK_XY, R.mipmap.bank_logo_xy);
+        bankMap.put(BANK_GD, R.mipmap.bank_logo_gd);
+        bankMap.put(BANK_GF, R.mipmap.bank_logo_gf);
+        bankMap.put(BANK_HX, R.mipmap.bank_logo_hx);
+        bankMap.put(BANK_MS, R.mipmap.bank_logo_ms);
+        bankMap.put(BANK_PF, R.mipmap.bank_logo_pf);
+        bankMap.put(BANK_ZS, R.mipmap.bank_logo_zs);
+        bankMap.put(BANK_ZX, R.mipmap.bank_logo_zx);
+        bankMap.put(BANK_YZ, R.mipmap.bank_logo_yz);
+        bankMap.put(BANK_BJ, R.mipmap.bank_logo_bj);
+
     }
 
     private void initView() {
@@ -95,11 +140,12 @@ public class BankCardActivity extends BaseActivity {
         bankCardAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) recycleBankCardList.getParent(), false));
 
     }
-    private Drawable getDrawable(String color){
+
+    private Drawable getDrawable(String color) {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setGradientType(GradientDrawable.RECTANGLE);
         //设置圆角大小
-        drawable.setCornerRadius(dip2px(this,4));
+        drawable.setCornerRadius(dip2px(this, 4));
         //设置边缘线的宽以及颜色
 //        drawable.setStroke(1, Color.parseColor(#FF00FF));
         //设置shape背景色
@@ -108,10 +154,12 @@ public class BankCardActivity extends BaseActivity {
         return drawable;
 
     }
+
     public static int dip2px(Context context, float dpValue) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
+
     private void initData() {
         getBankCardList();
     }
@@ -286,7 +334,7 @@ public class BankCardActivity extends BaseActivity {
         @Override
         protected void convert(BaseViewHolder helper, final BankCardListBean.BankCardDetailBean item) {
             BankCardInfoBean bankCardInfoBean = item.getBankCardInfoBean();
-            helper.getView(R.id.linearBankCard).setBackground(getDrawable("#ffb31f3f"));
+//            helper.getView(R.id.linearBankCard).setBackground(getDrawable("#ffb31f3f"));
             helper.setText(R.id.tvBankName, item.getBank());
             helper.setText(R.id.tvCardType, "");
             helper.setText(R.id.tvBankCardNumber, formateBankCard(item.getCard()));
@@ -294,13 +342,21 @@ public class BankCardActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     deleteBankCard(String.valueOf(item.getBank_id()));
-
                 }
             });
             helper.addOnClickListener(R.id.linearBankCard);
             if (null != bankCardInfoBean) {
-                GlideUtils.loadImageHead(BankCardActivity.this, bankCardInfoBean.getBankimage(), (ImageView) helper.getView(R.id.imgBank));
-                helper.setText(R.id.tvCardType,bankCardInfoBean.getCardtype());
+                helper.setText(R.id.tvBankName, bankCardInfoBean.getBankname());
+
+                String phone = bankCardInfoBean.getServicephone();
+                Object url = bankCardInfoBean.getBankimage();
+                ImageView iv = helper.getView(R.id.imgBank);
+                if(bankMap.containsKey(phone)){
+                    iv.setImageResource(bankMap.get(phone));
+                }else{
+                    GlideUtils.loadImageHead(BankCardActivity.this,url , iv);
+                }
+                helper.setText(R.id.tvCardType, bankCardInfoBean.getCardtype());
             }
 
         }

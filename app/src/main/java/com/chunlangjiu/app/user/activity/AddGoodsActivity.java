@@ -509,9 +509,11 @@ public class AddGoodsActivity extends BaseActivity {
                             } else if (AuthStatusBean.AUTH_FAILING.equals(authStatusBeans.get(0).getStatus()) || AuthStatusBean.AUTH_FAILING.equals(authStatusBeans.get(1).getStatus())) {
                                 ToastUtils.showShort("您的认证被驳回，请重新提交资料审核");
                                 startActivity(new Intent(AddGoodsActivity.this,VerifiedActivity.class));
+                                finish();
                             } else {
                                 ToastUtils.showShort("您还没有进行实名认证，请先认证");
                                 startActivity(new Intent(AddGoodsActivity.this,VerifiedActivity.class));
+                                finish();
                             }
                         }
                     }, new Consumer<Throwable>() {

@@ -125,7 +125,11 @@ public class GoodsManageHomeActivity extends BaseActivity {
         initData();
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSellerOrderNumIndex();
+    }
 
     private void initView() {
         MyStatusBarUtils.setStatusBar(this,ContextCompat.getColor(this, R.color.bg_red));
@@ -154,7 +158,6 @@ public class GoodsManageHomeActivity extends BaseActivity {
         EventManager.getInstance().registerListener(onNotifyListener);
         disposable = new CompositeDisposable();
         getUserInfo();
-        getSellerOrderNumIndex();
     }
 
     private void getUserInfo() {
