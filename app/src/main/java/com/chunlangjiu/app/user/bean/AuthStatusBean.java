@@ -10,6 +10,8 @@ public class AuthStatusBean {
     public static final String AUTH_LOCKED = "locked";
     public static final String AUTH_FAILING = "failing";
     public static final String AUTH_MODIFIER= "modifier";
+    public static final String AUTH_MODEFIER_FAIL= "modefierfail";
+
 
     //'active'=>'未审核',
     //'locked'=>'审核中',

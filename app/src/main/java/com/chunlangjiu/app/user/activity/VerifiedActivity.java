@@ -115,20 +115,21 @@ public class VerifiedActivity extends BaseActivity {
                     public void accept(ResultBean<AuthStatusBean> authStatusBeanResultBean) throws Exception {
                         personStatus = authStatusBeanResultBean.getData().getStatus();
                         hideLoadingDialog();
-                        if ("active".equals(authStatusBeanResultBean.getData().getStatus())) {
+                        if ("active".equals(personStatus)) {
                             //未认证
                             toAuthActivity();
-                        } else if ("locked".equals(authStatusBeanResultBean.getData().getStatus())) {
+                        } else if ("locked".equals(personStatus)) {
                             ToastUtils.showShort("您的认证正在审核中，我们会尽快处理");
-                        } else if ("failing".equals(authStatusBeanResultBean.getData().getStatus())) {
+                        } else if ("failing".equals(personStatus)) {
                             ToastUtils.showShort("您的认证被驳回，请重新提交资料审核");
                             toAuthActivity();
-                        } else if (AuthStatusBean.AUTH_MODIFIER.equals(authStatusBeanResultBean.getData().getStatus())) {
+                        } else if (AuthStatusBean.AUTH_MODIFIER.equals(personStatus)) {
+                            ToastUtils.showShort("您的更新的认证资料正在审核中，我们会尽快处理");
                             toAuthActivity();
-//                            tvAuthPerson.setVisibility(View.GONE);
-//                            imgAuthStatus.setImageResource(R.mipmap.my_auth);
-//                            tvAuthStatus.setText("已认证");
-                        }else if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeanResultBean.getData().getStatus())) {
+                        } else if (AuthStatusBean.AUTH_MODEFIER_FAIL.equals(personStatus)) {
+                            ToastUtils.showShort("您的更新的认证资料审核不通过，请重新提交资料审核");
+                            toAuthActivity();
+                        }else if (AuthStatusBean.AUTH_SUCCESS.equals(personStatus)) {
                             ToastUtils.showShort("您的认证已成功");
                             toAuthActivity();
 //                            tvAuthPerson.setVisibility(View.GONE);
@@ -155,38 +156,21 @@ public class VerifiedActivity extends BaseActivity {
                     public void accept(ResultBean<AuthStatusBean> authStatusBeanResultBean) throws Exception {
                         companyStatus = authStatusBeanResultBean.getData().getStatus();
                         hideLoadingDialog();
-                        if ("active".equals(authStatusBeanResultBean.getData().getStatus())) {
+                        if ("active".equals(companyStatus)) {
                             //未认证
                             toAuthCompanyActivity();
-                        } else if ("locked".equals(authStatusBeanResultBean.getData().getStatus())) {
+                        } else if ("locked".equals(companyStatus)) {
                             ToastUtils.showShort("您的认证正在审核中，我们会尽快处理");
-                        } else if ("failing".equals(authStatusBeanResultBean.getData().getStatus())) {
+                        } else if ("failing".equals(companyStatus)) {
                             ToastUtils.showShort("您的认证被驳回，请重新提交资料审核");
                             toAuthCompanyActivity();
-                        } else if (AuthStatusBean.AUTH_MODIFIER.equals(authStatusBeanResultBean.getData().getStatus())) {
+                        } else if (AuthStatusBean.AUTH_MODIFIER.equals(companyStatus)) {
+                            ToastUtils.showShort("您的更新的认证资料正在审核中，我们会尽快处理");
                             toAuthCompanyActivity();
-//                            tvAuthPerson.setVisibility(View.GONE);
-//                            tvAuthCompany.setVisibility(View.GONE);
-//                            imgAuthStatus.setImageResource(R.mipmap.my_auth);
-//                            tvAuthStatus.setText("已认证");
-//                            if (userType == TYPE_BUYER) {
-//                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-//                                    tvMyTitle.setText("企业买家");
-//                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
-//                                } else {
-//                                    tvMyTitle.setText("个人买家");
-//                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
-//                                }
-//                            } else {
-//                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-//                                    tvMyTitle.setText("企业卖家");
-//                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
-//                                } else {
-//                                    tvMyTitle.setText("个人卖家");
-//                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
-//                                }
-//                            }
-                        }else if (AuthStatusBean.AUTH_SUCCESS.equals(authStatusBeanResultBean.getData().getStatus())) {
+                        }else if (AuthStatusBean.AUTH_MODEFIER_FAIL.equals(companyStatus)) {
+                            ToastUtils.showShort("您的更新的认证资料审核不通过，请重新提交资料审核");
+                            toAuthCompanyActivity();
+                        }else if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
                             ToastUtils.showShort("您的认证已成功");
                             toAuthCompanyActivity();
 //                            tvAuthPerson.setVisibility(View.GONE);

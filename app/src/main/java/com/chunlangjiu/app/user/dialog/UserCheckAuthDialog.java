@@ -16,8 +16,8 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.goodsmanage.activity.GoodsManageHomeActivity;
 import com.chunlangjiu.app.user.activity.VerifiedActivity;
 import com.chunlangjiu.app.user.bean.AuthStatusBean;
-import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.util.SPUtils;
+import com.pkqup.commonlibrary.util.SizeUtils;
 
 /**
  * @CreatedbBy: liucun on 2018/7/30
@@ -45,7 +45,7 @@ public class UserCheckAuthDialog extends Dialog {
         super(context, R.style.dialog_transparent);
         this.context = context;
         setCancelable(true);
-        setCanceledOnTouchOutside(false);
+        setCanceledOnTouchOutside(true);
         initView();
     }
 
@@ -55,6 +55,7 @@ public class UserCheckAuthDialog extends Dialog {
         Window window = getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();
+        params.width  = SizeUtils.getScreenWidth()-SizeUtils.dp2px(50);
         window.setAttributes(params);
         window.setGravity(Gravity.CENTER);
         setContentView(view);// 设置布局
@@ -127,13 +128,12 @@ public class UserCheckAuthDialog extends Dialog {
     }
 
     private void confirm() {
+        if ((AuthStatusBean.AUTH_SUCCESS.equals(personStatus) || AuthStatusBean.AUTH_SUCCESS.equals(companyStatus))) {
+            GoodsManageHomeActivity.startShopMainActivity(context);
+        } else if ((AuthStatusBean.AUTH_FAILING.equals(personStatus) || AuthStatusBean.AUTH_FAILING.equals(companyStatus))) {
+            context.startActivity(new Intent(context,VerifiedActivity.class));
+        }
         if (callBack != null) {
-            if ((AuthStatusBean.AUTH_SUCCESS.equals(personStatus) || AuthStatusBean.AUTH_SUCCESS.equals(companyStatus))) {
-                GoodsManageHomeActivity.startShopMainActivity(context);
-            } else if ((AuthStatusBean.AUTH_FAILING.equals(personStatus) || AuthStatusBean.AUTH_FAILING.equals(companyStatus))) {
-                context.startActivity(new Intent(context,VerifiedActivity.class));
-            }
-
             callBack.confirm();
         }
     }

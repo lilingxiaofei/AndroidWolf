@@ -51,7 +51,6 @@ import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
 import com.pkqup.commonlibrary.dialog.ChoicePhotoDialog;
-import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
@@ -879,10 +878,10 @@ public class UserFragment extends BaseFragment {
 
     private void setAuthView() {
         rlAuthStatus.setVisibility(View.VISIBLE);
+        setLoginAccountAuth();
         if ((AuthStatusBean.AUTH_SUCCESS.equals(personStatus) || AuthStatusBean.AUTH_SUCCESS.equals(companyStatus))) {
             imgAuthStatus.setImageResource(R.mipmap.my_auth);
             tvAuthStatus.setText("已认证");
-            setLoginAccountAuth();
             if ((AuthStatusBean.AUTH_SUCCESS.equals(personStatus) && AuthStatusBean.AUTH_SUCCESS.equals(companyStatus))) {
                 tvAuthPerson.setVisibility(View.GONE);
                 tvAuthCompany.setVisibility(View.GONE);
