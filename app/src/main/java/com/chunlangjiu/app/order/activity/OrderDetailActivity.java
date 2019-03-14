@@ -183,7 +183,8 @@ public class OrderDetailActivity extends BaseActivity {
     @BindView(R.id.tvInfo)
     TextView tvInfo;
 
-
+    @BindView(R.id.tvComplain)
+    TextView tvComplain;
     @BindView(R.id.tvDelete)
     TextView tvDelete;//删除订单
     @BindView(R.id.tvServerInto)
@@ -273,6 +274,7 @@ public class OrderDetailActivity extends BaseActivity {
         refundAmountDialog = new RefundAmountDialog(this);
         tvDelete.setOnClickListener(onClickListener);//删除订单
         tvServerInto.setOnClickListener(onClickListener);
+        tvComplain.setOnClickListener(onClickListener);
         tvCancel.setOnClickListener(onClickListener);//取消订单
         tvRefund.setOnClickListener(onClickListener);//申请退款
         tvNotGoods.setOnClickListener(onClickListener);//无货
@@ -293,6 +295,7 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void hideOrderBtn() {
+        tvComplain.setVisibility(View.GONE);
         tvDelete.setVisibility(View.GONE);//删除订单
         tvCancel.setVisibility(View.GONE);//取消订单
         tvRefund.setVisibility(View.GONE);//申请退款
@@ -979,7 +982,14 @@ public class OrderDetailActivity extends BaseActivity {
                     tvAfterSalePayTime.setVisibility(View.VISIBLE);
                     if (2 == type) {
                         tvDelete.setVisibility(View.GONE);
-                        tvServerInto.setVisibility(View.VISIBLE);
+//                        tvServerInto.setVisibility(View.VISIBLE);
+                    }
+
+                    OrderDetailBean.OrdersBean orderBean = orderDetailBean.getOrder();
+                    if ("SELLER_REFUSE_BUYER".equals(orderBean.getAftersales_status())) {
+                        if ("NOT_COMPLAINTS".equals(orderBean.getComplaints_status())) {
+                            tvComplain.setVisibility(View.VISIBLE);
+                        }
                     }
                     break;
             }
@@ -1317,6 +1327,9 @@ public class OrderDetailActivity extends BaseActivity {
                     break;
                 case R.id.tvServerInto:
                     CommonUtils.callPhone("4007889550");
+                    break;
+                case R.id.tvComplain:
+                    toOrderComplainActivity();
                     break;
             }
         }
@@ -1892,6 +1905,17 @@ public class OrderDetailActivity extends BaseActivity {
                         }
                     }
                 }));
+    }
+
+
+    private void toOrderComplainActivity() {
+        Intent intent = new Intent(this, OrderComplainActivity.class);
+        intent.putExtra(OrderParams.ORDERID, orderDetailBean.getTid());
+        if (null != orderDetailBean.getOrder()) {
+            intent.putExtra(OrderParams.OID, orderDetailBean.getOrder().getOid());
+            intent.putExtra(OrderParams.AFTERSALESBN, orderDetailBean.getAftersales_bn());
+        }
+        startActivity(intent);
     }
 
     public void copy() {

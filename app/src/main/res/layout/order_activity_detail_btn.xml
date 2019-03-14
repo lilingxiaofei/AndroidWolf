@@ -34,7 +34,10 @@
         android:id="@+id/tvRefusedRefund"
         style="@style/order_btn_gray"
         android:text="拒绝" />
-
+    <TextView
+        android:id="@+id/tvComplain"
+        style="@style/order_btn_gray"
+        android:text="投诉" />
     <TextView
         android:id="@+id/tvReturnSend"
         style="@style/order_btn_gray"

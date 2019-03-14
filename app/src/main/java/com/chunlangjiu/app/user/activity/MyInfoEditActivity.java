@@ -140,6 +140,7 @@ public class MyInfoEditActivity extends BaseActivity implements View.OnClickList
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showErrorMsg(throwable);
                     }
                 }));
     }

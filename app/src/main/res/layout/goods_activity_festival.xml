@@ -5,7 +5,7 @@
     android:id="@+id/rlRootLayout">
 
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -20,15 +20,18 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycle_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:nestedScrollingEnabled="false" />
+                android:layout_marginRight="10dp" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/ivBgBottom"
@@ -37,7 +40,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rlShopTitle"
         android:layout_width="match_parent"

@@ -466,6 +466,13 @@ public class ApiUtils {
         return apiService.applyAfterSaleReason("member.aftersales.apply", "v1", tid, oid, reason, description, "REFUND_GOODS", evidence_pic);
     }
 
+    public Flowable<ResultBean> orderComplain(String tid, String oid, String complaints_type, String tel, String content,String evidence_pic) {
+        return apiService.orderComplain("member.complaints.create", "v1", tid, oid, complaints_type, tel, content, evidence_pic);
+    }
+
+
+
+
     public Flowable<ResultBean> delete(String tid) {
         return apiService.delete("trade.delete", "v1", tid);
     }

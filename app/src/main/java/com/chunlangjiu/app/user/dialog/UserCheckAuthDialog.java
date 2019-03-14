@@ -88,7 +88,7 @@ public class UserCheckAuthDialog extends Dialog {
                 boolean flag = (boolean) SPUtils.get(key, false);
                 if (!flag) {
                     ivCheckPic.setImageResource(R.mipmap.pass);
-                    tvTipsOne.setText(R.string.check_auth_pass_one);
+                    tvTipsOne.setText(AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)?R.string.check_auth_pass_one_company:R.string.check_auth_pass_one_person);
                     tvTipsTwo.setText(R.string.check_auth_pass_two);
                     tvConfirm.setText("去发布商品");
                     show();
@@ -99,7 +99,7 @@ public class UserCheckAuthDialog extends Dialog {
                 boolean flag = (boolean) SPUtils.get(key, false);
                 if (!flag) {
                     ivCheckPic.setImageResource(R.mipmap.warn);
-                    tvTipsOne.setText(R.string.check_auth_fail_one);
+                    tvTipsOne.setText( AuthStatusBean.AUTH_FAILING.equals(companyStatus)?R.string.check_auth_fail_one_company:R.string.check_auth_fail_one_person);
                     tvTipsTwo.setText(R.string.check_auth_fail_two);
                     tvConfirm.setText("重新提交认证");
                     show();

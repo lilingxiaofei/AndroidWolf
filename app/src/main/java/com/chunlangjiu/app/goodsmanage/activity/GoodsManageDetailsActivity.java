@@ -785,7 +785,9 @@ public class GoodsManageDetailsActivity extends BaseActivity {
         UMWeb web = new UMWeb(ConstantMsg.APP_DOWNLOAD_URL);
         web.setTitle(goodsDetailBean.getItem().getTitle());//标题
         web.setThumb(thumb);  //缩略图
-        web.setDescription(goodsDetailBean.getItem().getSub_title());//描述
+        String content = goodsDetailBean.getItem().getSub_title();
+        content = TextUtils.isEmpty(content)?" ":content;
+        web.setDescription(content);//描述
 
         ShareUtils.shareLink(this, web, new UMShareListener() {
             @Override

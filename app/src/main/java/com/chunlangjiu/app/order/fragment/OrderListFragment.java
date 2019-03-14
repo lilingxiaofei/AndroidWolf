@@ -26,6 +26,8 @@ import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.order.activity.OrderApplyForAfterSaleActivity;
+import com.chunlangjiu.app.order.activity.OrderComplainActivity;
 import com.chunlangjiu.app.order.activity.OrderDetailActivity;
 import com.chunlangjiu.app.order.activity.OrderEvaluationDetailActivity;
 import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
@@ -980,6 +982,9 @@ public class OrderListFragment extends BaseFragment {
                 case R.id.tvServerInto:
                     CommonUtils.callPhone("4007889550");
                     break;
+                case R.id.tvComplain:
+                    toOrderComplainActivity(position);
+                    break;
             }
         }
     };
@@ -1386,6 +1391,23 @@ public class OrderListFragment extends BaseFragment {
             }
         });
 
+    }
+
+
+
+    private void toOrderComplainActivity(int position) {
+        Intent intent = new Intent(activity, OrderComplainActivity.class);
+        intent.putExtra(OrderParams.ORDERID, listBeans.get(position).getTid());
+        if (null != listBeans.get(position).getSku()) {
+            intent.putExtra(OrderParams.OID, listBeans.get(position).getSku().getOid());
+            intent.putExtra(OrderParams.AFTERSALESBN, listBeans.get(position).getAftersales_bn());
+        }
+        intent.putExtra(OrderParams.CANCELID, listBeans.get(position).getCancel_id());
+        intent.putExtra(OrderParams.AUCTIONITEMID, listBeans.get(position).getAuctionitem_id());
+        OrderListBean.ListBean listBean = listBeans.get(position);
+        intent.putExtra(OrderParams.PRODUCTS, listBean);
+        intent.putExtra(OrderParams.TYPE, type);
+        startActivity(intent);
     }
 
     private void toOrderDetailActivity(int position) {

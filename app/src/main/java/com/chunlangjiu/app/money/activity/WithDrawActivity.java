@@ -18,6 +18,7 @@ import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
@@ -54,7 +55,6 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
     private String bankCardId = "";
     private BankCardListBean.BankCardDetailBean bankCardDetailBean;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +73,7 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
         } else {
             tvTips.setText(getResources().getString(R.string.refund_tips));
             String count =getIntent().getStringExtra(MoneyCount);
-            edtAmount.setHint(String.format("最多可提（%s）",count));
+            edtAmount.setHint(String.format("可提余额（¥%s）", BigDecimalUtils.objToStr(count)));
             btnOk.setText("确认提现");
         }
     }

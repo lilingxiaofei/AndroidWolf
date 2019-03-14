@@ -130,7 +130,7 @@ public class VerifiedActivity extends BaseActivity {
                             ToastUtils.showShort("您的更新的认证资料审核不通过，请重新提交资料审核");
                             toAuthActivity();
                         }else if (AuthStatusBean.AUTH_SUCCESS.equals(personStatus)) {
-                            ToastUtils.showShort("您的认证已成功");
+//                            ToastUtils.showShort("您的认证已成功");
                             toAuthActivity();
 //                            tvAuthPerson.setVisibility(View.GONE);
 //                            imgAuthStatus.setImageResource(R.mipmap.my_auth);
@@ -171,7 +171,7 @@ public class VerifiedActivity extends BaseActivity {
                             ToastUtils.showShort("您的更新的认证资料审核不通过，请重新提交资料审核");
                             toAuthCompanyActivity();
                         }else if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-                            ToastUtils.showShort("您的认证已成功");
+//                            ToastUtils.showShort("您的认证已成功");
                             toAuthCompanyActivity();
 //                            tvAuthPerson.setVisibility(View.GONE);
 //                            tvAuthCompany.setVisibility(View.GONE);

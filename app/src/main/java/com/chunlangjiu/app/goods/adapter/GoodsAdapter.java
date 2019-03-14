@@ -136,7 +136,7 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
             if (llTime != null) {
                 llTime.setVisibility(View.GONE);
             }
-            if (item.getAuction()!=null && "true".equals(item.getAuction().getAuction_status())) {
+            if (item.getAuction()!=null && !TextUtils.isEmpty(item.getAuction().getAuctionitem_id())) {
                 //竞拍
                 imgAuction.setVisibility(View.VISIBLE);
                 llStartPrice.setVisibility(View.VISIBLE);

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.user.bean.AuthStatusBean;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.user.bean.UserInfoBean;
 import com.chunlangjiu.app.util.CommonUtils;
@@ -33,11 +34,14 @@ import com.pkqup.commonlibrary.util.TimeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -65,6 +69,10 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     TextView etStoreAddress;
     @BindView(R.id.tvTel)
     TextView tvTel;
+    @BindView(R.id.llToAuth)
+    RelativeLayout llToAuth;
+    @BindView(R.id.llShopInfo)
+    LinearLayout llShopInfo;
 
     //个人认证
     @BindView(R.id.llPersonInfo)
@@ -102,6 +110,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     private CompositeDisposable disposable;
     private UserInfoBean userInfoBean;
 
+    private String personStatus;
+    private String companyStatus;
+
     @Override
     public void setTitleView() {
         titleName.setText("我的资料");
@@ -122,7 +133,64 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.user_my_info_activity);
         disposable = new CompositeDisposable();
         getUserInfo();
+        getPersonAndCompanyAuthStatus();
     }
+
+
+    private void getPersonAndCompanyAuthStatus() {
+        Observable<ResultBean<AuthStatusBean>> personAuthStatus = ApiUtils.getInstance().getPersonAuthStatus();
+        Observable<ResultBean<AuthStatusBean>> companyAuthStatus = ApiUtils.getInstance().getCompanyAuthStatus();
+        disposable.add(Observable.zip(personAuthStatus, companyAuthStatus, new BiFunction<ResultBean<AuthStatusBean>, ResultBean<AuthStatusBean>, List<AuthStatusBean>>() {
+            @Override
+            public List<AuthStatusBean> apply(ResultBean<AuthStatusBean> uploadImageBeanResultBean, ResultBean<AuthStatusBean> uploadImageBeanResultBean2) throws Exception {
+                List<AuthStatusBean> imageLists = new ArrayList<>();
+                imageLists.add(uploadImageBeanResultBean.getData());
+                imageLists.add(uploadImageBeanResultBean2.getData());
+                return imageLists;
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<AuthStatusBean>>() {
+                    @Override
+                    public void accept(List<AuthStatusBean> authStatusBeans) throws Exception {
+                        personStatus = authStatusBeans.get(0).getStatus();
+                        companyStatus = authStatusBeans.get(1).getStatus();
+                        setAuthView();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
+                    }
+                }));
+    }
+
+    private void setAuthView() {
+        if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus) || AuthStatusBean.AUTH_MODIFIER.equals(companyStatus) || AuthStatusBean.AUTH_MODEFIER_FAIL.equals(companyStatus) ||
+                AuthStatusBean.AUTH_SUCCESS.equals(personStatus) || AuthStatusBean.AUTH_MODIFIER.equals(personStatus) || AuthStatusBean.AUTH_MODEFIER_FAIL.equals(personStatus)) {
+            llShopInfo.setVisibility(View.VISIBLE);
+            llToAuth.setVisibility(View.GONE);
+
+            if(AuthStatusBean.AUTH_SUCCESS.equals(companyStatus) || AuthStatusBean.AUTH_MODIFIER.equals(companyStatus) || AuthStatusBean.AUTH_MODEFIER_FAIL.equals(companyStatus) ){
+                llCompanyInfo.setVisibility(View.VISIBLE);
+            }else{
+                llCompanyInfo.setVisibility(View.GONE);
+            }
+
+            if(AuthStatusBean.AUTH_SUCCESS.equals(personStatus) || AuthStatusBean.AUTH_MODIFIER.equals(personStatus) || AuthStatusBean.AUTH_MODEFIER_FAIL.equals(personStatus) ){
+                llPersonInfo.setVisibility(View.VISIBLE);
+            }else{
+                llPersonInfo.setVisibility(View.GONE);
+            }
+
+        }else{
+            llShopInfo.setVisibility(View.GONE);
+            llToAuth.setVisibility(View.VISIBLE);
+            llPersonInfo.setVisibility(View.GONE);
+            llCompanyInfo.setVisibility(View.GONE);
+        }
+    }
+
 
     private void getUserInfo() {
         disposable.add(ApiUtils.getInstance().getUserInfo()
@@ -142,21 +210,6 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 }));
     }
 
-//    private void getShopInfo(String shopId) {
-//        disposable.add(ApiUtils.getInstance().getShopInfo(shopId)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<ResultBean<ShopInfoBean>>() {
-//                    @Override
-//                    public void accept(ResultBean<ShopInfoBean> shopInfoBeanResultBean) throws Exception {
-//                        getShopInfoSuccess(shopInfoBeanResultBean.getData());
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//                    }
-//                }));
-//    }
 
     private void updateUserView() {
         if (userInfoBean != null) {
@@ -187,7 +240,8 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
             tvLegalPerson.setText(userInfoBean.getRepresentative());
             tvBusinessLicense.setText(userInfoBean.getCompany_area());
             tvCreateTime.setText(TimeUtils.millisToDate(userInfoBean.getEstablish_date()));
-            tvBusinessAddress.setText(userInfoBean.getCompany_area());
+            tvBusinessAddress.setText(userInfoBean.getArea());
+//            tvBusinessAddress.setText(userInfoBean.getCompany_area());
             tvCompanyPhone.setText(userInfoBean.getCompany_phone());
             if (BigDecimalUtils.objToBigDecimal(userInfoBean.getEstablish_date()).longValue() > 0 && !TextUtils.isEmpty(userInfoBean.getCompany_name())) {
                 llCompanyInfo.setVisibility(View.VISIBLE);
@@ -199,7 +253,7 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    @OnClick({R.id.img_title_left, R.id.imgHead, R.id.tvSex, R.id.tvStoreName, R.id.rlStoreIntro, R.id.rlStoreAddress, R.id.tvTel})
+    @OnClick({R.id.img_title_left, R.id.imgHead, R.id.tvSex, R.id.tvStoreName, R.id.rlStoreIntro, R.id.rlStoreAddress, R.id.tvTel,R.id.llToAuth})
     @Override
     public void onClick(View view) {
         int resId = view.getId();
@@ -223,16 +277,18 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
                 });
             }
             photoDialog.show();
-        } else if (resId == R.id.tvSex) {
-            MyInfoEditActivity.startActivity(MyInfoActivity.this,"修改性别","sex",userInfoBean.getSex(),1000);
+        } else if(resId == R.id.llToAuth){
+            startActivity(new Intent(this,VerifiedActivity.class));
+        }else if (resId == R.id.tvSex) {
+            MyInfoEditActivity.startActivity(MyInfoActivity.this, "修改性别", "sex", userInfoBean.getSex(), 1000);
         } else if (resId == R.id.tvStoreName) {
-            MyInfoEditActivity.startActivity(MyInfoActivity.this,"修改店铺名称","shopname",userInfoBean.getShop_name(),1000);
+            MyInfoEditActivity.startActivity(MyInfoActivity.this, "修改店铺名称", "shopname", userInfoBean.getShop_name(), 1000);
         } else if (resId == R.id.rlStoreIntro) {
-            MyInfoEditActivity.startActivity(MyInfoActivity.this,"修改店铺简介","bulletin",userInfoBean.getBulletin(),1000);
+            MyInfoEditActivity.startActivity(MyInfoActivity.this, "修改店铺简介", "bulletin", userInfoBean.getBulletin(), 1000);
         } else if (resId == R.id.rlStoreAddress) {
-            MyInfoEditActivity.startActivity(MyInfoActivity.this,"修改店铺地址","area",userInfoBean.getArea(),1000);
+            MyInfoEditActivity.startActivity(MyInfoActivity.this, "修改店铺地址", "area", userInfoBean.getArea(), 1000);
         } else if (resId == R.id.tvTel) {
-            MyInfoEditActivity.startActivity(MyInfoActivity.this,"修改联系方式","phone",userInfoBean.getPhone(),1000);
+            MyInfoEditActivity.startActivity(MyInfoActivity.this, "修改联系方式", "phone", userInfoBean.getPhone(), 1000);
         }
 
     }
@@ -268,9 +324,9 @@ public class MyInfoActivity extends BaseActivity implements View.OnClickListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            if(resultCode == Activity.RESULT_OK && requestCode == 1000){
+            if (resultCode == Activity.RESULT_OK && requestCode == 1000) {
                 getUserInfo();
-            }else if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            } else if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
                 //添加图片返回
                 if (data != null) {
                     if (requestCode == REQUEST_CODE_CHOICE_HEAD) {

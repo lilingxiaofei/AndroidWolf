@@ -524,6 +524,14 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
+    Flowable<ResultBean> orderComplain(@Field("method") String method, @Field("v") String v,
+                                              @Field("tid") String tid, @Field("oid") String oid,
+                                              @Field("complaints_type") String complaints_type, @Field("tel") String tel,
+                                              @Field("content") String content, @Field("image_url") String image_url);
+
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
     Flowable<ResultBean> delete(@Field("method") String method, @Field("v") String v, @Field("tid") String tid);
 
     @POST("index.php/topapi")

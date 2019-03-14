@@ -44,222 +44,263 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
 
     @Override
     protected void convert(BaseViewHolder helper, OrderListBean.ListBean item) {
-        LinearLayout llStore = helper.getView(R.id.llStore);
-        ImageView imgStore = helper.getView(R.id.imgStore);
-        TextView tvStore = helper.getView(R.id.tvStore);
-        TextView tvStatus = helper.getView(R.id.tvStatus);
-        LinearLayout llProducts = helper.getView(R.id.llProducts);
-        TextView tvTotalNum = helper.getView(R.id.tvTotalNum);
-        LinearLayout llBottom = helper.getView(R.id.llBottom);
 
-        tvStore.setText(item.getShopname());
-        tvStatus.setText(item.getStatus_desc());
-        GlideUtils.loadImageShop(context, item.getShop_logo(), imgStore);
+        ImageView imgStore = null;
+        try {
+            LinearLayout llStore = helper.getView(R.id.llStore);
+            imgStore = helper.getView(R.id.imgStore);
+            TextView tvStore = helper.getView(R.id.tvStore);
+            TextView tvStatus = helper.getView(R.id.tvStatus);
+            LinearLayout llProducts = helper.getView(R.id.llProducts);
+            TextView tvTotalNum = helper.getView(R.id.tvTotalNum);
+            LinearLayout llBottom = helper.getView(R.id.llBottom);
 
-        ImageView ivDel = helper.getView(R.id.ivDel);
+            tvStore.setText(item.getShopname());
+            tvStatus.setText(item.getStatus_desc());
+            GlideUtils.loadImageShop(context, item.getShop_logo(), imgStore);
+
+            ImageView ivDel = helper.getView(R.id.ivDel);
 //        ivDel.setVisibility(View.GONE);
 //        TextView tv1 = helper.getView(R.id.tv1);
 //        TextView tv2 = helper.getView(R.id.tv2);
 //        tv1.setVisibility(View.GONE);
 //        tv2.setVisibility(View.GONE);
-        TextView tvDelete = helper.getView(R.id.tvDelete);//删除订单
-        TextView tvCancel = helper.getView(R.id.tvCancel);//取消订单
-        TextView tvRefund = helper.getView(R.id.tvRefund);//申请退款
-        TextView tvNotGoods = helper.getView(R.id.tvNotGoods);//无货
-        TextView tvConsentRefund = helper.getView(R.id.tvConsentRefund);//同意退款
-        TextView tvRefusedRefund = helper.getView(R.id.tvRefusedRefund);//拒绝退款
-        TextView tvReturnSend = helper.getView(R.id.tvReturnSend);//退货发货
-        TextView tvServerInto = helper.getView(R.id.tvServerInto);//服务介入
-        TextView tvBackOutApply = helper.getView(R.id.tvBackOutApply);//撤销申请
-        TextView tvRefusedApply = helper.getView(R.id.tvRefusedApply);//拒绝申请
-        TextView tvConsentApply = helper.getView(R.id.tvConsentApply);//同意申请
-        TextView tvSendGoods = helper.getView(R.id.tvSendGoods);//发货
-        TextView tvGoodsSignBill = helper.getView(R.id.tvGoodsSignBill);//商品签单
-        TextView tvConfirmReceipt = helper.getView(R.id.tvConfirmReceipt);//确认收货
-        TextView tvEvaluate = helper.getView(R.id.tvEvaluate);//去评价
-        TextView tvPay = helper.getView(R.id.tvPay);//去支付
-        TextView tvPayment = helper.getView(R.id.tvPaymentBtn);//去付款
+            TextView tvComplain = helper.getView(R.id.tvComplain);//投诉
+            TextView tvDelete = helper.getView(R.id.tvDelete);//删除订单
+            TextView tvCancel = helper.getView(R.id.tvCancel);//取消订单
+            TextView tvRefund = helper.getView(R.id.tvRefund);//申请退款
+            TextView tvNotGoods = helper.getView(R.id.tvNotGoods);//无货
+            TextView tvConsentRefund = helper.getView(R.id.tvConsentRefund);//同意退款
+            TextView tvRefusedRefund = helper.getView(R.id.tvRefusedRefund);//拒绝退款
+            TextView tvReturnSend = helper.getView(R.id.tvReturnSend);//退货发货
+            TextView tvServerInto = helper.getView(R.id.tvServerInto);//服务介入
+            TextView tvBackOutApply = helper.getView(R.id.tvBackOutApply);//撤销申请
+            TextView tvRefusedApply = helper.getView(R.id.tvRefusedApply);//拒绝申请
+            TextView tvConsentApply = helper.getView(R.id.tvConsentApply);//同意申请
+            TextView tvSendGoods = helper.getView(R.id.tvSendGoods);//发货
+            TextView tvGoodsSignBill = helper.getView(R.id.tvGoodsSignBill);//商品签单
+            TextView tvConfirmReceipt = helper.getView(R.id.tvConfirmReceipt);//确认收货
+            TextView tvEvaluate = helper.getView(R.id.tvEvaluate);//去评价
+            TextView tvPay = helper.getView(R.id.tvPay);//去支付
+            TextView tvPayment = helper.getView(R.id.tvPaymentBtn);//去付款
 
-        TextView tvEditPrice = helper.getView(R.id.tvEditPrice);//修改出价
-        TextView tvPayDeposit = helper.getView(R.id.tvPayDeposit);//去付定金
+            TextView tvEditPrice = helper.getView(R.id.tvEditPrice);//修改出价
+            TextView tvPayDeposit = helper.getView(R.id.tvPayDeposit);//去付定金
 
 
-        tvDelete.setVisibility(View.GONE);//删除订单
-        tvCancel.setVisibility(View.GONE);//取消订单
-        tvRefund.setVisibility(View.GONE);//申请退款
-        tvNotGoods.setVisibility(View.GONE);//无货
-        tvConsentRefund.setVisibility(View.GONE);//同意退款
-        tvRefusedRefund.setVisibility(View.GONE);//拒绝退款
-        tvReturnSend.setVisibility(View.GONE);//退货发货
-        tvBackOutApply.setVisibility(View.GONE);//撤销申请
-        tvServerInto.setVisibility(View.GONE);//服务介入
-        tvRefusedApply.setVisibility(View.GONE);//拒绝申请
-        tvConsentApply.setVisibility(View.GONE);//同意申请
-        tvSendGoods.setVisibility(View.GONE);//发货
-        tvGoodsSignBill.setVisibility(View.GONE);//商品签单
-        tvConfirmReceipt.setVisibility(View.GONE);//确认收货
-        tvEvaluate.setVisibility(View.GONE);//去评价
-        tvPay.setVisibility(View.GONE);//去支付
-        tvPayment.setVisibility(View.GONE);
+            tvComplain.setVisibility(View.GONE);
+            tvDelete.setVisibility(View.GONE);//删除订单
+            tvCancel.setVisibility(View.GONE);//取消订单
+            tvRefund.setVisibility(View.GONE);//申请退款
+            tvNotGoods.setVisibility(View.GONE);//无货
+            tvConsentRefund.setVisibility(View.GONE);//同意退款
+            tvRefusedRefund.setVisibility(View.GONE);//拒绝退款
+            tvReturnSend.setVisibility(View.GONE);//退货发货
+            tvBackOutApply.setVisibility(View.GONE);//撤销申请
+            tvServerInto.setVisibility(View.GONE);//服务介入
+            tvRefusedApply.setVisibility(View.GONE);//拒绝申请
+            tvConsentApply.setVisibility(View.GONE);//同意申请
+            tvSendGoods.setVisibility(View.GONE);//发货
+            tvGoodsSignBill.setVisibility(View.GONE);//商品签单
+            tvConfirmReceipt.setVisibility(View.GONE);//确认收货
+            tvEvaluate.setVisibility(View.GONE);//去评价
+            tvPay.setVisibility(View.GONE);//去支付
+            tvPayment.setVisibility(View.GONE);
 
-        tvEditPrice.setVisibility(View.GONE);//修改出价
-        tvPayDeposit.setVisibility(View.GONE);//去付定金
+            tvEditPrice.setVisibility(View.GONE);//修改出价
+            tvPayDeposit.setVisibility(View.GONE);//去付定金
 
-        switch (type) {
-            case 0:
-                switch (item.getStatus()) {
-                    case OrderParams.WAIT_BUYER_PAY:
-                        tvCancel.setVisibility(View.VISIBLE);
-                        tvPay.setVisibility(View.VISIBLE);
-                        tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
-                        break;
-                    case OrderParams.TRADE_CLOSED_BY_SYSTEM:
-                        tvDelete.setVisibility(View.VISIBLE);
-                        tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_black));
-                        break;
-                    case OrderParams.WAIT_SELLER_SEND_GOODS:
-                        if ("NO_APPLY_CANCEL".equals(item.getCancel_status())) {
+            switch (type) {
+                case 0:
+                    switch (item.getStatus()) {
+                        case OrderParams.WAIT_BUYER_PAY:
                             tvCancel.setVisibility(View.VISIBLE);
-                        }
-                        tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
-                        break;
-                    case OrderParams.WAIT_BUYER_CONFIRM_GOODS:
-                        tvGoodsSignBill.setVisibility(View.VISIBLE);
-                        tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
-                        break;
-                    case OrderParams.TRADE_FINISHED:
-                        if (!item.isIs_buyer_rate()) {
-                            tvEvaluate.setVisibility(View.VISIBLE);
-                        }
-                        tvDelete.setVisibility(View.VISIBLE);
-                        tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_black));
-                        break;
-                }
-                break;
-            case 1://竞拍订单
-                helper.setVisible(R.id.ivAuctionBid, false);
-                switch (item.getStatus()) {
-                    case OrderParams.AUCTION_WAIT_PAY:
-                        tvPayDeposit.setVisibility(View.VISIBLE);
-                        tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
-                        break;
-                    case OrderParams.AUCTION_BIDDING:
-                        tvEditPrice.setVisibility(View.VISIBLE);
-                        tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
-                        break;
-                    case OrderParams.AUCTION_WON_BID:
-                        helper.setVisible(R.id.ivAuctionBid, true);
-                        helper.setImageResource(R.id.ivAuctionBid, R.mipmap.bid_already);
-                        tvStatus.setText("");
-                        if("WAIT_BUYER_PAY".equals(item.getTrade_ststus())){
-                            tvPayment.setVisibility(View.VISIBLE);
-                        }else if("WAIT_BUYER_CONFIRM_GOODS".equals(item.getTrade_ststus())){
+                            tvPay.setVisibility(View.VISIBLE);
+                            tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
+                            break;
+                        case OrderParams.TRADE_CLOSED_BY_SYSTEM:
+                            tvDelete.setVisibility(View.VISIBLE);
+                            tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_black));
+                            break;
+                        case OrderParams.WAIT_SELLER_SEND_GOODS:
+                            if ("NO_APPLY_CANCEL".equals(item.getCancel_status())) {
+                                tvCancel.setVisibility(View.VISIBLE);
+                            }
+                            tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
+                            break;
+                        case OrderParams.WAIT_BUYER_CONFIRM_GOODS:
                             tvGoodsSignBill.setVisibility(View.VISIBLE);
-                        }
-                        break;
-                    case OrderParams.AUCTION_OUTBID:
-                        helper.setVisible(R.id.ivAuctionBid, true);
-                        helper.setImageResource(R.id.ivAuctionBid, R.mipmap.bid_not);
-                        break;
-                    case OrderParams.AUCTION_DELIVERY:
+                            tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
+                            break;
+                        case OrderParams.TRADE_FINISHED:
+                            if (!item.isIs_buyer_rate()) {
+                                tvEvaluate.setVisibility(View.VISIBLE);
+                            }
+                            tvDelete.setVisibility(View.VISIBLE);
+                            tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_black));
+                            break;
+                    }
+                    break;
+                case 1://竞拍订单
+                    helper.setVisible(R.id.ivAuctionBid, false);
+                    switch (item.getStatus()) {
+                        case OrderParams.AUCTION_WAIT_PAY:
+                            tvPayDeposit.setVisibility(View.VISIBLE);
+                            tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
+                            break;
+                        case OrderParams.AUCTION_BIDDING:
+                            tvEditPrice.setVisibility(View.VISIBLE);
+                            tvStatus.setTextColor(ContextCompat.getColor(context, R.color.t_red));
+                            break;
+                        case OrderParams.AUCTION_WON_BID:
+                            helper.setVisible(R.id.ivAuctionBid, true);
+                            helper.setImageResource(R.id.ivAuctionBid, R.mipmap.bid_already);
+                            tvStatus.setText("");
+                            if ("WAIT_BUYER_PAY".equals(item.getTrade_ststus())) {
+                                tvPayment.setVisibility(View.VISIBLE);
+                            } else if ("WAIT_BUYER_CONFIRM_GOODS".equals(item.getTrade_ststus())) {
+                                tvGoodsSignBill.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case OrderParams.AUCTION_OUTBID:
+                            helper.setVisible(R.id.ivAuctionBid, true);
+                            helper.setImageResource(R.id.ivAuctionBid, R.mipmap.bid_not);
+                            break;
+                        case OrderParams.AUCTION_DELIVERY:
 //                        tv2.setText("删除订单");
 //                        tv2.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 2:
-                switch (item.getStatus()) {
-                    case "0":
-                        tvBackOutApply.setVisibility(View.GONE);
-                        break;
-                    case "1":
-                        if ("1".equals(item.getProgress())) {
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (item.getStatus()) {
+                        case "0":
                             tvBackOutApply.setVisibility(View.GONE);
-                            tvReturnSend.setVisibility(View.VISIBLE);
-                        } else {
-                            tvBackOutApply.setVisibility(View.GONE);
-                        }
-                        break;
-                    case "2":
-                        break;
-                    case "3":
-                        tvDelete.setVisibility(View.GONE);
-                        tvServerInto.setVisibility(View.VISIBLE);
-                        break;
-                }
-                break;
-            case 3:
-                switch (item.getStatus()) {
-                    case OrderParams.WAIT_SELLER_SEND_GOODS:
-                        if ("NO_APPLY_CANCEL".equals(item.getCancel_status()) || "FAILS".equals(item.getCancel_status())) {
-                            tvNotGoods.setVisibility(View.VISIBLE);
-                            tvSendGoods.setVisibility(View.VISIBLE);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 4:
-                switch (item.getStatus()) {
-                    case "0":
-                        tvRefusedApply.setVisibility(View.VISIBLE);
-                        tvConsentApply.setVisibility(View.VISIBLE);
-                        break;
-                    case "1":
-                        if ("2".equals(item.getProgress())) {
+                            break;
+                        case "1":
+                            if ("1".equals(item.getProgress())) {
+                                tvBackOutApply.setVisibility(View.GONE);
+                                tvReturnSend.setVisibility(View.VISIBLE);
+                            } else {
+                                tvBackOutApply.setVisibility(View.GONE);
+                            }
+                            break;
+                        case "2":
+                            break;
+                        case "3":
+                            tvDelete.setVisibility(View.GONE);
+//                        tvServerInto.setVisibility(View.VISIBLE);
+                            OrderListBean.ListBean.OrderBean orderBean = item.getSku();
+                            if ("SELLER_REFUSE_BUYER".equals(orderBean.getAftersales_status())) {
+                                if ("NOT_COMPLAINTS".equals(orderBean.getComplaints_status())) {
+                                    tvComplain.setVisibility(View.VISIBLE);
+                                }
+                            }
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (item.getStatus()) {
+                        case OrderParams.WAIT_SELLER_SEND_GOODS:
+                            if ("NO_APPLY_CANCEL".equals(item.getCancel_status()) || "FAILS".equals(item.getCancel_status())) {
+                                tvNotGoods.setVisibility(View.VISIBLE);
+                                tvSendGoods.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (item.getStatus()) {
+                        case "0":
+                            tvRefusedApply.setVisibility(View.VISIBLE);
+                            tvConsentApply.setVisibility(View.VISIBLE);
+                            break;
+                        case "1":
+                            if ("2".equals(item.getProgress())) {
+                                tvConsentRefund.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 5:
+                    switch (item.getStatus()) {
+                        case "WAIT_CHECK":
+                            tvRefusedRefund.setVisibility(View.VISIBLE);
                             tvConsentRefund.setVisibility(View.VISIBLE);
+                            break;
+                        default:
+                    }
+                    break;
+            }
+
+            helper.addOnClickListener(R.id.tvComplain);
+            helper.addOnClickListener(R.id.tvDelete);//删除订单
+            helper.addOnClickListener(R.id.tvServerInto);
+            helper.addOnClickListener(R.id.tvCancel);//取消订单
+            helper.addOnClickListener(R.id.tvRefund);//申请退款
+            helper.addOnClickListener(R.id.tvNotGoods);//无货
+            helper.addOnClickListener(R.id.tvConsentRefund);//同意退款
+            helper.addOnClickListener(R.id.tvRefusedRefund);//拒绝退款
+            helper.addOnClickListener(R.id.tvReturnSend);//退货发货
+            helper.addOnClickListener(R.id.tvBackOutApply);//撤销申请
+            helper.addOnClickListener(R.id.tvRefusedApply);//拒绝申请
+            helper.addOnClickListener(R.id.tvConsentApply);//同意申请
+            helper.addOnClickListener(R.id.tvSendGoods);//发货
+            helper.addOnClickListener(R.id.tvGoodsSignBill);//商品签单
+            helper.addOnClickListener(R.id.tvConfirmReceipt);//确认收货
+            helper.addOnClickListener(R.id.tvEvaluate);//去评价
+            helper.addOnClickListener(R.id.tvPay);//去支付
+            helper.addOnClickListener(R.id.tvPaymentBtn);
+            helper.addOnClickListener(R.id.tvEditPrice);//修改出价
+            helper.addOnClickListener(R.id.tvPayDeposit);//去付定金
+
+
+            helper.addOnClickListener(R.id.llStore);//点击店铺信息
+            helper.addOnClickListener(R.id.llProducts);//
+            helper.addOnClickListener(R.id.llBottom);//
+
+
+            llProducts.removeAllViews();
+            switch (type) {
+                case 0:
+                case 3:
+                case 5:
+                    if (item.getOrder() != null) {
+                        for (OrderListBean.ListBean.OrderBean orderBean : item.getOrder()) {
+                            View inflate = inflater.inflate(R.layout.order_adapter_list_product_item, null);
+                            ImageView imgProduct = inflate.findViewById(R.id.imgProduct);
+                            GlideUtils.loadImage(context, orderBean.getPic_path(), imgProduct);
+                            TextView tvProductName = inflate.findViewById(R.id.tvProductName);
+                            tvProductName.setText(orderBean.getTitle());
+                            TextView tvProductPrice = inflate.findViewById(R.id.tvProductPrice);
+                            if (!TextUtils.isEmpty(orderBean.getPrice())) {
+                                tvProductPrice.setText(String.format("¥%s", new BigDecimal(orderBean.getPrice()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+                            }
+                            TextView tvProductDesc = inflate.findViewById(R.id.tvProductDesc);
+                            tvProductDesc.setText(orderBean.getSpec_nature_info());
+
+                            TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
+                            tvProductNum.setText(String.format("x%d", orderBean.getNum()));
+                            llProducts.addView(inflate);
                         }
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case 5:
-                switch (item.getStatus()) {
-                    case "WAIT_CHECK":
-                        tvRefusedRefund.setVisibility(View.VISIBLE);
-                        tvConsentRefund.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                }
-                break;
-        }
-
-        helper.addOnClickListener(R.id.tvDelete);//删除订单
-        helper.addOnClickListener(R.id.tvServerInto);
-        helper.addOnClickListener(R.id.tvCancel);//取消订单
-        helper.addOnClickListener(R.id.tvRefund);//申请退款
-        helper.addOnClickListener(R.id.tvNotGoods);//无货
-        helper.addOnClickListener(R.id.tvConsentRefund);//同意退款
-        helper.addOnClickListener(R.id.tvRefusedRefund);//拒绝退款
-        helper.addOnClickListener(R.id.tvReturnSend);//退货发货
-        helper.addOnClickListener(R.id.tvBackOutApply);//撤销申请
-        helper.addOnClickListener(R.id.tvRefusedApply);//拒绝申请
-        helper.addOnClickListener(R.id.tvConsentApply);//同意申请
-        helper.addOnClickListener(R.id.tvSendGoods);//发货
-        helper.addOnClickListener(R.id.tvGoodsSignBill);//商品签单
-        helper.addOnClickListener(R.id.tvConfirmReceipt);//确认收货
-        helper.addOnClickListener(R.id.tvEvaluate);//去评价
-        helper.addOnClickListener(R.id.tvPay);//去支付
-        helper.addOnClickListener(R.id.tvPaymentBtn);
-        helper.addOnClickListener(R.id.tvEditPrice);//修改出价
-        helper.addOnClickListener(R.id.tvPayDeposit);//去付定金
-
-
-        helper.addOnClickListener(R.id.llStore);//点击店铺信息
-        helper.addOnClickListener(R.id.llProducts);//
-        helper.addOnClickListener(R.id.llBottom);//
-
-
-        llProducts.removeAllViews();
-        switch (type) {
-            case 0:
-            case 3:
-            case 5:
-                if (item.getOrder() != null) {
+                    }
+                    if (3 == type) {
+                        String num = item.getItemnum() + "";
+                        String payment = BigDecimalUtils.objToStr(item.getPayment(), 2);
+                        tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", num, payment));
+                    } else {
+                        String num = item.getTotalItem() + "";
+                        String payment = BigDecimalUtils.objToStr(item.getPayment(), 2);
+                        tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", num, payment));
+                    }
+                    break;
+                case 1:
                     for (OrderListBean.ListBean.OrderBean orderBean : item.getOrder()) {
                         View inflate = inflater.inflate(R.layout.order_adapter_list_product_item, null);
                         ImageView imgProduct = inflate.findViewById(R.id.imgProduct);
@@ -267,80 +308,54 @@ public class OrderListAdapter extends BaseQuickAdapter<OrderListBean.ListBean, B
                         TextView tvProductName = inflate.findViewById(R.id.tvProductName);
                         tvProductName.setText(orderBean.getTitle());
                         TextView tvProductPrice = inflate.findViewById(R.id.tvProductPrice);
-                        if (!TextUtils.isEmpty(orderBean.getPrice())) {
-                            tvProductPrice.setText(String.format("¥%s", new BigDecimal(orderBean.getPrice()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
-                        }
-                        TextView tvProductDesc = inflate.findViewById(R.id.tvProductDesc);
-                        tvProductDesc.setText(orderBean.getSpec_nature_info());
-
                         TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
-                        tvProductNum.setText(String.format("x%d", orderBean.getNum()));
+                        tvProductPrice.setVisibility(View.GONE);
+                        tvProductNum.setVisibility(View.GONE);
+                        TextView tvAuctionPrice = inflate.findViewById(R.id.tvAuctionPrice);
+                        String startPrice = "";
+                        if (!TextUtils.isEmpty(orderBean.getPrice())) {
+                            startPrice = String.format("起拍价：%s", String.format("¥%s", BigDecimalUtils.objToStr(orderBean.getPrice(), 2)));
+                        }
+
+                        tvProductNum.setGravity(Gravity.CENTER_VERTICAL);
+                        String maxPrice = "";
+                        if ("false".equalsIgnoreCase(item.getAuction().getAuction_status())) {
+                            maxPrice = "最高出价：保密出价";
+                        } else {
+                            maxPrice = CommonUtils.joinStr("最高出价：¥", BigDecimalUtils.objToStr(item.getAuction().getMax_price(), 2));
+                        }
+                        tvAuctionPrice.setText(startPrice + "\n" + maxPrice);
+                        tvAuctionPrice.setVisibility(View.VISIBLE);
                         llProducts.addView(inflate);
                     }
-                }
-                if (3 == type) {
-                    String num = item.getItemnum() + "";
-                    String payment = BigDecimalUtils.objToStr(item.getPayment(), 2);
-                    tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", num, payment));
-                } else {
                     String num = item.getTotalItem() + "";
                     String payment = BigDecimalUtils.objToStr(item.getPayment(), 2);
                     tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", num, payment));
-                }
-                break;
-            case 1:
-                for (OrderListBean.ListBean.OrderBean orderBean : item.getOrder()) {
+                    break;
+                case 2:
+                case 4:
                     View inflate = inflater.inflate(R.layout.order_adapter_list_product_item, null);
                     ImageView imgProduct = inflate.findViewById(R.id.imgProduct);
-                    GlideUtils.loadImage(context, orderBean.getPic_path(), imgProduct);
+                    GlideUtils.loadImage(context, item.getSku().getPic_path(), imgProduct);
                     TextView tvProductName = inflate.findViewById(R.id.tvProductName);
-                    tvProductName.setText(orderBean.getTitle());
+                    tvProductName.setText(item.getSku().getTitle());
                     TextView tvProductPrice = inflate.findViewById(R.id.tvProductPrice);
+                    tvProductPrice.setText(String.format("¥%s", new BigDecimal(item.getSku().getPrice()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+
+                    TextView tvProductDesc = inflate.findViewById(R.id.tvProductDesc);
+                    tvProductDesc.setText(item.getSku().getSpec_nature_info());
+
                     TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
-                    tvProductPrice.setVisibility(View.GONE);
-                    tvProductNum.setVisibility(View.GONE);
-                    TextView tvAuctionPrice = inflate.findViewById(R.id.tvAuctionPrice);
-                    String startPrice = "";
-                    if (!TextUtils.isEmpty(orderBean.getPrice())) {
-                        startPrice = String.format("起拍价：%s", String.format("¥%s", BigDecimalUtils.objToStr(orderBean.getPrice(), 2)));
-                    }
-
-                    tvProductNum.setGravity(Gravity.CENTER_VERTICAL);
-                    String maxPrice = "";
-                    if ("false".equalsIgnoreCase(item.getAuction().getAuction_status())) {
-                        maxPrice ="最高出价：保密出价";
-                    } else {
-                        maxPrice = CommonUtils.joinStr("最高出价：¥",BigDecimalUtils.objToStr(item.getAuction().getMax_price(),2));
-                    }
-                    tvAuctionPrice.setText(startPrice + "\n" + maxPrice);
-                    tvAuctionPrice.setVisibility(View.VISIBLE);
+                    tvProductNum.setText(String.format("x%d", item.getNum()));
                     llProducts.addView(inflate);
-                }
-                String num = item.getTotalItem() + "";
-                String payment = BigDecimalUtils.objToStr(item.getPayment(), 2);
-                tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", num, payment));
-                break;
-            case 2:
-            case 4:
-                View inflate = inflater.inflate(R.layout.order_adapter_list_product_item, null);
-                ImageView imgProduct = inflate.findViewById(R.id.imgProduct);
-                GlideUtils.loadImage(context, item.getSku().getPic_path(), imgProduct);
-                TextView tvProductName = inflate.findViewById(R.id.tvProductName);
-                tvProductName.setText(item.getSku().getTitle());
-                TextView tvProductPrice = inflate.findViewById(R.id.tvProductPrice);
-                tvProductPrice.setText(String.format("¥%s", new BigDecimal(item.getSku().getPrice()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
 
-                TextView tvProductDesc = inflate.findViewById(R.id.tvProductDesc);
-                tvProductDesc.setText(item.getSku().getSpec_nature_info());
-
-                TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
-                tvProductNum.setText(String.format("x%d", item.getNum()));
-                llProducts.addView(inflate);
-
-                String num1 = item.getTotalItem() + "";
-                String payment1 = BigDecimalUtils.objToStr(item.getSku().getPayment(), 2);
-                tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s",num1 , payment1));
-                break;
+                    String num1 = item.getTotalItem() + "";
+                    String payment1 = BigDecimalUtils.objToStr(item.getSku().getPayment(), 2);
+                    tvTotalNum.setText(String.format("共%s件商品\u3000合计：¥%s", num1, payment1));
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

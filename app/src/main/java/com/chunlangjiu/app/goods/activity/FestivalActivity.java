@@ -115,7 +115,13 @@ public class FestivalActivity extends BaseActivity {
             }
         });
 
-        recycleView.setLayoutManager(new LinearLayoutManager(this));
+        recycleView.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        recycleView.setNestedScrollingEnabled(false);
         GridSpacingItemDecoration decoration2 = new GridSpacingItemDecoration(1, Utils.dp2px(this, 5), false);
         recycleView.addItemDecoration(decoration2);
         recycleView.setAdapter(goodsAdapter);
