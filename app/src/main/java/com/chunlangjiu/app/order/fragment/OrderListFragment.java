@@ -47,10 +47,15 @@ import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
+import com.pkqup.commonlibrary.net.GSonUtils;
 import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -61,6 +66,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -240,25 +246,29 @@ public class OrderListFragment extends BaseFragment {
                     case 0:
                         status = OrderParams.AUCTION_WAIT_PAY;
                         getAuctionOrderLists();
+//                        getAuctionOrderListObj();
                         break;
                     case 1:
                         status = OrderParams.AUCTION_BIDDING;
                         getAuctionOrderLists();
+//                        getAuctionOrderListObj();
                         break;
                     case 2:
                         status = OrderParams.AUCTION_WON_BID;
                         getAuctionOrderLists();
+//                        getAuctionOrderListObj();
                         break;
                     case 3:
                         status = OrderParams.AUCTION_OUTBID;
                         getAuctionOrderLists();
+//                        getAuctionOrderListObj();
                         break;
                     case 4:
                         status = OrderParams.AUCTION_DELIVERY;
                         getAuctionOrderLists();
+//                        getAuctionOrderListObj();
                         break;
                 }
-                getAuctionOrderLists();
                 break;
             case 2:
                 switch (target) {
@@ -338,13 +348,15 @@ public class OrderListFragment extends BaseFragment {
     }
 
     private void getNormalOrderList() {
+
+
         disposable.add(ApiUtils.getInstance().getOrderLists(status, pageNo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<OrderListBean>>() {
                     @Override
                     public void accept(ResultBean<OrderListBean> orderListBeanResultBean) throws Exception {
-                        if (null == orderListBeanResultBean.getData().getPagers() || pageNo == orderListBeanResultBean.getData().getPagers().getTotal() / 10 + 1) {
+                        if (null == orderListBeanResultBean.getData() || null == orderListBeanResultBean.getData().getPagers() || pageNo == orderListBeanResultBean.getData().getPagers().getTotal() / 10 + 1) {
                             refreshLayout.setEnableLoadMore(false);
                         } else {
                             refreshLayout.setEnableLoadMore(true);
@@ -479,6 +491,100 @@ public class OrderListFragment extends BaseFragment {
                 }));
     }
 
+
+    private void getAuctionOrderListObj() {
+        disposable.add(ApiUtils.getInstance().getAuctionOrderListObj(status, pageNo)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean>() {
+                    @Override
+                    public void accept(ResultBean orderListBeanResultBean) throws Exception {
+//                        if (null == orderListBeanResultBean.getData().getPagers() || pageNo == orderListBeanResultBean.getData().getPagers().getTotal() / 10 + 1) {
+//                            refreshLayout.setEnableLoadMore(false);
+//                        } else {
+//                            refreshLayout.setEnableLoadMore(true);
+//                        }
+                        if (0 == orderListBeanResultBean.getErrorcode()) {
+                            if (1 == pageNo) {
+                                listBeans.clear();
+                            }
+
+                            Gson gson1=new Gson();
+                            List<AuctionOrderListBean> data= null;
+                            try {
+                                data = gson1.fromJson(orderListBeanResultBean.getData().toString(), new TypeToken<List<AuctionOrderListBean>>() {}.getType());
+                            } catch (JsonSyntaxException e) {
+                                e.printStackTrace();
+                            }
+                            if (null != data && !data.isEmpty()) {
+                                for (AuctionOrderListBean bean : data) {
+                                    OrderListBean.ListBean listBean = new OrderListBean.ListBean();
+                                    listBean.setTid(bean.getTid());
+                                    listBean.setShopname(bean.getItem().getShopname());
+                                    listBean.setShop_logo(bean.getItem().getShoplogo());
+                                    listBean.setShop_id(bean.getItem().getShop_id());
+                                    listBean.setTotalItem(1);
+                                    listBean.setPayment(bean.getCur_money());
+                                    listBean.setStatus(bean.getStatus());
+                                    listBean.setPaymentId(bean.getPayment_id());
+                                    listBean.setAuctionitem_id(bean.getAuctionitem_id());
+                                    listBean.setAuction(bean.getAuction());
+                                    listBean.setStatus_desc(bean.getStatus_desc());
+                                    listBean.setTrade_ststus(bean.getTrade_ststus());
+                                    List<OrderListBean.ListBean.OrderBean> order = new ArrayList<>();
+                                    OrderListBean.ListBean.OrderBean orderBean = new OrderListBean.ListBean.OrderBean();
+                                    orderBean.setNum(1);
+                                    orderBean.setTitle(bean.getItem().getTitle());
+                                    orderBean.setPrice(bean.getAuction().getStarting_price());
+                                    orderBean.setPic_path(bean.getItem().getImage_default_id());
+                                    if ("false".equalsIgnoreCase(bean.getAuction().getAuction_status())) {
+                                        orderBean.setSpec_nature_info("保密出价");
+                                    } else {
+                                        orderBean.setSpec_nature_info(bean.getAuction().getMax_price());
+                                    }
+                                    order.add(orderBean);
+                                    listBean.setOrder(order);
+
+                                    listBeans.add(listBean);
+                                }
+                            }
+                            orderListAdapter.notifyDataSetChanged();
+                        } else if (0 != orderListBeanResultBean.getErrorcode()) {
+                            if (1 < pageNo) {
+                                pageNo--;
+                            }
+                        }
+                        refreshLayout.finishLoadMore();
+                        refreshLayout.finishRefresh();
+                        rlLoading.setVisibility(View.GONE);
+                        if (listBeans.isEmpty()) {
+                            rlEmptyView.setVisibility(View.VISIBLE);
+                            listView.setVisibility(View.GONE);
+                        } else {
+                            listView.setVisibility(View.VISIBLE);
+                            rlEmptyView.setVisibility(View.GONE);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        rlLoading.setVisibility(View.GONE);
+                        if (listBeans.isEmpty()) {
+                            rlEmptyView.setVisibility(View.VISIBLE);
+                            listView.setVisibility(View.GONE);
+                        } else {
+                            listView.setVisibility(View.VISIBLE);
+                            rlEmptyView.setVisibility(View.GONE);
+                        }
+                        refreshLayout.finishLoadMore();
+                        refreshLayout.finishRefresh();
+                        if (1 < pageNo) {
+                            pageNo--;
+                        }
+                    }
+                }));
+    }
+
     private void getAfterSaleOrderList() {
         disposable.add(ApiUtils.getInstance().getAfterSaleOrderList(status, progress, pageNo)
                 .subscribeOn(Schedulers.io())
@@ -486,7 +592,7 @@ public class OrderListFragment extends BaseFragment {
                 .subscribe(new Consumer<ResultBean<OrderListBean>>() {
                     @Override
                     public void accept(ResultBean<OrderListBean> orderListBeanResultBean) throws Exception {
-                        if (null == orderListBeanResultBean.getData().getPagers() || pageNo == orderListBeanResultBean.getData().getPagers().getTotal() / 10 + 1) {
+                        if (null == orderListBeanResultBean.getData() || null == orderListBeanResultBean.getData().getPagers() || pageNo == orderListBeanResultBean.getData().getPagers().getTotal() / 10 + 1) {
                             refreshLayout.setEnableLoadMore(false);
                         } else {
                             refreshLayout.setEnableLoadMore(true);
@@ -544,7 +650,8 @@ public class OrderListFragment extends BaseFragment {
                     public void accept(ResultBean<OrderListBean> orderListBeanResultBean) throws Exception {
                         switch (type) {
                             case 3:
-                                if (pageNo == orderListBeanResultBean.getData().getCount() / 10 + 1) {
+                                if (orderListBeanResultBean.getData() == null || pageNo == orderListBeanResultBean.getData().getCount() / 10 + 1) {
+
                                     refreshLayout.setEnableLoadMore(false);
                                 } else {
                                     refreshLayout.setEnableLoadMore(true);
@@ -602,7 +709,7 @@ public class OrderListFragment extends BaseFragment {
                 .subscribe(new Consumer<ResultBean<OrderListBean>>() {
                     @Override
                     public void accept(ResultBean<OrderListBean> orderListBeanResultBean) throws Exception {
-                        if (null == orderListBeanResultBean.getData().getPagers() || pageNo == orderListBeanResultBean.getData().getPagers().getTotal() / 10 + 1) {
+                        if (null == orderListBeanResultBean.getData() ||null == orderListBeanResultBean.getData().getPagers() || pageNo == orderListBeanResultBean.getData().getPagers().getTotal() / 10 + 1) {
                             refreshLayout.setEnableLoadMore(false);
                         } else {
                             refreshLayout.setEnableLoadMore(true);
@@ -658,7 +765,7 @@ public class OrderListFragment extends BaseFragment {
                 .subscribe(new Consumer<ResultBean<OrderListBean>>() {
                     @Override
                     public void accept(ResultBean<OrderListBean> orderListBeanResultBean) throws Exception {
-                        if (null == orderListBeanResultBean.getData().getPagers() || pageNo == orderListBeanResultBean.getData().getPagers().getTotal() / 10 + 1) {
+                        if (null == orderListBeanResultBean.getData() || null == orderListBeanResultBean.getData().getPagers() || pageNo == orderListBeanResultBean.getData().getPagers().getTotal() / 10 + 1) {
                             refreshLayout.setEnableLoadMore(false);
                         } else {
                             refreshLayout.setEnableLoadMore(true);

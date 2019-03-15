@@ -326,11 +326,13 @@ public class AuctionFragment extends BaseFragment {
                 .subscribe(new Consumer<ResultBean<AlcListBean>>() {
                     @Override
                     public void accept(ResultBean<AlcListBean> alcListBeanResultBean) throws Exception {
-                        alcLists = alcListBeanResultBean.getData().getList();
-                        AlcListBean.AlcBean alcBean = new AlcListBean().new AlcBean();
-                        alcBean.setAlcohol_id("");
-                        alcBean.setAlcohol_name("全部");
-                        alcLists.add(0, alcBean);
+                        if(null != alcListBeanResultBean.getData()){
+                            alcLists = alcListBeanResultBean.getData().getList();
+                            AlcListBean.AlcBean alcBean = new AlcListBean().new AlcBean();
+                            alcBean.setAlcohol_id("");
+                            alcBean.setAlcohol_name("全部");
+                            alcLists.add(0, alcBean);
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override

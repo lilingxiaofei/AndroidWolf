@@ -586,10 +586,11 @@ public class OrderDetailActivity extends BaseActivity {
 
     private void setAuctionOrder() {
         if (type == 1) {
+            int close_time = orderDetailBean.getClose_time();
             switch (orderDetailBean.getAuction().getStatus()) {
                 case OrderParams.AUCTION_WAIT_PAY:
+//                    llOrderTitleRightContent.setVisibility(View.VISIBLE);
                     tvRightContentDesc.setText("剩余支付时间：");
-                    int close_time = orderDetailBean.getClose_time();
                     try {
                         int i = close_time * 1000;
                         countdownView.start(i);
@@ -615,6 +616,14 @@ public class OrderDetailActivity extends BaseActivity {
                     llFinishTime.setVisibility(View.GONE);
                     break;
                 case OrderParams.AUCTION_WON_BID:
+//                    llOrderTitleRightContent.setVisibility(View.VISIBLE);
+                    tvRightContentDesc.setText("剩余支付时间：");
+                    try {
+                        int i = close_time * 1000;
+                        countdownView.start(i);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     if (OrderParams.WAIT_BUYER_PAY.equals(orderDetailBean.getTrade_ststus())) {
                         tvPaymentBtn.setVisibility(View.VISIBLE);
                     } else if (OrderParams.WAIT_BUYER_CONFIRM_GOODS.equals(orderDetailBean.getTrade_ststus())) {

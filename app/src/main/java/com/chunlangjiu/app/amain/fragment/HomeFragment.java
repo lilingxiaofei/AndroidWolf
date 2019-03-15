@@ -316,13 +316,22 @@ public class HomeFragment extends BaseFragment {
 
 
     private void initBannerView() {
-        banner.setImages(bannerUrls)
-                .setImageLoader(new BannerGlideLoader())
-                .setBannerStyle(BannerConfig.NOT_INDICATOR)//去掉自带的indicator
-                .setBannerAnimation(AccordionTransformer.class)
-                .isAutoPlay(true)
-                .setDelayTime(4000)
-                .start();
+        if(bannerUrls!=null && bannerUrls.size()>0){
+            banner.setImages(bannerUrls)
+                    .setImageLoader(new BannerGlideLoader())
+                    .setBannerStyle(BannerConfig.NOT_INDICATOR)//去掉自带的indicator
+                    .setBannerAnimation(AccordionTransformer.class)
+                    .isAutoPlay(true)
+                    .setDelayTime(4000)
+                    .start();
+            banner.setVisibility(View.VISIBLE);
+            indicator.setVisibility(View.VISIBLE);
+
+        }else{
+            banner.setVisibility(View.GONE);
+            indicator.setVisibility(View.GONE);
+        }
+
     }
 
     private void initBannerIndicator() {

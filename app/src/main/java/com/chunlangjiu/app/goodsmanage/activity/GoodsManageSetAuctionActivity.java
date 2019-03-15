@@ -220,8 +220,8 @@ public class GoodsManageSetAuctionActivity extends BaseActivity {
         }else if(endTime<startTime){
             ToastUtils.showShort("开始时间必须早于结束时间");
             return ;
-        }else if(BigDecimalUtils.objToBigDecimal(etStartPrice.getText().toString()).doubleValue()<0.01d){
-            ToastUtils.showShort("竞拍金额必须大于0.01元");
+        }else if(BigDecimalUtils.objToBigDecimal(etStartPrice.getText().toString()).doubleValue()<1d){
+            ToastUtils.showShort("竞拍金额必须大于1元");
             return ;
         }else if(TextUtils.isEmpty(etNum.getText().toString())){
             ToastUtils.showShort("请输入商品的竞拍数量");

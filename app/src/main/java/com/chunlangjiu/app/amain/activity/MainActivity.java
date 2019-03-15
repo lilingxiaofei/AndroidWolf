@@ -250,9 +250,11 @@ public class MainActivity extends BaseActivity {
                     .subscribe(new Consumer<ResultBean<HomeModulesBean>>() {
                         @Override
                         public void accept(ResultBean<HomeModulesBean> brandsListBeanResultBean) throws Exception {
-                            params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
-                            OpenDialog dialog = new OpenDialog(MainActivity.this,params);
-                            dialog.show();
+                            if(null != brandsListBeanResultBean.getData()){
+                                params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
+                                OpenDialog dialog = new OpenDialog(MainActivity.this,params);
+                                dialog.show();
+                            }
                         }
                     }, new Consumer<Throwable>() {
                         @Override

@@ -97,7 +97,9 @@ public class SplashActivity extends Activity {
                 .subscribe(new Consumer<ResultBean<HomeModulesBean>>() {
                     @Override
                     public void accept(ResultBean<HomeModulesBean> brandsListBeanResultBean) throws Exception {
-                        params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
+                        if(null != brandsListBeanResultBean.getData()){
+                            params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override

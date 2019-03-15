@@ -426,6 +426,12 @@ public class ApiUtils {
         return apiService.getAuctionOrderLists("trade.auction.list", "v1", status, pageNo, 10, "*");
     }
 
+    public Flowable<ResultBean> getAuctionOrderListObj(String status, int pageNo) {
+        return apiService.getAuctionOrderListObj("trade.auction.list", "v1", status, pageNo, 10, "*");
+    }
+
+
+
     public Flowable<ResultBean<OrderDetailBean>> getAuctionOrderDetail(String auctionitem_id) {
         return apiService.getAuctionOrderDetail("item.auction.detail", "v1", auctionitem_id);
     }

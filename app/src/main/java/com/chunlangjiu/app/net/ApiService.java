@@ -469,6 +469,11 @@ public interface ApiService {
     Flowable<ResultBean<List<AuctionOrderListBean>>> getAuctionOrderLists(@Field("method") String method, @Field("v") String v,
                                                                           @Field("status") String status, @Field("page_no") int page_no,
                                                                           @Field("page_size") int pagesize, @Field("fields") String fields);
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> getAuctionOrderListObj(@Field("method") String method, @Field("v") String v,
+                                                                          @Field("status") String status, @Field("page_no") int page_no,
+                                                                          @Field("page_size") int pagesize, @Field("fields") String fields);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
