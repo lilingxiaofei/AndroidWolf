@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -694,7 +694,16 @@
 
             </RelativeLayout>
 
+            <com.pkqup.commonlibrary.view.MyGridView
+                android:id="@+id/gvGoods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"
+                android:visibility="gone"
+                android:numColumns="2">
 
+            </com.pkqup.commonlibrary.view.MyGridView>
             <RelativeLayout
                 android:id="@+id/rlGoods"
                 android:layout_width="match_parent"
@@ -766,7 +775,7 @@
                     android:padding="8dp"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/delete_ic"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
             </RelativeLayout>
 
 
@@ -1430,7 +1439,7 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
     <TextView

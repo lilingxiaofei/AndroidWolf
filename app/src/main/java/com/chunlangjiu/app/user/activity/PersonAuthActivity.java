@@ -1,6 +1,5 @@
 package com.chunlangjiu.app.user.activity;
 
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -436,7 +435,6 @@ public class PersonAuthActivity extends BaseActivity {
         Observable<ResultBean<UploadImageBean>> front;
         if (!TextUtils.isEmpty(base64Front) && frontLists != null && frontLists.size() > 0) {
             front = ApiUtils.getInstance().userUploadImage(base64Front, frontLists.get(0).name, "rate");
-
         } else {
             front = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
                 @Override

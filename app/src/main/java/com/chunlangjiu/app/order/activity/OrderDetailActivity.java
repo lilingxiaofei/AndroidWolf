@@ -292,6 +292,13 @@ public class OrderDetailActivity extends BaseActivity {
         tvPaymentBtn.setOnClickListener(onClickListener);
         tvEditPrice.setOnClickListener(onClickListener);//修改出价
         tvPayDeposit.setOnClickListener(onClickListener);//去付定金
+
+        countdownView.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+            @Override
+            public void onEnd(CountdownView cv) {
+                initData();
+            }
+        });
     }
 
     private void hideOrderBtn() {
@@ -589,7 +596,7 @@ public class OrderDetailActivity extends BaseActivity {
             int close_time = orderDetailBean.getClose_time();
             switch (orderDetailBean.getAuction().getStatus()) {
                 case OrderParams.AUCTION_WAIT_PAY:
-//                    llOrderTitleRightContent.setVisibility(View.VISIBLE);
+                    llOrderTitleRightContent.setVisibility(View.VISIBLE);
                     tvRightContentDesc.setText("剩余支付时间：");
                     try {
                         int i = close_time * 1000;
@@ -616,16 +623,16 @@ public class OrderDetailActivity extends BaseActivity {
                     llFinishTime.setVisibility(View.GONE);
                     break;
                 case OrderParams.AUCTION_WON_BID:
-//                    llOrderTitleRightContent.setVisibility(View.VISIBLE);
-                    tvRightContentDesc.setText("剩余支付时间：");
-                    try {
-                        int i = close_time * 1000;
-                        countdownView.start(i);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                     if (OrderParams.WAIT_BUYER_PAY.equals(orderDetailBean.getTrade_ststus())) {
                         tvPaymentBtn.setVisibility(View.VISIBLE);
+                        llOrderTitleRightContent.setVisibility(View.VISIBLE);
+                        tvRightContentDesc.setText("剩余支付时间：");
+                        try {
+                            int i = close_time * 1000;
+                            countdownView.start(i);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     } else if (OrderParams.WAIT_BUYER_CONFIRM_GOODS.equals(orderDetailBean.getTrade_ststus())) {
                         tvGoodsSignBill.setVisibility(View.VISIBLE);
                     } else if (OrderParams.WAIT_SELLER_SEND_GOODS.equals(orderDetailBean.getTrade_ststus())) {
@@ -845,6 +852,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvFinishTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getEnd_time())));
                     break;
                 case OrderParams.TRADE_CLOSED_BY_SYSTEM://已关闭
+                    llOrderTitleRightContent.setVisibility(View.VISIBLE);
                     if (0 == type) {
                         tvDelete.setVisibility(View.VISIBLE);
                     }
@@ -991,14 +999,13 @@ public class OrderDetailActivity extends BaseActivity {
                     tvAfterSalePayTime.setVisibility(View.VISIBLE);
                     if (2 == type) {
                         tvDelete.setVisibility(View.GONE);
-//                        tvServerInto.setVisibility(View.VISIBLE);
-                    }
-
-                    OrderDetailBean.OrdersBean orderBean = orderDetailBean.getOrder();
-                    if ("SELLER_REFUSE_BUYER".equals(orderBean.getAftersales_status())) {
-                        if ("NOT_COMPLAINTS".equals(orderBean.getComplaints_status())) {
-                            tvComplain.setVisibility(View.VISIBLE);
+                        OrderDetailBean.OrdersBean orderBean = orderDetailBean.getOrder();
+                        if ("SELLER_REFUSE_BUYER".equals(orderBean.getAftersales_status())) {
+                            if ("NOT_COMPLAINTS".equals(orderBean.getComplaints_status())) {
+                                tvComplain.setVisibility(View.VISIBLE);
+                            }
                         }
+//                        tvServerInto.setVisibility(View.VISIBLE);
                     }
                     break;
             }
@@ -1021,7 +1028,13 @@ public class OrderDetailActivity extends BaseActivity {
             TextView tvProductNum = inflate.findViewById(R.id.tvProductNum);
             tvProductNum.setText(String.format("x%d", order.getNum()));
             llProducts.addView(inflate);
-            tvPayment.setText(String.format("¥%s", new BigDecimal(order.getPayment()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
+
+            if(orderDetailBean.getRefunds()!=null && BigDecimalUtils.objToBigDecimal(orderDetailBean.getRefunds().getRefund_money()).doubleValue()>0){
+                tvPayment.setText(String.format("¥%s",BigDecimalUtils.objToStr(orderDetailBean.getRefunds().getRefund_money())));
+            }else{
+                tvPayment.setText(String.format("¥%s",   BigDecimalUtils.objToStr(order.getPayment())));
+            }
+
             tvPaymentTips.setText("退款金额：");
 
             tvUserInfo.setText(String.format("%s\u3000%s", orderDetailBean.getReceiver_name(), orderDetailBean.getReceiver_mobile()));

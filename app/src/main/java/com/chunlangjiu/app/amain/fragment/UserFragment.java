@@ -191,16 +191,16 @@ public class UserFragment extends BaseFragment {
 
     /*我的管理*/
     FlowLayout flowLayout;
-    private RelativeLayout rlMoneyManager;
-    private RelativeLayout rlCollect;
-    private RelativeLayout rlShare;
-    private RelativeLayout rlVip;
-    private RelativeLayout rlShop;
+    private LinearLayout rlMoneyManager;
+    private LinearLayout rlCollect;
+    private LinearLayout rlShare;
+    private LinearLayout rlVip;
+    private LinearLayout rlShop;
     private LinearLayout llMyManagerSecond;
-    private RelativeLayout rlMyEvaluate;
-    private RelativeLayout rlFansManage;
-    private RelativeLayout rlSetting;
-    private RelativeLayout rlService;
+    private LinearLayout rlMyEvaluate;
+    private LinearLayout rlFansManage;
+    private LinearLayout rlSetting;
+    private LinearLayout rlService;
     /*我的管理*/
 
     public static final int TYPE_BUYER = 0;//买家中心

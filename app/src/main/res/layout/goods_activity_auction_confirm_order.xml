@@ -377,7 +377,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="85dp"
-                    android:hint="(若落标，定金则原路退回)"
+                    android:hint="(竞拍结束，定金自动退回到可用余额)"
                     android:textColor="@color/t_black"
                     android:textSize="12sp" />
                 <TextView
@@ -388,8 +388,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
                     android:textColor="@color/t_red"
-                    android:textSize="@dimen/sp_mid"
-                    tools:text="¥500" />
+                    android:textSize="@dimen/sp_mid" />
             </RelativeLayout>
 
             <TextView

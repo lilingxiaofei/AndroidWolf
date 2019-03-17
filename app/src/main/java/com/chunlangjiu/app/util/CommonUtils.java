@@ -3,18 +3,22 @@ package com.chunlangjiu.app.util;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 
+import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.user.bean.UploadImageBean;
+import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.AppUtils;
+import com.pkqup.commonlibrary.util.FileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 /**
  * @CreatedbBy: liucun on 2018/8/12.
@@ -65,6 +69,26 @@ public class CommonUtils {
         return styledText;
     }
 
+
+    public static Observable<ResultBean<UploadImageBean>> getUploadPic(final String path,String name){
+        Observable<ResultBean<UploadImageBean>> detailsGoods ;
+        if (CommonUtils.isNetworkPic(path)) {
+            detailsGoods = Observable.create(new ObservableOnSubscribe<ResultBean<UploadImageBean>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ResultBean<UploadImageBean>> emitter) throws Exception {
+                    ResultBean<UploadImageBean> bean = new ResultBean<>();
+                    UploadImageBean uploadImageBean = new UploadImageBean();
+                    uploadImageBean.setUrl(path);
+                    bean.setData(uploadImageBean);
+                    emitter.onNext(bean);
+                }
+            });
+        } else {
+            String base64DetailFour = FileUtils.imgToBase64(path);
+            detailsGoods = ApiUtils.getInstance().shopUploadImage(base64DetailFour, name);
+        }
+        return detailsGoods;
+    }
 
     public static boolean isNetworkPic(String picPath) {
         if (TextUtils.isEmpty(picPath)) {

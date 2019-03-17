@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,6 +24,7 @@ import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
 import com.chunlangjiu.app.goods.bean.BrandsListBean;
 import com.chunlangjiu.app.goods.bean.OrdoListBean;
+import com.chunlangjiu.app.goodsmanage.adapter.GoodsPicAdapter;
 import com.chunlangjiu.app.money.activity.ReChargeActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.AddGoodsValueBean;
@@ -61,8 +63,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function5;
-import io.reactivex.functions.Function6;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -178,6 +179,8 @@ public class AddGoodsActivity extends BaseActivity {
     RelativeLayout rlDescFour;
     @BindView(R.id.rlGoods)
     RelativeLayout rlGoods;
+    @BindView(R.id.gvGoods)
+    GridView recyclerViewGoods;
 
     @BindView(R.id.etGoodsDesc)
     EditText etGoodsDesc;
@@ -243,7 +246,9 @@ public class AddGoodsActivity extends BaseActivity {
     private ArrayList<ImageItem> detailTwoPicLists;
     private ArrayList<ImageItem> detailThreePicLists;
     private ArrayList<ImageItem> detailFourPicLists;
-    private ArrayList<ImageItem> goodsPicLists;
+
+    private GoodsPicAdapter goodsAdapter;
+    private ArrayList<ImageItem> goodsPicLists = new ArrayList<>();
     private String base64Main;
     private String base64DetailOne;
     private String base64DetailTwo;
@@ -398,6 +403,21 @@ public class AddGoodsActivity extends BaseActivity {
                 }
             }
         });
+
+
+        goodsAdapter = new GoodsPicAdapter(this, goodsPicLists);
+        goodsAdapter.setOnItemChildClickListener(new GoodsPicAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(View view, int position) {
+                if(view.getId() == R.id.llAdd){
+                    showPhotoDialog(REQUEST_CODE_SELECT_GOODS_PIC);
+                }else if(view.getId() == R.id.ivDeleteGoodsPic){
+                    goodsPicLists.remove(position);
+                    goodsAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+        recyclerViewGoods.setAdapter(goodsAdapter);
     }
 
     private void initImagePicker() {
@@ -796,105 +816,59 @@ public class AddGoodsActivity extends BaseActivity {
             base64Lists.add(base64DetailFour);
             nameLists.add(detailFourPicLists.get(0).name);
         }
-        if (base64Goods != null) {
-            base64Lists.add(base64Goods);
-            nameLists.add(goodsPicLists.get(0).name);
-        }
 
+        //一定要上传的五张主图
         Observable<ResultBean<UploadImageBean>> main = ApiUtils.getInstance().shopUploadImage(base64Main, mainPicLists.get(0).name);
         Observable<ResultBean<UploadImageBean>> detailOne = ApiUtils.getInstance().shopUploadImage(base64DetailOne, detailOnePicLists.get(0).name);
         Observable<ResultBean<UploadImageBean>> detailTwo = ApiUtils.getInstance().shopUploadImage(base64DetailTwo, detailTwoPicLists.get(0).name);
         Observable<ResultBean<UploadImageBean>> detailThree = ApiUtils.getInstance().shopUploadImage(base64DetailThree, detailThreePicLists.get(0).name);
         Observable<ResultBean<UploadImageBean>> detailFour = ApiUtils.getInstance().shopUploadImage(base64DetailFour, detailFourPicLists.get(0).name);
-
-        if (base64Goods != null) {
-            Observable<ResultBean<UploadImageBean>> goods = ApiUtils.getInstance().shopUploadImage(base64Goods, goodsPicLists.get(0).name);
-            disposable.add(Observable.zip(main, detailOne, detailTwo, detailThree, detailFour, goods, new Function6<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>,
-                    ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, List<String>>() {
-                @Override
-                public List<String> apply(ResultBean<UploadImageBean> uploadImageBeanResultBean, ResultBean<UploadImageBean> uploadImageBeanResultBean2,
-                                          ResultBean<UploadImageBean> uploadImageBeanResultBean3, ResultBean<UploadImageBean> uploadImageBeanResultBean4, ResultBean<UploadImageBean> uploadImageBeanResultBean5, ResultBean<UploadImageBean> uploadImageBeanResultBean6) throws Exception {
-                    List<String> imageLists = new ArrayList<>();
-                    imageLists.add(uploadImageBeanResultBean.getData().getUrl());
-                    imageLists.add(uploadImageBeanResultBean2.getData().getUrl());
-                    imageLists.add(uploadImageBeanResultBean3.getData().getUrl());
-                    imageLists.add(uploadImageBeanResultBean4.getData().getUrl());
-                    imageLists.add(uploadImageBeanResultBean5.getData().getUrl());
-                    imageLists.add(uploadImageBeanResultBean6.getData().getUrl());
-                    return imageLists;
-                }
-            }).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<List<String>>() {
-                        @Override
-                        public void accept(List<String> strings) throws Exception {
-                            uploadSuccess(strings);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            hideLoadingDialog();
-                            ToastUtils.showShort("上传图片失败");
-                        }
-                    }));
-        } else {
-            disposable.add(Observable.zip(main, detailOne, detailTwo, detailThree, detailFour, new Function5<ResultBean<UploadImageBean>, ResultBean<UploadImageBean>,
-                    ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, ResultBean<UploadImageBean>, List<String>>() {
-                @Override
-                public List<String> apply(ResultBean<UploadImageBean> uploadImageBeanResultBean, ResultBean<UploadImageBean> uploadImageBeanResultBean2,
-                                          ResultBean<UploadImageBean> uploadImageBeanResultBean3, ResultBean<UploadImageBean> uploadImageBeanResultBean4, ResultBean<UploadImageBean> uploadImageBeanResultBean5) throws Exception {
-                    List<String> imageLists = new ArrayList<>();
-                    imageLists.add(uploadImageBeanResultBean.getData().getUrl());
-                    imageLists.add(uploadImageBeanResultBean2.getData().getUrl());
-                    imageLists.add(uploadImageBeanResultBean3.getData().getUrl());
-                    imageLists.add(uploadImageBeanResultBean4.getData().getUrl());
-                    imageLists.add(uploadImageBeanResultBean5.getData().getUrl());
-                    return imageLists;
-                }
-            }).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<List<String>>() {
-                        @Override
-                        public void accept(List<String> strings) throws Exception {
-                            uploadSuccess(strings);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            hideLoadingDialog();
-                            ToastUtils.showShort("上传图片失败");
-                        }
-                    }));
+        ArrayList<Observable<ResultBean<UploadImageBean>>> tempList = new ArrayList();
+        tempList.add(main);
+        tempList.add(detailOne);
+        tempList.add(detailTwo);
+        tempList.add(detailThree);
+        tempList.add(detailFour);
+        //可选上传的图片
+        if(goodsPicLists!= null && goodsPicLists.size()>0){
+            for (ImageItem imageItem:goodsPicLists) {
+                String base64DetailFour = FileUtils.imgToBase64(imageItem.path);
+                Observable<ResultBean<UploadImageBean>> detailsGoods = ApiUtils.getInstance().shopUploadImage(base64DetailFour, imageItem.name);
+                tempList.add(detailsGoods);
+            }
         }
 
-       /* for (int i = 0; i < base64Lists.size(); i++) {
-            disposable.add(ApiUtils.getInstance().shopUploadImage(base64Lists.get(i), nameLists.get(i))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean<UploadImageBean>>() {
-                        @Override
-                        public void accept(ResultBean<UploadImageBean> uploadImageBeanResultBean) throws Exception {
-                            imageLists.add(uploadImageBeanResultBean.getData().getUrl());
-                            if (imageLists.size() == base64Lists.size()) {
-                                StringBuffer stringBuffer = new StringBuffer();
-                                for (int i = 0; i < imageLists.size(); i++) {
-                                    if (i == imageLists.size() - 1) {
-                                        stringBuffer.append(imageLists.get(i));
-                                    } else {
-                                        stringBuffer.append(imageLists.get(i)).append(",");
-                                    }
-                                }
-                                commitGoods(stringBuffer.toString());
-                            }
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
+
+        disposable.add(Observable.zip(tempList, new Function<Object[], List<String>>() {
+            @Override
+            public List<String> apply(Object[] objects) throws Exception {
+                List<String> imageLists = new ArrayList<>();
+                for (Object obj:objects) {
+                    ResultBean<UploadImageBean> resultBeans = (ResultBean<UploadImageBean>)obj;
+                    imageLists.add(resultBeans.getData().getUrl());
+                }
+                return imageLists;
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<String>>() {
+                    @Override
+                    public void accept(List<String> strings) throws Exception {
+                        if(strings != null && strings.size()>0){
+                            uploadSuccess(strings);
+                        }else{
                             hideLoadingDialog();
                             ToastUtils.showShort("上传图片失败");
                         }
-                    }));
-        }*/
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
+                        ToastUtils.showShort("上传图片失败");
+                    }
+                }));
+
     }
 
     private void uploadSuccess(List<String> imageLists) {
@@ -908,6 +882,19 @@ public class AddGoodsActivity extends BaseActivity {
         }
         commitGoods(stringBuffer.toString());
     }
+
+
+//    private void uploadSuccess(List<ResultBean<UploadImageBean>> list) {
+//        StringBuffer stringBuffer = new StringBuffer();
+//        for (int i = 0; i < list.size(); i++) {
+//            if (i == list.size() - 1) {
+//                stringBuffer.append(list.get(i).getData().getUrl());
+//            } else {
+//                stringBuffer.append(list.get(i).getData().getUrl()).append(",");
+//            }
+//        }
+//        commitGoods(stringBuffer.toString());
+//    }
 
     private void commitGoods(String images) {
         SkuBean skuBean = new SkuBean();
@@ -1011,16 +998,15 @@ public class AddGoodsActivity extends BaseActivity {
                         imgDescFourPic.setVisibility(View.VISIBLE);
                         imgDeleteDescFourPic.setVisibility(View.VISIBLE);
                         GlideUtils.loadImage(AddGoodsActivity.this, detailFourPicLists.get(0).path, imgDescFourPic);
-                        rlGoods.setVisibility(View.VISIBLE);
+//                        rlGoods.setVisibility(View.VISIBLE);
+                        recyclerViewGoods.setVisibility(View.VISIBLE);
                     } else if (requestCode == REQUEST_CODE_SELECT_GOODS_PIC) {
-                        goodsPicLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                        ImageItem imageItem = goodsPicLists.get(0);
+                        ArrayList<ImageItem> tempItem = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                        ImageItem imageItem = tempItem.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-                        base64Goods = FileUtils.imgToBase64(goodsPicLists.get(0).path);
-                        imgGoodsPic.setVisibility(View.VISIBLE);
-                        imgDeleteGoodsPic.setVisibility(View.VISIBLE);
-                        GlideUtils.loadImage(AddGoodsActivity.this, goodsPicLists.get(0).path, imgGoodsPic);
+                        goodsPicLists.add(imageItem);
+                        goodsAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -1079,3 +1065,4 @@ public class AddGoodsActivity extends BaseActivity {
         EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
 }
+

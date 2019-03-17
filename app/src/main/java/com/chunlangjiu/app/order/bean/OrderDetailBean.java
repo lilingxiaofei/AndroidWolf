@@ -1,5 +1,7 @@
 package com.chunlangjiu.app.order.bean;
 
+import com.chunlangjiu.app.order.RefundsBean;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -156,6 +158,16 @@ public class OrderDetailBean {
 
     private String commission ;//平台佣金
     private String shop_payment ;//店铺实收
+
+    private RefundsBean refunds;
+
+    public RefundsBean getRefunds() {
+        return refunds;
+    }
+
+    public void setRefunds(RefundsBean refunds) {
+        this.refunds = refunds;
+    }
 
     public long getTid() {
         return tid;

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="150dp"
+    android:layout_height="150dp">
+
+    <RelativeLayout android:id="@+id/rlGoods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/llAdd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_white_soild_gray_stroke"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="16dp"
+                android:drawableTop="@mipmap/address_add"
+                android:text="添加商品图片"
+                android:textColor="@color/t_gray"
+                android:textSize="@dimen/sp_small" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/ivGoodsPic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:src="@mipmap/sell_bg" />
+
+
+        <ImageView
+            android:id="@+id/ivDeleteGoodsPic"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="-5dp"
+            android:layout_marginTop="-5dp"
+            android:padding="8dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/delete_ic"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>
