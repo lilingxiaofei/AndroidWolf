@@ -902,6 +902,11 @@ public class OrderDetailActivity extends BaseActivity {
                                     tvAfterSale.setTag(i);
                                     tvAfterSale.setOnClickListener(onClickListener);
                                     tvAfterSale.setVisibility(View.VISIBLE);
+                                }else if ("SELLER_REFUSE_BUYER".equals(orderBean.getAftersales_status()) && "FINISHED".equals(orderBean.getComplaints_status())) {
+                                    TextView tvAfterSale = inflate.findViewById(R.id.tvAfterSale);
+                                    tvAfterSale.setTag(i);
+                                    tvAfterSale.setOnClickListener(onClickListener);
+                                    tvAfterSale.setVisibility(View.VISIBLE);
                                 }
                                 break;
                         }
@@ -970,7 +975,7 @@ public class OrderDetailActivity extends BaseActivity {
                     if (2 == type) {
                         tvBackOutApply.setVisibility(View.GONE);
                     } else {
-                        tvRefusedApply.setVisibility(View.GONE);
+                        tvRefusedApply.setVisibility(View.VISIBLE);
                         tvConsentApply.setVisibility(View.VISIBLE);
                     }
                     break;
