@@ -3,24 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="215dp"
+        android:layout_height="272dp"
+        android:background="@mipmap/update_app_bg"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="150dp"
-            android:background="@mipmap/custom_bg"
-            android:scaleType="centerCrop" />
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/llContentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:background="@drawable/bg_round_white"
             android:orientation="vertical"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="85dp"
+            android:layout_marginBottom="55dp"
+            android:minHeight="90dp"
+            android:elevation="5dp"
             android:padding="15dp">
 
             <TextView
@@ -30,6 +33,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:text="检测到新版本"
+                android:visibility="gone"
                 android:textColor="@android:color/black"
                 android:textSize="13sp" />
 
@@ -37,43 +41,51 @@
                 android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="内容"
                 android:textColor="#666"
                 android:textSize="12sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_cancel"
-                    android:layout_width="0dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="18dp"
-                    android:visibility="gone"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_corner"
-                    android:gravity="center"
-                    android:text="取消"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/tv_confirm"
-                    android:layout_width="0dp"
-                    android:layout_height="35dp"
-
-                    android:layout_marginTop="18dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_corner"
-                    android:gravity="center"
-                    android:text="升级"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
-
 
         </LinearLayout>
-    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_cancel"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:layout_marginRight="20dp"-->
+                <!--android:layout_marginTop="18dp"-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@drawable/shape_corner"-->
+                <!--android:gravity="center"-->
+                <!--android:text="取消"-->
+                <!--android:textColor="@android:color/white" />-->
+            <TextView
+                android:id="@+id/tv_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="18dp"
+                android:background="@drawable/bg_round_red_15dp"
+                android:gravity="center"
+                android:text="升级"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/tv_cancel"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="18dp"
+        android:padding="7dp"
+        android:visibility="gone"
+        android:src="@mipmap/close_white_round"
+         />
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
@@ -22,7 +23,7 @@ public class AppUpdateDialog extends Dialog {
     private CallBack callBack;
 
     private TextView tv_content;
-    private TextView tv_cancel;
+    private ImageView tv_cancel;
     private TextView tv_confirm;
 
     public AppUpdateDialog(Context context, String content) {
