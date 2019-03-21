@@ -7,7 +7,7 @@ android {
         applicationId "com.chunlangjiu.app"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 5
+        versionCode 6
         versionName "2.0.3"
         multiDexEnabled true
         flavorDimensions "versionCode"

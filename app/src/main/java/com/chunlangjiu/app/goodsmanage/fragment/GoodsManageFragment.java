@@ -388,7 +388,7 @@ public class GoodsManageFragment extends BaseFragment {
                     .setWheelItemTextNormalColor(
                             getResources().getColor(R.color.timetimepicker_default_text_color))
                     .setWheelItemTextSelectorColor(
-                            getResources().getColor(R.color.bg_white))
+                            getResources().getColor(R.color.timepicker_toolbar_bg))
                     .setWheelItemTextSize(12).build();
         }
         startTimeDialog.show(getFragmentManager(), "all");
