@@ -253,6 +253,9 @@ public class CartFragment extends BaseFragment {
     public void initData() {
         if (BaseApplication.isLogin()) {
             getCartList();
+            rlContent.setVisibility(View.VISIBLE);
+            rl_bottom.setVisibility(View.VISIBLE);
+            rlLogin.setVisibility(View.GONE);
         } else {
             imgEdit.setVisibility(View.GONE);
             rlContent.setVisibility(View.GONE);

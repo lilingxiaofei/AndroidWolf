@@ -9,8 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/rlLogin"
-        android:layout_toRightOf="@+id/rlLogin"
         android:background="@color/bg_red"
         android:minHeight="@dimen/title_bar_height">
 
@@ -184,7 +182,8 @@
         android:id="@+id/rlLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_view"
+        android:layout_below="@id/rlCartTitle"
+        android:background="@color/bg_white"
         android:visibility="gone">
 
         <TextView

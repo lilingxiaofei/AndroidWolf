@@ -194,7 +194,6 @@ public class UserFragment extends BaseFragment {
     private LinearLayout rlMoneyManager;
     private LinearLayout rlCollect;
     private LinearLayout rlShare;
-    private LinearLayout rlVip;
     private LinearLayout rlShop;
     private LinearLayout llMyManagerSecond;
     private LinearLayout rlMyEvaluate;
@@ -360,16 +359,6 @@ public class UserFragment extends BaseFragment {
                 case R.id.rlCollect:// 我的收藏
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_COLLECT + BaseApplication.getToken(), "我的收藏");
                     break;
-                case R.id.rlVip:// 会员资料
-                    if (userType == TYPE_BUYER) {
-                        WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_VIP_INFO + BaseApplication.getToken(), "会员资料");
-                    } else {
-                        WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_SHOP_INFO + BaseApplication.getToken(), "店铺资料");
-                    }
-                    break;
-//                case R.id.rlBankCard:// 银行卡管理
-//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_BANK_CARD + BaseApplication.getToken(), "银行卡管理");
-//                    break;
                 case R.id.rlMyEvaluate:// 我的估价
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_EVALUATE + BaseApplication.getToken(), "我的估价");
                     break;
@@ -561,12 +550,10 @@ public class UserFragment extends BaseFragment {
         rlMoneyManager = rootView.findViewById(R.id.rlMoneyManager);
         rlCollect = rootView.findViewById(R.id.rlCollect);
         rlShare = rootView.findViewById(R.id.rlShare);
-        rlVip = rootView.findViewById(R.id.rlVip);
         rlShop = rootView.findViewById(R.id.rlShop);
         rlMoneyManager.setOnClickListener(onClickListener);
         rlCollect.setOnClickListener(onClickListener);
         rlShare.setOnClickListener(onClickListener);
-        rlVip.setOnClickListener(onClickListener);
         rlShop.setOnClickListener(onClickListener);
         int width = (SizeUtils.getScreenWidth() - SizeUtils.dp2px(20)) / 3;
         for (int i = 0; i < flowLayout.getChildCount(); i++) {
