@@ -39,7 +39,6 @@ import com.chunlangjiu.app.util.GeTuiPushService;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.igexin.sdk.PushManager;
-import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;

@@ -250,27 +250,6 @@ public class OrderComplainActivity extends BaseActivity {
             return;
         }
 
-
-//        if(null != orderEvaluationPicBeanList){
-//            Iterable<Observable> iterable= null ;
-//            Observable[] observables = new Observable[orderEvaluationPicBeanList.size()];
-//            for (int i = 0; i < orderEvaluationPicBeanList.size(); i++) {
-//                String base64Data = orderEvaluationPicBean.getBase64Data();
-//                String name = orderEvaluationPicBean.getName();
-//                Observable<ResultBean<UploadImageBean>> observable = ApiUtils.getInstance().userUploadImage(base64Data, name, "aftersales");
-//                observables[i] = observable;
-//            }
-//
-//            Observable.zip(iterable,null );
-//
-////            new Function<ResultBean<UploadImageBean>[], List<String>>() {
-////                @Override
-////                public List<String> apply(ResultBean<UploadImageBean>[] resultBeans) throws Exception {
-////                    return null;
-////                }
-////            }
-//        }
-
         uploadImageUrls.clear();
         if (orderEvaluationPicBeanList.size() > 1) {
             showLoadingDialog();

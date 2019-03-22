@@ -78,7 +78,7 @@ public class GuideActivity extends AppCompatActivity {
             ImageView iv = new ImageView(this);
             iv.setLayoutParams(mParams);//设置布局
             iv.setImageResource(imgs[i]);//为ImageView添加图片资源
-            iv.setScaleType(ImageView.ScaleType.FIT_XY);//这里也是一个图片的适配
+            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);//这里也是一个图片的适配
             imageViews.add(iv);
 //            if (i == imgs.length - 1) {
                 //为最后一张图片添加点击事件

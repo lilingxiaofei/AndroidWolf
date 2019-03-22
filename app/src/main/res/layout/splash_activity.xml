@@ -6,7 +6,8 @@
         android:id="@+id/ivOpenPic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"/>
+        android:src="@mipmap/splash"
+        android:scaleType="centerCrop"/>
     
     <TextView android:id="@+id/tvOpenPic"
         android:layout_width="wrap_content"
