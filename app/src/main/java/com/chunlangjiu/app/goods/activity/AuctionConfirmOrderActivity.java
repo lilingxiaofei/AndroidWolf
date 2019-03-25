@@ -26,6 +26,7 @@ import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
+import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.bean.AddressListDetailBean;
@@ -409,7 +410,13 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     }
 
     private void invokeYuePay(ResultBean data) {
-        toOrderMainActivity(true);
+
+        PayResultBean payResultBean = (PayResultBean)data.getData();
+        if(payResultBean!=null && "success".equals(payResultBean.getStatus())){
+            toOrderMainActivity(true);
+        }else{
+            toOrderMainActivity(false);
+        }
     }
 
     private void invokeDaePay(ResultBean data) {

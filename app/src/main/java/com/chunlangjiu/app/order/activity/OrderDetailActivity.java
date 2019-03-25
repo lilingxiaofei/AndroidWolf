@@ -7,25 +7,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.awen.photo.photopick.controller.PhotoPagerConfig;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
+import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
+import com.chunlangjiu.app.goods.activity.ShopMainActivity;
+import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
 import com.chunlangjiu.app.goods.bean.CreateOrderBean;
+import com.chunlangjiu.app.goods.bean.GoodsListDetailBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.order.adapter.OrderAfterSalePicAdapter;
 import com.chunlangjiu.app.order.bean.CancelReasonBean;
 import com.chunlangjiu.app.order.bean.LogisticsBean;
 import com.chunlangjiu.app.order.bean.OrderDetailBean;
@@ -42,6 +53,8 @@ import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
+import com.lzy.imagepicker.util.Utils;
+import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
@@ -57,6 +70,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -178,6 +192,8 @@ public class OrderDetailActivity extends BaseActivity {
     @BindView(R.id.tvLogiNoCopy)
     TextView tvLogiNoCopy;
 
+    @BindView(R.id.rvAfterSalePic)
+    RecyclerView rvAfterSalePic;
     @BindView(R.id.llInfo)
     LinearLayout llInfo;
     @BindView(R.id.tvInfo)
@@ -245,6 +261,7 @@ public class OrderDetailActivity extends BaseActivity {
     private ResultBean<CreateOrderBean> createOrderBeanResultBean;
     private String paymentId;
     private InputPriceDialog inputPriceDialog;
+    private ArrayList<String> afterSalePicList;
 
     private RefundAfterSaleOrderDialog refundAfterSaleOrderDialog;
     private RefundAfterSaleOrderDialog refundCancelOrderDialog;
@@ -1018,6 +1035,40 @@ public class OrderDetailActivity extends BaseActivity {
             tvRightContentDesc.setVisibility(View.GONE);
             tvAfterSaleCreateTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getModified_time())));
 
+            afterSalePicList = new ArrayList();
+
+            if(afterSalePicList!=null && afterSalePicList.size()>0){
+                OrderAfterSalePicAdapter goodsAdapter = new OrderAfterSalePicAdapter(this,afterSalePicList);
+                goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        toLargeImage(position);
+                    }
+                });
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+                rvAfterSalePic.setLayoutManager(new LinearLayoutManager(this){
+                    @Override
+                    public boolean canScrollVertically() {
+                        return false;
+                    }
+                });
+                rvAfterSalePic.setNestedScrollingEnabled(false);
+                rvAfterSalePic.setLayoutManager(gridLayoutManager);
+
+                GridSpacingItemDecoration decoration2 = new GridSpacingItemDecoration(3, Utils.dp2px(this, 5), false);
+                rvAfterSalePic.addItemDecoration(decoration2);
+                rvAfterSalePic.setAdapter(goodsAdapter);
+                rvAfterSalePic.setVisibility(View.VISIBLE);
+            }else{
+                rvAfterSalePic.setVisibility(View.GONE);
+            }
+
+
+
+
+
+
+
             llProducts.removeAllViews();
             LayoutInflater inflater = LayoutInflater.from(this);
             OrderDetailBean.OrdersBean order = orderDetailBean.getOrder();
@@ -1072,6 +1123,15 @@ public class OrderDetailActivity extends BaseActivity {
         }
     }
 
+
+    private void toLargeImage(int position) {
+        new PhotoPagerConfig.Builder(this)
+                .setBigImageUrls(afterSalePicList)
+                .setSavaImage(false)
+                .setPosition(position)
+//                        .setSaveImageLocalPath("这里是你想保存的图片地址")
+                .build();
+    }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
