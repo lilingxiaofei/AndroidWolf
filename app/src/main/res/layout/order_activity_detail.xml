@@ -37,7 +37,8 @@
 
                 <TextView
                     android:id="@+id/tvOrderStatus"
-                    style="@style/order_left_value"/>
+                    style="@style/order_left_value"
+                    android:textColor="@color/t_red"/>
 
                 <LinearLayout
                     android:id="@+id/llOrderTitleRightContent"
@@ -101,7 +102,8 @@
 
                 <TextView
                     android:id="@+id/tvApplyReason"
-                    style="@style/order_left_value" />
+                    style="@style/order_left_value"
+                    android:textColor="@color/t_red"/>
 
             </LinearLayout>
             <LinearLayout android:id="@+id/llRefusalCause"
@@ -121,9 +123,64 @@
 
                 <TextView
                     android:id="@+id/tvRefusalCause"
-                    style="@style/order_left_value" />
+                    style="@style/order_left_value"
+                    android:textColor="@color/t_red"/>
 
             </LinearLayout>
+            <LinearLayout android:id="@+id/llAfterSaleRemark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="@dimen/order_details_padding"
+                android:paddingRight="@dimen/order_details_padding"
+                android:gravity="center_vertical"
+                android:background="@color/bg_white"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/order_left_label"
+                    android:text="@string/remark_label" />
+
+                <TextView
+                    android:id="@+id/tvAfterSaleRemark"
+                    style="@style/order_left_value"
+                    android:text="无"
+                    android:textColor="@color/t_red"/>
+
+            </LinearLayout>
+            <RelativeLayout android:id="@+id/rlAfterSalePic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="@dimen/order_details_padding"
+                android:paddingRight="@dimen/order_details_padding"
+                android:gravity="center_vertical"
+                android:background="@color/bg_white"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvAfterSalePicLabel"
+                    style="@style/order_left_label"
+                    android:text="凭证图片：" />
+
+                <TextView
+                    android:id="@+id/tvAfterSalePic"
+                    android:layout_toRightOf="@+id/tvAfterSalePicLabel"
+                    style="@style/order_left_value"
+                    android:text="无"
+                    android:textColor="@color/t_red"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvAfterSalePic"
+                    android:layout_marginTop="12dp"
+                    android:layout_below="@+id/tvAfterSalePicLabel"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
             <LinearLayout
                 android:id="@+id/llInfo"
                 android:layout_width="match_parent"
@@ -148,11 +205,6 @@
                     android:textColor="@color/black" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvAfterSalePic"
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

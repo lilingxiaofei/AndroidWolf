@@ -15,9 +15,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +26,7 @@ import com.awen.photo.photopick.controller.PhotoPagerConfig;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
-import com.chunlangjiu.app.goods.activity.ShopMainActivity;
-import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
 import com.chunlangjiu.app.goods.bean.CreateOrderBean;
-import com.chunlangjiu.app.goods.bean.GoodsListDetailBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
@@ -153,6 +149,19 @@ public class OrderDetailActivity extends BaseActivity {
     @BindView(R.id.tvRefusalCause)
     TextView tvRefusalCause;
 
+    //售后备注
+    @BindView(R.id.llAfterSaleRemark)
+    LinearLayout llAfterSaleRemark;
+    @BindView(R.id.tvAfterSaleRemark)
+    TextView tvAfterSaleRemark;
+    //售后图片
+    @BindView(R.id.rlAfterSalePic)
+    RelativeLayout rlAfterSalePic;
+    @BindView(R.id.tvAfterSalePic)
+    TextView tvAfterSalePic;
+    @BindView(R.id.rvAfterSalePic)
+    RecyclerView rvAfterSalePic;
+
     @BindView(R.id.llPayType)
     LinearLayout llPayType;
     @BindView(R.id.llAfterSaleTme)
@@ -192,8 +201,7 @@ public class OrderDetailActivity extends BaseActivity {
     @BindView(R.id.tvLogiNoCopy)
     TextView tvLogiNoCopy;
 
-    @BindView(R.id.rvAfterSalePic)
-    RecyclerView rvAfterSalePic;
+
     @BindView(R.id.llInfo)
     LinearLayout llInfo;
     @BindView(R.id.tvInfo)
@@ -605,6 +613,8 @@ public class OrderDetailActivity extends BaseActivity {
         } else {
             llInfo.setVisibility(View.GONE);
         }
+
+
     }
 
 
@@ -674,9 +684,9 @@ public class OrderDetailActivity extends BaseActivity {
             }
 
             TextView tvPaymentTips = findViewById(R.id.tvPaymentTips);
-            if(OrderParams.AUCTION_WAIT_PAY.equals(orderDetailBean.getAuction().getStatus())){
+            if (OrderParams.AUCTION_WAIT_PAY.equals(orderDetailBean.getAuction().getStatus())) {
                 tvPaymentTips.setText("应付定金：");
-            }else{
+            } else {
                 tvPaymentTips.setText("已付定金：");
             }
 
@@ -919,7 +929,7 @@ public class OrderDetailActivity extends BaseActivity {
                                     tvAfterSale.setTag(i);
                                     tvAfterSale.setOnClickListener(onClickListener);
                                     tvAfterSale.setVisibility(View.VISIBLE);
-                                }else if ("SELLER_REFUSE_BUYER".equals(orderBean.getAftersales_status()) && "FINISHED".equals(orderBean.getComplaints_status())) {
+                                } else if ("SELLER_REFUSE_BUYER".equals(orderBean.getAftersales_status()) && "FINISHED".equals(orderBean.getComplaints_status())) {
                                     TextView tvAfterSale = inflate.findViewById(R.id.tvAfterSale);
                                     tvAfterSale.setTag(i);
                                     tvAfterSale.setOnClickListener(onClickListener);
@@ -950,14 +960,14 @@ public class OrderDetailActivity extends BaseActivity {
             tvTotalPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getTotal_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
             tvSendPrice.setText(String.format("¥%s", new BigDecimal(orderDetailBean.getPost_fee()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()));
 
-            if (type ==3) {
+            if (type == 3) {
                 llCommission.setVisibility(View.VISIBLE);
-                tvCommission.setText("¥" +  BigDecimalUtils.objToStr(orderDetailBean.getCommission()));
+                tvCommission.setText("¥" + BigDecimalUtils.objToStr(orderDetailBean.getCommission()));
             } else {
                 llCommission.setVisibility(View.GONE);
             }
 
-            if (type ==3) {
+            if (type == 3) {
                 llShopPayment.setVisibility(View.VISIBLE);
                 tvShopPayment.setText("¥" + BigDecimalUtils.objToStr(orderDetailBean.getShop_payment()));
             } else {
@@ -1035,10 +1045,17 @@ public class OrderDetailActivity extends BaseActivity {
             tvRightContentDesc.setVisibility(View.GONE);
             tvAfterSaleCreateTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getModified_time())));
 
-            afterSalePicList = new ArrayList();
 
-            if(afterSalePicList!=null && afterSalePicList.size()>0){
-                OrderAfterSalePicAdapter goodsAdapter = new OrderAfterSalePicAdapter(this,afterSalePicList);
+            llAfterSaleRemark.setVisibility(View.VISIBLE);
+            if(!TextUtils.isEmpty(orderDetailBean.getDescription())){
+                tvAfterSaleRemark.setText(orderDetailBean.getDescription());
+            }else{
+                tvAfterSaleRemark.setText("无");
+            }
+
+            afterSalePicList = new ArrayList();
+            if (afterSalePicList != null && afterSalePicList.size() > 0) {
+                OrderAfterSalePicAdapter goodsAdapter = new OrderAfterSalePicAdapter(this, afterSalePicList);
                 goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -1046,7 +1063,7 @@ public class OrderDetailActivity extends BaseActivity {
                     }
                 });
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
-                rvAfterSalePic.setLayoutManager(new LinearLayoutManager(this){
+                rvAfterSalePic.setLayoutManager(new LinearLayoutManager(this) {
                     @Override
                     public boolean canScrollVertically() {
                         return false;
@@ -1059,14 +1076,11 @@ public class OrderDetailActivity extends BaseActivity {
                 rvAfterSalePic.addItemDecoration(decoration2);
                 rvAfterSalePic.setAdapter(goodsAdapter);
                 rvAfterSalePic.setVisibility(View.VISIBLE);
-            }else{
+                tvAfterSalePic.setText("");
+            } else {
+                tvAfterSalePic.setText("无");
                 rvAfterSalePic.setVisibility(View.GONE);
             }
-
-
-
-
-
 
 
             llProducts.removeAllViews();
@@ -1085,10 +1099,10 @@ public class OrderDetailActivity extends BaseActivity {
             tvProductNum.setText(String.format("x%d", order.getNum()));
             llProducts.addView(inflate);
 
-            if(orderDetailBean.getRefunds()!=null && BigDecimalUtils.objToBigDecimal(orderDetailBean.getRefunds().getRefund_money()).doubleValue()>0){
-                tvPayment.setText(String.format("¥%s",BigDecimalUtils.objToStr(orderDetailBean.getRefunds().getRefund_money())));
-            }else{
-                tvPayment.setText(String.format("¥%s",   BigDecimalUtils.objToStr(order.getPayment())));
+            if (orderDetailBean.getRefunds() != null && BigDecimalUtils.objToBigDecimal(orderDetailBean.getRefunds().getRefund_money()).doubleValue() > 0) {
+                tvPayment.setText(String.format("¥%s", BigDecimalUtils.objToStr(orderDetailBean.getRefunds().getRefund_money())));
+            } else {
+                tvPayment.setText(String.format("¥%s", BigDecimalUtils.objToStr(order.getPayment())));
             }
 
             tvPaymentTips.setText("退款金额：");
@@ -1432,7 +1446,7 @@ public class OrderDetailActivity extends BaseActivity {
         }
         String original_bid = orderDetailBean.getAuction().getOriginal_bid();
         String moneyPrice = orderDetailBean.getPayments().getPrice();
-        original_bid = BigDecimalUtils.objToBigDecimal(original_bid).doubleValue()>0?original_bid:moneyPrice;
+        original_bid = BigDecimalUtils.objToBigDecimal(original_bid).doubleValue() > 0 ? original_bid : moneyPrice;
         if (inputPriceDialog == null) {
             inputPriceDialog = new InputPriceDialog(this, max_price, original_bid);
             inputPriceDialog.setCallBack(new InputPriceDialog.CallBack() {

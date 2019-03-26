@@ -38,6 +38,7 @@
     <string name="bank_manager">银行卡管理</string>
 
 
+    <string name="remark_label">备\u3000\u3000注：</string>
     <string name="into_store">进店</string>
     <string name="into_seller_center">进入卖家中心 >></string>
     <string name="into_buyer_center">进入买家中心 >></string>

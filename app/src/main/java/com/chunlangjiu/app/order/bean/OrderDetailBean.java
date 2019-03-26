@@ -155,7 +155,7 @@ public class OrderDetailBean {
     private String paymentId;
     private String info;
     private String trade_ststus ;
-
+    private String description ;
     private String commission ;//平台佣金
     private String shop_payment ;//店铺实收
 
@@ -219,6 +219,14 @@ public class OrderDetailBean {
 
     public String getProgress() {
         return progress;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setProgress(String progress) {
