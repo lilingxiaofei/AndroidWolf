@@ -238,11 +238,11 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
             showLoadingDialog();
             ArrayList<Observable<ResultBean<UploadImageBean>>> tempList = new ArrayList();
             //可选上传的图片
-            if(orderEvaluationPicBeanList!= null && orderEvaluationPicBeanList.size()>0){
-                for (OrderEvaluationPicBean imageItem:orderEvaluationPicBeanList) {
+            for (OrderEvaluationPicBean imageItem : orderEvaluationPicBeanList) {
+                if (!imageItem.isAddButton()) {
                     String base64Data = imageItem.getBase64Data();
                     String name = imageItem.getName();
-                    Observable<ResultBean<UploadImageBean>> detailsGoods = ApiUtils.getInstance().userUploadImage(base64Data,name,"aftersales");
+                    Observable<ResultBean<UploadImageBean>> detailsGoods = ApiUtils.getInstance().userUploadImage(base64Data, name, "aftersales");
                     tempList.add(detailsGoods);
                 }
             }
@@ -250,8 +250,8 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
                 @Override
                 public List<String> apply(Object[] objects) throws Exception {
                     List<String> imageLists = new ArrayList<>();
-                    for (Object obj:objects) {
-                        ResultBean<UploadImageBean> resultBeans = (ResultBean<UploadImageBean>)obj;
+                    for (Object obj : objects) {
+                        ResultBean<UploadImageBean> resultBeans = (ResultBean<UploadImageBean>) obj;
                         imageLists.add(resultBeans.getData().getUrl());
                     }
                     return imageLists;
@@ -261,10 +261,10 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
                     .subscribe(new Consumer<List<String>>() {
                         @Override
                         public void accept(List<String> strings) throws Exception {
-                            if(strings != null && strings.size()>0){
+                            if (strings != null && strings.size() > 0) {
                                 uploadImageUrls = strings;
                                 commitContent();
-                            }else{
+                            } else {
                                 hideLoadingDialog();
                                 ToastUtils.showShort("上传图片失败");
                             }
