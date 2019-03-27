@@ -40,9 +40,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 public class OrderApplyForAfterSaleActivity extends BaseActivity {
@@ -231,45 +233,88 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
             return;
         }
         uploadImageUrls.clear();
+
         if (orderEvaluationPicBeanList.size() > 1) {
             showLoadingDialog();
-            orderEvaluationPicBeanListSize = 0;
-            for (OrderEvaluationPicBean orderEvaluationPicBean : orderEvaluationPicBeanList) {
-                if (!orderEvaluationPicBean.isAddButton()) {
-                    orderEvaluationPicBeanListSize++;
-                    String base64Data = orderEvaluationPicBean.getBase64Data();
-                    String name = orderEvaluationPicBean.getName();
-                    disposable.add(ApiUtils.getInstance().userUploadImage(base64Data, name, "aftersales")
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<ResultBean<UploadImageBean>>() {
-                                @Override
-                                public void accept(ResultBean<UploadImageBean> uploadImageBeanResultBean) throws Exception {
-                                    uploadImageUrls.add(uploadImageBeanResultBean.getData().getUrl());
-                                    if (uploadImageUrls.size() == orderEvaluationPicBeanListSize) {
-                                        commitContent();
-                                    } else {
-                                        if (TextUtils.isEmpty(uploadImageBeanResultBean.getMsg())) {
-                                            ToastUtils.showShort("上传图片失败");
-                                        } else {
-                                            ToastUtils.showShort(uploadImageBeanResultBean.getMsg());
-                                        }
-                                        hideLoadingDialog();
-                                    }
-                                }
-                            }, new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    if (TextUtils.isEmpty(throwable.getMessage())) {
-                                        ToastUtils.showShort("上传图片失败");
-                                    } else {
-                                        ToastUtils.showShort(throwable.getMessage());
-                                    }
-                                    hideLoadingDialog();
-                                }
-                            }));
+            ArrayList<Observable<ResultBean<UploadImageBean>>> tempList = new ArrayList();
+            //可选上传的图片
+            if(orderEvaluationPicBeanList!= null && orderEvaluationPicBeanList.size()>0){
+                for (OrderEvaluationPicBean imageItem:orderEvaluationPicBeanList) {
+                    String base64Data = imageItem.getBase64Data();
+                    String name = imageItem.getName();
+                    Observable<ResultBean<UploadImageBean>> detailsGoods = ApiUtils.getInstance().userUploadImage(base64Data,name,"aftersales");
+                    tempList.add(detailsGoods);
                 }
             }
+            disposable.add(Observable.zip(tempList, new Function<Object[], List<String>>() {
+                @Override
+                public List<String> apply(Object[] objects) throws Exception {
+                    List<String> imageLists = new ArrayList<>();
+                    for (Object obj:objects) {
+                        ResultBean<UploadImageBean> resultBeans = (ResultBean<UploadImageBean>)obj;
+                        imageLists.add(resultBeans.getData().getUrl());
+                    }
+                    return imageLists;
+                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<List<String>>() {
+                        @Override
+                        public void accept(List<String> strings) throws Exception {
+                            if(strings != null && strings.size()>0){
+                                uploadImageUrls = strings;
+                                commitContent();
+                            }else{
+                                hideLoadingDialog();
+                                ToastUtils.showShort("上传图片失败");
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            hideLoadingDialog();
+                            ToastUtils.showShort("上传图片失败");
+                        }
+                    }));
+
+
+//            orderEvaluationPicBeanListSize = 0;
+//            for (OrderEvaluationPicBean orderEvaluationPicBean : orderEvaluationPicBeanList) {
+//                if (!orderEvaluationPicBean.isAddButton()) {
+//                    orderEvaluationPicBeanListSize++;
+//                    String base64Data = orderEvaluationPicBean.getBase64Data();
+//                    String name = orderEvaluationPicBean.getName();
+//                    disposable.add(ApiUtils.getInstance().userUploadImage(base64Data, name, "aftersales")
+//                            .subscribeOn(Schedulers.io())
+//                            .observeOn(AndroidSchedulers.mainThread())
+//                            .subscribe(new Consumer<ResultBean<UploadImageBean>>() {
+//                                @Override
+//                                public void accept(ResultBean<UploadImageBean> uploadImageBeanResultBean) throws Exception {
+//                                    uploadImageUrls.add(uploadImageBeanResultBean.getData().getUrl());
+//                                    if (uploadImageUrls.size() == orderEvaluationPicBeanListSize) {
+//                                        commitContent();
+//                                    } else {
+//                                        if (TextUtils.isEmpty(uploadImageBeanResultBean.getMsg())) {
+//                                            ToastUtils.showShort("上传图片失败");
+//                                        } else {
+//                                            ToastUtils.showShort(uploadImageBeanResultBean.getMsg());
+//                                        }
+//                                        hideLoadingDialog();
+//                                    }
+//                                }
+//                            }, new Consumer<Throwable>() {
+//                                @Override
+//                                public void accept(Throwable throwable) throws Exception {
+//                                    if (TextUtils.isEmpty(throwable.getMessage())) {
+//                                        ToastUtils.showShort("上传图片失败");
+//                                    } else {
+//                                        ToastUtils.showShort(throwable.getMessage());
+//                                    }
+//                                    hideLoadingDialog();
+//                                }
+//                            }));
+//                }
+//            }
         } else {
             showLoadingDialog();
             commitContent();
