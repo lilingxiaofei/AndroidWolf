@@ -156,6 +156,7 @@ public class OrderDetailBean {
     private String info;
     private String trade_ststus ;
     private String description ;
+    private String evidence_pic;
     private String commission ;//平台佣金
     private String shop_payment ;//店铺实收
 
@@ -227,6 +228,14 @@ public class OrderDetailBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getEvidence_pic() {
+        return evidence_pic;
+    }
+
+    public void setEvidence_pic(String evidence_pic) {
+        this.evidence_pic = evidence_pic;
     }
 
     public void setProgress(String progress) {

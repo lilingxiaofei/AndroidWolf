@@ -67,6 +67,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -1052,8 +1053,11 @@ public class OrderDetailActivity extends BaseActivity {
             }else{
                 tvAfterSaleRemark.setText("无");
             }
+            String afterSalePic = orderDetailBean.getEvidence_pic();
+            afterSalePic = afterSalePic == null?"":afterSalePic;
+            String[] afterSalePics = afterSalePic.split(",");
+            afterSalePicList = new ArrayList<>(Arrays.asList(afterSalePics));
 
-            afterSalePicList = new ArrayList();
             if (afterSalePicList != null && afterSalePicList.size() > 0) {
                 OrderAfterSalePicAdapter goodsAdapter = new OrderAfterSalePicAdapter(this, afterSalePicList);
                 goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
