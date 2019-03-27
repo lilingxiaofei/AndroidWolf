@@ -62,6 +62,7 @@ public class GoodsManageFragment extends BaseFragment {
     private String status = "";
     private TimePickerDialog startTimeDialog;
     private long startTime;
+    private int clickId = 0 ;
 
     CheckGoodsBean checkGoodsBean ;
     StarLevelDialog starLevelDialog = null ;
@@ -151,7 +152,8 @@ public class GoodsManageFragment extends BaseFragment {
         @Override
         public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
             final GoodsBean goods = pageUtils.get(position);
-            switch (view.getId()) {
+            clickId = view.getId() ;
+            switch (clickId) {
                 case R.id.rl_item_layout:
                     if(CommonUtils.GOODS_STATUS_SELL.equals(status) || CommonUtils.GOODS_STATUS_AUCTION_ACTIVE.equals(status)){
                         GoodsManageDetailsActivity.startActivity(activity,goods.getItem_id(),"");
@@ -170,8 +172,7 @@ public class GoodsManageFragment extends BaseFragment {
                 case R.id.tvPutaway:
 
                     if (BigDecimalUtils.objToBigDecimal(goods.getStore()).intValue() > 0) {
-//                        editGoodsShelves(goods.getItem_id(), "tosale");
-                        checkUploadGoods(goods.getItem_id());//检测是否还能上传商品接口
+                        checkUploadGoods(goods);//检测是否还能上传商品接口
                     } else {
                         ToastUtils.showShort("库存为0，请先设置库存再上架此商品");
                     }
@@ -179,7 +180,7 @@ public class GoodsManageFragment extends BaseFragment {
                     break;
                 case R.id.tvSetAuction:
                     if (BigDecimalUtils.objToBigDecimal(goods.getStore()).intValue() > 0) {
-                        GoodsManageSetAuctionActivity.startSetAuctionActivity(activity, goods);
+                        checkUploadGoods(goods);//检测是否还能上传商品接口
                     } else {
                         ToastUtils.showShort("库存为0，请先设置库存再设置为竞拍商品");
                     }
@@ -222,7 +223,11 @@ public class GoodsManageFragment extends BaseFragment {
         }
     };
 
-    private void checkUploadGoods(final String itemId){
+    /**
+     *
+     * @param goods 商品数据
+     */
+    private void checkUploadGoods(final GoodsBean goods){
         showLoadingDialog();
         disposable.add(ApiUtils.getInstance().checkUploadGoods()
                 .subscribeOn(Schedulers.io())
@@ -235,7 +240,12 @@ public class GoodsManageFragment extends BaseFragment {
                         if(null != checkGoodsBean ){
                             hideLoadingDialog();
                             if("true".equals(checkGoodsBean.getStatus())){
-                                editGoodsShelves(itemId, "tosale");
+                                if(clickId == R.id.tvSetAuction){
+                                    GoodsManageSetAuctionActivity.startSetAuctionActivity(activity, goods);
+                                }else{
+                                    editGoodsShelves(goods.getItem_id(), "tosale");
+                                }
+
                             }else{
                                 starLevelDialog.updateTips(checkGoodsBean.getTips());
                                 starLevelDialog.show();
