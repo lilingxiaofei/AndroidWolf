@@ -82,6 +82,10 @@ public class EditAccountNameDialog extends Dialog {
         etName.setText("");
     }
 
+    public void setNameContent(String name){
+        etName.setText(name);
+    }
+
 
     public interface CallBack {
         void onConfirm(String name);

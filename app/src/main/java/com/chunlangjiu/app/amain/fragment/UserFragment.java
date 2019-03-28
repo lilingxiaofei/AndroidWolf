@@ -642,7 +642,6 @@ public class UserFragment extends BaseFragment {
             //卖家中心
             imgEditName.setVisibility(View.VISIBLE);
             llNotUseMoney.setVisibility(View.VISIBLE);
-            shopName = null ;
             if (TextUtils.isEmpty(shopName)) {
                 if (!TextUtils.isEmpty(companyName)) {
                     tvName.setText(companyName);
@@ -1344,7 +1343,7 @@ public class UserFragment extends BaseFragment {
                 }
             });
         }
-        editAccountNameDialog.clearName();
+        editAccountNameDialog.setNameContent(shopName);
         editAccountNameDialog.show();
     }
 
