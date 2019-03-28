@@ -1048,17 +1048,26 @@ public class OrderDetailActivity extends BaseActivity {
 
 
             llAfterSaleRemark.setVisibility(View.VISIBLE);
-            if(!TextUtils.isEmpty(orderDetailBean.getDescription())){
+            if (!TextUtils.isEmpty(orderDetailBean.getDescription())) {
                 tvAfterSaleRemark.setText(orderDetailBean.getDescription());
-            }else{
+            } else {
                 tvAfterSaleRemark.setText("无");
             }
-            String afterSalePic = orderDetailBean.getEvidence_pic();
-            afterSalePic = afterSalePic == null?"":afterSalePic;
-            String[] afterSalePics = afterSalePic.split(",");
-            afterSalePicList = new ArrayList<>(Arrays.asList(afterSalePics));
+            //预防后台数据格式错误问题
+            Object afterSalePicObj = orderDetailBean.getEvidence_pic();
 
-            if (afterSalePicList != null && afterSalePicList.size() > 0) {
+            if(afterSalePicObj!=null){
+                if(afterSalePicObj instanceof ArrayList){
+                    afterSalePicList = (ArrayList)afterSalePicObj;
+                }else if(afterSalePicObj.toString().length()>0){
+                    String afterSalePic = afterSalePicObj.toString() ;
+                    String[] afterSalePics = afterSalePic.split(",");
+                    afterSalePicList = new ArrayList<>(Arrays.asList(afterSalePics));
+                }
+            }
+
+            rlAfterSalePic.setVisibility(View.VISIBLE);
+            if (afterSalePicList!=null && afterSalePicList.size()>0) {
                 OrderAfterSalePicAdapter goodsAdapter = new OrderAfterSalePicAdapter(this, afterSalePicList);
                 goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override

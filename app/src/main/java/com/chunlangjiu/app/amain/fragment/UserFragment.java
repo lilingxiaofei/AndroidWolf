@@ -642,11 +642,14 @@ public class UserFragment extends BaseFragment {
             //卖家中心
             imgEditName.setVisibility(View.VISIBLE);
             llNotUseMoney.setVisibility(View.VISIBLE);
+            shopName = null ;
             if (TextUtils.isEmpty(shopName)) {
-                if (TextUtils.isEmpty(companyName)) {
-                    tvName.setText(personName);
-                } else {
+                if (!TextUtils.isEmpty(companyName)) {
                     tvName.setText(companyName);
+                } else if(!TextUtils.isEmpty(personName)){
+                    tvName.setText(personName);
+                }else{
+                    tvName.setText("设置店铺名称");
                 }
             } else {
                 tvName.setText(shopName);

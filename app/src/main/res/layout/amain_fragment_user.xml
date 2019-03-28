@@ -68,7 +68,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/tvName"
                     android:src="@mipmap/my_edit"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <RelativeLayout
                     android:id="@+id/rlAuthStatus"
