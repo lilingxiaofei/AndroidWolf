@@ -200,8 +200,21 @@ public class GoodsAdapter extends BaseQuickAdapter<GoodsListDetailBean, BaseView
                 }
             }else {
                 //普通商品
+
                 imgAuction.setVisibility(View.GONE);
-                llStartPrice.setVisibility(View.GONE);
+                int position =helper.getLayoutPosition();
+                //判断列表是两列的情况下，旁边的数据如果是竞拍 就设置竞拍启动价隐藏并占位置 以保证布局排版对不齐问题
+                if (itemType == LIST_GRID ) {
+                    int index = position%2==0?position+1:position-1;
+                    GoodsListDetailBean tempItem = getItem(index);
+                    if(tempItem.isAuction() || (tempItem.getAuction()!=null && !TextUtils.isEmpty(tempItem.getAuction().getAuctionitem_id()))){
+                        llStartPrice.setVisibility(View.INVISIBLE);
+                    }else{
+                        llStartPrice.setVisibility(View.GONE);
+                    }
+                }else{
+                    llStartPrice.setVisibility(View.GONE);
+                }
                 llHighPrice.setVisibility(View.VISIBLE);
                 tvAnPaiStr.setVisibility(View.GONE);
                 helper.setText(R.id.tvSellPriceStr, "");

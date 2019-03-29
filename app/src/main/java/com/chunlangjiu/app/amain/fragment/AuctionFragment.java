@@ -161,7 +161,7 @@ public class AuctionFragment extends BaseFragment {
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
         refreshLayout.setEnableRefresh(true);//设置可以下拉刷新
-        refreshLayout.setEnableLoadMore(false);//设置不能加载更多
+//        refreshLayout.setEnableLoadMore(false);//设置不能加载更多
         recyclerView = rootView.findViewById(R.id.recycle_view);
         pageUtils = new PageUtils<>();
         linearAdapter = new AuctionListAdapter(getActivity(), R.layout.amain_item_goods_list_linear, pageUtils.getList());
@@ -379,6 +379,7 @@ public class AuctionFragment extends BaseFragment {
                     @Override
                     public void accept(ResultBean<AuctionListBean> listResultBean) throws Exception {
                         refreshLayout.finishRefresh();
+                        refreshLayout.finishLoadMore();
                         List<AuctionListBean.AuctionBean> list = listResultBean.getData().getList();
                         getListSuccess(list);
                     }
@@ -386,6 +387,7 @@ public class AuctionFragment extends BaseFragment {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         refreshLayout.finishRefresh();
+                        refreshLayout.finishLoadMore();
                     }
                 }));
     }
