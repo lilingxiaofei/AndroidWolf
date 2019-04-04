@@ -29,6 +29,7 @@ import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
 import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
+import com.chunlangjiu.app.user.bean.AddressListBean;
 import com.chunlangjiu.app.user.bean.AddressListDetailBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
@@ -195,6 +196,31 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
 //            //暗拍
 //            tvPriceHint.setHint("(暗拍商品，其他出价保密)");
 //        }
+        getDefaultAddress();
+    }
+
+    private void getDefaultAddress() {
+        disposable.add(ApiUtils.getInstance().getAddressList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<AddressListBean>>() {
+                    @Override
+                    public void accept(ResultBean<AddressListBean> addressListBeanResultBean) throws Exception {
+                        List<AddressListDetailBean> list = addressListBeanResultBean.getData().getList();
+                        if(list != null){
+                            for (AddressListDetailBean item:list) {
+                                if("1".equals(item.getDef_addr())){
+                                    setAddressView(item);
+                                }
+                            }
+                        }
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                    }
+                }));
     }
 
 
@@ -430,20 +456,24 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
             if (requestCode == CHOICE_ADDRESS) {
                 AddressListDetailBean addressListDetailBean =
                         (AddressListDetailBean) data.getSerializableExtra("addressListDetailBean");
-                if (addressListDetailBean == null || TextUtils.isEmpty(addressListDetailBean.getAddr_id())) {
-                    addressId = "";
-                    rlNoAddress.setVisibility(View.VISIBLE);
-                    rlHasAddress.setVisibility(View.GONE);
-                } else {
-                    addressId = addressListDetailBean.getAddr_id();
-                    rlNoAddress.setVisibility(View.GONE);
-                    rlHasAddress.setVisibility(View.VISIBLE);
-                    tvAddressName.setText(addressListDetailBean.getName());
-                    tvAddressPhone.setText(addressListDetailBean.getMobile());
-                    String address = addressListDetailBean.getArea() + addressListDetailBean.getAddr();
-                    tvAddressDetails.setText(address.replace("/", ""));
-                }
+                setAddressView(addressListDetailBean);
             }
+        }
+    }
+
+    private void setAddressView(AddressListDetailBean addressListDetailBean){
+        if (addressListDetailBean == null || TextUtils.isEmpty(addressListDetailBean.getAddr_id())) {
+            addressId = "";
+            rlNoAddress.setVisibility(View.VISIBLE);
+            rlHasAddress.setVisibility(View.GONE);
+        } else {
+            addressId = addressListDetailBean.getAddr_id();
+            rlNoAddress.setVisibility(View.GONE);
+            rlHasAddress.setVisibility(View.VISIBLE);
+            tvAddressName.setText(addressListDetailBean.getName());
+            tvAddressPhone.setText(addressListDetailBean.getMobile());
+            String address = addressListDetailBean.getArea() + addressListDetailBean.getAddr();
+            tvAddressDetails.setText(address.replace("/", ""));
         }
     }
 
