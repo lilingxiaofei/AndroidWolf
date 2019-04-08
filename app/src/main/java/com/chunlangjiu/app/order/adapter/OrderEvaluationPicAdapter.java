@@ -33,13 +33,22 @@ public class OrderEvaluationPicAdapter extends BaseAdapter {
     // 得到总的数量
     @Override
     public int getCount() {
-        return list == null ? 0 : list.size();
+        int size = list == null ? 0 : list.size() ;
+        if(size<3){
+            size = size+1;
+        }
+        return size;
+//        return list == null ? 0 : list.size();
     }
 
     // 根据ListView位置返回View
     @Override
     public OrderEvaluationPicBean getItem(int position) {
-        return list.get(position);
+        if(list!=null && list.size()>position){
+            return list.get(position);
+        }else{
+            return null ;
+        }
     }
 
     // 根据ListView位置得到List中的ID
@@ -62,8 +71,8 @@ public class OrderEvaluationPicAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        OrderEvaluationPicBean orderEvaluationPicBean = list.get(position);
-        if (!orderEvaluationPicBean.isAddButton()) {
+        OrderEvaluationPicBean orderEvaluationPicBean = getItem(position);
+        if (orderEvaluationPicBean!=null) {
             GlideUtils.loadImage(context, orderEvaluationPicBean.getPicPath(), holder.imgOrderEvaluation);
             holder.tvOrderEvaluation.setVisibility(View.GONE);
         } else {

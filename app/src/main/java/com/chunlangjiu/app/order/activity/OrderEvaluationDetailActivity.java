@@ -51,6 +51,8 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 public class OrderEvaluationDetailActivity extends BaseActivity {
     public static final int REQUEST_CODE_SELECT_PIC = 1001;
+    public static final int REQUEST_CODE_CAMERA_PIC = 1002;
+
     @BindView(R.id.imgStore)
     ImageView imgStore;
     @BindView(R.id.tvStore)
@@ -66,13 +68,12 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
     @BindView(R.id.cbAnonymous)
     CheckBox cbAnonymous;
 
-    private int codeType;
     private ChoicePhotoDialog photoDialog;
+    private int selectLimit= 3 ;
     private List<OrderEvaluationPicBean> orderEvaluationPicBeanList;
     private OrderEvaluationPicAdapter orderEvaluationPicAdapter;
     @BindView(R.id.gvPhoto)
     GridView gvPhoto;
-    private OrderEvaluationPicBean orderEvaluationPicBean;
 
     private CommonConfirmDialog commonConfirmDialog;
     private int longClickPosition;
@@ -132,17 +133,14 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
         }
 
         orderEvaluationPicBeanList = new ArrayList<>();
-        orderEvaluationPicBean = new OrderEvaluationPicBean();
-        orderEvaluationPicBean.setAddButton(true);
-        orderEvaluationPicBeanList.add(orderEvaluationPicBean);
         orderEvaluationPicAdapter = new OrderEvaluationPicAdapter(this, orderEvaluationPicBeanList);
         gvPhoto.setAdapter(orderEvaluationPicAdapter);
         gvPhoto.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 longClickPosition = i;
-                OrderEvaluationPicBean item = orderEvaluationPicBeanList.get(i);
-                if (!item.isAddButton()) {
+                OrderEvaluationPicBean item = orderEvaluationPicAdapter.getItem(i);
+                if (item!= null) {
                     if (null == commonConfirmDialog) {
                         commonConfirmDialog = new CommonConfirmDialog(OrderEvaluationDetailActivity.this, "是否取消上传该图片？");
                         commonConfirmDialog.setCallBack(new CommonConfirmDialog.CallBack() {
@@ -150,15 +148,6 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
                             public void onConfirm() {
                                 orderEvaluationPicBeanList.remove(longClickPosition);
                                 ImagePicker.getInstance().removeSelectedImage(longClickPosition);
-                                boolean hasAddButton = false;
-                                for (OrderEvaluationPicBean orderEvaluationPicBean : orderEvaluationPicBeanList) {
-                                    if (orderEvaluationPicBean.isAddButton()) {
-                                        hasAddButton = true;
-                                    }
-                                }
-                                if (!hasAddButton) {
-                                    orderEvaluationPicBeanList.add(orderEvaluationPicBean);
-                                }
                                 orderEvaluationPicAdapter.updateData(orderEvaluationPicBeanList);
                             }
 
@@ -176,27 +165,26 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 OrderEvaluationPicBean item = orderEvaluationPicAdapter.getItem(i);
-                if (item.isAddButton()) {
-                    showPhotoDialog(REQUEST_CODE_SELECT_PIC);
+                if (item == null) {
+                    showPhotoDialog();
                 }
             }
         });
         tvCommit.setOnClickListener(onClickListener);
     }
 
-    private void showPhotoDialog(int requestCode) {
-        codeType = requestCode;
+    private void showPhotoDialog() {
         if (photoDialog == null) {
             photoDialog = new ChoicePhotoDialog(this);
             photoDialog.setCallBackListener(new ChoicePhotoDialog.OnCallBackListener() {
                 @Override
                 public void takePhoto() {
-                    openCamera(codeType);
+                    openCamera(REQUEST_CODE_CAMERA_PIC);
                 }
 
                 @Override
                 public void toPhotoAlbum() {
-                    openAlbum(codeType);
+                    openAlbum(REQUEST_CODE_SELECT_PIC);
                 }
             });
         }
@@ -210,7 +198,7 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
         imagePicker.setMultiMode(true);
         imagePicker.setCrop(false);                            //允许裁剪（单选才有效）
         imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
-        imagePicker.setSelectLimit(3);                        //选中数量限制
+//        imagePicker.setSelectLimit(3);                        //选中数量限制
         imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
         imagePicker.setFocusWidth(800);                       //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
         imagePicker.setFocusHeight(800);                      //裁剪框的高度。单位像素（圆形自动取宽高最小值）
@@ -227,8 +215,19 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
 
     private void openAlbum(int requestCode) {
         Intent intent1 = new Intent(this, ImageGridActivity.class);
+        ImagePicker.getInstance().setSelectLimit(getSelectLimit());
         intent1.putExtra(ImageGridActivity.NEED_CLEAR, false);
         startActivityForResult(intent1, requestCode);
+    }
+
+    private int getSelectLimit() {
+        int cameraSize = 0;
+        for (OrderEvaluationPicBean picBean : orderEvaluationPicBeanList) {
+            if (picBean.isCamera()) {
+                cameraSize++;
+            }
+        }
+        return selectLimit - cameraSize;
     }
 
     @Override
@@ -238,9 +237,9 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
             if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
                 //添加图片返回
                 if (data != null) {
-                    if (requestCode == REQUEST_CODE_SELECT_PIC) {
+                    if (requestCode == REQUEST_CODE_SELECT_PIC || REQUEST_CODE_CAMERA_PIC == requestCode) {
                         ArrayList<ImageItem> pics = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                        orderEvaluationPicBeanList.clear();
+//                        orderEvaluationPicBeanList.clear();
                         for (ImageItem imageItem : pics) {
                             OrderEvaluationPicBean orderEvaluationPicBean = new OrderEvaluationPicBean();
                             orderEvaluationPicBean.setAddButton(false);
@@ -249,9 +248,7 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
                             orderEvaluationPicBean.setBase64Data(FileUtils.imgToBase64(imageItem.path));
                             orderEvaluationPicBean.setPicPath(imageItem.path);
                             orderEvaluationPicBean.setName(imageItem.name);
-                            orderEvaluationPicBeanList.add(orderEvaluationPicBean);
-                        }
-                        if (orderEvaluationPicBeanList.size() < 3) {
+                            orderEvaluationPicBean.setCamera(REQUEST_CODE_CAMERA_PIC == requestCode);
                             orderEvaluationPicBeanList.add(orderEvaluationPicBean);
                         }
                         orderEvaluationPicAdapter.updateData(orderEvaluationPicBeanList);
@@ -288,40 +285,38 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
             showLoadingDialog();
             orderEvaluationPicBeanListSize = 0;
             for (OrderEvaluationPicBean orderEvaluationPicBean : orderEvaluationPicBeanList) {
-                if (!orderEvaluationPicBean.isAddButton()) {
-                    orderEvaluationPicBeanListSize++;
-                    String base64Data = orderEvaluationPicBean.getBase64Data();
-                    String name = orderEvaluationPicBean.getName();
-                    disposable.add(ApiUtils.getInstance().userUploadImage(base64Data, name, "rate")
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<ResultBean<UploadImageBean>>() {
-                                @Override
-                                public void accept(ResultBean<UploadImageBean> uploadImageBeanResultBean) throws Exception {
-                                    uploadImageUrls.add(uploadImageBeanResultBean.getData().getUrl());
-                                    if (uploadImageUrls.size() == orderEvaluationPicBeanListSize) {
-                                        commitContent();
-                                    } else {
-                                        if (TextUtils.isEmpty(uploadImageBeanResultBean.getMsg())) {
-                                            ToastUtils.showShort("上传图片失败");
-                                        } else {
-                                            ToastUtils.showShort(uploadImageBeanResultBean.getMsg());
-                                        }
-                                        hideLoadingDialog();
-                                    }
-                                }
-                            }, new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    if (TextUtils.isEmpty(throwable.getMessage())) {
+                orderEvaluationPicBeanListSize++;
+                String base64Data = orderEvaluationPicBean.getBase64Data();
+                String name = orderEvaluationPicBean.getName();
+                disposable.add(ApiUtils.getInstance().userUploadImage(base64Data, name, "rate")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<ResultBean<UploadImageBean>>() {
+                            @Override
+                            public void accept(ResultBean<UploadImageBean> uploadImageBeanResultBean) throws Exception {
+                                uploadImageUrls.add(uploadImageBeanResultBean.getData().getUrl());
+                                if (uploadImageUrls.size() == orderEvaluationPicBeanListSize) {
+                                    commitContent();
+                                } else {
+                                    if (TextUtils.isEmpty(uploadImageBeanResultBean.getMsg())) {
                                         ToastUtils.showShort("上传图片失败");
                                     } else {
-                                        ToastUtils.showShort(throwable.getMessage());
+                                        ToastUtils.showShort(uploadImageBeanResultBean.getMsg());
                                     }
                                     hideLoadingDialog();
                                 }
-                            }));
-                }
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                if (TextUtils.isEmpty(throwable.getMessage())) {
+                                    ToastUtils.showShort("上传图片失败");
+                                } else {
+                                    ToastUtils.showShort(throwable.getMessage());
+                                }
+                                hideLoadingDialog();
+                            }
+                        }));
             }
         } else {
             showLoadingDialog();

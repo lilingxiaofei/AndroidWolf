@@ -56,7 +56,6 @@ public class GoodsPicAdapter extends BaseAdapter {
         }else{
             return null ;
         }
-
     }
 
     // 根据ListView位置得到List中的ID

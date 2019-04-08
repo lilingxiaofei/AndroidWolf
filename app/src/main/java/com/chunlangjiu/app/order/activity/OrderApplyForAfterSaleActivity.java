@@ -63,15 +63,15 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
     TextView tvAfterSaleReason;
 
     public static final int REQUEST_CODE_SELECT_PIC = 1001;
+    public static final int REQUEST_CODE_CAMERA_PIC = 1002;
     @BindView(R.id.gvPhoto)
     GridView gvPhoto;
-    private OrderEvaluationPicBean orderEvaluationPicBean;
+    private int selectLimit = 3;
     private ChoicePhotoDialog photoDialog;
     private List<OrderEvaluationPicBean> orderEvaluationPicBeanList;
     private OrderEvaluationPicAdapter orderEvaluationPicAdapter;
     private int longClickPosition;
     private CommonConfirmDialog commonConfirmDialog;
-    private int codeType;
 
     private CompositeDisposable disposable;
     private List<String> uploadImageUrls;
@@ -123,17 +123,14 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
         tvAfterSaleNum.setText(String.valueOf(orderBean.getNum()));
 
         orderEvaluationPicBeanList = new ArrayList<>();
-        orderEvaluationPicBean = new OrderEvaluationPicBean();
-        orderEvaluationPicBean.setAddButton(true);
-        orderEvaluationPicBeanList.add(orderEvaluationPicBean);
         orderEvaluationPicAdapter = new OrderEvaluationPicAdapter(this, orderEvaluationPicBeanList);
         gvPhoto.setAdapter(orderEvaluationPicAdapter);
         gvPhoto.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 longClickPosition = i;
-                OrderEvaluationPicBean item = orderEvaluationPicBeanList.get(i);
-                if (!item.isAddButton()) {
+                OrderEvaluationPicBean item = orderEvaluationPicAdapter.getItem(i);
+                if (item != null) {
                     if (null == commonConfirmDialog) {
                         commonConfirmDialog = new CommonConfirmDialog(OrderApplyForAfterSaleActivity.this, "是否取消上传该图片？");
                         commonConfirmDialog.setCallBack(new CommonConfirmDialog.CallBack() {
@@ -141,15 +138,6 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
                             public void onConfirm() {
                                 orderEvaluationPicBeanList.remove(longClickPosition);
                                 ImagePicker.getInstance().removeSelectedImage(longClickPosition);
-                                boolean hasAddButton = false;
-                                for (OrderEvaluationPicBean orderEvaluationPicBean : orderEvaluationPicBeanList) {
-                                    if (orderEvaluationPicBean.isAddButton()) {
-                                        hasAddButton = true;
-                                    }
-                                }
-                                if (!hasAddButton) {
-                                    orderEvaluationPicBeanList.add(orderEvaluationPicBean);
-                                }
                                 orderEvaluationPicAdapter.updateData(orderEvaluationPicBeanList);
                             }
 
@@ -167,8 +155,8 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 OrderEvaluationPicBean item = orderEvaluationPicAdapter.getItem(i);
-                if (item.isAddButton()) {
-                    showPhotoDialog(REQUEST_CODE_SELECT_PIC);
+                if (item == null) {
+                    showPhotoDialog();
                 }
             }
         });
@@ -239,12 +227,10 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
             ArrayList<Observable<ResultBean<UploadImageBean>>> tempList = new ArrayList();
             //可选上传的图片
             for (OrderEvaluationPicBean imageItem : orderEvaluationPicBeanList) {
-                if (!imageItem.isAddButton()) {
-                    String base64Data = imageItem.getBase64Data();
-                    String name = imageItem.getName();
-                    Observable<ResultBean<UploadImageBean>> detailsGoods = ApiUtils.getInstance().userUploadImage(base64Data, name, "aftersales");
-                    tempList.add(detailsGoods);
-                }
+                String base64Data = imageItem.getBase64Data();
+                String name = imageItem.getName();
+                Observable<ResultBean<UploadImageBean>> detailsGoods = ApiUtils.getInstance().userUploadImage(base64Data, name, "aftersales");
+                tempList.add(detailsGoods);
             }
             disposable.add(Observable.zip(tempList, new Function<Object[], List<String>>() {
                 @Override
@@ -362,19 +348,18 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
                 }));
     }
 
-    private void showPhotoDialog(int requestCode) {
-        codeType = requestCode;
+    private void showPhotoDialog() {
         if (photoDialog == null) {
             photoDialog = new ChoicePhotoDialog(this);
             photoDialog.setCallBackListener(new ChoicePhotoDialog.OnCallBackListener() {
                 @Override
                 public void takePhoto() {
-                    openCamera(codeType);
+                    openCamera(REQUEST_CODE_CAMERA_PIC);
                 }
 
                 @Override
                 public void toPhotoAlbum() {
-                    openAlbum(codeType);
+                    openAlbum(REQUEST_CODE_SELECT_PIC);
                 }
             });
         }
@@ -405,8 +390,19 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
 
     private void openAlbum(int requestCode) {
         Intent intent1 = new Intent(this, ImageGridActivity.class);
+        ImagePicker.getInstance().setSelectLimit(getSelectLimit());
         intent1.putExtra(ImageGridActivity.NEED_CLEAR, false);
         startActivityForResult(intent1, requestCode);
+    }
+
+    private int getSelectLimit() {
+        int cameraSize = 0;
+        for (OrderEvaluationPicBean picBean : orderEvaluationPicBeanList) {
+            if (picBean.isCamera()) {
+                cameraSize++;
+            }
+        }
+        return selectLimit - cameraSize;
     }
 
     @Override
@@ -416,9 +412,11 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
             if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
                 //添加图片返回
                 if (data != null) {
-                    if (requestCode == REQUEST_CODE_SELECT_PIC) {
+                    if (requestCode == REQUEST_CODE_SELECT_PIC || REQUEST_CODE_CAMERA_PIC == requestCode) {
+//                        if(requestCode == REQUEST_CODE_SELECT_PIC ){
+//                            orderEvaluationPicBeanList.clear();
+//                        }
                         ArrayList<ImageItem> pics = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                        orderEvaluationPicBeanList.clear();
                         for (ImageItem imageItem : pics) {
                             OrderEvaluationPicBean orderEvaluationPicBean = new OrderEvaluationPicBean();
                             orderEvaluationPicBean.setAddButton(false);
@@ -427,9 +425,7 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
                             orderEvaluationPicBean.setBase64Data(FileUtils.imgToBase64(imageItem.path));
                             orderEvaluationPicBean.setPicPath(imageItem.path);
                             orderEvaluationPicBean.setName(imageItem.name);
-                            orderEvaluationPicBeanList.add(orderEvaluationPicBean);
-                        }
-                        if (orderEvaluationPicBeanList.size() < 3) {
+                            orderEvaluationPicBean.setCamera(REQUEST_CODE_CAMERA_PIC == requestCode);
                             orderEvaluationPicBeanList.add(orderEvaluationPicBean);
                         }
                         orderEvaluationPicAdapter.updateData(orderEvaluationPicBeanList);
