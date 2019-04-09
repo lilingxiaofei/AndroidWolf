@@ -222,7 +222,7 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
         }
         uploadImageUrls.clear();
 
-        if (orderEvaluationPicBeanList.size() > 1) {
+        if (orderEvaluationPicBeanList.size() > 0) {
             showLoadingDialog();
             ArrayList<Observable<ResultBean<UploadImageBean>>> tempList = new ArrayList();
             //可选上传的图片
@@ -262,45 +262,6 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
                             ToastUtils.showShort("上传图片失败");
                         }
                     }));
-
-
-//            orderEvaluationPicBeanListSize = 0;
-//            for (OrderEvaluationPicBean orderEvaluationPicBean : orderEvaluationPicBeanList) {
-//                if (!orderEvaluationPicBean.isAddButton()) {
-//                    orderEvaluationPicBeanListSize++;
-//                    String base64Data = orderEvaluationPicBean.getBase64Data();
-//                    String name = orderEvaluationPicBean.getName();
-//                    disposable.add(ApiUtils.getInstance().userUploadImage(base64Data, name, "aftersales")
-//                            .subscribeOn(Schedulers.io())
-//                            .observeOn(AndroidSchedulers.mainThread())
-//                            .subscribe(new Consumer<ResultBean<UploadImageBean>>() {
-//                                @Override
-//                                public void accept(ResultBean<UploadImageBean> uploadImageBeanResultBean) throws Exception {
-//                                    uploadImageUrls.add(uploadImageBeanResultBean.getData().getUrl());
-//                                    if (uploadImageUrls.size() == orderEvaluationPicBeanListSize) {
-//                                        commitContent();
-//                                    } else {
-//                                        if (TextUtils.isEmpty(uploadImageBeanResultBean.getMsg())) {
-//                                            ToastUtils.showShort("上传图片失败");
-//                                        } else {
-//                                            ToastUtils.showShort(uploadImageBeanResultBean.getMsg());
-//                                        }
-//                                        hideLoadingDialog();
-//                                    }
-//                                }
-//                            }, new Consumer<Throwable>() {
-//                                @Override
-//                                public void accept(Throwable throwable) throws Exception {
-//                                    if (TextUtils.isEmpty(throwable.getMessage())) {
-//                                        ToastUtils.showShort("上传图片失败");
-//                                    } else {
-//                                        ToastUtils.showShort(throwable.getMessage());
-//                                    }
-//                                    hideLoadingDialog();
-//                                }
-//                            }));
-//                }
-//            }
         } else {
             showLoadingDialog();
             commitContent();
@@ -370,7 +331,7 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
         ImagePicker imagePicker = ImagePicker.getInstance();
         imagePicker.setImageLoader(new GlideImageLoader());   //设置图片加载器
         imagePicker.setShowCamera(true);                      //显示拍照按钮
-        imagePicker.setMultiMode(true);
+//        imagePicker.setMultiMode(true);
         imagePicker.setCrop(false);                            //允许裁剪（单选才有效）
         imagePicker.setSaveRectangle(true);                   //是否按矩形区域保存
         imagePicker.setSelectLimit(3);                        //选中数量限制
@@ -400,6 +361,7 @@ public class OrderApplyForAfterSaleActivity extends BaseActivity {
         for (OrderEvaluationPicBean picBean : orderEvaluationPicBeanList) {
             if (picBean.isCamera()) {
                 cameraSize++;
+
             }
         }
         return selectLimit - cameraSize;
