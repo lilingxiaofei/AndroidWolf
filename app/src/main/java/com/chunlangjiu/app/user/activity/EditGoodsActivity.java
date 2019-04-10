@@ -539,42 +539,48 @@ public class EditGoodsActivity extends BaseActivity {
 
         try {
             List<String> images = item.getImages();
-            GlideApp.with(this).asBitmap().load(images.get(0)).into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                    imgMainPic.setImageBitmap(resource);
-                    base64Main = FileUtils.bitMapToBase64(resource);
-                }
-            });
-            GlideApp.with(this).asBitmap().load(images.get(1)).into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                    imgDescOnePic.setImageBitmap(resource);
-                    base64DetailOne = FileUtils.bitMapToBase64(resource);
-                }
-            });
-            GlideApp.with(this).asBitmap().load(images.get(2)).into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                    imgDescTwoPic.setImageBitmap(resource);
-                    base64DetailTwo = FileUtils.bitMapToBase64(resource);
-                }
-            });
-            GlideApp.with(this).asBitmap().load(images.get(3)).into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                    imgDescThreePic.setImageBitmap(resource);
-                    base64DetailThree = FileUtils.bitMapToBase64(resource);
-                }
-            });
-            GlideApp.with(this).asBitmap().load(images.get(4)).into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                    imgDescFourPic.setImageBitmap(resource);
-                    base64DetailFour = FileUtils.bitMapToBase64(resource);
-                }
-            });
-            if(images.size()>5){
+            GlideApp.with(this).load(base64Main = images.get(0)).into(imgMainPic);
+            GlideApp.with(this).load(base64DetailOne = images.get(1)).into(imgDescOnePic);
+            GlideApp.with(this).load(base64DetailTwo = images.get(2)).into(imgDescTwoPic);
+            GlideApp.with(this).load(base64DetailThree = images.get(3)).into(imgDescThreePic);
+            GlideApp.with(this).load(base64DetailFour = images.get(4)).into(imgDescFourPic);
+
+//            GlideApp.with(this).asBitmap().load(images.get(0)).into(new SimpleTarget<Bitmap>() {
+//                @Override
+//                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                    imgMainPic.setImageBitmap(resource);
+//                    base64Main = images.get(0);
+//                }
+//            });
+//            GlideApp.with(this).asBitmap().load(images.get(1)).into(new SimpleTarget<Bitmap>() {
+//                @Override
+//                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                    imgDescOnePic.setImageBitmap(resource);
+//                    base64DetailOne = FileUtils.bitMapToBase64(resource);
+//                }
+//            });
+//            GlideApp.with(this).asBitmap().load(images.get(2)).into(new SimpleTarget<Bitmap>() {
+//                @Override
+//                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                    imgDescTwoPic.setImageBitmap(resource);
+//                    base64DetailTwo = FileUtils.bitMapToBase64(resource);
+//                }
+//            });
+//            GlideApp.with(this).asBitmap().load(images.get(3)).into(new SimpleTarget<Bitmap>() {
+//                @Override
+//                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                    imgDescThreePic.setImageBitmap(resource);
+//                    base64DetailThree = FileUtils.bitMapToBase64(resource);
+//                }
+//            });
+//            GlideApp.with(this).asBitmap().load(images.get(4)).into(new SimpleTarget<Bitmap>() {
+//                @Override
+//                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                    imgDescFourPic.setImageBitmap(resource);
+//                    base64DetailFour = FileUtils.bitMapToBase64(resource);
+//                }
+//            });
+            if(images.size()>=5){
                 for (int i = 5; i <images.size() ; i++) {
                     ImageItem imageItem = new ImageItem();
                     imageItem.path = images.get(i);
@@ -583,15 +589,6 @@ public class EditGoodsActivity extends BaseActivity {
                 goodsAdapter.notifyDataSetChanged();
                 recyclerViewGoods.setVisibility(View.VISIBLE);
             }
-//            if (images.size() == 6) {
-//                GlideApp.with(this).asBitmap().load(images.get(5)).into(new SimpleTarget<Bitmap>() {
-//                    @Override
-//                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-//                        imgGoodsPic.setImageBitmap(resource);
-//                        base64Goods = FileUtils.bitMapToBase64(resource);
-//                    }
-//                });
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -869,18 +866,24 @@ public class EditGoodsActivity extends BaseActivity {
         showLoadingDialog();
 
         //一定要上传的五张主图
-        Observable<ResultBean<UploadImageBean>> main = ApiUtils.getInstance().shopUploadImage(base64Main, (mainPicLists == null || mainPicLists.size() == 0) ? "main.jpg" : mainPicLists.get(0).name);
-        Observable<ResultBean<UploadImageBean>> detailOne = ApiUtils.getInstance().shopUploadImage(base64DetailOne, (detailOnePicLists == null || detailOnePicLists.size() == 0) ? "one.jpg" : detailOnePicLists.get(0).name);
-        Observable<ResultBean<UploadImageBean>> detailTwo = ApiUtils.getInstance().shopUploadImage(base64DetailTwo, (detailTwoPicLists == null || detailTwoPicLists.size() == 0) ? "two.jpg" : detailTwoPicLists.get(0).name);
-        Observable<ResultBean<UploadImageBean>> detailThree = ApiUtils.getInstance().shopUploadImage(base64DetailThree, (detailThreePicLists == null || detailThreePicLists.size() == 0) ? "three.jpg" : detailThreePicLists.get(0).name);
-        Observable<ResultBean<UploadImageBean>> detailFour = ApiUtils.getInstance().shopUploadImage(base64DetailFour, (detailFourPicLists == null || detailFourPicLists.size() == 0) ? "four.jpg" : detailFourPicLists.get(0).name);
-
+//        Observable<ResultBean<UploadImageBean>> main = ApiUtils.getInstance().shopUploadImage(base64Main, (mainPicLists == null || mainPicLists.size() == 0) ? "main.jpg" : mainPicLists.get(0).name);
+//        Observable<ResultBean<UploadImageBean>> detailOne = ApiUtils.getInstance().shopUploadImage(base64DetailOne, (detailOnePicLists == null || detailOnePicLists.size() == 0) ? "one.jpg" : detailOnePicLists.get(0).name);
+//        Observable<ResultBean<UploadImageBean>> detailTwo = ApiUtils.getInstance().shopUploadImage(base64DetailTwo, (detailTwoPicLists == null || detailTwoPicLists.size() == 0) ? "two.jpg" : detailTwoPicLists.get(0).name);
+//        Observable<ResultBean<UploadImageBean>> detailThree = ApiUtils.getInstance().shopUploadImage(base64DetailThree, (detailThreePicLists == null || detailThreePicLists.size() == 0) ? "three.jpg" : detailThreePicLists.get(0).name);
+//        Observable<ResultBean<UploadImageBean>> detailFour = ApiUtils.getInstance().shopUploadImage(base64DetailFour, (detailFourPicLists == null || detailFourPicLists.size() == 0) ? "four.jpg" : detailFourPicLists.get(0).name);
+//
+//        ArrayList<Observable<ResultBean<UploadImageBean>>> tempList = new ArrayList();
+//        tempList.add(main);
+//        tempList.add(detailOne);
+//        tempList.add(detailTwo);
+//        tempList.add(detailThree);
+//        tempList.add(detailFour);
         ArrayList<Observable<ResultBean<UploadImageBean>>> tempList = new ArrayList();
-        tempList.add(main);
-        tempList.add(detailOne);
-        tempList.add(detailTwo);
-        tempList.add(detailThree);
-        tempList.add(detailFour);
+        tempList.add(CommonUtils.getUploadPic(base64Main, (mainPicLists == null || mainPicLists.size() == 0) ? "main.jpg" : mainPicLists.get(0).name));
+        tempList.add(CommonUtils.getUploadPic(base64DetailOne, (detailOnePicLists == null || detailOnePicLists.size() == 0) ? "main.jpg" : detailOnePicLists.get(0).name));
+        tempList.add(CommonUtils.getUploadPic(base64DetailTwo, (detailTwoPicLists == null || detailTwoPicLists.size() == 0) ? "main.jpg" : detailTwoPicLists.get(0).name));
+        tempList.add(CommonUtils.getUploadPic(base64DetailThree, (detailThreePicLists == null || detailThreePicLists.size() == 0) ? "main.jpg" : detailThreePicLists.get(0).name));
+        tempList.add(CommonUtils.getUploadPic(base64DetailFour, (detailFourPicLists == null || detailFourPicLists.size() == 0) ? "main.jpg" : detailFourPicLists.get(0).name));
         //可选上传的图片
         if(goodsPicLists!= null && goodsPicLists.size()>0){
             for (final ImageItem imageItem:goodsPicLists) {
@@ -993,7 +996,8 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = mainPicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-                        base64Main = FileUtils.imgToBase64(mainPicLists.get(0).path);
+//                        base64Main = FileUtils.imgToBase64(mainPicLists.get(0).path);
+                        base64Main = mainPicLists.get(0).path;
                         imgMainPic.setVisibility(View.VISIBLE);
                         imgDeleteMainPic.setVisibility(View.VISIBLE);
                         GlideUtils.loadImage(EditGoodsActivity.this, mainPicLists.get(0).path, imgMainPic);
@@ -1002,7 +1006,8 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = detailOnePicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-                        base64DetailOne = FileUtils.imgToBase64(detailOnePicLists.get(0).path);
+//                        base64DetailOne = FileUtils.imgToBase64(detailOnePicLists.get(0).path);
+                        base64DetailOne = detailOnePicLists.get(0).path;
                         imgDescOnePic.setVisibility(View.VISIBLE);
                         imgDeleteDescOnePic.setVisibility(View.VISIBLE);
                         GlideUtils.loadImage(EditGoodsActivity.this, detailOnePicLists.get(0).path, imgDescOnePic);
@@ -1012,7 +1017,8 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = detailTwoPicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-                        base64DetailTwo = FileUtils.imgToBase64(detailTwoPicLists.get(0).path);
+//                        base64DetailTwo = FileUtils.imgToBase64(detailTwoPicLists.get(0).path);
+                        base64DetailTwo = detailTwoPicLists.get(0).path;
                         imgDescTwoPic.setVisibility(View.VISIBLE);
                         imgDeleteDescTwoPic.setVisibility(View.VISIBLE);
                         GlideUtils.loadImage(EditGoodsActivity.this, detailTwoPicLists.get(0).path, imgDescTwoPic);
@@ -1022,7 +1028,8 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = detailThreePicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-                        base64DetailThree = FileUtils.imgToBase64(detailThreePicLists.get(0).path);
+//                        base64DetailThree = FileUtils.imgToBase64(detailThreePicLists.get(0).path);
+                        base64DetailThree = detailThreePicLists.get(0).path;
                         imgDescThreePic.setVisibility(View.VISIBLE);
                         imgDeleteDescThreePic.setVisibility(View.VISIBLE);
                         GlideUtils.loadImage(EditGoodsActivity.this, detailThreePicLists.get(0).path, imgDescThreePic);
@@ -1032,7 +1039,8 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = detailFourPicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-                        base64DetailFour = FileUtils.imgToBase64(detailFourPicLists.get(0).path);
+//                        base64DetailFour = FileUtils.imgToBase64(detailFourPicLists.get(0).path);
+                        base64DetailFour = detailFourPicLists.get(0).path;
                         imgDescFourPic.setVisibility(View.VISIBLE);
                         imgDeleteDescFourPic.setVisibility(View.VISIBLE);
                         GlideUtils.loadImage(EditGoodsActivity.this, detailFourPicLists.get(0).path, imgDescFourPic);
