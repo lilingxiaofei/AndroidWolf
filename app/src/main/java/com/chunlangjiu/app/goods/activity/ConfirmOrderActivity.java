@@ -36,6 +36,7 @@ import com.chunlangjiu.app.user.bean.AddressListDetailBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.google.gson.Gson;
+import com.pingplusplus.android.Pingpp;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.BigDecimalUtils;
@@ -410,6 +411,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
 
     private void invokePay(ResultBean data) {
+//        Pingpp.createPayment(this, data);
         switch (payMehtodId) {
             case OrderParams.PAY_APP_WXPAY:
                 invokeWeixinPay(data);
