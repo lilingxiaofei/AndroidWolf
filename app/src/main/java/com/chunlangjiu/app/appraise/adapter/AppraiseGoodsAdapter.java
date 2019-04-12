@@ -6,8 +6,8 @@ import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 
 import java.util.List;
 
-public class RecommendAdapter extends BaseQuickAdapter<AppraiseBean, BaseViewHolder> {
-        public RecommendAdapter(int layoutResId, List<AppraiseBean> data) {
+public class AppraiseGoodsAdapter extends BaseQuickAdapter<AppraiseBean, BaseViewHolder> {
+        public AppraiseGoodsAdapter(int layoutResId, List<AppraiseBean> data) {
             super(layoutResId, data);
         }
 
