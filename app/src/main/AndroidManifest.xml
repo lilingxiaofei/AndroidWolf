@@ -31,6 +31,10 @@
         <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复 -->
         <service android:name=".util.GeTuiIntentService" />
 
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5b3b3744f43e4879b8000236"/>
         <activity
             android:name=".amain.activity.SplashActivity"
             android:screenOrientation="portrait"

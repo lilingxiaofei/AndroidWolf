@@ -37,7 +37,7 @@ import io.reactivex.schedulers.Schedulers;
  * @CreatedbBy: liucun on 2018/7/6
  * @Describe: 登录页面
  */
-public class LoginActivity extends BaseActivity {
+public class BindingActivity extends BaseActivity {
 
     @BindView(R.id.etPhone)
     EditText etPhone;
@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity {
 
 
     public static void startLoginActivity(Activity activity) {
-        Intent intent = new Intent(activity, LoginActivity.class);
+        Intent intent = new Intent(activity, BindingActivity.class);
         activity.startActivity(intent);
     }
 
@@ -88,16 +88,16 @@ public class LoginActivity extends BaseActivity {
                     toLicence();
                     break;
                 case R.id.tvPsdLogin:
-                    startActivity(new Intent(LoginActivity.this, PasswordLoginActivity.class));
+                    startActivity(new Intent(BindingActivity.this, PasswordLoginActivity.class));
                     break;
                 case R.id.ivQQLogin:
-                    UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, SHARE_MEDIA.QQ, umAuthListener);
+                    UMShareAPI.get(BindingActivity.this).getPlatformInfo(BindingActivity.this, SHARE_MEDIA.QQ, umAuthListener);
                     break;
                 case R.id.ivWeChatLogin:
-                    UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
+                    UMShareAPI.get(BindingActivity.this).getPlatformInfo(BindingActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
                     break;
                 case R.id.ivSinaLogin:
-                    UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, SHARE_MEDIA.SINA, umAuthListener);
+                    UMShareAPI.get(BindingActivity.this).getPlatformInfo(BindingActivity.this, SHARE_MEDIA.SINA, umAuthListener);
                     break;
             }
         }
@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
             if (!map.containsKey("iconurl")) { //判断是授权还是获取用户信息
-                UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, share_media, umAuthListener);
+                UMShareAPI.get(BindingActivity.this).getPlatformInfo(BindingActivity.this, share_media, umAuthListener);
             } else {
                 System.out.println("uid========" + map.get("uid"));
                 System.out.println("name========" + map.get("name"));
@@ -124,7 +124,7 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-            UMShareAPI.get(LoginActivity.this).deleteOauth(LoginActivity.this,share_media,umAuthListener);
+            UMShareAPI.get(BindingActivity.this).deleteOauth(BindingActivity.this,share_media,umAuthListener);
             ToastUtils.showShort("已经删除错误授权，请重新登录");
 //            UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, share_media, umAuthListener);
         }

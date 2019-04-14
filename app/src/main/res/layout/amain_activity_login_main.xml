@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_white"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_width="85dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="100dp"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/logo" />
+
+
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="200dp"
+        android:background="@drawable/login_red_bg"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:text="登录"
+        android:textColor="@color/t_white"
+        android:textSize="@dimen/sp_big" />
+    <org.apmem.tools.layouts.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_margin="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:gravity="fill"
+        android:layout_marginTop="@dimen/dp_40">
+
+        <ImageView android:id="@+id/ivQQLogin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/umeng_socialize_qq"/>
+        <ImageView  android:id="@+id/ivWeChatLogin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/umeng_socialize_wechat"/>
+        <ImageView  android:id="@+id/ivSinaLogin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/umeng_socialize_sina"/>
+        <TextView android:id="@+id/tvRegister"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="@color/t_red"
+            android:textSize="@dimen/text_size_15sp"
+            android:layout_height="40dp"
+            android:text="注册"/>
+    </org.apmem.tools.layouts.FlowLayout>
+
+</RelativeLayout>

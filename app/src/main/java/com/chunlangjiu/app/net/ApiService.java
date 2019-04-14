@@ -46,6 +46,7 @@ import com.chunlangjiu.app.order.bean.LogisticsBean;
 import com.chunlangjiu.app.order.bean.OrderAfterSaleReasonBean;
 import com.chunlangjiu.app.order.bean.OrderDetailBean;
 import com.chunlangjiu.app.order.bean.OrderListBean;
+import com.chunlangjiu.app.order.bean.PayPingBean;
 import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.bean.SellerOrderDetailBean;
 import com.chunlangjiu.app.store.bean.StoreClassListBean;
@@ -351,6 +352,10 @@ public interface ApiService {
     Flowable<ResultBean<PayResultBean>> payDo(@Field("method") String method, @Field("v") String v,
                                               @Field("payment_id") String payment_id, @Field("pay_app_id") String pay_app_id, @Field("deposit_password") String deposit_password);
 
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<PayPingBean>> payPing(@Field("method") String method, @Field("v") String v,
+                                              @Field("payment_id") String payment_id, @Field("pay_app_id") String pay_app_id, @Field("deposit_password") String deposit_password);
 
     @POST("index.php/topapi")
     @FormUrlEncoded

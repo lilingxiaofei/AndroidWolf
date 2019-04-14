@@ -8,7 +8,6 @@ import com.awen.photo.FrescoImageLoader;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.github.promeg.pinyinhelper.PinyinMapDict;
-import com.pkqup.commonlibrary.crash.CrashHandler;
 import com.pkqup.commonlibrary.util.AppUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -20,8 +19,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.socks.library.KLog;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
@@ -69,12 +66,24 @@ public class BaseApplication extends MultiDexApplication {
      * 友盟初始化
      */
     private void initUM() {
+//        UMConfigure.init(this, "5b3b3744f43e4879b8000236", "chunlang", UMConfigure.DEVICE_TYPE_PHONE, "");
+//        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
+////        MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计功能
+//        PlatformConfig.setWeixin("wx0e1869b241d7234f", "13a3d322c7055d7c33e3de912a4fad2a");
+//        PlatformConfig.setQQZone("1106941413", "9qybO7qdrpQIYPiq");
+//        PlatformConfig.setSinaWeibo("1325843831", "bccdf04dac982831efd444a71588daea", "http://sns.whalecloud.com");
+
+
         UMConfigure.init(this, "5b3b3744f43e4879b8000236", "chunlang", UMConfigure.DEVICE_TYPE_PHONE, "");
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
 //        MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计功能
-        PlatformConfig.setWeixin("wx0e1869b241d7234f", "13a3d322c7055d7c33e3de912a4fad2a");
+
+        PlatformConfig.setWeixin("wx0e1869b241d7234f", "76be7f506fd8a4d51e002dffbbb30f14");
+//        PlatformConfig.setWeixin("wx0e1869b241d7234f", "13a3d322c7055d7c33e3de912a4fad2a");
         PlatformConfig.setQQZone("1106941413", "9qybO7qdrpQIYPiq");
-        PlatformConfig.setSinaWeibo("1325843831", "bccdf04dac982831efd444a71588daea", "http://sns.whalecloud.com");
+//        PlatformConfig.setSinaWeibo("1325843831", "bccdf04dac982831efd444a71588daea", "http://sns.whalecloud.com");
+        PlatformConfig.setSinaWeibo("1325843831", "bccdf04dac982831efd444a71588daea", "http://sns.whalecloud.com/sina2/callback");
+
     }
 
     private void initRealm() {

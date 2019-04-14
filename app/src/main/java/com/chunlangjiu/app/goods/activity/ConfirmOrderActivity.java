@@ -30,6 +30,7 @@ import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
+import com.chunlangjiu.app.order.bean.PayPingBean;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.bean.AddressListDetailBean;
@@ -44,6 +45,8 @@ import com.pkqup.commonlibrary.util.ToastUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +111,7 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     private String mode;//是立即购买还是购物车购买
     private ConfirmOrderBean confirmOrderBean;
-    private CreateOrderBean createOrderBean ;
+    private CreateOrderBean createOrderBean;
     private String addressId = "";
     private String sendPrice = "0.00";
     private String goodsPrice = "0.00";
@@ -370,7 +373,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                     .subscribe(new Consumer<ResultBean<CreateOrderBean>>() {
                         @Override
                         public void accept(ResultBean<CreateOrderBean> resultBean) throws Exception {
-                            createOrderBean= resultBean.getData();
+                            createOrderBean = resultBean.getData();
                             createSuccess(pwd);
 //                            confirmPayMode();
                         }
@@ -387,17 +390,35 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
 
 
+    private void createSuccess(String payPwd) {
+        if (null != createOrderBean) {
+//            disposable.add(ApiUtils.getInstance().payDo(createOrderBean.getPayment_id(), payMehtodId, payPwd)
+//////                    .subscribeOn(Schedulers.io())
+//////                    .observeOn(AndroidSchedulers.mainThread())
+//////                    .subscribe(new Consumer<ResultBean>() {
+//////                        @Override
+//////                        public void accept(ResultBean resultBean) throws Exception {
+//////                            hideLoadingDialog();
+//////                            invokePay(resultBean);
+//////                        }
+//////                    }, new Consumer<Throwable>() {
+//////                        @Override
+//////                        public void accept(Throwable throwable) throws Exception {
+//////                            toOrderMainActivity();
+//////                            hideLoadingDialog();
+//////                            ToastUtils.showErrorMsg(throwable);
+//////                        }
+//////                    }));
 
-    private void createSuccess( String payPwd) {
-        if(null != createOrderBean ){
-            disposable.add(ApiUtils.getInstance().payDo(createOrderBean.getPayment_id(), payMehtodId, payPwd)
+            disposable.add(ApiUtils.getInstance().payPing(createOrderBean.getPayment_id(), payMehtodId, payPwd)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean>() {
+                    .subscribe(new Consumer<ResultBean<PayPingBean>>() {
                         @Override
-                        public void accept(ResultBean resultBean) throws Exception {
+                        public void accept(ResultBean<PayPingBean> resultBean) throws Exception {
                             hideLoadingDialog();
-                            invokePay(resultBean);
+//                            invokePay(resultBean);
+                            invokePayPing(resultBean);
                         }
                     }, new Consumer<Throwable>() {
                         @Override
@@ -410,8 +431,17 @@ public class ConfirmOrderActivity extends BaseActivity {
         }
     }
 
+
+    private void invokePayPing(ResultBean<PayPingBean> data) {
+        try {
+            JSONObject jsonObject = new JSONObject(data.getData().getData());
+            Pingpp.createPayment(ConfirmOrderActivity.this,jsonObject.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void invokePay(ResultBean data) {
-//        Pingpp.createPayment(this, data);
         switch (payMehtodId) {
             case OrderParams.PAY_APP_WXPAY:
                 invokeWeixinPay(data);
@@ -509,6 +539,23 @@ public class ConfirmOrderActivity extends BaseActivity {
                     String address = addressListDetailBean.getArea() + addressListDetailBean.getAddr();
                     tvAddressDetails.setText(address.replace("/", ""));
                 }
+            }
+        }
+        //支付页面返回处理
+        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+                /* 处理返回值
+                 * "success" - 支付
+                 * 成功
+                 * "fail"    - 支付失败
+                 * "cancel"  - 取消支付
+                 * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
+                 * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
+                 */
+                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+                ToastUtils.showShort(result+"=========="+ errorMsg+"=========="+ extraMsg);
             }
         }
     }

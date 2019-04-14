@@ -360,7 +360,8 @@ public class UserFragment extends BaseFragment {
                     WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_COLLECT + BaseApplication.getToken(), "我的收藏");
                     break;
                 case R.id.rlMyEvaluate:// 我的估价
-                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_EVALUATE + BaseApplication.getToken(), "我的估价");
+//                    WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_EVALUATE + BaseApplication.getToken(), "我的估价");
+//                    AppraiserMainActivity.
                     break;
                 case R.id.rl_fans_manage:// 粉丝管理
                     startActivity(new Intent(getActivity(), FansHomeActivity.class));
@@ -737,9 +738,9 @@ public class UserFragment extends BaseFragment {
                 }));
     }
 
-    private void getBuyerOrderNumIndex() {
-        disposable.add(ApiUtils.getInstance().getMyNumFlag("user")
-                .subscribeOn(Schedulers.io())
+        private void getBuyerOrderNumIndex() {
+            disposable.add(ApiUtils.getInstance().getMyNumFlag("user")
+                    .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<MyNumBean>>() {
                     @Override
