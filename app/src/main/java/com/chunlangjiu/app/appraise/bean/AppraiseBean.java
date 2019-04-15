@@ -5,4 +5,14 @@ package com.chunlangjiu.app.appraise.bean;
  */
 
 public class AppraiseBean {
+    private int itemType;
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
+    }
 }
+

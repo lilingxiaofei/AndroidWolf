@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_round_white"
+    android:gravity="center_horizontal"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgHead"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/common_head_icon" />
+    <TextView android:id="@+id/tvAppraiserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_marginTop="8dp"
+        android:text="@string/appraise_num"
+        android:textColor="@color/black"/>
+
+    <TextView android:id="@+id/tvAppraiserScope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:lines="2"
+        android:ellipsize="end"
+        android:layout_marginTop="8dp"
+        android:text="觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻"
+        android:textColor="@color/black"/>
+
+    <TextView android:id="@+id/tvAppraiserRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:lines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻觉得输卵管积水快乐关键时刻"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/line_vertical"
+        android:dividerPadding="2dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:showDividers="middle">
+        <TextView android:id="@+id/tvDailyAverage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="日均5"
+            android:textColor="@color/t_grey"/>
+        <TextView android:id="@+id/tvPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="完成率100%"
+            android:textColor="@color/t_grey"/>
+        <TextView  android:id="@+id/tvLineUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="精准市场评估"
+            android:textColor="@color/t_grey"/>
+    </LinearLayout>
+</LinearLayout>
