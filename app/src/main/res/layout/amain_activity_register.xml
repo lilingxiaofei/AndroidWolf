@@ -21,15 +21,21 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/bg_round_white_25dp">
 
+        <ImageView
+            android:id="@+id/ivPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:src="@mipmap/login_phone" />
 
         <com.pkqup.commonlibrary.view.ClearEditText
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableLeft="@mipmap/login_phone"
             android:layout_toRightOf="@id/imgPhone"
-            android:paddingLeft="30dp"
-            android:background="@null"
+            android:layout_marginLeft="30dp"
+            android:background=""
             android:hint="请输入您的手机号码"
             android:textColorHint="@color/t_gray"
             android:inputType="number"
@@ -45,7 +51,7 @@
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/login_gray_stroke">
+        android:background="@drawable/bgroundwhi">
 
         <ImageView
             android:id="@+id/imgAuthCode"

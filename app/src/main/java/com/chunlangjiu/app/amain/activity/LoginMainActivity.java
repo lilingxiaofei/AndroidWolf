@@ -50,15 +50,15 @@ public class LoginMainActivity extends BaseActivity {
     @BindView(R.id.tvLicence)
     TextView tvLicence;
 
-    @BindView(R.id.tvPsdLogin)
-    TextView tvPsdLogin;
-
     @BindView(R.id.ivQQLogin)
     ImageView ivQQLogin;
     @BindView(R.id.ivWeChatLogin)
     ImageView ivWeChatLogin;
     @BindView(R.id.ivSinaLogin)
     ImageView ivSinaLogin;
+
+    @BindView(R.id.tvRegister)
+    TextView tvRegister;
 
     private CompositeDisposable disposable;
 
@@ -82,7 +82,8 @@ public class LoginMainActivity extends BaseActivity {
                     checkPhone();
                     break;
                 case R.id.tvLogin:
-                    checkSmsCode();
+//                    checkSmsCode();
+                    startActivity(new Intent(LoginMainActivity.this,LoginActivity.class));
                     break;
                 case R.id.tvLicence:
                     toLicence();
@@ -98,6 +99,9 @@ public class LoginMainActivity extends BaseActivity {
                     break;
                 case R.id.ivSinaLogin:
                     UMShareAPI.get(LoginMainActivity.this).getPlatformInfo(LoginMainActivity.this, SHARE_MEDIA.SINA, umAuthListener);
+                    break;
+                case R.id.tvRegister:
+                    startActivity(new Intent(LoginMainActivity.this,RegisterActivity.class));
                     break;
             }
         }
@@ -143,7 +147,7 @@ public class LoginMainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.amain_activity_login);
+        setContentView(R.layout.amain_activity_login_main);
         EventManager.getInstance().registerListener(onNotifyListener);
         initView();
     }
@@ -153,11 +157,11 @@ public class LoginMainActivity extends BaseActivity {
         tvGetCode.setOnClickListener(onClickListener);
         tvLogin.setOnClickListener(onClickListener);
         tvLicence.setOnClickListener(onClickListener);
-        tvPsdLogin.setOnClickListener(onClickListener);
 
         ivQQLogin.setOnClickListener(onClickListener);
         ivWeChatLogin.setOnClickListener(onClickListener);
         ivSinaLogin.setOnClickListener(onClickListener);
+        tvRegister.setOnClickListener(onClickListener);
     }
 
 
