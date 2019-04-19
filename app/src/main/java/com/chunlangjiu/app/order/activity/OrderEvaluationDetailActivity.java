@@ -107,7 +107,7 @@ public class OrderEvaluationDetailActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         listBean = (OrderListBean.ListBean) getIntent().getSerializableExtra(OrderParams.PRODUCTS);
 
-        GlideUtils.loadImage(getApplicationContext(), listBean.getShop_logo(), imgStore);
+        GlideUtils.loadImageShop(getApplicationContext(), listBean.getShop_logo(), imgStore);
         tvStore.setText(listBean.getShopname());
 
         List<OrderListBean.ListBean.OrderBean> order = listBean.getOrder();
