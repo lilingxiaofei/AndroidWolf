@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llContent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="15dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgHead"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/common_head_icon"
+        app:civ_border_color="@color/bg_white"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/appraise_num"
+        android:textColor="@color/t_black"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvAppraiseScope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/appraise_scope"
+        android:textColor="@color/t_black"
+        android:lines="2"
+        android:layout_marginTop="5dp"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tvAppraiseRequire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/appraise_require"
+        android:layout_marginTop="2dp"
+        android:singleLine="true"
+        android:textColor="@color/t_black"
+        android:textSize="11sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:divider="@drawable/line_vertical"
+        android:dividerPadding="2dp"
+        android:showDividers="middle">
+
+        <TextView
+            android:id="@+id/tvTipsOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="多年行业经验"
+            android:textColor="@color/t_grey"
+            android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/tvTipsTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="10项检测"
+            android:textColor="@color/t_grey"
+            android:textSize="9sp" />
+
+        <TextView
+            android:id="@+id/tvTipsThree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="精准市场评估"
+            android:textColor="@color/t_grey"
+            android:textSize="9sp" />
+    </LinearLayout>
+</LinearLayout>
