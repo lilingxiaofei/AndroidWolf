@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<android.support.v4.widget.NestedScrollView
+    android:id="@+id/estedScrollView"
+    android:layout_above="@+id/llCommit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/llContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center_horizontal"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgHead"
+            android:textColor="@color/t_black"
+            android:layout_marginTop="35dp"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:text="鉴定报告"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="19dp"
+                android:layout_height="10dp"
+                android:src="@mipmap/logo"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imgHead"
+                android:textColor="@color/t_black"
+                android:layout_marginLeft="8dp"
+                android:textSize="10sp"
+                android:text="来自醇狼APP"/>
+        </LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgHead"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/common_head_icon"
+            android:layout_marginTop="8dp"
+            app:civ_border_color="@color/bg_white"
+            app:civ_border_width="2dp" />
+        <TextView android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgHead"
+            android:textColor="@color/t_black"
+            android:layout_marginTop="5dp"
+            android:textSize="13sp"
+            android:text="名称"/>
+
+
+        <TextView
+            android:id="@+id/tvTipsOne"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="5dp"
+            android:layout_marginTop="14dp"
+            android:text="鉴别结果根据用户提供的信息得出"
+            android:textColor="@color/t_grey"
+            android:textSize="9sp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="5dp"
+            android:text="名酒评估定价"
+            android:textColor="@color/t_orange"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="5dp"
+            android:text="￥11880.00"
+            android:textColor="@color/t_orange"
+            android:textSize="50sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="25dp"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="5dp"
+            android:text="评估详情"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="名酒成色："
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvAssessOne"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="评估详情"
+                android:textColor="@color/t_grey"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="瑕疵情况："
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <TextView android:id="@+id/tvAssessTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评估详情"
+                android:textColor="@color/t_grey"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="附件情况："
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <TextView android:id="@+id/tvAssessThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评估详情"
+                android:textColor="@color/t_grey"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="其他说明："
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <TextView android:id="@+id/tvAssessFour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评估详情"
+                android:textColor="@color/t_grey"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="5dp"
+            android:text="商品信息"
+            android:textColor="@color/t_red"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tvGoodsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="商品标题：康帝"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tvGoodsSeries"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="所属系列：罗曼尼康帝"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tvGoodsYear"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="商品年份：2008年"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tvGoodsExplain"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="其他说明：为增加鉴定的准确度，可提供酒的重量、 是否有沉淀物、酒花等细节信息。"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvPicList"
+            android:layout_marginTop="15dp"
+            android:nestedScrollingEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:text="此次评估仅供参考。"
+        android:gravity="center"
+        android:textColor="@color/t_black"
+        android:textSize="15sp" />
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+    <LinearLayout android:id="@+id/llCommit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="visible"
+        android:gravity="center"
+        android:background="@color/bg_red"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="快速变现"
+            android:gravity="center"
+            android:textColor="@color/t_white"
+            android:textSize="18sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(¥0.00）"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textColor="@color/t_white"
+            android:textSize="15sp" />
+    </LinearLayout>
+</RelativeLayout>

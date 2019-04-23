@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_white"
+    android:paddingBottom="16dp">
+
+    <com.pkqup.commonlibrary.view.RoundedImageView
+        android:id="@+id/imgPic"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@mipmap/logo"
+        android:scaleType="centerCrop"
+        app:sriv_left_bottom_corner_radius="5dp"
+        app:sriv_left_top_corner_radius="5dp"
+        app:sriv_right_bottom_corner_radius="5dp"
+        app:sriv_right_top_corner_radius="5dp" />
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/imgPic"
+        android:layout_alignRight="@id/imgPic"
+        android:layout_below="@id/imgPic"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:lines="2"
+        android:textColor="@color/t_black"
+        android:textSize="@dimen/text_size_14sp"
+        tools:text="法国凡特纳酒庄 全都是系列 康帝" />
+
+
+    <TextView
+        android:id="@+id/tvAppraise"
+        android:layout_below="@id/tvName"
+        android:layout_alignRight="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_round_white_red_border"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/t_red"
+        android:textSize="@dimen/text_size_14sp"
+        android:paddingLeft="5dp"
+        android:paddingTop="3dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="3dp"
+        tools:text="鉴定报告" />
+</RelativeLayout>

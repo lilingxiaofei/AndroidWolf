@@ -19,6 +19,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.appraise.activity.AppraiserMainActivity;
 import com.chunlangjiu.app.fans.activity.FansHomeActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.dialog.EditAccountNameDialog;
@@ -200,6 +201,7 @@ public class UserFragment extends BaseFragment {
     private LinearLayout rlFansManage;
     private LinearLayout rlSetting;
     private LinearLayout rlService;
+    private LinearLayout rlAppraiser ;
     /*我的管理*/
 
     public static final int TYPE_BUYER = 0;//买家中心
@@ -371,6 +373,9 @@ public class UserFragment extends BaseFragment {
                     break;
                 case R.id.rlShop:
                     ShopMainActivity.startShopMainActivity(activity, shopId);
+                    break;
+                case R.id.rlAppraiser:
+                    startActivity(new Intent(getActivity(), AppraiserMainActivity.class));
                     break;
 
             }
@@ -571,10 +576,12 @@ public class UserFragment extends BaseFragment {
         rlFansManage = rootView.findViewById(R.id.rl_fans_manage);
         rlSetting = rootView.findViewById(R.id.rl_setting);
         rlService = rootView.findViewById(R.id.rl_service);
+        rlAppraiser = rootView.findViewById(R.id.rlAppraiser);
         rlMyEvaluate.setOnClickListener(onClickListener);
         rlFansManage.setOnClickListener(onClickListener);
         rlSetting.setOnClickListener(onClickListener);
         rlService.setOnClickListener(onClickListener);
+        rlAppraiser.setOnClickListener(onClickListener);
 
 
         //切换用户布局
