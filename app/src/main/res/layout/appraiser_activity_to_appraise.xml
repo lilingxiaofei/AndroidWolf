@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<android.support.v4.widget.NestedScrollView
+    android:id="@+id/estedScrollView"
+    android:layout_above="@+id/llCommit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:id="@+id/llContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="5dp"
+            android:text="商品信息"
+            android:textColor="@color/t_red"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tvGoodsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="商品标题：康帝"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tvGoodsSeries"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="所属系列：罗曼尼康帝"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tvGoodsYear"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="商品年份：2008年"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tvGoodsExplain"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="其他说明：为增加鉴定的准确度，可提供酒的重量、 是否有沉淀物、酒花等细节信息。"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvPicList"
+            android:layout_marginTop="15dp"
+            android:nestedScrollingEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:layout_marginTop="16dp"
+        android:divider="@drawable/line_vertical"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="评估详情"
+            android:textColor="@color/t_red"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="名酒估价："
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:hint="请输入价格"
+                android:inputType="numberDecimal"
+                android:textColor="@color/t_grey"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="名酒成色："
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvLevel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:hint="请输入酒成色"
+                android:textColor="@color/t_grey"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingRight="5dp"
+                android:text="瑕疵情况："
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/etDefects"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入商品外观"
+                android:textColor="@color/t_grey"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingRight="5dp"
+                android:text="附件情况："
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/etAttachment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入附件情况"
+                android:textColor="@color/t_grey"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingRight="5dp"
+                android:text="其他说明："
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/etOther"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="您可填写酒的其他详情"
+                android:textColor="@color/t_grey"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>
+    <LinearLayout android:id="@+id/llCommit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="visible"
+        android:gravity="center"
+        android:background="@color/bg_red"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交鉴定报告"
+            android:gravity="center"
+            android:textColor="@color/t_white"
+            android:textSize="18sp" />
+    </LinearLayout>
+</RelativeLayout>

@@ -16,7 +16,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragment;
-import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.amain.adapter.AuctionListAdapter;
 import com.chunlangjiu.app.amain.bean.AuctionListBean;
 import com.chunlangjiu.app.amain.bean.FirstClassBean;
@@ -172,7 +172,7 @@ public class AuctionFragment extends BaseFragment {
 //                    AuctionDetailActivity.startAuctionDetailsActivity(getActivity(), lists.get(position).getItem_id());
                     GoodsDetailslNewActivity.startActivity(getActivity(), pageUtils.get(position).getItem_id());
                 } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    LoginMainActivity.startLoginActivity(activity);
                 }
             }
         });

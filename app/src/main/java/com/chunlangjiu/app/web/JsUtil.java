@@ -3,7 +3,7 @@ package com.chunlangjiu.app.web;
 import android.content.Intent;
 import android.webkit.JavascriptInterface;
 
-import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.activity.EditGoodsActivity;
@@ -75,7 +75,7 @@ public class JsUtil {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LoginActivity.startLoginActivity(activity);
+                LoginMainActivity.startLoginActivity(activity);
             }
         });
     }

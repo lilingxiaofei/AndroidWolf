@@ -206,7 +206,7 @@ public class SplashActivity extends Activity {
                     if (BaseApplication.isLogin()) {
                         startActivity(new Intent(SplashActivity.this, ValuationActivity.class));
                     } else {
-                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                        startActivity(new Intent(SplashActivity.this, LoginMainActivity.class));
                     }
                     UmengEventUtil.bannerEvent(SplashActivity.this, "名酒估价");
                     break;

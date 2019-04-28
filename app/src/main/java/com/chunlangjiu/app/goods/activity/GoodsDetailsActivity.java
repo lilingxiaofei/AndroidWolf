@@ -16,7 +16,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragmentAdapter;
-import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.amain.bean.CartCountBean;
 import com.chunlangjiu.app.cart.CartActivity;
 import com.chunlangjiu.app.cart.ChoiceNumDialog;
@@ -135,7 +135,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                         break;
                 }
             } else {
-                startActivity(new Intent(GoodsDetailsActivity.this, LoginActivity.class));
+                LoginMainActivity.startLoginActivity(GoodsDetailsActivity.this);
             }
         }
     };

@@ -99,5 +99,7 @@
     <string name="appraise_scope">鉴定范围：%s</string>
     <string name="appraise_require">鉴定要求：%s</string>
     <string name="appraise_attention">注意事项：%s</string>
+    <string name="contact_platform">平台将在24小时之内与您联系，注意保持手机畅通\n您可拨打全国热线“400-189-0095”或添加 客服微信“chunlang9”联系客服</string>
+    <string name="request_appraise">+求鉴定</string>
 
 </resources>

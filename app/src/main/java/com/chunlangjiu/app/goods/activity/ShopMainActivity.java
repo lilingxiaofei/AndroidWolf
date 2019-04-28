@@ -21,6 +21,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
+import com.chunlangjiu.app.appraise.activity.AppraiserMainActivity;
 import com.chunlangjiu.app.goods.adapter.GoodsAdapter;
 import com.chunlangjiu.app.goods.bean.AlcListBean;
 import com.chunlangjiu.app.goods.bean.AreaListBean;
@@ -133,6 +134,9 @@ public class ShopMainActivity extends BaseActivity {
     TextView tvShopPhone;
     @BindView(R.id.rlShopInfo)
     RelativeLayout rlShopInfo;
+    @BindView(R.id.tvRequestAppraise)
+    TextView tvRequestAppraise;
+
 
     @BindView(R.id.tvDesc)
     TextView tvDesc;
@@ -203,6 +207,9 @@ public class ShopMainActivity extends BaseActivity {
                     break;
                 case R.id.rlPrice:
                     showPricePopWindow();
+                    break;
+                case R.id.tvRequestAppraise:
+                    startActivity(new Intent(ShopMainActivity.this, AppraiserMainActivity.class));
                     break;
 
             }

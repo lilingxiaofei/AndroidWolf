@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
-import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.amain.bean.FirstClassBean;
 import com.chunlangjiu.app.amain.bean.SecondClassBean;
 import com.chunlangjiu.app.amain.bean.ThirdClassBean;
@@ -543,7 +543,7 @@ public class AddGoodsActivity extends BaseActivity {
                         }
                     }));
         } else {
-            startActivity(new Intent(AddGoodsActivity.this, LoginActivity.class));
+            LoginMainActivity.startLoginActivity(AddGoodsActivity.this);
         }
     }
 
