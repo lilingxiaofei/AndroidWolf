@@ -1,6 +1,5 @@
 package com.chunlangjiu.app.amain.fragment;
 
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,13 +14,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragment;
-import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.amain.adapter.CartGoodsListAdapter;
 import com.chunlangjiu.app.amain.bean.CartGoodsBean;
 import com.chunlangjiu.app.amain.bean.CartListBean;
 import com.chunlangjiu.app.cart.UpdateCartGoodsBean;
 import com.chunlangjiu.app.goods.activity.ConfirmOrderActivity;
-import com.chunlangjiu.app.goods.activity.GoodsDetailsActivity;
 import com.chunlangjiu.app.goods.bean.ConfirmOrderBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -110,7 +108,7 @@ public class CartFragment extends BaseFragment {
                     deleteMulGoods();
                     break;
                 case R.id.tvLogin:
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    LoginMainActivity.startLoginActivity(activity);
                     break;
             }
         }

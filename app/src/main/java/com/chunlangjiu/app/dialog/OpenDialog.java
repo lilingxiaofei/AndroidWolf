@@ -2,7 +2,6 @@ package com.chunlangjiu.app.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -19,8 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
-import com.chunlangjiu.app.amain.activity.LoginActivity;
-import com.chunlangjiu.app.amain.activity.SplashActivity;
+import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.goods.activity.FestivalActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
@@ -30,7 +28,6 @@ import com.chunlangjiu.app.goods.activity.ValuationActivity;
 import com.chunlangjiu.app.store.activity.StoreListActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.util.ConstantMsg;
-import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.util.UmengEventUtil;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -169,7 +166,7 @@ public class OpenDialog extends Dialog {
                     if (BaseApplication.isLogin()) {
                         context.startActivity(new Intent(context, ValuationActivity.class));
                     } else {
-                        context.startActivity(new Intent(context, LoginActivity.class));
+                        LoginMainActivity.startLoginActivity(context);
                     }
                     UmengEventUtil.bannerEvent(context, "名酒估价");
                     break;

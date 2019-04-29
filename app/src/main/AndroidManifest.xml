@@ -75,6 +75,18 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
+            android:name=".amain.activity.LoginMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".amain.activity.BindingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".amain.activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
             android:name=".amain.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
@@ -398,6 +410,15 @@
             android:name="com.chunlangjiu.app.appraise.activity.NoviceMustSeeActivity"
             android:label="@string/title_activity_goods_audit"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="com.chunlangjiu.app.appraise.activity.AppraiseReportActivity"
+            android:label="@string/title_activity_goods_audit"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="com.chunlangjiu.app.appraise.activity.QuickCashActivity"
+            android:label="@string/title_activity_goods_audit"
+            android:theme="@style/AppTheme"></activity>
+
     </application>
 
 </manifest>

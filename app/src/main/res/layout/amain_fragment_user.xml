@@ -1479,7 +1479,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:orientation="vertical"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:gravity="center">
 
                     <ImageView
@@ -1493,6 +1493,28 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="我的估价"
+                        android:textColor="@color/t_black"
+                        android:textSize="@dimen/text_size_12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/rlAppraiseReport"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="22dp"
+                        android:src="@mipmap/my_assess" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="鉴定报告"
                         android:textColor="@color/t_black"
                         android:textSize="@dimen/text_size_12sp" />
                 </LinearLayout>

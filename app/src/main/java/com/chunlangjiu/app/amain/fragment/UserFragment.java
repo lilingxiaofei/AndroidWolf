@@ -18,7 +18,8 @@ import android.widget.TextView;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragment;
-import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.amain.activity.LoginMainActivity;
+import com.chunlangjiu.app.appraise.activity.AppraiseReportActivity;
 import com.chunlangjiu.app.appraise.activity.AppraiserMainActivity;
 import com.chunlangjiu.app.fans.activity.FansHomeActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
@@ -201,6 +202,7 @@ public class UserFragment extends BaseFragment {
     private LinearLayout rlFansManage;
     private LinearLayout rlSetting;
     private LinearLayout rlService;
+    private LinearLayout rlAppraiseReport ;
     private LinearLayout rlAppraiser ;
     /*我的管理*/
 
@@ -231,7 +233,7 @@ public class UserFragment extends BaseFragment {
         @Override
         public void onClick(View view) {
             if (!BaseApplication.isLogin()) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                LoginMainActivity.startLoginActivity(activity);
                 return;
             }
             switch (view.getId()) {
@@ -373,6 +375,9 @@ public class UserFragment extends BaseFragment {
                     break;
                 case R.id.rlShop:
                     ShopMainActivity.startShopMainActivity(activity, shopId);
+                    break;
+                case R.id.rlAppraiseReport:
+                    startActivity(new Intent(getActivity(), AppraiseReportActivity.class));
                     break;
                 case R.id.rlAppraiser:
                     startActivity(new Intent(getActivity(), AppraiserMainActivity.class));
@@ -577,11 +582,13 @@ public class UserFragment extends BaseFragment {
         rlSetting = rootView.findViewById(R.id.rl_setting);
         rlService = rootView.findViewById(R.id.rl_service);
         rlAppraiser = rootView.findViewById(R.id.rlAppraiser);
+        rlAppraiseReport = rootView.findViewById(R.id.rlAppraiseReport);
         rlMyEvaluate.setOnClickListener(onClickListener);
         rlFansManage.setOnClickListener(onClickListener);
         rlSetting.setOnClickListener(onClickListener);
         rlService.setOnClickListener(onClickListener);
         rlAppraiser.setOnClickListener(onClickListener);
+        rlAppraiseReport.setOnClickListener(onClickListener);
 
 
         //切换用户布局
@@ -624,15 +631,8 @@ public class UserFragment extends BaseFragment {
             tvMyTitle.setText("买家中心");
             ivSwitchIcon.setImageResource(R.mipmap.center_seller);
             tvSwitchText.setText("进入卖家中心  >>");
-//            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-////                tvMyTitle.setText("企业买家");
-//                tvMyTitle.setText("卖家中心");
-//                ivSwitchIcon.setImageResource(R.mipmap.center_seller);
-//                imgMyTitleType.setImageResource(R.mipmap.my_company);
-//            } else {
-////                tvMyTitle.setText("个人买家");
-//                imgMyTitleType.setImageResource(R.mipmap.my_person);
-//            }
+            rlAppraiseReport.setVisibility(View.VISIBLE);
+            rlAppraiser.setVisibility(View.GONE);
 
             llBuyOrder.setVisibility(View.VISIBLE);
             llSellOrder.setVisibility(View.GONE);
@@ -667,13 +667,6 @@ public class UserFragment extends BaseFragment {
             ivSwitchIcon.setImageResource(R.mipmap.center_buyer);
             tvSwitchText.setText("进入买家中心 >>");
 
-//            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-//                tvMyTitle.setText("企业卖家");
-//                imgMyTitleType.setImageResource(R.mipmap.my_company);
-//            } else {
-//                tvMyTitle.setText("个人卖家");
-//                imgMyTitleType.setImageResource(R.mipmap.my_person);
-//            }
 
             llBuyOrder.setVisibility(View.GONE);
             llSellOrder.setVisibility(View.VISIBLE);
@@ -685,9 +678,10 @@ public class UserFragment extends BaseFragment {
             llGoodsContent.setVisibility(View.VISIBLE);
             rlShop.setVisibility(View.VISIBLE);
             rlCollect.setVisibility(View.VISIBLE);
-            rlMyEvaluate.setVisibility(View.VISIBLE);
-
-            llMyManagerSecond.setVisibility(View.VISIBLE);
+            rlMyEvaluate.setVisibility(View.GONE);
+            rlAppraiseReport.setVisibility(View.GONE);
+            rlAppraiser.setVisibility(View.VISIBLE);
+            llMyManagerSecond.setVisibility(View.GONE);
         }
     }
 

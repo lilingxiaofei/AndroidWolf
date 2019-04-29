@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llContent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_gray"
+    android:gravity="center_horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@drawable/bg_round_white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="20dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgHead"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@mipmap/common_head_icon"
+                app:civ_border_color="@color/bg_white"
+                app:civ_border_width="2dp" />
+            <TextView android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imgHead"
+                android:textColor="@color/t_black"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:textSize="20sp"
+
+                android:text="名称"/>
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/rbEvaluation"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:isIndicator="false"
+                android:layout_below="@+id/tvName"
+                android:layout_alignLeft="@+id/tvName"
+                android:numStars="5"
+                android:rating="5"
+                android:stepSize="1"
+                android:theme="@style/RatingBar20"
+                style="@style/RatingBar20"
+                />
+            <TextView android:id="@+id/tvRequestAppraise"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="编辑"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textColor="@color/t_red"
+                android:textSize="15sp"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+        <TextView android:id="@+id/tvAppraiseScope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/appraise_scope"
+            android:textColor="@color/t_black"
+            android:textSize="11sp"/>
+        <TextView android:id="@+id/tvAppraiseRequire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/appraise_require"
+            android:textColor="@color/t_black"
+            android:textSize="11sp"
+            />
+        <TextView android:id="@+id/tvAppraiseAttention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/appraise_attention"
+            android:textColor="@color/t_black"
+            android:textSize="11sp"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:divider="@drawable/line_vertical"
+            android:dividerPadding="2dp"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/tvTipsOne"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingRight="5dp"
+                android:text="多年行业经验"
+                android:textColor="@color/t_grey"
+                android:textSize="9sp" />
+
+            <TextView
+                android:id="@+id/tvTipsTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="10项检测"
+                android:textColor="@color/t_grey"
+                android:textSize="9sp" />
+
+            <TextView
+                android:id="@+id/tvTipsThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="精准市场评估"
+                android:textColor="@color/t_grey"
+                android:textSize="9sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
+        app:tabSelectedTextColor="@color/t_red"
+        app:tabTextColor="@color/t_black"
+        app:tabIndicatorColor="@color/bg_red" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

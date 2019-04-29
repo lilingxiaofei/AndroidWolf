@@ -21,7 +21,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragment;
-import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.amain.adapter.BrandAdapter;
 import com.chunlangjiu.app.amain.adapter.HomeAdapter;
 import com.chunlangjiu.app.amain.bean.HomeBean;
@@ -158,7 +158,7 @@ public class HomeFragment extends BaseFragment {
                     break;
                 case R.id.imgMsg:
                     if (!BaseApplication.isLogin()) {
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        LoginMainActivity.startLoginActivity(activity);
                     }else{
                         WebViewActivity.startWebViewActivity(getActivity(), ConstantMsg.WEB_URL_MESSAGE + BaseApplication.getToken(), "消息");
                     }
@@ -750,7 +750,7 @@ public class HomeFragment extends BaseFragment {
                         }
                     }));
         } else {
-            startActivity(new Intent(getActivity(), LoginActivity.class));
+            LoginMainActivity.startLoginActivity(activity);
         }
     }
 
@@ -830,7 +830,7 @@ public class HomeFragment extends BaseFragment {
                     if (BaseApplication.isLogin()) {
                         startActivity(new Intent(getActivity(), ValuationActivity.class));
                     } else {
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        LoginMainActivity.startLoginActivity(activity);
                     }
                     UmengEventUtil.iconEvent(getActivity(), "名酒估价");
                     break;
@@ -904,7 +904,7 @@ public class HomeFragment extends BaseFragment {
                 if (BaseApplication.isLogin()) {
                     startActivity(new Intent(getActivity(), ValuationActivity.class));
                 } else {
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    LoginMainActivity.startLoginActivity(activity);
                 }
                 if ("banner".equals(type)) {
                     UmengEventUtil.bannerEvent(getActivity(), "名酒估价");

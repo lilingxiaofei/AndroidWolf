@@ -21,7 +21,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragmentAdapter;
-import com.chunlangjiu.app.amain.activity.LoginActivity;
+import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
@@ -142,7 +142,7 @@ public class AuctionDetailActivity extends BaseActivity {
                         break;
                 }
             } else {
-                startActivity(new Intent(AuctionDetailActivity.this, LoginActivity.class));
+                LoginMainActivity.startLoginActivity(AuctionDetailActivity.this);
             }
         }
     };
