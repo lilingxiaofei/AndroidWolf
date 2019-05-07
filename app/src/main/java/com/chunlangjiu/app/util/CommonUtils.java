@@ -1,6 +1,7 @@
 package com.chunlangjiu.app.util;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -103,6 +104,21 @@ public class CommonUtils {
         boolean isAuction = GOODS_STATUS_AUCTION_NOT_START.equals(status) || GOODS_STATUS_AUCTION_ACTIVE.equals(status) || GOODS_STATUS_AUCTION_STOP.equals(status) ? true : false;
         return isAuction;
     }
+
+
+
+    public static String getString(int resId,String obj) {
+        try {
+            if (obj == null) {
+                obj = "";
+            }
+            return AppUtils.getContext().getResources().getString(resId,obj);
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+        return "" ;
+    }
+
 
     public static String joinStr(Object... obj) {
         String joinStr = "";

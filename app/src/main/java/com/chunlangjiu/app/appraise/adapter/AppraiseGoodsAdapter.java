@@ -1,6 +1,7 @@
 package com.chunlangjiu.app.appraise.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -48,7 +49,12 @@ public class AppraiseGoodsAdapter extends BaseQuickAdapter<AppraiseGoodsBean, Ba
                 layoutParams.height = picWidth;
                 imgPic.setLayoutParams(layoutParams);
             }
-            GlideUtils.loadImage(context, item.getImg(), imgPic);
+            String img = "" ;
+            if(!TextUtils.isEmpty(item.getImg())){
+                String[] imgList = item.getImg().split(",");
+                img = imgList[0];
+            }
+            GlideUtils.loadImage(context, img, imgPic);
             helper.setText(R.id.tvName, item.getTitle());
             helper.setText(R.id.tvAppraise,"鉴定报告");
 //            helper.addOnClickListener(R.id.tvAppraise);

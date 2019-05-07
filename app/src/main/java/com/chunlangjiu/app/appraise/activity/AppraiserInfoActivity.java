@@ -92,7 +92,7 @@ public class AppraiserInfoActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 AppraiseGoodsBean appraiseBean= appraiseGoodsAdapter.getItem(position);
-                AppraiseResultActivity.startAppraiserResultActivity(AppraiserInfoActivity.this,appraiseBean);
+                AppraiseResultActivity.startAppraiserResultActivity(AppraiserInfoActivity.this,appraiseBean.getChateau_id());
             }
         });
         appraiseGoodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) rvAppraiserList.getParent(), false));

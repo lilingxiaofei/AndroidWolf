@@ -1,10 +1,12 @@
 package com.chunlangjiu.app.appraise.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2019/4/11.
  */
 
-public class AppraiseGoodsBean {
+public class AppraiseGoodsBean implements Serializable{
 
     /**
      * "chateau_id": 16,
@@ -21,7 +23,12 @@ public class AppraiseGoodsBean {
      "flaw": "0.00",
      "accessory": "0.00",
      "content": "姐姐斤斤计较"
+     "details": "6",
+     "authenticate_name": "版本更新",
+     "authenticate_img": "http://chunlang.oss-cn-shenzhen.aliyuncs.com/687e4f23177c90154154b3a8122bf9d9.jpg"
      */
+
+
 
     private String chateau_id;
     private String title;
@@ -37,7 +44,9 @@ public class AppraiseGoodsBean {
     private String flaw;
     private String accessory;
     private String content;
-
+    private String details;
+    private String authenticate_name;
+    private String authenticate_img;
 
 
     private boolean isAdd;
@@ -160,5 +169,29 @@ public class AppraiseGoodsBean {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getAuthenticate_name() {
+        return authenticate_name;
+    }
+
+    public void setAuthenticate_name(String authenticate_name) {
+        this.authenticate_name = authenticate_name;
+    }
+
+    public String getAuthenticate_img() {
+        return authenticate_img;
+    }
+
+    public void setAuthenticate_img(String authenticate_img) {
+        this.authenticate_img = authenticate_img;
     }
 }
