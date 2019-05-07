@@ -158,6 +158,7 @@ public class OrderDetailBean {
     private String description ;
     private Object evidence_pic;
     private String commission ;//平台佣金
+    private String distribution_admin ;//平台佣金
     private String shop_payment ;//店铺实收
 
     private RefundsBean refunds;
@@ -1040,6 +1041,14 @@ public class OrderDetailBean {
 
     public void setCommission(String commission) {
         this.commission = commission;
+    }
+
+    public String getDistribution_admin() {
+        return distribution_admin;
+    }
+
+    public void setDistribution_admin(String distribution_admin) {
+        this.distribution_admin = distribution_admin;
     }
 
     public String getShop_payment() {
