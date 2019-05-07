@@ -61,6 +61,7 @@ public class ResetPsdActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
+        hideTitleView();
         titleName.setText("忘记密码");
         titleImgLeft.setOnClickListener(onClickListener);
     }

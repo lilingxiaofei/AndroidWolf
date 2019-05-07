@@ -64,6 +64,7 @@ public class PasswordLoginActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
+        hideTitleView();
         titleName.setText("密码登录");
         titleImgLeft.setOnClickListener(onClickListener);
     }

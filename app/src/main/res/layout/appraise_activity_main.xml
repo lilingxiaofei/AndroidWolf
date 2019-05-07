@@ -76,7 +76,13 @@
             android:layout_alignParentRight="true"
             android:text="新手拍摄指南  >"/>
     </RelativeLayout>
-
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableFooterFollowWhenLoadFinished="true"
+        app:srlEnableScrollContentWhenLoaded="true">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAppraiserList"
         android:layout_margin="10dp"
@@ -84,4 +90,5 @@
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

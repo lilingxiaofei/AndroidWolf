@@ -300,6 +300,7 @@ public class ShopMainActivity extends BaseActivity {
         imgShow.setOnClickListener(onClickListener);
         scrollableLayout.setCurrentScrollableContainer(recycleView);
         rlShopInfo.setOnClickListener(onClickListener);
+        tvRequestAppraise.setOnClickListener(onClickListener);
         lists = new ArrayList<>();
         goodsAdapter = new GoodsAdapter(this, lists);
         goodsAdapter.setShowStoreView(false);

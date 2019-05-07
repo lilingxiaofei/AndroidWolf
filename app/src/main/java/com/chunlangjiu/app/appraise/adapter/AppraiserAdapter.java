@@ -24,14 +24,13 @@ public class AppraiserAdapter extends BaseQuickAdapter<AppraiseBean, BaseViewHol
     @Override
     protected void convert(BaseViewHolder helper, AppraiseBean item) {
         ImageView imgPic = helper.getView(R.id.imgHead);
-        GlideUtils.loadImageHead(context, "", imgPic);
-
-        helper.setText(R.id.tvName,"鉴定师名称");
-        helper.setText(R.id.tvAppraiseScope,context.getString(R.string.appraise_scope,"茅台，五粮液，各种皮牌老酒"));
-        helper.setText(R.id.tvAppraiseRequire,context.getString(R.string.appraise_require,"拍摄物品图清晰，有主题"));
-        helper.setText(R.id.tvTipsOne,"日均"+12);
-        helper.setText(R.id.tvTipsTwo,"完成率"+"%80");
-        String queueUp = "5";
+        GlideUtils.loadImageHead(context, item.getAuthenticate_img(), imgPic);
+        helper.setText(R.id.tvName,item.getAuthenticate_name());
+        helper.setText(R.id.tvAppraiseScope,context.getString(R.string.appraise_scope,item.getAuthenticate_scope()));
+        helper.setText(R.id.tvAppraiseRequire,context.getString(R.string.appraise_require,item.getAuthenticate_require()));
+        helper.setText(R.id.tvTipsOne,"日均"+item.getDay());
+        helper.setText(R.id.tvTipsTwo,"完成率"+item.getRate());
+        String queueUp = item.getLine();
         helper.setText(R.id.tvTipsThree,CommonUtils.setSpecifiedTextsColor("排队"+queueUp,queueUp, ContextCompat.getColor(context,R.color.t_red)));
 
     }

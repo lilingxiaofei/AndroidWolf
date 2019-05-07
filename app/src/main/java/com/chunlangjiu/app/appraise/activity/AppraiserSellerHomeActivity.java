@@ -2,7 +2,6 @@ package com.chunlangjiu.app.appraise.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,29 +12,22 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.appraise.adapter.AppraiserAdapter;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
-import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.util.PageUtils;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
-import com.pkqup.commonlibrary.net.bean.ResultBean;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 
 /**
  * @CreatedbBy: 吴申飞 on 2018/6/16.
  * @Describe: 鉴定师主页
  */
-public class AppraiserMainActivity extends BaseActivity {
+public class AppraiserSellerHomeActivity extends BaseActivity {
 
     @BindView(R.id.tvAppraiseNum)
     TextView tvAppraiseNum;
@@ -48,24 +40,27 @@ public class AppraiserMainActivity extends BaseActivity {
     @BindView(R.id.rlBeginner)
     RelativeLayout rlBeginner;
 
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout refreshLayout;
     @BindView(R.id.rvAppraiserList)
     RecyclerView rvAppraiserList;
     AppraiserAdapter appraiserAdapter ;
-    private PageUtils<AppraiseBean> pageUtils = new PageUtils<>();
+    List<AppraiseBean> appraiseList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.appraise_activity_main);
         initView();
-        loadAppraiserList(pageUtils.firstPage());
     }
 
     private void initView(){
         rlBeginner.setOnClickListener(onClickListener);
 
-        appraiserAdapter = new AppraiserAdapter(this,pageUtils.getList());
+        appraiseList = new ArrayList<>();
+        appraiseList.add(new AppraiseBean());
+        appraiseList.add(new AppraiseBean());
+        appraiseList.add(new AppraiseBean());
+        appraiseList.add(new AppraiseBean());
+        appraiserAdapter = new AppraiserAdapter(this,appraiseList);
         appraiserAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -73,7 +68,7 @@ public class AppraiserMainActivity extends BaseActivity {
                 if(appraiseBean.isAdd()){
 
                 }else{
-                    AppraiserInfoActivity.startAppraiserInfoActivity(AppraiserMainActivity.this,appraiseBean.getAuthenticate_id());
+                    AppraiserInfoActivity.startAppraiserInfoActivity(AppraiserSellerHomeActivity.this,"");
                 }
             }
         });
@@ -82,39 +77,6 @@ public class AppraiserMainActivity extends BaseActivity {
         rvAppraiserList.setLayoutManager(gridLayoutManager);
         rvAppraiserList.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(this, 5), false));
         rvAppraiserList.setAdapter(appraiserAdapter);
-
-        refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                loadAppraiserList(pageUtils.nextPage());
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                loadAppraiserList(pageUtils.firstPage());
-            }
-        });
-    }
-
-    private void loadAppraiserList(int page){
-        disposable.add(ApiUtils.getInstance().getAppraiserList(page,10)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<ListBean<AppraiseBean>>>() {
-                    @Override
-                    public void accept(ResultBean<ListBean<AppraiseBean>> result) throws Exception {
-                        refreshLayout.finishRefresh();
-                        refreshLayout.finishLoadMore();
-                        pageUtils.loadListSuccess(result.getData().getList());
-                        appraiserAdapter.setNewData(pageUtils.getList());
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        refreshLayout.finishRefresh();
-                        refreshLayout.finishLoadMore();
-                    }
-                }));
     }
 
     @Override
@@ -124,18 +86,13 @@ public class AppraiserMainActivity extends BaseActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(R.id.img_title_left == view.getId()){
                 finish();
             }else if(R.id.rlBeginner == view.getId()){
-                startActivity(new Intent(AppraiserMainActivity.this,NoviceMustSeeActivity.class));
+                startActivity(new Intent(AppraiserSellerHomeActivity.this,NoviceMustSeeActivity.class));
             }
         }
     };

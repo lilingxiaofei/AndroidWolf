@@ -16,6 +16,7 @@ import com.pkqup.commonlibrary.dialog.CommonLoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
 
 public abstract class BaseActivity extends FragmentActivity {
 
@@ -41,6 +42,7 @@ public abstract class BaseActivity extends FragmentActivity {
     private TextView tvEmpty;
     private TextView tvError;
 
+    public CompositeDisposable disposable;
 
     @Override
     public void onResume() {
@@ -63,6 +65,7 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.abase_activity);
+        disposable = new CompositeDisposable();
         setStatusBarColor();
         findView();
         setTitleView();
@@ -163,5 +166,11 @@ public abstract class BaseActivity extends FragmentActivity {
     public void setErrorListView(BaseQuickAdapter baseQuickAdapter, String content) {
         baseQuickAdapter.setEmptyView(emptyListView);
         tvError.setText(content);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 }

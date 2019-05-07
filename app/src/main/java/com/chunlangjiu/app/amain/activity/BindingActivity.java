@@ -70,6 +70,13 @@ public class BindingActivity extends BaseActivity {
         activity.startActivity(intent);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.amain_activity_login_binding);
+        EventManager.getInstance().registerListener(onNotifyListener);
+        initView();
+    }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -136,17 +143,12 @@ public class BindingActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
+        hideTitleView();
         titleName.setText("登录注册");
         titleImgLeft.setOnClickListener(onClickListener);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.amain_activity_login);
-        EventManager.getInstance().registerListener(onNotifyListener);
-        initView();
-    }
+
 
     private void initView() {
         disposable = new CompositeDisposable();

@@ -48,8 +48,9 @@ public class AppraiseGoodsAdapter extends BaseQuickAdapter<AppraiseGoodsBean, Ba
                 layoutParams.height = picWidth;
                 imgPic.setLayoutParams(layoutParams);
             }
-            GlideUtils.loadImage(context, "", imgPic);
-            helper.setText(R.id.tvName, "商品名称");
+            GlideUtils.loadImage(context, item.getImg(), imgPic);
+            helper.setText(R.id.tvName, item.getTitle());
+            helper.setText(R.id.tvAppraise,"鉴定报告");
 //            helper.addOnClickListener(R.id.tvAppraise);
         } catch (Exception e) {
             e.printStackTrace();

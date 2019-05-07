@@ -121,7 +121,7 @@
         <item name="colorControlActivated">@color/bg_yellow</item>
     </style>
 
-    <style name="RatingBar20" parent="Theme.AppCompat">
+    <style name="RatingBar20" parent="Widget.MaterialRatingBar.RatingBar.Indicator">
         <item name="android:minHeight">20dp</item>
         <item name="android:maxHeight">20dp</item>
         <item name="colorControlNormal">@color/t_gray</item>

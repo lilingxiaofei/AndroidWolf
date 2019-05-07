@@ -96,6 +96,8 @@
     <string name="check_auth_fail_one_company">您的企业认证未通过！</string>
     <string name="check_auth_fail_two">距离发布商品还差一点点哦，我们期待您再次提交。</string>
     <string name="appraise_num">累计鉴别已超过%s件</string>
+    <string name="appraiser">鉴定师</string>
+
     <string name="appraise_scope">鉴定范围：%s</string>
     <string name="appraise_require">鉴定要求：%s</string>
     <string name="appraise_attention">注意事项：%s</string>

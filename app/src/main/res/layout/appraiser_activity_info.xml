@@ -33,9 +33,9 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:textSize="13sp"
-
+                android:textStyle="bold"
                 android:text="名称"/>
-            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/rbEvaluation"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
@@ -43,19 +43,24 @@
                 android:layout_below="@+id/tvName"
                 android:layout_alignLeft="@+id/tvName"
                 android:numStars="5"
-                android:rating="5"
+                android:rating="2"
                 android:stepSize="1"
                 android:theme="@style/RatingBar20"
                 style="@style/RatingBar20"
                 />
-            <TextView android:id="@+id/tvRequestAppraise"
+
+
+
+
+            <TextView
+                android:id="@+id/tvRequestAppraise"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:text="求鉴定"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@mipmap/appraise_request_red"
                 android:gravity="center"
-                android:textColor="@color/t_red"
-                android:background="@drawable/bg_round_transparent_red_border_15dp"
-                android:layout_alignParentRight="true"/>
+                android:textColor="@color/t_red" />
         </RelativeLayout>
         <TextView android:id="@+id/tvAppraiseScope"
             android:layout_width="wrap_content"
@@ -116,6 +121,13 @@
                 android:textSize="9sp" />
         </LinearLayout>
     </LinearLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableFooterFollowWhenLoadFinished="true"
+        app:srlEnableScrollContentWhenLoaded="true">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAppraiserList"
         android:layout_marginLeft="10dp"
@@ -125,4 +137,5 @@
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

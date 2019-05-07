@@ -19,8 +19,8 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.abase.BaseFragment;
 import com.chunlangjiu.app.amain.activity.LoginMainActivity;
-import com.chunlangjiu.app.appraise.activity.AppraiseReportActivity;
-import com.chunlangjiu.app.appraise.activity.AppraiserMainActivity;
+import com.chunlangjiu.app.appraise.activity.AppraiserBuyerHomeActivity;
+import com.chunlangjiu.app.appraise.activity.AppraiserSellerHomeActivity;
 import com.chunlangjiu.app.fans.activity.FansHomeActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
 import com.chunlangjiu.app.goods.dialog.EditAccountNameDialog;
@@ -206,8 +206,8 @@ public class UserFragment extends BaseFragment {
     private LinearLayout rlAppraiser ;
     /*我的管理*/
 
-    public static final int TYPE_BUYER = 0;//买家中心
-    public static final int TYPE_SELLER = 1;//卖家中心
+    public static final int TYPE_BUYER = 1;//买家中心
+    public static final int TYPE_SELLER = 0;//卖家中心
     public static int userType = TYPE_BUYER;
     private String companyStatus;
     private String personStatus;
@@ -377,10 +377,10 @@ public class UserFragment extends BaseFragment {
                     ShopMainActivity.startShopMainActivity(activity, shopId);
                     break;
                 case R.id.rlAppraiseReport:
-                    startActivity(new Intent(getActivity(), AppraiseReportActivity.class));
+                    startActivity(new Intent(getActivity(), AppraiserBuyerHomeActivity.class));
                     break;
                 case R.id.rlAppraiser:
-                    startActivity(new Intent(getActivity(), AppraiserMainActivity.class));
+                    startActivity(new Intent(getActivity(), AppraiserSellerHomeActivity.class));
                     break;
 
             }
@@ -892,24 +892,6 @@ public class UserFragment extends BaseFragment {
             tvAuthCompany.setVisibility(View.VISIBLE);
         }
 
-//        llMyTitle.setVisibility(View.VISIBLE);
-//        if (userType == TYPE_BUYER) {
-//            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-//                tvMyTitle.setText("企业买家");
-//                imgMyTitleType.setImageResource(R.mipmap.my_company);
-//            } else {
-//                tvMyTitle.setText("个人买家");
-//                imgMyTitleType.setImageResource(R.mipmap.my_person);
-//            }
-//        } else {
-//            if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-//                tvMyTitle.setText("企业卖家");
-//                imgMyTitleType.setImageResource(R.mipmap.my_company);
-//            } else {
-//                tvMyTitle.setText("个人卖家");
-//                imgMyTitleType.setImageResource(R.mipmap.my_person);
-//            }
-//        }
     }
 
 
@@ -1108,23 +1090,6 @@ public class UserFragment extends BaseFragment {
                             tvAuthCompany.setVisibility(View.GONE);
                             imgAuthStatus.setImageResource(R.mipmap.my_auth);
                             tvAuthStatus.setText("已认证");
-//                            if (userType == TYPE_BUYER) {
-//                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-//                                    tvMyTitle.setText("企业买家");
-//                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
-//                                } else {
-//                                    tvMyTitle.setText("个人买家");
-//                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
-//                                }
-//                            } else {
-//                                if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
-//                                    tvMyTitle.setText("企业卖家");
-//                                    imgMyTitleType.setImageResource(R.mipmap.my_company);
-//                                } else {
-//                                    tvMyTitle.setText("个人卖家");
-//                                    imgMyTitleType.setImageResource(R.mipmap.my_person);
-//                                }
-//                            }
                         }
                     }
                 }, new Consumer<Throwable>() {
