@@ -1,14 +1,14 @@
-package com.chunlangjiu.app.amain.bean;
+package com.chunlangjiu.app.appraise.bean;
 
 
 import java.util.List;
 
-public class ListBean<T>{
+public class AppraiseGoodsListBean<T>{
 
     private List<T> list;
-
     private int false_count;
     private int true_count;
+
     public List<T> getList() {
         return list;
     }

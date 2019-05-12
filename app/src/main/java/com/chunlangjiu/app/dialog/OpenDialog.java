@@ -20,11 +20,11 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.appraise.activity.AppraiserMainActivity;
 import com.chunlangjiu.app.goods.activity.FestivalActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
-import com.chunlangjiu.app.goods.activity.ValuationActivity;
 import com.chunlangjiu.app.store.activity.StoreListActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -164,7 +164,7 @@ public class OpenDialog extends Dialog {
                     break;
                 case HomeModulesBean.ITEM_EVALUATION:
                     if (BaseApplication.isLogin()) {
-                        context.startActivity(new Intent(context, ValuationActivity.class));
+                        context.startActivity(new Intent(context, AppraiserMainActivity.class));
                     } else {
                         LoginMainActivity.startLoginActivity(context);
                     }

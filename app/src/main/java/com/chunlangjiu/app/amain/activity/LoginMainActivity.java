@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,19 +11,30 @@ import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
+import com.chunlangjiu.app.abase.BaseApplication;
+import com.chunlangjiu.app.amain.bean.LoginBean;
+import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
-import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
+import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
+import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @CreatedbBy: liucun on 2018/7/6
@@ -32,6 +42,8 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public class LoginMainActivity extends BaseActivity {
 
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
     @BindView(R.id.tvLogin)
     TextView tvLogin;
 
@@ -68,6 +80,7 @@ public class LoginMainActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.img_title_left:
+                case R.id.ivBack:
                     finish();
                     break;
                 case R.id.tvLogin:
@@ -98,14 +111,15 @@ public class LoginMainActivity extends BaseActivity {
 
         @Override
         public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            if (!map.containsKey("iconurl")) { //判断是授权还是获取用户信息
-                UMShareAPI.get(LoginMainActivity.this).getPlatformInfo(LoginMainActivity.this, share_media, umAuthListener);
-            } else {
-                System.out.println("uid========" + map.get("uid"));
-                System.out.println("name========" + map.get("name"));
-                System.out.println("iconurl========" + map.get("iconurl"));
-                ToastUtils.showShort("社会唐哥" + map.get("name"));
-                thirdPartyLogin(map.get("uid"));
+            if(map!=null){
+                if (!map.containsKey("iconurl")) { //判断是授权还是获取用户信息
+                    UMShareAPI.get(LoginMainActivity.this).getPlatformInfo(LoginMainActivity.this, share_media, umAuthListener);
+                } else {
+                    JSONObject json = new JSONObject(map);
+                    String loginInfo = json.toString().replaceAll("\"","/\"");
+                    String loginInfoTwo = json.toString().replaceAll("\"","'");
+                    thirdPartyLogin(map);
+                }
             }
         }
 
@@ -131,8 +145,11 @@ public class LoginMainActivity extends BaseActivity {
 
 
     private void initView() {
-        MyStatusBarUtils.setStatusBar(this, ContextCompat.getColor(this, R.color.bg_red));
-        MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlTitle), true);
+//        MyStatusBarUtils.setStatusBar(this, ContextCompat.getColor(this, R.color.bg_red));
+//        MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlTitle), true);
+        StatusBarUtil.setTranslucentForImageView(this,0,findViewById(R.id.rlTitle));
+        StatusBarUtil.setLightMode(this);
+        ivBack.setOnClickListener(onClickListener);
         disposable = new CompositeDisposable();
         tvLogin.setOnClickListener(onClickListener);
         tvRegister.setOnClickListener(onClickListener);
@@ -145,37 +162,40 @@ public class LoginMainActivity extends BaseActivity {
 
 
 
-    private void thirdPartyLogin (String loginId) {
-        if(TextUtils.isEmpty(loginId)){
+    private void thirdPartyLogin (Map loginId) {
+        if(loginId == null || TextUtils.isEmpty(loginId.toString())){
             ToastUtils.showShort("第三方登录失败，请稍后重试!");
         }else{
-//            showLoadingDialog();
-//            disposable.add(ApiUtils.getInstance().login(etPhone.getText().toString(), etAuthCode.getText().toString())
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Consumer<ResultBean<LoginBean>>() {
-//                        @Override
-//                        public void accept(ResultBean<LoginBean> loginBeanResultBean) throws Exception {
-//                            hideLoadingDialog();
-//                            ToastUtils.showShort("登录成功");
-//                            SPUtils.put("token", loginBeanResultBean.getData().getAccessToken());
-//                            SPUtils.put("account", etPhone.getText().toString());
-//                            BaseApplication.setToken(loginBeanResultBean.getData().getAccessToken());
-//                            BaseApplication.initToken();
-//                            if ("false".equals(loginBeanResultBean.getData().getReferrer())) {
-//                                EventManager.getInstance().notify(null, ConstantMsg.SET_INVITATION_CODE);
-//                            }
-//                            EventManager.getInstance().notify(null, ConstantMsg.LOGIN_SUCCESS);
-//                            finish();
-//
-//                        }
-//                    }, new Consumer<Throwable>() {
-//                        @Override
-//                        public void accept(Throwable throwable) throws Exception {
-//                            hideLoadingDialog();
-//                            ToastUtils.showErrorMsg(throwable);
-//                        }
-//                    }));
+            showLoadingDialog();
+            disposable.add(ApiUtils.getInstance().thirdPartyLogin(loginId,  CommonUtils.getUniquePsuedoID())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResultBean<LoginBean>>() {
+                        @Override
+                        public void accept(ResultBean<LoginBean> loginBeanResultBean) throws Exception {
+                            hideLoadingDialog();
+                            if(loginBeanResultBean.getErrorcode() == 0){
+                                ToastUtils.showShort("登录成功");
+                                SPUtils.put("token", loginBeanResultBean.getData().getAccessToken());
+                                BaseApplication.setToken(loginBeanResultBean.getData().getAccessToken());
+                                BaseApplication.initToken();
+                                if ("false".equals(loginBeanResultBean.getData().getReferrer())) {
+                                    EventManager.getInstance().notify(null, ConstantMsg.SET_INVITATION_CODE);
+                                }
+                                EventManager.getInstance().notify(null, ConstantMsg.LOGIN_SUCCESS);
+                                finish();
+                            }else{
+
+                            }
+
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            hideLoadingDialog();
+                            ToastUtils.showErrorMsg(throwable);
+                        }
+                    }));
         }
 
 

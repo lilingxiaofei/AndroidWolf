@@ -17,6 +17,7 @@ import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.web.WebViewActivity;
+import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
@@ -151,6 +152,8 @@ public class BindingActivity extends BaseActivity {
 
 
     private void initView() {
+        StatusBarUtil.setTranslucentForImageView(this,0,findViewById(R.id.rlTitle));
+        StatusBarUtil.setLightMode(this);
         disposable = new CompositeDisposable();
         tvGetCode.setOnClickListener(onClickListener);
         tvLogin.setOnClickListener(onClickListener);

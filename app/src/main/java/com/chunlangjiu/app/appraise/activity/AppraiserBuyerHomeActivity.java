@@ -50,17 +50,26 @@ public class AppraiserBuyerHomeActivity extends BaseActivity {
     private void initView(){
         llToAppraise.setOnClickListener(onClickListener);
         fragments = new ArrayList<>();
-        fragments.add(AppriseGoodsListFragment.newInstance("0"));
-        fragments.add(AppriseGoodsListFragment.newInstance("1"));
-        initFragmentAdapter("鉴定中","已鉴定");
-
+        AppriseGoodsListFragment fragmentOne = AppriseGoodsListFragment.newInstance(false,"0") ;
+        AppriseGoodsListFragment fragmentTwo = AppriseGoodsListFragment.newInstance(false,"1") ;
+        fragments.add(fragmentOne);
+        fragments.add(fragmentTwo);
+        initFragmentAdapter("鉴定中\n(0)","已鉴定\n(0)");
+        fragmentOne.setGoodsNum(new AppriseGoodsListFragment.GoodsNum() {
+            @Override
+            public void getGoodsNum(int falseNum, int trueNum) {
+                setFragmentTitle("待鉴定\n("+falseNum+")","已鉴定\n("+trueNum+")");
+            }
+        });
+        fragmentOne.setGoodsNum(new AppriseGoodsListFragment.GoodsNum() {
+            @Override
+            public void getGoodsNum(int falseNum, int trueNum) {
+                setFragmentTitle("待鉴定\n("+falseNum+")","已鉴定\n("+trueNum+")");
+            }
+        });
     }
 
-    private void initFragmentAdapter(String... title){
-        myFragmentAdapter = new BaseFragmentAdapter(getSupportFragmentManager());
-        myFragmentAdapter.setLists(fragments);
-        vpContent.setAdapter(myFragmentAdapter);
-        tabLayout.setupWithViewPager(vpContent);
+    private void setFragmentTitle(String... title){
         //手动添加标题 ,必须在setupwidthViewPager之后否则不行
         if(null != title && title.length>0){
             for (int i = 0; i < tabLayout.getTabCount(); i++) {
@@ -69,6 +78,15 @@ public class AppraiserBuyerHomeActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    private void initFragmentAdapter(String... title){
+        myFragmentAdapter = new BaseFragmentAdapter(getSupportFragmentManager());
+        myFragmentAdapter.setLists(fragments);
+        vpContent.setAdapter(myFragmentAdapter);
+        tabLayout.setupWithViewPager(vpContent);
+        //手动添加标题 ,必须在setupwidthViewPager之后否则不行
+        setFragmentTitle(title);
     }
 
     public void reflex(final TabLayout tabLayout){

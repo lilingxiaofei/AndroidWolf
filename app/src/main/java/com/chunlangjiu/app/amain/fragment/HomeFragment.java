@@ -27,6 +27,7 @@ import com.chunlangjiu.app.amain.adapter.HomeAdapter;
 import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.appraise.activity.AppraiserMainActivity;
 import com.chunlangjiu.app.fans.dialog.InviteCodeDialog;
 import com.chunlangjiu.app.goods.activity.FestivalActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
@@ -34,7 +35,6 @@ import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.PartnerListActivity;
 import com.chunlangjiu.app.goods.activity.SearchActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
-import com.chunlangjiu.app.goods.activity.ValuationActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.store.activity.StoreListActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
@@ -828,7 +828,7 @@ public class HomeFragment extends BaseFragment {
                     break;
                 case 3:
                     if (BaseApplication.isLogin()) {
-                        startActivity(new Intent(getActivity(), ValuationActivity.class));
+                        startActivity(new Intent(getActivity(), AppraiserMainActivity.class));
                     } else {
                         LoginMainActivity.startLoginActivity(activity);
                     }
@@ -902,7 +902,7 @@ public class HomeFragment extends BaseFragment {
                 break;
             case HomeModulesBean.ITEM_EVALUATION:
                 if (BaseApplication.isLogin()) {
-                    startActivity(new Intent(getActivity(), ValuationActivity.class));
+                    startActivity(new Intent(getActivity(), AppraiserMainActivity.class));
                 } else {
                     LoginMainActivity.startLoginActivity(activity);
                 }

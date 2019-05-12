@@ -14,7 +14,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
     android:orientation="vertical">
-    <LinearLayout
+    <LinearLayout android:id="@+id/llAppraiseSource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -78,7 +78,7 @@
             android:textSize="9sp" />
 
     </LinearLayout>
-    <LinearLayout
+    <LinearLayout android:id="@+id/llAppraisePrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -104,7 +104,7 @@
             android:textColor="@color/t_orange"
             android:textSize="50sp" />
     </LinearLayout>
-    <LinearLayout
+    <LinearLayout android:id="@+id/llAppraiseDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -197,7 +197,7 @@
         </LinearLayout>
     </LinearLayout>
     <include layout="@layout/appraiser_activity_goosd_info"/>
-    <TextView
+    <TextView android:id="@+id/tvAppraiseTips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"

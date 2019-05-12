@@ -111,5 +111,8 @@
     <string name="appraise_goods_year">商品年份：%s</string>
     <string name="appraise_goods_other">其他说明：%s</string>
     <string name="quick_cash">快速变现</string>
+    <string name="edit_info">编辑资料</string>
+    <string name="done">完成</string>
+    <string name="add_appraise_tips1">我们正在招募\n有经验的鉴定师</string>
 
 </resources>

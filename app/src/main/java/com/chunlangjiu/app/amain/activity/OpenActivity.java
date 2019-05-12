@@ -13,11 +13,11 @@ import com.bumptech.glide.Glide;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.appraise.activity.AppraiserMainActivity;
 import com.chunlangjiu.app.goods.activity.FestivalActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
-import com.chunlangjiu.app.goods.activity.ValuationActivity;
 import com.chunlangjiu.app.store.activity.StoreListActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -178,9 +178,9 @@ public class OpenActivity extends Activity {
                     break;
                 case HomeModulesBean.ITEM_EVALUATION:
                     if (BaseApplication.isLogin()) {
-                        startActivity(new Intent(OpenActivity.this, ValuationActivity.class));
+                        startActivity(new Intent(OpenActivity.this, AppraiserMainActivity.class));
                     } else {
-                        startActivity(new Intent(OpenActivity.this, LoginActivity.class));
+                        startActivity(new Intent(OpenActivity.this, LoginMainActivity.class));
                     }
                     UmengEventUtil.bannerEvent(OpenActivity.this, "名酒估价");
                     break;

@@ -13,11 +13,11 @@ import com.bumptech.glide.Glide;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
+import com.chunlangjiu.app.appraise.activity.AppraiserMainActivity;
 import com.chunlangjiu.app.goods.activity.FestivalActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.activity.GoodsListNewActivity;
 import com.chunlangjiu.app.goods.activity.ShopMainActivity;
-import com.chunlangjiu.app.goods.activity.ValuationActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.store.activity.StoreListActivity;
 import com.chunlangjiu.app.user.activity.AddGoodsActivity;
@@ -204,7 +204,7 @@ public class SplashActivity extends Activity {
                     break;
                 case HomeModulesBean.ITEM_EVALUATION:
                     if (BaseApplication.isLogin()) {
-                        startActivity(new Intent(SplashActivity.this, ValuationActivity.class));
+                        startActivity(new Intent(SplashActivity.this, AppraiserMainActivity.class));
                     } else {
                         startActivity(new Intent(SplashActivity.this, LoginMainActivity.class));
                     }

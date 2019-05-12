@@ -87,7 +87,7 @@ public class AppraiserInfoActivity extends BaseActivity {
 
     private void initView(){
 
-        appraiseGoodsAdapter = new AppraiseGoodsAdapter(this,pageUtils.getList());
+        appraiseGoodsAdapter = new AppraiseGoodsAdapter(this,false ,pageUtils.getList());
         appraiseGoodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -199,7 +199,7 @@ public class AppraiserInfoActivity extends BaseActivity {
             if(view.getId() == R.id.img_title_left){
                 finish();
             }else if(view.getId() == R.id.tvRequestAppraise){
-
+                AppraiseApplyAssessActivity.startApplyAssessActivity(AppraiserInfoActivity.this,appraiserId);
             }
         }
     };

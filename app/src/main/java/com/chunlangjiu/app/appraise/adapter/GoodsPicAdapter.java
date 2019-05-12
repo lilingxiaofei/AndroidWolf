@@ -1,4 +1,4 @@
-package com.chunlangjiu.app.goodsmanage.adapter;
+package com.chunlangjiu.app.appraise.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -70,7 +70,7 @@ public class GoodsPicAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.user_item_goods_manage_add_pic, null);
+            convertView = inflater.inflate(R.layout.appraise_item_goods_add_pic, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -86,12 +86,10 @@ public class GoodsPicAdapter extends BaseAdapter {
             ImageItem item = getItem(position);
             if(item == null){
                 holder.llAdd.setVisibility(View.VISIBLE);
-                holder.ivGoodsPic.setVisibility(View.GONE);
                 holder.ivDeleteGoodsPic.setVisibility(View.GONE);
             }else{
                 GlideUtils.loadImage(context, item.path, holder.ivGoodsPic);
                 holder.llAdd.setVisibility(View.GONE);
-                holder.ivGoodsPic.setVisibility(View.VISIBLE);
                 holder.ivDeleteGoodsPic.setVisibility(View.VISIBLE);
             }
         } catch (Exception e) {
@@ -124,10 +122,10 @@ public class GoodsPicAdapter extends BaseAdapter {
             ivGoodsPic= view.findViewById(R.id.ivGoodsPic);
             ivDeleteGoodsPic= view.findViewById(R.id.ivDeleteGoodsPic);
             rlGoods = view.findViewById(R.id.rlGoods);
-            ViewGroup.LayoutParams layoutParams = rlGoods.getLayoutParams();
-            layoutParams.width = (SizeUtils.getScreenWidth()-SizeUtils.dp2px(10))/2;
+            ViewGroup.LayoutParams layoutParams = ivGoodsPic.getLayoutParams();
+            layoutParams.width = (SizeUtils.getScreenWidth()-SizeUtils.dp2px(35))/2;
             layoutParams.height = layoutParams.width;
-            rlGoods.setLayoutParams(layoutParams);
+            ivGoodsPic.setLayoutParams(layoutParams);
         }
     }
 

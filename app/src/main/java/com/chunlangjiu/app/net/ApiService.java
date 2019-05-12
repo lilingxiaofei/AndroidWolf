@@ -12,6 +12,7 @@ import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
+import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
@@ -95,6 +96,15 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> getAuthSms(@Field("method") String method, @Field("v") String v, @Field("mobile") String mobile);
+
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<LoginBean>> thirdPartyLogin(@Field("method") String method, @Field("v") String v, @Field("trust_params") Object trust_params, @Field("deviceid") String deviceid);
+
+//    @POST("index.php/topapi")
+//    @FormUrlEncoded
+//    Flowable<ResultBean<LoginBean>> thirdPartyLogin( @FieldMap("trust_params") Map map);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
@@ -191,6 +201,12 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
+    Flowable<ResultBean> assessGoods(@Field("method") String method, @Field("v") String v, @Field("authenticate_id") String authenticate_id,
+                                      @Field("title") String title, @Field("series")  String series,
+                                     @Field("year") String year, @Field("content") String content,@Field("img") String img);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
     Flowable<ResultBean<AuctionListBean>> getAuctionList(@Field("method") String method, @Field("v") String v,
                                                          @Field("brand_id") String brand_id, @Field("area_id") String area_id,
                                                          @Field("odor_id") String odor_id, @Field("min_price") String min_price,
@@ -216,44 +232,42 @@ public interface ApiService {
                                                      @Field("max_price") String max_price);
 
 
-
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> appraiserGoods(@Field("method") String method, @Field("v") String v, @Field("chateau_id") String chateau_id, @Field("price") String price,
-                                                                @Field("colour") String colour, @Field("flaw") String flaw,
-                                                                @Field("accessory") String accessory, @Field("content") String content);
-
+                                        @Field("colour") String colour, @Field("flaw") String flaw,
+                                        @Field("accessory") String accessory, @Field("details") String content);
 
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean> updateAppraiserInfo(@Field("method") String method, @Field("v") String v, @Field("name") String name, @Field("scope") String scope ,
+    Flowable<ResultBean> updateAppraiserInfo(@Field("method") String method, @Field("v") String v, @Field("name") String name, @Field("scope") String scope,
                                              @Field("require") String require, @Field("content") String content,
                                              @Field("img") String img);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<ListBean<AppraiseBean>>> getAppraiserList(@Field("method") String method, @Field("v") String v, @Field("page_no") int page_no, @Field("page_size") int page_size);
+    Flowable<ResultBean<AppraiseListBean<AppraiseBean>>> getAppraiserList(@Field("method") String method, @Field("v") String v, @Field("page_no") int page_no, @Field("page_size") int page_size);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<AppraiseBean>> getAppraiserDetails(@Field("method") String method, @Field("v") String v, @Field("authenticate_id") String authenticate_id);
 
 
-
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseGoodsListById(@Field("method") String method, @Field("v") String v, @Field("authenticate_id") String authenticate_id,
-                                                                           @Field("page_no") int page_no, @Field("page_size") int page_size);
+                                                                               @Field("page_no") int page_no, @Field("page_size") int page_size);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseGoodsList(@Field("method") String method, @Field("v") String v, @Field("status") boolean status,
-                                                                 @Field("page_no") int page_no, @Field("page_size") int page_size, @Field("user_status") String user_status);
+                                                                           @Field("page_no") int page_no, @Field("page_size") int page_size);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<AppraiseGoodsBean>> getAppraiseGoodsDetails(@Field("method") String method, @Field("v") String v, @Field("chateau_id") String chateau_id);
+
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<FilterListBean>> getFilterData(@Field("method") String method, @Field("v") String v, @Field("cat_id") String cat_id);
@@ -271,7 +285,7 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<GoodsDetailBean.ItemBean>> getAuctionGoodsDetail(@Field("method") String method, @Field("v") String v,
-                                                                @Field("auctionitem_id") String auctionitem_id);
+                                                                         @Field("auctionitem_id") String auctionitem_id);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
@@ -458,12 +472,12 @@ public interface ApiService {
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> deleteCommonGoods(@Field("method") String method, @Field("v") String v,
-                                          @Field("item_id") String item_id);
+                                           @Field("item_id") String item_id);
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> deleteAuctionGoods(@Field("method") String method, @Field("v") String v,
-                                           @Field("auctionitem_id") String auctionitem_id);
+                                            @Field("auctionitem_id") String auctionitem_id);
 
     @POST("index.php/shop/topapi")
     @FormUrlEncoded
@@ -515,11 +529,12 @@ public interface ApiService {
     Flowable<ResultBean<List<AuctionOrderListBean>>> getAuctionOrderLists(@Field("method") String method, @Field("v") String v,
                                                                           @Field("status") String status, @Field("page_no") int page_no,
                                                                           @Field("page_size") int pagesize, @Field("fields") String fields);
+
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> getAuctionOrderListObj(@Field("method") String method, @Field("v") String v,
-                                                                          @Field("status") String status, @Field("page_no") int page_no,
-                                                                          @Field("page_size") int pagesize, @Field("fields") String fields);
+                                                @Field("status") String status, @Field("page_no") int page_no,
+                                                @Field("page_size") int pagesize, @Field("fields") String fields);
 
     @POST("index.php/topapi")
     @FormUrlEncoded
@@ -576,9 +591,9 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean> orderComplain(@Field("method") String method, @Field("v") String v,
-                                              @Field("tid") String tid, @Field("oid") String oid,
-                                              @Field("complaints_type") String complaints_type, @Field("tel") String tel,
-                                              @Field("content") String content, @Field("image_url") String image_url);
+                                       @Field("tid") String tid, @Field("oid") String oid,
+                                       @Field("complaints_type") String complaints_type, @Field("tel") String tel,
+                                       @Field("content") String content, @Field("image_url") String image_url);
 
 
     @POST("index.php/topapi")

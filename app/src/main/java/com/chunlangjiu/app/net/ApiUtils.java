@@ -14,6 +14,7 @@ import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
+import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
@@ -120,6 +121,10 @@ public class ApiUtils {
         return apiService.getAuthSms("user.sendSms", "v1", mobile);
     }
 
+    public Flowable<ResultBean<LoginBean>> thirdPartyLogin(Object trust_params, String deviceid) {
+        return apiService.thirdPartyLogin("user.trust.dcloudlogin", "v1", trust_params, deviceid);
+    }
+
     public Flowable<ResultBean<LoginBean>> login(String account, String code) {
         return apiService.login("user.oauthlogin", "v2", account, code);
     }
@@ -196,6 +201,11 @@ public class ApiUtils {
         return apiService.valuationGoods("member.evaluate", "v1", title, name, imgs, series);
     }
 
+    public Flowable<ResultBean> assessGoods(String authenticate_id,String title, String series, String year, String content,String imgs) {
+        return apiService.assessGoods("member.evaluate", "v1",authenticate_id, title, series, year, content,imgs);
+    }
+
+
     public Flowable<ResultBean<AuctionListBean>> getAuctionList(String brand_id, String area_id, String odor_id, String min_price, String max_price, int page_no, int page_size) {
         return apiService.getAuctionList("item.auction.list", "v1", brand_id, area_id, odor_id, min_price, max_price, page_no, page_size);
     }
@@ -247,10 +257,10 @@ public class ApiUtils {
 
 
     public Flowable<ResultBean> appraiserGoods(String chateau_id,String price,String colour,String flaw,String accessory,String content) {
-        return apiService.appraiserGoods("member.authenticate.list", "v1", chateau_id,price,colour,flaw,accessory,content);
+        return apiService.appraiserGoods("member.authenticate", "v1", chateau_id,price,colour,flaw,accessory,content);
     }
 
-    public Flowable<ResultBean<ListBean<AppraiseBean>>> getAppraiserList(int page_no, int page_size) {
+    public Flowable<ResultBean<AppraiseListBean<AppraiseBean>>> getAppraiserList(int page_no, int page_size) {
         return apiService.getAppraiserList("member.authenticate.list", "v1", page_no, page_size);
     }
 
@@ -260,8 +270,12 @@ public class ApiUtils {
     }
 
 
-    public Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseGoodsList(boolean status, int page_no, int page_size, String user_status) {
-        return apiService.getAppraiseGoodsList("authenticate.item.list", "v1", status, page_no, page_size, user_status);
+    public Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseGoodsList(boolean status, int page_no, int page_size) {
+        return apiService.getAppraiseGoodsList("authenticate.user.list", "v1", status, page_no, page_size);
+    }
+
+    public Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseShopGoodsList(boolean status, int page_no, int page_size) {
+        return apiService.getAppraiseGoodsList("authenticate.shop.list", "v1", status, page_no, page_size);
     }
 
     public Flowable<ResultBean<AppraiseGoodsBean>> getAppraiseGoodsDetails(String chateau_id) {

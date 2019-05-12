@@ -1,10 +1,12 @@
 package com.chunlangjiu.app.appraise.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2019/4/11.
  */
 
-public class AppraiseBean {
+public class AppraiseBean implements Serializable{
 
 
     /**

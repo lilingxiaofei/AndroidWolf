@@ -1,14 +1,16 @@
-package com.chunlangjiu.app.amain.bean;
+package com.chunlangjiu.app.appraise.bean;
 
 
 import java.util.List;
 
-public class ListBean<T>{
+public class AppraiseListBean<T>{
 
     private List<T> list;
-
+    private String content;
+    private String count;
     private int false_count;
     private int true_count;
+
     public List<T> getList() {
         return list;
     }
@@ -31,5 +33,21 @@ public class ListBean<T>{
 
     public void setTrue_count(int true_count) {
         this.true_count = true_count;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 }

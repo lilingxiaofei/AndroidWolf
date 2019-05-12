@@ -13,13 +13,15 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.appraise.adapter.AppraiserAdapter;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
+import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.PageUtils;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
+import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -54,6 +56,9 @@ public class AppraiserMainActivity extends BaseActivity {
     RecyclerView rvAppraiserList;
     AppraiserAdapter appraiserAdapter ;
     private PageUtils<AppraiseBean> pageUtils = new PageUtils<>();
+
+
+    CommonConfirmDialog commonConfirmDialog ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +68,19 @@ public class AppraiserMainActivity extends BaseActivity {
     }
 
     private void initView(){
+        commonConfirmDialog = new CommonConfirmDialog(this,"“若想成为鉴定师，可拨打400-189-0095”联系平台申请！");
+        commonConfirmDialog.setDialogStr("取消","联系");
+        commonConfirmDialog.setCallBack(new CommonConfirmDialog.CallBack() {
+            @Override
+            public void onConfirm() {
+                CommonUtils.callPhone("400-189-0095");
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
         rlBeginner.setOnClickListener(onClickListener);
 
         appraiserAdapter = new AppraiserAdapter(this,pageUtils.getList());
@@ -71,7 +89,7 @@ public class AppraiserMainActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 AppraiseBean appraiseBean= appraiserAdapter.getItem(position);
                 if(appraiseBean.isAdd()){
-
+                    commonConfirmDialog.show();
                 }else{
                     AppraiserInfoActivity.startAppraiserInfoActivity(AppraiserMainActivity.this,appraiseBean.getAuthenticate_id());
                 }
@@ -100,13 +118,15 @@ public class AppraiserMainActivity extends BaseActivity {
         disposable.add(ApiUtils.getInstance().getAppraiserList(page,10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<ListBean<AppraiseBean>>>() {
+                .subscribe(new Consumer<ResultBean<AppraiseListBean<AppraiseBean>>>() {
                     @Override
-                    public void accept(ResultBean<ListBean<AppraiseBean>> result) throws Exception {
+                    public void accept(ResultBean<AppraiseListBean<AppraiseBean>> result) throws Exception {
                         refreshLayout.finishRefresh();
                         refreshLayout.finishLoadMore();
+                        tvAppraiseNum.setText(CommonUtils.getString(R.string.appraise_num,result.getData().getCount()));
+                        tvTipsOne.setText(result.getData().getContent());
                         pageUtils.loadListSuccess(result.getData().getList());
-                        appraiserAdapter.setNewData(pageUtils.getList());
+                        appraiserAdapter.setAddNewData(pageUtils.getList());
                     }
                 }, new Consumer<Throwable>() {
                     @Override

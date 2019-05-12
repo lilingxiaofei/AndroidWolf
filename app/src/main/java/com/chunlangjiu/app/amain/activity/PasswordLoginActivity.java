@@ -1,10 +1,10 @@
 package com.chunlangjiu.app.amain.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
@@ -12,13 +12,13 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
+import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
-
-import java.util.UUID;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,6 +32,8 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class PasswordLoginActivity extends BaseActivity {
 
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
     @BindView(R.id.etPhone)
     EditText etPhone;
     @BindView(R.id.etPsd)
@@ -49,6 +51,7 @@ public class PasswordLoginActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.img_title_left:
+                case R.id.ivBack:
                     finish();
                     break;
                 case R.id.tvLogin:
@@ -78,32 +81,14 @@ public class PasswordLoginActivity extends BaseActivity {
     }
 
     private void initView() {
+        StatusBarUtil.setTranslucentForImageView(this,0,findViewById(R.id.rlTitle));
+        StatusBarUtil.setLightMode(this);
         disposable = new CompositeDisposable();
+        ivBack.setOnClickListener(onClickListener);
         tvLogin.setOnClickListener(onClickListener);
         tvForgetPsd.setOnClickListener(onClickListener);
     }
 
-    public static String getUniquePsuedoID() {
-        String serial = "";
-        String m_szDevIDShort = "35" +
-                Build.BOARD.length() % 10 + Build.BRAND.length() % 10 +
-                Build.CPU_ABI.length() % 10 + Build.DEVICE.length() % 10 +
-                Build.DISPLAY.length() % 10 + Build.HOST.length() % 10 +
-                Build.ID.length() % 10 + Build.MANUFACTURER.length() % 10 +
-                Build.MODEL.length() % 10 + Build.PRODUCT.length() % 10 +
-                Build.TAGS.length() % 10 + Build.TYPE.length() % 10 +
-                Build.USER.length() % 10; //13 位
-        try {
-            serial = android.os.Build.class.getField("SERIAL").get(null).toString();
-            //API>=9 使用serial号
-            return new UUID(m_szDevIDShort.hashCode(), serial.hashCode()).toString();
-        } catch (Exception exception) {
-            //serial需要一个初始化
-            serial = "serial"; // 随便一个初始化
-        }
-        //使用硬件信息拼凑出来的15位号码
-        return new UUID(m_szDevIDShort.hashCode(), serial.hashCode()).toString();
-    }
 
     private void checkData() {
         if (etPhone.getText().toString().length() < 11) {
@@ -117,7 +102,7 @@ public class PasswordLoginActivity extends BaseActivity {
 
     private void login() {
         showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().psdLogin(etPhone.getText().toString(), etPsd.getText().toString(),getUniquePsuedoID())
+        disposable.add(ApiUtils.getInstance().psdLogin(etPhone.getText().toString(), etPsd.getText().toString(), CommonUtils.getUniquePsuedoID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<LoginBean>>() {

@@ -204,6 +204,7 @@ public class UserFragment extends BaseFragment {
     private LinearLayout rlService;
     private LinearLayout rlAppraiseReport ;
     private LinearLayout rlAppraiser ;
+    private ImageView img_appraiser;
     /*我的管理*/
 
     public static final int TYPE_BUYER = 1;//买家中心
@@ -219,6 +220,7 @@ public class UserFragment extends BaseFragment {
 
     private CompositeDisposable disposable;
 
+    private UserInfoBean userInfo ;
     private String loginAccount;
     private String personName;
     private String companyName;
@@ -380,7 +382,12 @@ public class UserFragment extends BaseFragment {
                     startActivity(new Intent(getActivity(), AppraiserBuyerHomeActivity.class));
                     break;
                 case R.id.rlAppraiser:
-                    startActivity(new Intent(getActivity(), AppraiserSellerHomeActivity.class));
+                    if(userInfo != null && "true".equals(userInfo.getAuthenticate()) && !TextUtils.isEmpty(userInfo.getAuthenticate_id())){
+                        AppraiserSellerHomeActivity.startAppraiserInfoActivity(activity,userInfo.getAuthenticate_id());
+                    }
+//                    else{
+//                        startActivity(new Intent(activity, AppraiserInfoEditActivity.class));
+//                    }
                     break;
 
             }
@@ -404,6 +411,7 @@ public class UserFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         if (BaseApplication.isLogin()) {
+            getUserInfo();
             getBuyerOrderNumIndex();
             getSellerOrderNumIndex();
         }
@@ -582,6 +590,7 @@ public class UserFragment extends BaseFragment {
         rlSetting = rootView.findViewById(R.id.rl_setting);
         rlService = rootView.findViewById(R.id.rl_service);
         rlAppraiser = rootView.findViewById(R.id.rlAppraiser);
+        img_appraiser = rootView.findViewById(R.id.img_appraiser);
         rlAppraiseReport = rootView.findViewById(R.id.rlAppraiseReport);
         rlMyEvaluate.setOnClickListener(onClickListener);
         rlFansManage.setOnClickListener(onClickListener);
@@ -721,15 +730,21 @@ public class UserFragment extends BaseFragment {
                 .subscribe(new Consumer<ResultBean<UserInfoBean>>() {
                     @Override
                     public void accept(ResultBean<UserInfoBean> userInfoBeanResultBean) throws Exception {
-                        GlideUtils.loadImageHead(getActivity(), userInfoBeanResultBean.getData().getHead_portrait(), imgHead);
-                        loginAccount = userInfoBeanResultBean.getData().getLogin_account();
-                        personName = userInfoBeanResultBean.getData().getName();
-                        companyName = userInfoBeanResultBean.getData().getCompany_name();
-                        shopName = userInfoBeanResultBean.getData().getShop_name();
-                        shopId = userInfoBeanResultBean.getData().getShop_id();
+                        userInfo = userInfoBeanResultBean.getData();
+                        GlideUtils.loadImageHead(getActivity(), userInfo.getHead_portrait(), imgHead);
+                        loginAccount = userInfo.getLogin_account();
+                        personName = userInfo.getName();
+                        companyName = userInfo.getCompany_name();
+                        shopName = userInfo.getShop_name();
+                        shopId = userInfo.getShop_id();
                         tvName.setText(loginAccount);
                         SPUtils.put("account", loginAccount);
-                        SPUtils.put("avator", userInfoBeanResultBean.getData().getHead_portrait());
+                        SPUtils.put("avator", userInfo.getHead_portrait());
+                        if("true".equals(userInfo.getAuthenticate()) && !TextUtils.isEmpty(userInfo.getAuthenticate_id())){
+                            img_appraiser.setImageResource(R.mipmap.appraise_icon);
+                        }else{
+                            img_appraiser.setImageResource(R.mipmap.appraise_grey);
+                        }
                         setLoginAccountAuth();
                     }
                 }, new Consumer<Throwable>() {

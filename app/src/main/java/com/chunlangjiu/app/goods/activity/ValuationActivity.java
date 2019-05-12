@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.user.activity.AddGoodsActivity;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.chunlangjiu.app.util.GlideImageLoader;
 import com.lzy.imagepicker.ImagePicker;
@@ -194,7 +193,7 @@ public class ValuationActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
-        titleName.setText("名酒估价");
+        titleName.setText("名酒鉴定");
         titleImgLeft.setOnClickListener(onClickListener);
     }
 

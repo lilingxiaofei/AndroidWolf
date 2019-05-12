@@ -424,6 +424,25 @@
             android:name="com.chunlangjiu.app.appraise.activity.QuickCashActivity"
             android:label="@string/title_activity_goods_audit"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="com.chunlangjiu.app.appraise.activity.AppraiserInfoEditActivity"
+            android:label="@string/title_activity_goods_audit"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="com.chunlangjiu.app.appraise.activity.AppraiseAssessActivity"
+            android:label="@string/title_activity_goods_audit"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/AppTheme"></activity>
+
+        <activity
+            android:name="com.chunlangjiu.app.appraise.activity.AppraiseApplyAssessActivity"
+            android:label="@string/title_activity_goods_audit"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:theme="@style/AppTheme"></activity>
 
     </application>
 

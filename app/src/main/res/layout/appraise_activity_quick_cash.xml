@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/llContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,81 +8,147 @@
     android:gravity="center_horizontal">
     <TextView android:id="@+id/tvQuickCashTitle"
         android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/t_black"
-        android:background="@color/bg_white"
-        android:gravity="center"
-        android:paddingTop="27dp"
-        android:textSize="23sp"
-        android:textStyle="bold"
-        android:text="商品鉴定"/>
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/t_black"
-        android:background="@color/bg_white"
-        android:paddingTop="16dp"
+        android:layout_margin="27dp"
         android:textSize="15sp"
-        android:gravity="center"
-        android:text="-新手拍摄指南-"/>
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_white"
-        android:textColor="@color/t_red"
-        android:paddingTop="27dp"
-        android:paddingBottom="35dp"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:text="注意：请在自然光线下拍摄，切勿使用闪光灯出现色差"/>
+        android:text="如何快速变现？"/>
 
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/ivStepLine"
+        android:layout_width="1dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/t_black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="商品鉴定"
-        android:paddingTop="20dp"
-        android:paddingLeft="23dp"
-        android:paddingRight="23dp"/>
-    <LinearLayout
+        android:layout_alignTop="@+id/llOnlineValuation"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="7dp"
+
+        android:background="@color/bg_red"
+        android:layout_marginBottom="-40dp"
+        android:layout_alignBottom="@+id/llContactPlatform"/>
+
+    <TextView android:id="@+id/tvStepOne"
+        android:layout_alignLeft="@+id/ivStepLine"
+        android:layout_alignTop="@+id/llOnlineValuation"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_round_red_8dp"
+        android:layout_marginLeft="-7dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:text="1"/>
+    <TextView android:id="@+id/tvStepTwo"
+        android:layout_alignLeft="@+id/ivStepLine"
+        android:layout_alignTop="@+id/llContactPlatform"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:background="@drawable/bg_round_red_8dp"
+        android:textColor="@color/white"
+        android:layout_marginLeft="-7dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:text="2"/>
+    <TextView android:id="@+id/tvStepThree"
+        android:layout_alignTop="@+id/llService"
+        android:layout_alignLeft="@+id/ivStepLine"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:background="@drawable/bg_round_red_8dp"
+        android:textColor="@color/white"
+        android:layout_marginLeft="-7dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:text="3"/>
+
+
+    <LinearLayout android:id="@+id/llOnlineValuation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="23dp"
-        android:paddingRight="23dp">
-        <TextView android:id="@+id/title"
+        android:paddingTop="8dp"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:paddingBottom="16dp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginRight="57dp"
+        android:layout_below="@+id/tvQuickCashTitle"
+        android:background="@drawable/bg_round_white">
+        <TextView android:id="@+id/tvOnlineValuationLabel"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:text="商品主图"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:textSize="15sp"
-            android:textColor="@color/t_black"/>
-        <com.pkqup.commonlibrary.view.RoundedImageView
-            android:id="@+id/imgPic"
-            android:layout_width="match_parent"
-            android:layout_height="330dp"
-            android:src="@mipmap/wi"
-            android:scaleType="centerCrop"
-            app:sriv_left_bottom_corner_radius="5dp"
-            app:sriv_left_top_corner_radius="5dp"
-            app:sriv_right_bottom_corner_radius="5dp"
-            app:sriv_right_top_corner_radius="5dp" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/t_red"
+            android:textSize="13sp"
+            android:text="如何快速变现？"/>
+        <TextView android:id="@+id/tvOnlineValuationValue"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/t_black"
+            android:textSize="10sp"
+            android:layout_marginTop="10dp"
+            android:text="如何快速变现？"/>
     </LinearLayout>
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/rvPicList"-->
-        <!--android:layout_marginLeft="22dp"-->
-        <!--android:layout_marginRight="22dp"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-    <!--</android.support.v7.widget.RecyclerView>-->
-</LinearLayout>
+    <LinearLayout android:id="@+id/llContactPlatform"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:paddingBottom="16dp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginRight="57dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/llOnlineValuation"
+        android:background="@drawable/bg_round_white">
+        <TextView android:id="@+id/tvContactPlatformLabel"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/t_red"
+            android:textSize="13sp"
+            android:text="平台联系"/>
+        <TextView android:id="@+id/tvContactPlatformValue"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/t_black"
+            android:textSize="10sp"
+            android:layout_marginTop="10dp"
+            android:text="@string/contact_platform"/>
+    </LinearLayout>
+    <LinearLayout android:id="@+id/llService"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:paddingBottom="16dp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginRight="57dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/llContactPlatform"
+        android:background="@drawable/bg_round_white">
+        <TextView android:id="@+id/tvServiceLabel"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/t_red"
+            android:textSize="13sp"
+            android:text="上门服务"/>
+        <TextView android:id="@+id/tvServiceValue"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/t_black"
+            android:textSize="10sp"
+            android:layout_marginTop="10dp"
+            android:text="平台会尽快安排该城市鉴定师进行名酒回收服 务，请您耐心等待。"/>
+    </LinearLayout>
+</RelativeLayout>

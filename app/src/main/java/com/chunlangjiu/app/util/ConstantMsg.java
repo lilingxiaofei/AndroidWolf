@@ -8,6 +8,10 @@ import com.pkqup.commonlibrary.net.HttpUtils;
  */
 public class ConstantMsg {
 
+    public static final int REQUEST_CODE_CHOICE_HEAD = 1001;
+
+    public static final String APPRAISE_GOODS_SUCCESS = "appraise_goods_success";//鉴别成功
+
     public static final String MSG_PAGE_CLASS = "msg_page_class";//首页切换到分类
     public static final String MSG_PAGE_AUCTION = "msg_page_auction";//首页切换到竞拍专区
     public static final String MSG_PAGE_MY = "msg_page_my";//首页切换到我的

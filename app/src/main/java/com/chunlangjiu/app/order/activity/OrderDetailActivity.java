@@ -2044,7 +2044,6 @@ public class OrderDetailActivity extends BaseActivity {
         myClipboard.setPrimaryClip(text);
         ToastUtils.showShort("物流单号已复制");
     }
-
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
@@ -2062,4 +2061,5 @@ public class OrderDetailActivity extends BaseActivity {
         disposable.dispose();
         EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
+
 }

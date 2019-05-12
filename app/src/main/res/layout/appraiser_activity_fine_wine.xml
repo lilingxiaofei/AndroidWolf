@@ -3,318 +3,369 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<android.support.v4.widget.NestedScrollView
-    android:id="@+id/estedScrollView"
-    android:layout_above="@+id/llCommit"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
-    android:id="@+id/llContent"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_gray"
-    android:orientation="vertical">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/estedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tvCommit">
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_gray"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="请填写您申请鉴定的名酒相关信息："
+                android:textColor="@color/t_black"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/white"
+                android:divider="@drawable/line_vertical"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="商品标题"
+                        android:textColor="@color/t_black"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/etTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入标题"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/t_grey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="所属系列"
+                        android:textColor="@color/t_black"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/etSeries"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入所属系列"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/t_grey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingRight="5dp"
+                        android:text="商品年份"
+                        android:textColor="@color/t_black"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/etYear"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="请输入商品年份"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/t_grey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingRight="5dp"
+                        android:paddingTop="10dp"
+                        android:text="其他说明"
+                        android:textColor="@color/t_black"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/etOther"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:gravity="top"
+                        android:hint="例：为增加鉴定的准确度，可提供酒的重量、是 否有沉淀物、酒花等细节信息。"
+                        android:minHeight="40dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/t_grey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_round_white"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/tvGoodsMainPic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="商品主图"
+                    android:textColor="@color/t_black"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/imgMainEx"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_below="@+id/tvGoodsMainPic"
+                    android:layout_marginLeft="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/example_main" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:layout_alignBottom="@+id/imgMainEx"
+                    android:layout_alignLeft="@+id/imgMainEx"
+                    android:layout_alignRight="@+id/imgMainEx"
+                    android:background="#99000000"
+                    android:gravity="center"
+                    android:text="示例图"
+                    android:textColor="@color/t_white"
+                    android:textSize="12sp" />
+
+
+                <ImageView
+                    android:id="@+id/imgMainPic"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/tvGoodsMainPic"
+                    android:layout_marginRight="5dp"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:id="@+id/llMainPicAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imgMainPic"
+                    android:layout_alignLeft="@+id/imgMainPic"
+                    android:layout_alignRight="@+id/imgMainPic"
+                    android:layout_alignTop="@+id/imgMainPic"
+                    android:background="@color/bg_gray_two"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="34dp"
+                        android:src="@mipmap/camera" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgDeleteMainPic"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignRight="@+id/imgMainPic"
+                    android:layout_alignTop="@+id/imgMainPic"
+                    android:layout_marginRight="-6dp"
+                    android:layout_marginTop="-13dp"
+                    android:padding="7dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/delete_ic"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_round_white"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="商品主图"
+                    android:textColor="@color/t_black"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/imgMainExTwo"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="41dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/example_main" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:layout_alignBottom="@+id/imgMainExTwo"
+                    android:layout_alignLeft="@+id/imgMainExTwo"
+                    android:layout_alignRight="@+id/imgMainExTwo"
+                    android:background="#99000000"
+                    android:gravity="center"
+                    android:text="示例图"
+                    android:textColor="@color/t_white"
+                    android:textSize="12sp" />
+
+
+                <ImageView
+                    android:id="@+id/imgMainPicTwo"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="41dp"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:id="@+id/llMainPicAddTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imgMainPicTwo"
+                    android:layout_alignLeft="@+id/imgMainPicTwo"
+                    android:layout_alignRight="@+id/imgMainPicTwo"
+                    android:layout_alignTop="@+id/imgMainPicTwo"
+                    android:background="@color/bg_gray_two"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="34dp"
+                        android:src="@mipmap/camera" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgDeleteMainPicTwo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignRight="@+id/imgMainPicTwo"
+                    android:layout_alignTop="@+id/imgMainPicTwo"
+                    android:layout_marginRight="-6dp"
+                    android:layout_marginTop="-13dp"
+                    android:padding="7dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/delete_ic"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_round_white"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:id="@+id/tvGoodsListTipsOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="商品其他标志、证明图"
+                    android:textColor="@color/t_black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvGoodsListTipsTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_toRightOf="@+id/tvGoodsListTipsOne"
+                    android:gravity="center_vertical"
+                    android:text="（亲，还能上传8张图哦~）"
+                    android:textColor="@color/t_gray"
+                    android:textSize="12sp" />
+
+                <com.pkqup.commonlibrary.view.MyGridView
+                    android:id="@+id/gvGoodsList"
+                    android:layout_below="@+id/tvGoodsListTipsOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:numColumns="2"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="5dp">
+
+                </com.pkqup.commonlibrary.view.MyGridView>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:gravity="center_vertical"
-        android:text="请填写您申请鉴定的名酒相关信息："
-        android:textColor="@color/t_black"
-        android:paddingLeft="15dp"
-        android:textSize="12sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:divider="@drawable/line_vertical"
-        android:orientation="vertical"
-        android:showDividers="middle">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="5dp"
-                android:text="商品标题"
-                android:textColor="@color/t_black"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/tvPrice"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:hint="请输入价格"
-                android:inputType="numberDecimal"
-                android:textColor="@color/t_grey"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="5dp"
-                android:text="所属系列"
-                android:textColor="@color/t_black"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/tvLevel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:hint="请输入酒成色"
-                android:textColor="@color/t_grey"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:paddingRight="5dp"
-                android:text="商品年份"
-                android:textColor="@color/t_black"
-                android:textSize="15sp" />
-
-            <EditText
-                android:id="@+id/etDefects"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="请输入商品外观"
-                android:textColor="@color/t_grey"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingRight="5dp"
-                android:paddingTop="10dp"
-                android:text="其他说明"
-                android:textColor="@color/t_black"
-                android:textSize="15sp" />
-
-            <EditText
-                android:id="@+id/etOther"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp"
-                android:paddingTop="10dp"
-                android:gravity="top"
-                android:paddingBottom="10dp"
-                android:background="@null"
-                android:text="aaaa"
-                android:hint="例：为增加鉴定的准确度，可提供酒的重量、是 否有沉淀物、酒花等细节信息。"
-                android:textColor="@color/t_grey"
-                android:textSize="13sp" />
-        </LinearLayout>
-    </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingBottom="15dp"
-        android:background="@drawable/bg_round_white">
-        <TextView android:id="@+id/tvGoodsMainPic"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="商品主图"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:textSize="15sp"
-            android:textColor="@color/t_black"/>
-        <ImageView
-            android:id="@+id/imgMainEx"
-            android:layout_below="@+id/tvGoodsMainPic"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginLeft="5dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/example_main" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_alignLeft="@+id/imgMainEx"
-            android:layout_alignBottom="@+id/imgMainEx"
-            android:layout_alignRight="@+id/imgMainEx"
-            android:background="#99000000"
-            android:gravity="center"
-            android:text="示例图"
-            android:textColor="@color/t_white"
-            android:textSize="12sp" />
-
-
-        <ImageView
-            android:id="@+id/imgMainPic"
-            android:layout_below="@+id/tvGoodsMainPic"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:scaleType="centerCrop"
-            android:layout_marginRight="5dp"
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/authentication_difference" />
-        <ImageView
-            android:id="@+id/imgDeleteMainPic"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignRight="@+id/imgMainPic"
-            android:layout_alignTop="@+id/imgMainPic"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="-8dp"
-            android:layout_marginTop="-15dp"
-            android:padding="8dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/delete_ic" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingBottom="15dp"
-        android:background="@drawable/bg_round_white">
-        <TextView android:id="@+id/tvGoodsMainPic"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="商品主图"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:textSize="15sp"
-            android:textColor="@color/t_black"/>
-        <ImageView
-            android:id="@+id/imgMainEx"
-            android:layout_below="@+id/tvGoodsMainPic"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginLeft="5dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/example_main" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_alignLeft="@+id/imgMainEx"
-            android:layout_alignBottom="@+id/imgMainEx"
-            android:layout_alignRight="@+id/imgMainEx"
-            android:background="#99000000"
-            android:gravity="center"
-            android:text="示例图"
-            android:textColor="@color/t_white"
-            android:textSize="12sp" />
-
-
-        <ImageView
-            android:id="@+id/imgMainPic"
-            android:layout_below="@+id/tvGoodsMainPic"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:scaleType="centerCrop"
-            android:layout_marginRight="5dp"
-            android:layout_alignParentRight="true"
-            android:src="@mipmap/authentication_difference" />
-        <ImageView
-            android:id="@+id/imgDeleteMainPic"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignRight="@+id/imgMainPic"
-            android:layout_alignTop="@+id/imgMainPic"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="-8dp"
-            android:layout_marginTop="-15dp"
-            android:padding="8dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/delete_ic" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingBottom="15dp"
-        android:background="@drawable/bg_round_white">
-        <TextView android:id="@+id/tvGoodsListTipsOne"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="商品其他标志、证明图"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:textSize="15sp"
-            android:textColor="@color/t_black"/>
-        <TextView android:id="@+id/tvGoodsListTipsTwo"
-            android:layout_toRightOf="@+id/tvGoodsListTipsOne"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="（亲，还能上传4张图哦~）"
-            android:gravity="center_vertical"
-            android:textSize="12sp"
-            android:textColor="@color/t_gray"/>
-        <com.pkqup.commonlibrary.view.MyGridView
-            android:id="@+id/gvGoodsList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingBottom="5dp"
-            android:verticalSpacing="5dp"
-            android:horizontalSpacing="5dp"
-            android:visibility="gone"
-            android:numColumns="2">
-
-        </com.pkqup.commonlibrary.view.MyGridView>
-    </RelativeLayout>
-
-</LinearLayout>
-</android.support.v4.widget.NestedScrollView>
-    <LinearLayout android:id="@+id/llCommit"
+        android:id="@+id/tvCommit"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:visibility="visible"
-        android:gravity="center"
-        android:background="@color/bg_red"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="提交鉴定报告"
-            android:gravity="center"
-            android:textColor="@color/t_white"
-            android:textSize="18sp" />
-    </LinearLayout>
+        android:background="@color/bg_red"
+        android:gravity="center"
+        android:text="提交鉴定报告"
+        android:textColor="@color/t_white"
+        android:textSize="18sp" />
 </RelativeLayout>

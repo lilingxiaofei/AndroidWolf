@@ -7,7 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,10 +17,12 @@ import com.chunlangjiu.app.appraise.adapter.AppraiseGoodsPicAdapter;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.CommonUtils;
+import com.chunlangjiu.app.util.ConstantMsg;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
-import com.pkqup.commonlibrary.glide.GlideUtils;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,30 +38,19 @@ import io.reactivex.schedulers.Schedulers;
  * @CreatedbBy: 吴申飞 on 2018/6/16.
  * @Describe: 鉴定结果
  */
-public class AppraiseResultActivity extends BaseActivity {
-    //鉴定师信息
-    @BindView(R.id.llAppraiseSource)
-    LinearLayout llAppraiseSource;
-    @BindView(R.id.imgHead)
-    ImageView imgHead;
-    @BindView(R.id.tvName)
-    TextView tvName;
+public class AppraiseAssessActivity extends BaseActivity {
 
-    @BindView(R.id.llAppraisePrice)
-    LinearLayout llAppraisePrice;
-    @BindView(R.id.tvPrice)
-    TextView tvPrice;
 
-    @BindView(R.id.llAppraiseDetails)
-    LinearLayout llAppraiseDetails;
-    @BindView(R.id.tvColour)
-    TextView tvColour;
-    @BindView(R.id.tvFlaw)
-    TextView tvFlaw;
-    @BindView(R.id.tvAccessory)
-    TextView tvAccessory;
-    @BindView(R.id.tvOtherHelp)
-    TextView tvOtherHelp;
+    @BindView(R.id.etPrice)
+    EditText etPrice;
+    @BindView(R.id.etColour)
+    EditText etColour;
+    @BindView(R.id.etFlaw)
+    EditText etFlaw;
+    @BindView(R.id.etAccessory)
+    EditText etAccessory;
+    @BindView(R.id.etOtherHelp)
+    EditText etOtherHelp;
 
     //商品UI
 
@@ -77,11 +68,7 @@ public class AppraiseResultActivity extends BaseActivity {
     //快速提现UI
     @BindView(R.id.llCommit)
     LinearLayout llCommit;
-    @BindView(R.id.tvCommitPrice)
-    TextView tvCommitPrice;
 
-    @BindView(R.id.tvAppraiseTips)
-    TextView tvAppraiseTips ;
 
     private List<String> picList = new ArrayList<>();
     AppraiseGoodsPicAdapter picAdapter;
@@ -92,8 +79,22 @@ public class AppraiseResultActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.appraiser_activity_result);
+        setContentView(R.layout.appraiser_activity_to_appraise);
+        initView();
         initData();
+    }
+
+
+    public static void startAppraiserAssessActivity(Activity activity, String appraiseGoodsId) {
+        if (activity != null) {
+            Intent intent = new Intent(activity, AppraiseAssessActivity.class);
+            intent.putExtra("appraiseGoodsId", appraiseGoodsId);
+            activity.startActivity(intent);
+        }
+    }
+
+    private void initView(){
+        llCommit.setOnClickListener(onClickListener);
     }
 
     private void initData() {
@@ -124,31 +125,18 @@ public class AppraiseResultActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
-        titleName.setText("鉴别结果");
+        titleName.setText("名酒鉴别");
         titleImgLeft.setOnClickListener(onClickListener);
     }
 
 
     private void updateView() {
         if (appraiseGoodsBean != null) {
-            //鉴定师信息
-            GlideUtils.loadImageHead(this, appraiseGoodsBean.getAuthenticate_img(), imgHead);
-            tvName.setText(appraiseGoodsBean.getAuthenticate_name());
-
-            tvPrice.setText(CommonUtils.getString(R.string.rmb_one,appraiseGoodsBean.getPrice()));
-
-            tvColour.setText(appraiseGoodsBean.getColour());
-            tvFlaw.setText(appraiseGoodsBean.getFlaw());
-            tvAccessory.setText(appraiseGoodsBean.getAccessory());
-            tvOtherHelp.setText(appraiseGoodsBean.getDetails());
-
-
-
             //商品UI
             tvGoodsTitle.setText(CommonUtils.getString(R.string.appraise_goods_title,appraiseGoodsBean.getTitle()));
             tvGoodsSeries.setText(CommonUtils.getString(R.string.appraise_goods_series,appraiseGoodsBean.getSeries()));
             tvGoodsYear.setText(CommonUtils.getString(R.string.appraise_goods_year,appraiseGoodsBean.getYear()));
-            tvGoodsExplain.setText(CommonUtils.getString(R.string.appraise_goods_other,appraiseGoodsBean.getContent()));
+            tvGoodsExplain.setText(CommonUtils.getString(R.string.appraise_goods_other,appraiseGoodsBean.getDetails()));
             if(!TextUtils.isEmpty(appraiseGoodsBean.getImg())){
                 picList = Arrays.asList(appraiseGoodsBean.getImg().split(","));
                 picAdapter = new AppraiseGoodsPicAdapter(this,picList);
@@ -157,35 +145,26 @@ public class AppraiseResultActivity extends BaseActivity {
                 rvPicList.setAdapter(picAdapter);
             }
 
-            //快速提现UI
-            if("true".equals(appraiseGoodsBean.getStatus())){
+//            //快速提现UI
+//            if("true".equals(appraiseGoodsBean.getStatus())){
 //                llAppraiseSource.setVisibility(View.VISIBLE);
-                titleName.setText("鉴别结果");
-                llAppraisePrice.setVisibility(View.VISIBLE);
-                llAppraiseDetails.setVisibility(View.VISIBLE);
-                tvAppraiseTips.setVisibility(View.VISIBLE);
-                llCommit.setVisibility(View.VISIBLE);
-                llCommit.setOnClickListener(onClickListener);
-                tvCommitPrice.setText(CommonUtils.getString(R.string.rmb_two,appraiseGoodsBean.getPrice()));
-            }else{
-                titleName.setText("待鉴定");
-                llCommit.setVisibility(View.GONE);
+//                llAppraisePrice.setVisibility(View.VISIBLE);
+//                llAppraiseDetails.setVisibility(View.VISIBLE);
+//                tvAppraiseTips.setVisibility(View.VISIBLE);
+//                llCommit.setVisibility(View.VISIBLE);
+//                llCommit.setOnClickListener(onClickListener);
+//                tvCommitPrice.setText(CommonUtils.getString(R.string.rmb_two,appraiseGoodsBean.getPrice()));
+//            }else{
+//                llCommit.setVisibility(View.GONE);
 //                llAppraiseSource.setVisibility(View.GONE);
-                llAppraisePrice.setVisibility(View.GONE);
-                llAppraiseDetails.setVisibility(View.GONE);
-                tvAppraiseTips.setVisibility(View.GONE);
-            }
+//                llAppraisePrice.setVisibility(View.GONE);
+//                llAppraiseDetails.setVisibility(View.GONE);
+//                tvAppraiseTips.setVisibility(View.GONE);
+//            }
 
         }
     }
 
-    public static void startAppraiserResultActivity(Activity activity, String appraiseGoodsId) {
-        if (activity != null) {
-            Intent intent = new Intent(activity, AppraiseResultActivity.class);
-            intent.putExtra("appraiseGoodsId", appraiseGoodsId);
-            activity.startActivity(intent);
-        }
-    }
 
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -194,12 +173,60 @@ public class AppraiseResultActivity extends BaseActivity {
             if(view.getId() == R.id.img_title_left){
                 finish();
             }else if(view.getId() == R.id.llCommit){
-                quickCash();
+                commitAssess();
             }
         }
     };
 
+    private void commitAssess() {
+
+        String price = etPrice.getText().toString() ;
+        String colour = etColour.getText().toString() ;
+        String flaw = etFlaw.getText().toString() ;
+        String accessory = etAccessory.getText().toString() ;
+        String otherHelp = etOtherHelp.getText().toString() ;
+        if(TextUtils.isEmpty(price)){
+            ToastUtils.showShort("请输入价格");
+            return ;
+        }else if(TextUtils.isEmpty(colour)){
+            ToastUtils.showShort("请输入酒成色");
+            return ;
+        }else if(TextUtils.isEmpty(flaw)){
+            ToastUtils.showShort("请输入瑕疵情况");
+            return ;
+        }else if(TextUtils.isEmpty(accessory)){
+            ToastUtils.showShort("请输入附近情况");
+            return ;
+        }else if(TextUtils.isEmpty(otherHelp)){
+            ToastUtils.showShort("请输入其内容");
+            return ;
+        }
+
+
+        showLoadingDialog();
+        disposable.add(ApiUtils.getInstance().appraiserGoods(appraiseGoodsId,price, colour,flaw,accessory, otherHelp)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean>() {
+                    @Override
+                    public void accept(ResultBean resultBean) throws Exception {
+                        hideLoadingDialog();
+                        if(resultBean.getErrorcode() == 0 ){
+                            ToastUtils.showShort("鉴别成功");
+                            EventManager.getInstance().notify(null, ConstantMsg.APPRAISE_GOODS_SUCCESS);
+                            finish();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                }));
+    }
+
     private void quickCash(){
-        startActivity(new Intent(AppraiseResultActivity.this,QuickCashActivity.class));
+        startActivity(new Intent(AppraiseAssessActivity.this,QuickCashActivity.class));
     }
 }
