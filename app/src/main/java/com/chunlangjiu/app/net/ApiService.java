@@ -76,7 +76,10 @@ import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
@@ -101,6 +104,14 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<LoginBean>> thirdPartyLogin(@Field("method") String method, @Field("v") String v, @Field("trust_params") Object trust_params, @Field("deviceid") String deviceid);
+
+
+    @POST("index.php/topapi?method=user.trust.dcloudlogin")
+    Flowable<ResultBean<LoginBean>> thirdPartyLogin(@Body RequestBody requestBody);
+
+    @FormUrlEncoded
+    @POST("index.php/topapi?method=user.trust.dcloudlogin")
+    Flowable<ResultBean<LoginBean>> thirdPartyLogin(@FieldMap Map<String,Object> paramMap);
 
 //    @POST("index.php/topapi")
 //    @FormUrlEncoded

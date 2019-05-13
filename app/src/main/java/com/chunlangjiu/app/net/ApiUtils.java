@@ -74,12 +74,17 @@ import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @CreatedbBy: liucun on 2018/7/6
@@ -122,7 +127,22 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<LoginBean>> thirdPartyLogin(Object trust_params, String deviceid) {
-        return apiService.thirdPartyLogin("user.trust.dcloudlogin", "v1", trust_params, deviceid);
+//        return apiService.thirdPartyLogin("user.trust.dcloudlogin", "v1", trust_params, deviceid);
+        JSONObject jsonData = new JSONObject();
+        try {
+            jsonData.put("v","v1");
+            jsonData.put("trust_params",trust_params);
+            jsonData.put("deviceid",deviceid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData.toString());
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("v","v1");
+        map.put("trust_params",trust_params);
+        map.put("deviceid",deviceid);
+        return apiService.thirdPartyLogin(map);
     }
 
     public Flowable<ResultBean<LoginBean>> login(String account, String code) {
