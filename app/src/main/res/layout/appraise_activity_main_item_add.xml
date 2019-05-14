@@ -58,6 +58,6 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="22dp"
-        android:textColor="@color/t_grey"
+        android:textColor="@color/t_red"
         android:textSize="9sp" />
 </RelativeLayout>

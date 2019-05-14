@@ -10,6 +10,7 @@ import com.chunlangjiu.app.amain.bean.ItemListBean;
 import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
+import com.chunlangjiu.app.amain.bean.ThirdpartyLoginBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
@@ -103,15 +104,18 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<LoginBean>> thirdPartyLogin(@Field("method") String method, @Field("v") String v, @Field("trust_params") Object trust_params, @Field("deviceid") String deviceid);
+    Flowable<ResultBean<ThirdpartyLoginBean>> thirdPartyLogin(@Field("method") String method, @Field("v") String v, @Field("trust_params") Object trust_params, @Field("deviceid") String deviceid);
 
 
     @POST("index.php/topapi?method=user.trust.dcloudlogin")
-    Flowable<ResultBean<LoginBean>> thirdPartyLogin(@Body RequestBody requestBody);
+    Flowable<ResultBean<ThirdpartyLoginBean>> thirdPartyLogin(@Body RequestBody requestBody);
+
+    @POST("index.php/topapi?method=user.trust.bindUser")
+    Flowable<ResultBean<LoginBean>> bindUser(@Body RequestBody requestBody);
 
     @FormUrlEncoded
     @POST("index.php/topapi?method=user.trust.dcloudlogin")
-    Flowable<ResultBean<LoginBean>> thirdPartyLogin(@FieldMap Map<String,Object> paramMap);
+    Flowable<ResultBean<ThirdpartyLoginBean>> thirdPartyLogin(@FieldMap Map<String,Object> paramMap);
 
 //    @POST("index.php/topapi")
 //    @FormUrlEncoded

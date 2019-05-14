@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.abase.BaseApplication;
-import com.chunlangjiu.app.amain.bean.LoginBean;
+import com.chunlangjiu.app.amain.bean.ThirdpartyLoginBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -20,7 +19,6 @@ import com.chunlangjiu.app.web.WebViewActivity;
 import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
-import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -116,9 +114,8 @@ public class LoginMainActivity extends BaseActivity {
                     UMShareAPI.get(LoginMainActivity.this).getPlatformInfo(LoginMainActivity.this, share_media, umAuthListener);
                 } else {
                     JSONObject json = new JSONObject(map);
-                    String loginInfo = json.toString().replaceAll("\"","/\"");
-                    String loginInfoTwo = json.toString().replaceAll("\"","'");
-                    thirdPartyLogin(map);
+                    String loginInfo = json.toString().replaceAll("\\\\","/");
+                    thirdPartyLogin(loginInfo);
                 }
             }
         }
@@ -162,32 +159,35 @@ public class LoginMainActivity extends BaseActivity {
 
 
 
-    private void thirdPartyLogin (Map loginId) {
-        if(loginId == null || TextUtils.isEmpty(loginId.toString())){
+    private void thirdPartyLogin (final String loginInfo) {
+        if(loginInfo == null || TextUtils.isEmpty(loginInfo.toString())){
             ToastUtils.showShort("第三方登录失败，请稍后重试!");
         }else{
             showLoadingDialog();
-            disposable.add(ApiUtils.getInstance().thirdPartyLogin(loginId,  CommonUtils.getUniquePsuedoID())
+            disposable.add(ApiUtils.getInstance().thirdPartyLogin(loginInfo,  CommonUtils.getUniquePsuedoID())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean<LoginBean>>() {
+                    .subscribe(new Consumer<ResultBean<ThirdpartyLoginBean>>() {
                         @Override
-                        public void accept(ResultBean<LoginBean> loginBeanResultBean) throws Exception {
+                        public void accept(ResultBean<ThirdpartyLoginBean> loginBeanResultBean) throws Exception {
                             hideLoadingDialog();
                             if(loginBeanResultBean.getErrorcode() == 0){
-                                ToastUtils.showShort("登录成功");
-                                SPUtils.put("token", loginBeanResultBean.getData().getAccessToken());
-                                BaseApplication.setToken(loginBeanResultBean.getData().getAccessToken());
-                                BaseApplication.initToken();
-                                if ("false".equals(loginBeanResultBean.getData().getReferrer())) {
-                                    EventManager.getInstance().notify(null, ConstantMsg.SET_INVITATION_CODE);
+                                if("1".equals(loginBeanResultBean.getData().getBinded())){
+                                    ToastUtils.showShort("登录成功");
+//                                    SPUtils.put("token", loginBeanResultBean.getData().getAccessToken());
+//                                    BaseApplication.setToken(loginBeanResultBean.getData().getAccessToken());
+//                                    BaseApplication.initToken();
+//                                    if ("false".equals(loginBeanResultBean.getData().getReferrer())) {
+//                                        EventManager.getInstance().notify(null, ConstantMsg.SET_INVITATION_CODE);
+//                                    }
+                                    EventManager.getInstance().notify(null, ConstantMsg.LOGIN_SUCCESS);
+                                    finish();
+                                }else{
+                                    BindingActivity.startLoginActivity(LoginMainActivity.this,loginInfo);
                                 }
-                                EventManager.getInstance().notify(null, ConstantMsg.LOGIN_SUCCESS);
-                                finish();
                             }else{
-
+                                ToastUtils.showShort(loginBeanResultBean.getMsg());
                             }
-
                         }
                     }, new Consumer<Throwable>() {
                         @Override

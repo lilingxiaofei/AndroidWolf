@@ -12,6 +12,7 @@ import com.chunlangjiu.app.amain.bean.ItemListBean;
 import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
+import com.chunlangjiu.app.amain.bean.ThirdpartyLoginBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
@@ -77,7 +78,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -126,7 +126,9 @@ public class ApiUtils {
         return apiService.getAuthSms("user.sendSms", "v1", mobile);
     }
 
-    public Flowable<ResultBean<LoginBean>> thirdPartyLogin(Object trust_params, String deviceid) {
+
+
+    public Flowable<ResultBean<ThirdpartyLoginBean>> thirdPartyLogin(Object trust_params, String deviceid) {
 //        return apiService.thirdPartyLogin("user.trust.dcloudlogin", "v1", trust_params, deviceid);
         JSONObject jsonData = new JSONObject();
         try {
@@ -137,12 +139,28 @@ public class ApiUtils {
             e.printStackTrace();
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData.toString());
+        return apiService.thirdPartyLogin(body);
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("v","v1");
-        map.put("trust_params",trust_params);
-        map.put("deviceid",deviceid);
-        return apiService.thirdPartyLogin(map);
+//        Map<String,Object> map = new HashMap<>();
+//        map.put("v","v1");
+//        map.put("trust_params",trust_params);
+//        map.put("deviceid",deviceid);
+//        return apiService.thirdPartyLogin(map);
+
+    }
+
+    public Flowable<ResultBean<LoginBean>> bindUser(String account, String verifycode,Object trust_params) {
+        JSONObject jsonData = new JSONObject();
+        try {
+            jsonData.put("v","v1");
+            jsonData.put("trust_params",trust_params);
+            jsonData.put("account",account);
+            jsonData.put("verifycode",verifycode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData.toString());
+        return apiService.bindUser(body);
     }
 
     public Flowable<ResultBean<LoginBean>> login(String account, String code) {

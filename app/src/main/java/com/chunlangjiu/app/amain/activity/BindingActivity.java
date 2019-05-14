@@ -7,7 +7,6 @@ import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
@@ -22,11 +21,7 @@ import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
-import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-
-import java.util.Map;
 
 import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -54,20 +49,14 @@ public class BindingActivity extends BaseActivity {
     @BindView(R.id.tvPsdLogin)
     TextView tvPsdLogin;
 
-    @BindView(R.id.ivQQLogin)
-    ImageView ivQQLogin;
-    @BindView(R.id.ivWeChatLogin)
-    ImageView ivWeChatLogin;
-    @BindView(R.id.ivSinaLogin)
-    ImageView ivSinaLogin;
-
     private CompositeDisposable disposable;
 
     private CountDownTimer countDownTimer;
 
-
-    public static void startLoginActivity(Activity activity) {
+    private String trust_params ;
+    public static void startLoginActivity(Activity activity,String trust_params) {
         Intent intent = new Intent(activity, BindingActivity.class);
+        intent.putExtra("trust_params",trust_params);
         activity.startActivity(intent);
     }
 
@@ -98,49 +87,11 @@ public class BindingActivity extends BaseActivity {
                 case R.id.tvPsdLogin:
                     startActivity(new Intent(BindingActivity.this, PasswordLoginActivity.class));
                     break;
-                case R.id.ivQQLogin:
-                    UMShareAPI.get(BindingActivity.this).getPlatformInfo(BindingActivity.this, SHARE_MEDIA.QQ, umAuthListener);
-                    break;
-                case R.id.ivWeChatLogin:
-                    UMShareAPI.get(BindingActivity.this).getPlatformInfo(BindingActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
-                    break;
-                case R.id.ivSinaLogin:
-                    UMShareAPI.get(BindingActivity.this).getPlatformInfo(BindingActivity.this, SHARE_MEDIA.SINA, umAuthListener);
-                    break;
             }
         }
 
     };
 
-    UMAuthListener umAuthListener = new UMAuthListener() {
-        @Override
-        public void onStart(SHARE_MEDIA share_media) {
-
-        }
-
-        @Override
-        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-            if (!map.containsKey("iconurl")) { //判断是授权还是获取用户信息
-                UMShareAPI.get(BindingActivity.this).getPlatformInfo(BindingActivity.this, share_media, umAuthListener);
-            } else {
-                System.out.println("uid========" + map.get("uid"));
-                System.out.println("name========" + map.get("name"));
-                System.out.println("iconurl========" + map.get("iconurl"));
-                ToastUtils.showShort("社会唐哥" + map.get("name"));
-            }
-        }
-
-        @Override
-        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-            UMShareAPI.get(BindingActivity.this).deleteOauth(BindingActivity.this,share_media,umAuthListener);
-            ToastUtils.showShort("已经删除错误授权，请重新登录");
-//            UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, share_media, umAuthListener);
-        }
-
-        @Override
-        public void onCancel(SHARE_MEDIA share_media, int i) {
-        }
-    };
 
     @Override
     public void setTitleView() {
@@ -152,6 +103,7 @@ public class BindingActivity extends BaseActivity {
 
 
     private void initView() {
+        trust_params = getIntent().getStringExtra("trust_params");
         StatusBarUtil.setTranslucentForImageView(this,0,findViewById(R.id.rlTitle));
         StatusBarUtil.setLightMode(this);
         disposable = new CompositeDisposable();
@@ -160,9 +112,6 @@ public class BindingActivity extends BaseActivity {
         tvLicence.setOnClickListener(onClickListener);
         tvPsdLogin.setOnClickListener(onClickListener);
 
-        ivQQLogin.setOnClickListener(onClickListener);
-        ivWeChatLogin.setOnClickListener(onClickListener);
-        ivSinaLogin.setOnClickListener(onClickListener);
     }
 
 
@@ -223,7 +172,7 @@ public class BindingActivity extends BaseActivity {
 
     private void login() {
         showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().login(etPhone.getText().toString(), etAuthCode.getText().toString())
+        disposable.add(ApiUtils.getInstance().bindUser(etPhone.getText().toString(), etAuthCode.getText().toString(),trust_params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<LoginBean>>() {
