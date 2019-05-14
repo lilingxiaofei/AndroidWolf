@@ -2,6 +2,7 @@ package com.chunlangjiu.app.amain.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -52,6 +53,10 @@ public class RegisterActivity extends BaseActivity {
 
     @BindView(R.id.llUserProtocol)
     LinearLayout llUserProtocol;
+    @BindView(R.id.tvUserProtocolOne)
+    TextView tvUserProtocolOne;
+    @BindView(R.id.tvUserProtocolTwo)
+    TextView tvUserProtocolTwo;
 
     private CompositeDisposable disposable;
 
@@ -112,7 +117,12 @@ public class RegisterActivity extends BaseActivity {
         tvGetCode.setOnClickListener(onClickListener);
         tvLogin.setOnClickListener(onClickListener);
         llUserProtocol.setOnClickListener(onClickListener);
-
+        tvGetCode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tvGetCode.getPaint().setAntiAlias(true);//抗锯齿
+        tvUserProtocolOne.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tvUserProtocolOne.getPaint().setAntiAlias(true);//抗锯齿z
+        tvUserProtocolTwo.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tvUserProtocolTwo.getPaint().setAntiAlias(true);//抗锯齿z
     }
 
 

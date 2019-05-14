@@ -1,6 +1,7 @@
 package com.chunlangjiu.app.amain.activity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -42,6 +43,9 @@ public class PasswordLoginActivity extends BaseActivity {
     TextView tvLogin;
     @BindView(R.id.tvForgetPsd)
     TextView tvForgetPsd;
+    @BindView(R.id.tvSmsLogin)
+    TextView tvSmsLogin;
+
 
     private CompositeDisposable disposable;
 
@@ -60,6 +64,10 @@ public class PasswordLoginActivity extends BaseActivity {
                 case R.id.tvForgetPsd:
                     startActivity(new Intent(PasswordLoginActivity.this, ResetPsdActivity.class));
                     break;
+                case R.id.tvSmsLogin:
+                    finish();
+                    break;
+
             }
         }
     };
@@ -87,6 +95,11 @@ public class PasswordLoginActivity extends BaseActivity {
         ivBack.setOnClickListener(onClickListener);
         tvLogin.setOnClickListener(onClickListener);
         tvForgetPsd.setOnClickListener(onClickListener);
+        tvSmsLogin.setOnClickListener(onClickListener);
+        tvForgetPsd.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tvForgetPsd.getPaint().setAntiAlias(true);//抗锯齿
+        tvSmsLogin.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tvSmsLogin.getPaint().setAntiAlias(true);//抗锯齿
     }
 
 

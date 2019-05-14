@@ -12,7 +12,6 @@ import com.chunlangjiu.app.amain.bean.ItemListBean;
 import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
-import com.chunlangjiu.app.amain.bean.ThirdpartyLoginBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
@@ -128,7 +127,7 @@ public class ApiUtils {
 
 
 
-    public Flowable<ResultBean<ThirdpartyLoginBean>> thirdPartyLogin(Object trust_params, String deviceid) {
+    public Flowable<ResultBean<LoginBean>> thirdPartyLogin(Object trust_params, String deviceid) {
 //        return apiService.thirdPartyLogin("user.trust.dcloudlogin", "v1", trust_params, deviceid);
         JSONObject jsonData = new JSONObject();
         try {

@@ -2,6 +2,7 @@ package com.chunlangjiu.app.amain.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -163,6 +164,10 @@ public class LoginActivity extends BaseActivity {
         tvLicence.setOnClickListener(onClickListener);
         tvPsdLogin.setOnClickListener(onClickListener);
 
+        tvGetCode.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tvGetCode.getPaint().setAntiAlias(true);//抗锯齿z
+        tvPsdLogin.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tvPsdLogin.getPaint().setAntiAlias(true);//抗锯齿z
         ivQQLogin.setOnClickListener(onClickListener);
         ivWeChatLogin.setOnClickListener(onClickListener);
         ivSinaLogin.setOnClickListener(onClickListener);

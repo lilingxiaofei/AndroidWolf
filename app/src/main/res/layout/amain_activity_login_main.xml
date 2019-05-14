@@ -83,6 +83,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
+            android:autoLink="all"
             android:textColor="@color/t_red"
             android:textSize="@dimen/text_size_15sp"
             android:layout_height="40dp"

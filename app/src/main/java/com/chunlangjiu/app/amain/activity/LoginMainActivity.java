@@ -2,6 +2,7 @@ package com.chunlangjiu.app.amain.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -11,7 +12,8 @@ import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
-import com.chunlangjiu.app.amain.bean.ThirdpartyLoginBean;
+import com.chunlangjiu.app.abase.BaseApplication;
+import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -19,6 +21,7 @@ import com.chunlangjiu.app.web.WebViewActivity;
 import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -150,6 +153,8 @@ public class LoginMainActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         tvLogin.setOnClickListener(onClickListener);
         tvRegister.setOnClickListener(onClickListener);
+        tvRegister.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tvRegister.getPaint().setAntiAlias(true);//抗锯齿
 
         ivQQLogin.setOnClickListener(onClickListener);
         ivWeChatLogin.setOnClickListener(onClickListener);
@@ -167,19 +172,19 @@ public class LoginMainActivity extends BaseActivity {
             disposable.add(ApiUtils.getInstance().thirdPartyLogin(loginInfo,  CommonUtils.getUniquePsuedoID())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean<ThirdpartyLoginBean>>() {
+                    .subscribe(new Consumer<ResultBean<LoginBean>>() {
                         @Override
-                        public void accept(ResultBean<ThirdpartyLoginBean> loginBeanResultBean) throws Exception {
+                        public void accept(ResultBean<LoginBean> loginBeanResultBean) throws Exception {
                             hideLoadingDialog();
                             if(loginBeanResultBean.getErrorcode() == 0){
                                 if("1".equals(loginBeanResultBean.getData().getBinded())){
                                     ToastUtils.showShort("登录成功");
-//                                    SPUtils.put("token", loginBeanResultBean.getData().getAccessToken());
-//                                    BaseApplication.setToken(loginBeanResultBean.getData().getAccessToken());
-//                                    BaseApplication.initToken();
-//                                    if ("false".equals(loginBeanResultBean.getData().getReferrer())) {
-//                                        EventManager.getInstance().notify(null, ConstantMsg.SET_INVITATION_CODE);
-//                                    }
+                                    SPUtils.put("token", loginBeanResultBean.getData().getAccessToken());
+                                    BaseApplication.setToken(loginBeanResultBean.getData().getAccessToken());
+                                    BaseApplication.initToken();
+                                    if ("false".equals(loginBeanResultBean.getData().getReferrer())) {
+                                        EventManager.getInstance().notify(null, ConstantMsg.SET_INVITATION_CODE);
+                                    }
                                     EventManager.getInstance().notify(null, ConstantMsg.LOGIN_SUCCESS);
                                     finish();
                                 }else{

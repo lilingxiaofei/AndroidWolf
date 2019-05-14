@@ -2,6 +2,7 @@ package com.chunlangjiu.app.amain.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -43,11 +44,7 @@ public class BindingActivity extends BaseActivity {
     TextView tvGetCode;
     @BindView(R.id.tvLogin)
     TextView tvLogin;
-    @BindView(R.id.tvLicence)
-    TextView tvLicence;
 
-    @BindView(R.id.tvPsdLogin)
-    TextView tvPsdLogin;
 
     private CompositeDisposable disposable;
 
@@ -81,12 +78,6 @@ public class BindingActivity extends BaseActivity {
                 case R.id.tvLogin:
                     checkSmsCode();
                     break;
-                case R.id.tvLicence:
-                    toLicence();
-                    break;
-                case R.id.tvPsdLogin:
-                    startActivity(new Intent(BindingActivity.this, PasswordLoginActivity.class));
-                    break;
             }
         }
 
@@ -109,8 +100,8 @@ public class BindingActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         tvGetCode.setOnClickListener(onClickListener);
         tvLogin.setOnClickListener(onClickListener);
-        tvLicence.setOnClickListener(onClickListener);
-        tvPsdLogin.setOnClickListener(onClickListener);
+        tvGetCode.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tvGetCode.getPaint().setAntiAlias(true);//抗锯齿
 
     }
 
