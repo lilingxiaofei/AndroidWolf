@@ -6,18 +6,21 @@
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp"
         android:layout_margin="10dp"
-        android:background="@drawable/bg_round_white">
+        android:background="@drawable/bg_round_white"
+        android:orientation="vertical"
+        android:padding="10dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="20dp">
+            android:paddingBottom="20dp"
+            android:paddingTop="5dp">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgHead"
                 android:layout_width="60dp"
@@ -25,31 +28,46 @@
                 android:src="@mipmap/common_head_icon"
                 app:civ_border_color="@color/bg_white"
                 app:civ_border_width="2dp" />
-            <TextView android:id="@+id/tvName"
+
+            <TextView
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/imgHead"
-                android:textColor="@color/t_black"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/imgHead"
+                android:text="名称"
+                android:textColor="@color/t_black"
                 android:textSize="13sp"
-                android:textStyle="bold"
-                android:text="名称"/>
-                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:textStyle="bold" />
+
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/rbEvaluation"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:isIndicator="false"
-                android:layout_below="@+id/tvName"
+                style="@style/RatingBar20"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tvName"
+                android:layout_below="@+id/tvName"
+                android:layout_marginTop="7dp"
+                android:isIndicator="false"
                 android:numStars="5"
                 android:rating="2"
                 android:stepSize="1"
-                android:theme="@style/RatingBar20"
-                style="@style/RatingBar20"
-                />
+                android:theme="@style/RatingBar20" />
 
-
+            <!--<RatingBar-->
+            <!--android:id="@+id/rbEvaluation"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:isIndicator="false"-->
+            <!--android:layout_below="@+id/tvName"-->
+            <!--android:layout_alignLeft="@+id/tvName"-->
+            <!--android:numStars="5"-->
+            <!--android:rating="2"-->
+            <!--android:stepSize="1"-->
+            <!--android:theme="@style/RatingBar20"-->
+            <!--style="@style/RatingBar20"-->
+            <!--/>-->
 
 
             <TextView
@@ -62,33 +80,38 @@
                 android:gravity="center"
                 android:textColor="@color/t_red" />
         </RelativeLayout>
-        <TextView android:id="@+id/tvAppraiseScope"
+
+        <TextView
+            android:id="@+id/tvAppraiseScope"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/appraise_scope"
             android:textColor="@color/t_black"
-            android:textSize="11sp"/>
-        <TextView android:id="@+id/tvAppraiseRequire"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvAppraiseRequire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/appraise_require"
             android:layout_marginTop="8dp"
+            android:text="@string/appraise_require"
             android:textColor="@color/t_black"
-            android:textSize="11sp"
-            />
-        <TextView android:id="@+id/tvAppraiseAttention"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvAppraiseAttention"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="@string/appraise_attention"
             android:textColor="@color/t_black"
-            android:layout_marginTop="8dp"
-            android:textSize="11sp"
-            />
+            android:textSize="11sp" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
             android:divider="@drawable/line_vertical"
             android:dividerPadding="2dp"
             android:showDividers="middle">
@@ -123,6 +146,7 @@
                 android:textSize="9sp" />
         </LinearLayout>
     </LinearLayout>
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/refreshLayout"
@@ -130,14 +154,15 @@
         android:layout_height="match_parent"
         app:srlEnableFooterFollowWhenLoadFinished="true"
         app:srlEnableScrollContentWhenLoaded="true">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvAppraiserList"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvAppraiserList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+        </android.support.v7.widget.RecyclerView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>
