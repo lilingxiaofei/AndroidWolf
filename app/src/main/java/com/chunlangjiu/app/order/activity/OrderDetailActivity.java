@@ -963,8 +963,8 @@ public class OrderDetailActivity extends BaseActivity {
 
             if (type == 3) {
                 llCommission.setVisibility(View.VISIBLE);
-                tvCommission.setText("¥" + BigDecimalUtils.objToStr(orderDetailBean.getDistribution_admin()));
-//                tvCommission.setText("¥" + BigDecimalUtils.objToStr(orderDetailBean.getCommission()));
+//                tvCommission.setText("¥" + BigDecimalUtils.objToStr(orderDetailBean.getDistribution_admin()));
+                tvCommission.setText("¥" + BigDecimalUtils.objToStr(orderDetailBean.getCommission()));
             } else {
                 llCommission.setVisibility(View.GONE);
             }
