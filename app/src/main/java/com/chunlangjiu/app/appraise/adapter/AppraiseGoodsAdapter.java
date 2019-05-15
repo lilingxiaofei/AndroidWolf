@@ -1,6 +1,7 @@
 package com.chunlangjiu.app.appraise.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -23,10 +24,12 @@ public class AppraiseGoodsAdapter extends BaseQuickAdapter<AppraiseGoodsBean, Ba
     private int itemType = LIST_GRID;
 
     private Context context;
+    private boolean isSeller ;
     private boolean isShowStoreView = true;
 
-    public AppraiseGoodsAdapter(Context context, List<AppraiseGoodsBean> data) {
+    public AppraiseGoodsAdapter(Context context,boolean isSeller, List<AppraiseGoodsBean> data) {
         super(R.layout.appraise_item_goods_grid,data);
+        this.isSeller = isSeller;
         this.context = context;
 
     }
@@ -48,8 +51,24 @@ public class AppraiseGoodsAdapter extends BaseQuickAdapter<AppraiseGoodsBean, Ba
                 layoutParams.height = picWidth;
                 imgPic.setLayoutParams(layoutParams);
             }
-            GlideUtils.loadImage(context, "", imgPic);
-            helper.setText(R.id.tvName, "商品名称");
+            String img = "" ;
+            if(!TextUtils.isEmpty(item.getImg())){
+                String[] imgList = item.getImg().split(",");
+                img = imgList[0];
+            }
+            GlideUtils.loadImage(context, img, imgPic);
+            helper.setText(R.id.tvName, item.getTitle());
+
+            if("true".equals(item.getStatus())){
+                helper.setText(R.id.tvAppraise,"鉴定报告");
+            }else{
+                if(isSeller){
+                    helper.setText(R.id.tvAppraise,"去鉴定");
+                }else{
+                    helper.setText(R.id.tvAppraise,"鉴定中");
+                }
+            }
+
 //            helper.addOnClickListener(R.id.tvAppraise);
         } catch (Exception e) {
             e.printStackTrace();

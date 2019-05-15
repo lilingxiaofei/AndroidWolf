@@ -2,124 +2,131 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_white"
+    android:background="@color/bg_gray"
     android:orientation="vertical">
-
-
-    <RelativeLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rlTitle"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/login_gray_stroke">
+        android:minHeight="@dimen/title_bar_height"
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imgPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@mipmap/login_phone" />
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
+            android:padding="10dp"
+            android:src="@mipmap/black_left_arrow_two" />
 
-        <EditText
-            android:id="@+id/etPhone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@id/imgPhone"
-            android:background="@null"
-            android:hint="请输入您的手机号码"
-            android:textColorHint="@color/t_gray"
-            android:inputType="number"
-            android:maxLength="11"
-            android:textColor="@color/t_black"
-            android:textSize="@dimen/sp_mid" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_centerHorizontal="true"
+            android:lines="1"
+            android:layout_marginLeft="@dimen/title_bar_height"
+            android:layout_marginRight="@dimen/title_bar_height"
+            android:gravity="center"
+            android:textColor="@color/t_white"
+            android:textSize="18sp" />
+
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/login_gray_stroke">
+    <TextView android:id="@+id/ivLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:layout_marginLeft="71dp"
+        android:scaleType="centerCrop"
+        android:text="忘记密码"
+        android:textColor="@color/t_red"
+        android:textSize="@dimen/text_size_18sp"
+        />
 
-        <ImageView
-            android:id="@+id/imgAuthCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@mipmap/login_auth_code" />
+
+    <com.pkqup.commonlibrary.view.ClearEditText
+        android:id="@+id/etPhone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:drawableLeft="@mipmap/account_phone"
+        android:background="@drawable/bg_round_white_25dp"
+        android:hint="请输入您的手机号码"
+        android:drawablePadding="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="10dp"
+        android:textColorHint="@color/t_red"
+        android:inputType="number"
+        android:maxLength="11"
+        android:layout_below="@+id/ivLogo"
+        android:layout_marginTop="68dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:textColor="@color/t_red"
+        android:textSize="14sp" />
+
+
+    <RelativeLayout android:id="@+id/rlAuthCode"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/etPhone">
+
+        <com.pkqup.commonlibrary.view.ClearEditText
+            android:id="@+id/etAuthCode"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableLeft="@mipmap/account_code"
+            android:background="@drawable/bg_round_white_25dp"
+            android:hint="请输入验证码"
+            android:drawablePadding="10dp"
+            android:paddingLeft="16dp"
+            android:inputType="number"
+            android:maxLength="11"
+            android:paddingRight="100dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:textColorHint="@color/t_red"
+            android:textColor="@color/t_red"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvGetCode"
             android:layout_width="110dp"
-            android:layout_height="27dp"
-            android:layout_alignParentRight="true"
+            android:layout_height="match_parent"
+            android:layout_alignRight="@+id/etAuthCode"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/login_gray_bg"
             android:gravity="center"
             android:text="获取验证码"
-            android:textColor="@color/t_gray"
-            android:textSize="@dimen/sp_mid" />
-
-        <EditText
-            android:id="@+id/etAuthCode"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_toLeftOf="@id/tvGetCode"
-            android:layout_toRightOf="@id/imgAuthCode"
-            android:background="@null"
-            android:hint="请输入验证码"
-            android:textColorHint="@color/t_gray"
-            android:inputType="number"
-            android:maxLength="6"
-            android:textColor="@color/t_black"
-            android:textSize="@dimen/sp_mid" />
+            android:textColor="@color/t_red"
+            android:textSize="14sp" />
     </RelativeLayout>
 
-    <RelativeLayout
+
+    <com.pkqup.commonlibrary.view.ClearEditText
+        android:id="@+id/etPsd"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/login_gray_stroke">
-
-        <ImageView
-            android:id="@+id/imgPsd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@mipmap/login_auth_code" />
-
-        <EditText
-            android:id="@+id/etPsd"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@id/imgPsd"
-            android:background="@null"
-            android:hint="请输入密码"
-            android:textColorHint="@color/t_gray"
-            android:inputType="textPassword"
-            android:maxLength="20"
-            android:textColor="@color/t_black"
-            android:textSize="@dimen/sp_mid" />
-    </RelativeLayout>
+        android:layout_height="50dp"
+        android:drawableLeft="@mipmap/account_pwd"
+        android:background="@drawable/bg_round_white_25dp"
+        android:hint="请输入密码"
+        android:drawablePadding="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="10dp"
+        android:textColorHint="@color/t_red"
+        android:inputType="textPassword"
+        android:layout_below="@+id/etPhone"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:textColor="@color/t_red"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tvSave"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/login_red_bg"
         android:gravity="center"
         android:text="保存"

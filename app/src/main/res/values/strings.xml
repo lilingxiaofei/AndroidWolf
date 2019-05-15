@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">醇狼</string>
     <string name="rmb">¥</string>
+    <string name="rmb_one">¥%s</string>
+    <string name="rmb_two">(¥%s)</string>
     <!-- 粉丝的字符码 -->
     <string name="fans_manager">粉丝管理</string>
     <string name="fans_list">粉丝列表</string>
@@ -96,10 +98,21 @@
     <string name="check_auth_fail_one_company">您的企业认证未通过！</string>
     <string name="check_auth_fail_two">距离发布商品还差一点点哦，我们期待您再次提交。</string>
     <string name="appraise_num">累计鉴别已超过%s件</string>
+    <string name="appraiser">鉴定师</string>
+
     <string name="appraise_scope">鉴定范围：%s</string>
     <string name="appraise_require">鉴定要求：%s</string>
     <string name="appraise_attention">注意事项：%s</string>
     <string name="contact_platform">平台将在24小时之内与您联系，注意保持手机畅通\n您可拨打全国热线“400-189-0095”或添加 客服微信“chunlang9”联系客服</string>
     <string name="request_appraise">+求鉴定</string>
+
+    <string name="appraise_goods_title">商品标题：%s</string>
+    <string name="appraise_goods_series">所属系列：%s</string>
+    <string name="appraise_goods_year">商品年份：%s</string>
+    <string name="appraise_goods_other">其他说明：%s</string>
+    <string name="quick_cash">快速变现</string>
+    <string name="edit_info">编辑资料</string>
+    <string name="done">完成</string>
+    <string name="add_appraise_tips1">我们正在招募\n有经验的鉴定师</string>
 
 </resources>

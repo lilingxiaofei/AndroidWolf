@@ -1,7 +1,9 @@
 package com.chunlangjiu.app.util;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -15,6 +17,7 @@ import com.pkqup.commonlibrary.util.FileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -38,6 +41,28 @@ public class CommonUtils {
     public static final String GOODS_STATUS_AUCTION_ACTIVE = AUCTION_STATUS_SUB + "active";//竞拍进行时
     public static final String GOODS_STATUS_AUCTION_STOP = AUCTION_STATUS_SUB + "stop";//竞拍结束后
 
+
+    public static String getUniquePsuedoID() {
+        String serial = "";
+        String m_szDevIDShort = "35" +
+                Build.BOARD.length() % 10 + Build.BRAND.length() % 10 +
+                Build.CPU_ABI.length() % 10 + Build.DEVICE.length() % 10 +
+                Build.DISPLAY.length() % 10 + Build.HOST.length() % 10 +
+                Build.ID.length() % 10 + Build.MANUFACTURER.length() % 10 +
+                Build.MODEL.length() % 10 + Build.PRODUCT.length() % 10 +
+                Build.TAGS.length() % 10 + Build.TYPE.length() % 10 +
+                Build.USER.length() % 10; //13 位
+        try {
+            serial = android.os.Build.class.getField("SERIAL").get(null).toString();
+            //API>=9 使用serial号
+            return new UUID(m_szDevIDShort.hashCode(), serial.hashCode()).toString();
+        } catch (Exception exception) {
+            //serial需要一个初始化
+            serial = "serial"; // 随便一个初始化
+        }
+        //使用硬件信息拼凑出来的15位号码
+        return new UUID(m_szDevIDShort.hashCode(), serial.hashCode()).toString();
+    }
 
 
     public static SpannableStringBuilder setSpecifiedTextsColor(String text, String specifiedTexts,int colorId) {
@@ -103,6 +128,21 @@ public class CommonUtils {
         boolean isAuction = GOODS_STATUS_AUCTION_NOT_START.equals(status) || GOODS_STATUS_AUCTION_ACTIVE.equals(status) || GOODS_STATUS_AUCTION_STOP.equals(status) ? true : false;
         return isAuction;
     }
+
+
+
+    public static String getString(int resId,String obj) {
+        try {
+            if (obj == null) {
+                obj = "";
+            }
+            return AppUtils.getContext().getResources().getString(resId,obj);
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+        return "" ;
+    }
+
 
     public static String joinStr(Object... obj) {
         String joinStr = "";

@@ -12,6 +12,9 @@ import com.chunlangjiu.app.amain.bean.ItemListBean;
 import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
+import com.chunlangjiu.app.appraise.bean.AppraiseBean;
+import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
+import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
@@ -71,12 +74,16 @@ import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @CreatedbBy: liucun on 2018/7/6
@@ -116,6 +123,43 @@ public class ApiUtils {
 
     public Flowable<ResultBean> getAuthSms(String mobile) {
         return apiService.getAuthSms("user.sendSms", "v1", mobile);
+    }
+
+
+
+    public Flowable<ResultBean<LoginBean>> thirdPartyLogin(Object trust_params, String deviceid) {
+//        return apiService.thirdPartyLogin("user.trust.dcloudlogin", "v1", trust_params, deviceid);
+        JSONObject jsonData = new JSONObject();
+        try {
+            jsonData.put("v","v1");
+            jsonData.put("trust_params",trust_params);
+            jsonData.put("deviceid",deviceid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData.toString());
+        return apiService.thirdPartyLogin(body);
+
+//        Map<String,Object> map = new HashMap<>();
+//        map.put("v","v1");
+//        map.put("trust_params",trust_params);
+//        map.put("deviceid",deviceid);
+//        return apiService.thirdPartyLogin(map);
+
+    }
+
+    public Flowable<ResultBean<LoginBean>> bindUser(String account, String verifycode,Object trust_params) {
+        JSONObject jsonData = new JSONObject();
+        try {
+            jsonData.put("v","v1");
+            jsonData.put("trust_params",trust_params);
+            jsonData.put("account",account);
+            jsonData.put("verifycode",verifycode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonData.toString());
+        return apiService.bindUser(body);
     }
 
     public Flowable<ResultBean<LoginBean>> login(String account, String code) {
@@ -194,6 +238,11 @@ public class ApiUtils {
         return apiService.valuationGoods("member.evaluate", "v1", title, name, imgs, series);
     }
 
+    public Flowable<ResultBean> assessGoods(String authenticate_id,String title, String series, String year, String content,String imgs) {
+        return apiService.assessGoods("member.evaluate", "v1",authenticate_id, title, series, year, content,imgs);
+    }
+
+
     public Flowable<ResultBean<AuctionListBean>> getAuctionList(String brand_id, String area_id, String odor_id, String min_price, String max_price, int page_no, int page_size) {
         return apiService.getAuctionList("item.auction.list", "v1", brand_id, area_id, odor_id, min_price, max_price, page_no, page_size);
     }
@@ -233,6 +282,42 @@ public class ApiUtils {
         return apiService.getFilterData("item.filterItems", "v1", cat_id);
     }
 
+
+
+    public Flowable<ResultBean> updateAppraiserInfo(String name, String scope ,String require, String content,String img) {
+        return apiService.updateAppraiserInfo("member.authenticate.update", "v1",  name, scope ,require, content,img);
+    }
+
+    public Flowable<ResultBean<AppraiseBean>> getAppraiserDetails(String authenticate_id) {
+        return apiService.getAppraiserDetails("member.authenticate.detail", "v1", authenticate_id);
+    }
+
+
+    public Flowable<ResultBean> appraiserGoods(String chateau_id,String price,String colour,String flaw,String accessory,String content) {
+        return apiService.appraiserGoods("member.authenticate", "v1", chateau_id,price,colour,flaw,accessory,content);
+    }
+
+    public Flowable<ResultBean<AppraiseListBean<AppraiseBean>>> getAppraiserList(int page_no, int page_size) {
+        return apiService.getAppraiserList("member.authenticate.list", "v1", page_no, page_size);
+    }
+
+
+    public Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseGoodsListById(String authenticate_id, int page_no, int page_size ) {
+        return apiService.getAppraiseGoodsListById("authenticate.item.list", "v1", authenticate_id, page_no, page_size);
+    }
+
+
+    public Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseGoodsList(boolean status, int page_no, int page_size) {
+        return apiService.getAppraiseGoodsList("authenticate.user.list", "v1", status, page_no, page_size);
+    }
+
+    public Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseShopGoodsList(boolean status, int page_no, int page_size) {
+        return apiService.getAppraiseGoodsList("authenticate.shop.list", "v1", status, page_no, page_size);
+    }
+
+    public Flowable<ResultBean<AppraiseGoodsBean>> getAppraiseGoodsDetails(String chateau_id) {
+        return apiService.getAppraiseGoodsDetails("authenticate.item.detail", "v1", chateau_id);
+    }
 
     public Flowable<ResultBean<EvaluateListBean>> getEvaluateList(String item_id, int page_no) {
         return apiService.getEvaluateList("item.rate.list", "v1", 0, item_id, page_no, 10);

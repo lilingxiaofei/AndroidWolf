@@ -2,13 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
 
     <LinearLayout
         android:id="@+id/llContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_gray"
+        android:background="@color/bg_white"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -25,15 +26,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:layout_marginBottom="28dp"
             android:text="更换头像"
             android:textColor="@color/t_red"
             android:textSize="15sp" />
-
+    <include layout="@layout/line_horizontal"></include>
         <RelativeLayout
             android:id="@+id/llToAppraise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
             android:background="@color/bg_white"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
@@ -59,7 +60,7 @@
                 android:textColorHint="@color/t_gray"
                 android:textSize="15sp" />
         </RelativeLayout>
-
+        <include layout="@layout/line_horizontal"></include>
         <RelativeLayout
             android:id="@+id/llAppraiseScope"
             android:layout_width="match_parent"
@@ -83,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="80dp"
                 android:background="@null"
+                android:gravity="top"
                 android:hint="例：鉴定茅台、五粮液、泸州老家等 中国十大白酒特供品。"
                 android:minHeight="40dp"
                 android:paddingBottom="10dp"
@@ -90,7 +92,7 @@
                 android:textColorHint="@color/t_gray"
                 android:textSize="15sp" />
         </RelativeLayout>
-
+        <include layout="@layout/line_horizontal"></include>
         <RelativeLayout
             android:id="@+id/llAppraiseRequire"
             android:layout_width="match_parent"
@@ -114,14 +116,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="80dp"
                 android:background="@null"
+                android:gravity="top"
                 android:hint="例：拍摄物品图清晰、商品标签完整， 标签正反面拍摄，地方老酒注意拍摄 物品的特点等。"
                 android:minHeight="40dp"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
+                android:minLines="3"
                 android:textColorHint="@color/t_gray"
                 android:textSize="15sp" />
         </RelativeLayout>
-
+        <include layout="@layout/line_horizontal"></include>
         <RelativeLayout
             android:id="@+id/llAppraiseAttention"
             android:layout_width="match_parent"
@@ -145,9 +149,11 @@
                 android:layout_marginLeft="80dp"
                 android:background="@null"
                 android:hint="例：按要求补图，请勿私自鉴定，拼 揍图片不鉴定。"
+                android:gravity="top"
                 android:minHeight="40dp"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
+                android:minLines="2"
                 android:textColorHint="@color/t_gray"
                 android:textSize="15sp" />
         </RelativeLayout>

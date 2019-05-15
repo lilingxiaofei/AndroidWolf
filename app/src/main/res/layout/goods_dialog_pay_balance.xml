@@ -54,7 +54,6 @@
             android:layout_height="40dp"
             android:layout_marginTop="12dp"
             android:layout_toLeftOf="@id/tvGetCode"
-            android:layout_toRightOf="@id/imgAuthCode"
             android:background="@drawable/bg_white_soild_gray_stroke_round"
             android:hint="请输入支付密码"
             android:textColorHint="@color/t_gray"

@@ -5,11 +5,13 @@ import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
@@ -24,7 +26,8 @@ import io.reactivex.schedulers.Schedulers;
  * @Describe:
  */
 public class ResetPsdActivity extends BaseActivity {
-
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
 
     @BindView(R.id.etPhone)
     EditText etPhone;
@@ -47,6 +50,7 @@ public class ResetPsdActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.img_title_left:
+                case R.id.ivBack:
                     finish();
                     break;
                 case R.id.tvGetCode:
@@ -61,6 +65,7 @@ public class ResetPsdActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
+        hideTitleView();
         titleName.setText("忘记密码");
         titleImgLeft.setOnClickListener(onClickListener);
     }
@@ -74,7 +79,10 @@ public class ResetPsdActivity extends BaseActivity {
     }
 
     private void initView() {
+        StatusBarUtil.setTranslucentForImageView(this,0,findViewById(R.id.rlTitle));
+        StatusBarUtil.setLightMode(this);
         disposable = new CompositeDisposable();
+        ivBack.setOnClickListener(onClickListener);
         tvGetCode.setOnClickListener(onClickListener);
         tvSave.setOnClickListener(onClickListener);
     }

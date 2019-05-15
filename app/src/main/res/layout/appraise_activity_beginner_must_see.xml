@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/llContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_gray"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvQuickCashTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/bg_white"
+            android:gravity="center"
+            android:paddingTop="27dp"
+            android:text="商品鉴定"
+            android:textColor="@color/t_black"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/bg_white"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:text="-新手拍摄指南-"
+            android:textColor="@color/t_black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/bg_white"
+            android:gravity="center"
+            android:paddingBottom="35dp"
+            android:paddingTop="27dp"
+            android:text="注意：请在自然光线下拍摄，切勿使用闪光灯出现色差"
+            android:textColor="@color/t_red"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="23dp"
+            android:paddingRight="23dp"
+            android:paddingTop="20dp"
+            android:text="商品鉴定"
+            android:textColor="@color/t_black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="23dp"
+            android:paddingRight="23dp">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:text="主图"
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <com.pkqup.commonlibrary.view.RoundedImageView
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/winebottle_front"
+                app:sriv_left_bottom_corner_radius="5dp"
+                app:sriv_left_top_corner_radius="5dp"
+                app:sriv_right_bottom_corner_radius="5dp"
+                app:sriv_right_top_corner_radius="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:text="正标图"
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <com.pkqup.commonlibrary.view.RoundedImageView
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/winebottle_front"
+                app:sriv_left_bottom_corner_radius="5dp"
+                app:sriv_left_top_corner_radius="5dp"
+                app:sriv_right_bottom_corner_radius="5dp"
+                app:sriv_right_top_corner_radius="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:text="背标图"
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <com.pkqup.commonlibrary.view.RoundedImageView
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/winebottlef_reverse_side"
+                app:sriv_left_bottom_corner_radius="5dp"
+                app:sriv_left_top_corner_radius="5dp"
+                app:sriv_right_bottom_corner_radius="5dp"
+                app:sriv_right_top_corner_radius="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:text="水位线"
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <com.pkqup.commonlibrary.view.RoundedImageView
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/winebottle_water_level"
+                app:sriv_left_bottom_corner_radius="5dp"
+                app:sriv_left_top_corner_radius="5dp"
+                app:sriv_right_bottom_corner_radius="5dp"
+                app:sriv_right_top_corner_radius="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:text="瓶盖"
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <com.pkqup.commonlibrary.view.RoundedImageView
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/winebottle_cap"
+                app:sriv_left_bottom_corner_radius="5dp"
+                app:sriv_left_top_corner_radius="5dp"
+                app:sriv_right_bottom_corner_radius="5dp"
+                app:sriv_right_top_corner_radius="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:text="瓶底"
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <com.pkqup.commonlibrary.view.RoundedImageView
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/winebottle_bottom"
+                app:sriv_left_bottom_corner_radius="5dp"
+                app:sriv_left_top_corner_radius="5dp"
+                app:sriv_right_bottom_corner_radius="5dp"
+                app:sriv_right_top_corner_radius="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:text="其他细节图"
+                android:textColor="@color/t_black"
+                android:textSize="15sp" />
+            <com.pkqup.commonlibrary.view.RoundedImageView
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/winebottle_time"
+                app:sriv_left_bottom_corner_radius="5dp"
+                app:sriv_left_top_corner_radius="5dp"
+                app:sriv_right_bottom_corner_radius="5dp"
+                app:sriv_right_top_corner_radius="5dp" />
+        </LinearLayout>
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/rvPicList"-->
+        <!--android:layout_marginLeft="22dp"-->
+        <!--android:layout_marginRight="22dp"-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--</android.support.v7.widget.RecyclerView>-->
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="@color/white"
+android:layout_marginTop="10dp"
+android:paddingLeft="16dp"
+android:paddingRight="16dp"
+android:paddingBottom="25dp">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingRight="5dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:text="商品信息"
+    android:textColor="@color/t_red"
+    android:textSize="15sp" />
+<TextView
+    android:id="@+id/tvGoodsTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:text="商品标题：康帝"
+    android:textColor="@color/t_black"
+    android:textSize="15sp" />
+<TextView
+    android:id="@+id/tvGoodsSeries"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:text="所属系列：罗曼尼康帝"
+    android:textColor="@color/t_black"
+    android:textSize="15sp" />
+<TextView
+    android:id="@+id/tvGoodsYear"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:text="商品年份：2008年"
+    android:textColor="@color/t_black"
+    android:textSize="15sp" />
+<TextView
+    android:id="@+id/tvGoodsExplain"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:text="其他说明：为增加鉴定的准确度，可提供酒的重量、 是否有沉淀物、酒花等细节信息。"
+    android:textColor="@color/t_black"
+    android:textSize="15sp" />
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/rvPicList"
+    android:layout_marginTop="15dp"
+    android:nestedScrollingEnabled="false"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</android.support.v7.widget.RecyclerView>
+</LinearLayout>

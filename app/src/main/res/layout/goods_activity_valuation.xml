@@ -22,7 +22,7 @@
                 android:background="@color/bg_gray"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="请填写您申请估价的名酒相关信息："
+                android:text="请填写您申请鉴定的名酒相关信息："
                 android:textColor="@color/t_gray"
                 android:textSize="@dimen/sp_small" />
 

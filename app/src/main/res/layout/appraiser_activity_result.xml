@@ -14,7 +14,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_gray"
     android:orientation="vertical">
-    <LinearLayout
+    <LinearLayout android:id="@+id/llAppraiseSource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -78,7 +78,7 @@
             android:textSize="9sp" />
 
     </LinearLayout>
-    <LinearLayout
+    <LinearLayout android:id="@+id/llAppraisePrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -104,7 +104,7 @@
             android:textColor="@color/t_orange"
             android:textSize="50sp" />
     </LinearLayout>
-    <LinearLayout
+    <LinearLayout android:id="@+id/llAppraiseDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -112,19 +112,20 @@
         android:layout_marginTop="10dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="25dp"
-        android:visibility="gone">
+        android:paddingBottom="25dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingRight="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:text="评估详情"
             android:textColor="@color/t_black"
             android:textSize="15sp" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -134,7 +135,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tvAssessOne"
+                android:id="@+id/tvColour"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="评估详情"
@@ -143,7 +144,8 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,7 +153,7 @@
                 android:text="瑕疵情况："
                 android:textColor="@color/t_black"
                 android:textSize="15sp" />
-            <TextView android:id="@+id/tvAssessTwo"
+            <TextView android:id="@+id/tvFlaw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="评估详情"
@@ -160,7 +162,8 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -168,7 +171,7 @@
                 android:text="附件情况："
                 android:textColor="@color/t_black"
                 android:textSize="15sp" />
-            <TextView android:id="@+id/tvAssessThree"
+            <TextView android:id="@+id/tvAccessory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="评估详情"
@@ -185,7 +188,7 @@
                 android:text="其他说明："
                 android:textColor="@color/t_black"
                 android:textSize="15sp" />
-            <TextView android:id="@+id/tvAssessFour"
+            <TextView android:id="@+id/tvOtherHelp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="评估详情"
@@ -193,61 +196,8 @@
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/white"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="25dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingRight="5dp"
-            android:text="商品信息"
-            android:textColor="@color/t_red"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/tvGoodsTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="商品标题：康帝"
-            android:textColor="@color/t_black"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/tvGoodsSeries"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="所属系列：罗曼尼康帝"
-            android:textColor="@color/t_black"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/tvGoodsYear"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="商品年份：2008年"
-            android:textColor="@color/t_black"
-            android:textSize="15sp" />
-        <TextView
-            android:id="@+id/tvGoodsExplain"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="其他说明：为增加鉴定的准确度，可提供酒的重量、 是否有沉淀物、酒花等细节信息。"
-            android:textColor="@color/t_black"
-            android:textSize="15sp" />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvPicList"
-            android:layout_marginTop="15dp"
-            android:nestedScrollingEnabled="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-    <TextView
+    <include layout="@layout/appraiser_activity_goosd_info"/>
+    <TextView android:id="@+id/tvAppraiseTips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
@@ -272,7 +222,7 @@
             android:gravity="center"
             android:textColor="@color/t_white"
             android:textSize="18sp" />
-        <TextView
+        <TextView android:id="@+id/tvCommitPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(¥0.00）"

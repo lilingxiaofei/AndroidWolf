@@ -2,6 +2,7 @@ package com.chunlangjiu.app.amain.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.web.WebViewActivity;
+import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
@@ -38,6 +40,10 @@ import io.reactivex.schedulers.Schedulers;
  * @Describe: 登录页面
  */
 public class LoginActivity extends BaseActivity {
+
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
+
 
     @BindView(R.id.etPhone)
     EditText etPhone;
@@ -76,6 +82,7 @@ public class LoginActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.img_title_left:
+                case R.id.ivBack:
                     finish();
                     break;
                 case R.id.tvGetCode:
@@ -115,16 +122,12 @@ public class LoginActivity extends BaseActivity {
             if (!map.containsKey("iconurl")) { //判断是授权还是获取用户信息
                 UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, share_media, umAuthListener);
             } else {
-                System.out.println("uid========" + map.get("uid"));
-                System.out.println("name========" + map.get("name"));
-                System.out.println("iconurl========" + map.get("iconurl"));
-                ToastUtils.showShort("社会唐哥" + map.get("name"));
             }
         }
 
         @Override
         public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-            UMShareAPI.get(LoginActivity.this).deleteOauth(LoginActivity.this,share_media,umAuthListener);
+            UMShareAPI.get(LoginActivity.this).deleteOauth(LoginActivity.this, share_media, umAuthListener);
             ToastUtils.showShort("已经删除错误授权，请重新登录");
 //            UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, share_media, umAuthListener);
         }
@@ -136,6 +139,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
+        hideTitleView();
         titleName.setText("登录注册");
         titleImgLeft.setOnClickListener(onClickListener);
     }
@@ -149,12 +153,21 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initView() {
+//        MyStatusBarUtils.setStatusBar(this, ContextCompat.getColor(this, R.color.bg_red));
+//        MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlTitle), true);
+        StatusBarUtil.setTranslucentForImageView(this,0,findViewById(R.id.rlTitle));
+        StatusBarUtil.setLightMode(this);
         disposable = new CompositeDisposable();
+        ivBack.setOnClickListener(onClickListener);
         tvGetCode.setOnClickListener(onClickListener);
         tvLogin.setOnClickListener(onClickListener);
         tvLicence.setOnClickListener(onClickListener);
         tvPsdLogin.setOnClickListener(onClickListener);
 
+        tvGetCode.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tvGetCode.getPaint().setAntiAlias(true);//抗锯齿z
+        tvPsdLogin.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        tvPsdLogin.getPaint().setAntiAlias(true);//抗锯齿z
         ivQQLogin.setOnClickListener(onClickListener);
         ivWeChatLogin.setOnClickListener(onClickListener);
         ivSinaLogin.setOnClickListener(onClickListener);

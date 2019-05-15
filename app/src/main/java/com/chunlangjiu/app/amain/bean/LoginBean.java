@@ -6,6 +6,8 @@ package com.chunlangjiu.app.amain.bean;
  */
 public class LoginBean {
 
+    private String account ;
+    private String binded  ;
     private String accessToken;
     private String referrer ;//是否设置邀请码
     public String getAccessToken() {
@@ -22,5 +24,21 @@ public class LoginBean {
 
     public void setReferrer(String referrer) {
         this.referrer = referrer;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getBinded() {
+        return binded;
+    }
+
+    public void setBinded(String binded) {
+        this.binded = binded;
     }
 }

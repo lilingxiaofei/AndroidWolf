@@ -26,6 +26,7 @@ public class GoodsPicAdapter extends BaseAdapter {
     private Context context;
     private List<ImageItem> list;
     private LayoutInflater inflater;
+    private int maxCount =  5 ;
 
     public GoodsPicAdapter(Context context, List<ImageItem> list) {
         this.context = context;
@@ -42,7 +43,7 @@ public class GoodsPicAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         int size = list == null ? 0 : list.size() ;
-        if(size<5){
+        if(size<maxCount){
             size = size+1;
         }
         return size;

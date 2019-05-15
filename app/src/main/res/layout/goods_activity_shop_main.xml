@@ -143,14 +143,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/bg_round_transparent_red_border_15dp"
+                    android:background="@mipmap/appraise_request_white"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/t_white"
-                    android:textSize="11sp"
-                    tools:text="@string/request_appraise" />
+                    android:textSize="11sp"/>
             </RelativeLayout>
 
 

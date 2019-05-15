@@ -19,6 +19,9 @@
             android:textColor="@color/t_black"
             android:textStyle="bold"
             android:text="@string/appraise_num"/>
+
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +44,8 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:textColor="@color/t_black"
-                android:text="10项检测"/>
+                android:text="10项检测"
+                android:visibility="gone"/>
             <TextView android:id="@+id/tvTipsThree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +53,8 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:textColor="@color/t_black"
-                android:text="精准市场评估"/>
+                android:text="精准市场评估"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -76,7 +81,13 @@
             android:layout_alignParentRight="true"
             android:text="新手拍摄指南  >"/>
     </RelativeLayout>
-
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableFooterFollowWhenLoadFinished="true"
+        app:srlEnableScrollContentWhenLoaded="true">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvAppraiserList"
         android:layout_margin="10dp"
@@ -84,4 +95,5 @@
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

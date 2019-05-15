@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_gray">
+    <TextView android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="商品主图"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/t_black"/>
+    <com.pkqup.commonlibrary.view.RoundedImageView
+        android:id="@+id/imgPic"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@mipmap/logo"
+        android:scaleType="centerCrop"
+        app:sriv_left_bottom_corner_radius="5dp"
+        app:sriv_left_top_corner_radius="5dp"
+        app:sriv_right_bottom_corner_radius="5dp"
+        app:sriv_right_top_corner_radius="5dp" />
+</LinearLayout>

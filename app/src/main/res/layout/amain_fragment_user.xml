@@ -1529,7 +1529,7 @@
                         android:id="@+id/img_appraiser"
                         android:layout_width="24dp"
                         android:layout_height="22dp"
-                        android:src="@mipmap/my_assess" />
+                        android:src="@mipmap/appraise_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"

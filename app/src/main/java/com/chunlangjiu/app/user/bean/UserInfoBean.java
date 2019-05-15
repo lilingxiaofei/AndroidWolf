@@ -26,6 +26,8 @@ public class UserInfoBean {
     private String area; //店铺地址
     private String company_phone;
 
+    private String authenticate;//是否是鉴定师
+    private String authenticate_id;//鉴定师Id
 
     public String getShop_name() {
         return shop_name;
@@ -117,6 +119,22 @@ public class UserInfoBean {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getAuthenticate() {
+        return authenticate;
+    }
+
+    public void setAuthenticate(String authenticate) {
+        this.authenticate = authenticate;
+    }
+
+    public String getAuthenticate_id() {
+        return authenticate_id;
+    }
+
+    public void setAuthenticate_id(String authenticate_id) {
+        this.authenticate_id = authenticate_id;
     }
 
     public void setUsername(String username) {
