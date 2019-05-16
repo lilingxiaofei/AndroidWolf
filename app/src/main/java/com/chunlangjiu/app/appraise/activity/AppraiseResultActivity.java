@@ -87,6 +87,7 @@ public class AppraiseResultActivity extends BaseActivity {
     AppraiseGoodsPicAdapter picAdapter;
 
     private String appraiseGoodsId;
+    private boolean isSeller ;
     private AppraiseGoodsBean appraiseGoodsBean;
 
     @Override
@@ -98,6 +99,7 @@ public class AppraiseResultActivity extends BaseActivity {
 
     private void initData() {
         appraiseGoodsId = getIntent().getStringExtra("appraiseGoodsId");
+        isSeller = getIntent().getBooleanExtra("isSeller",false);
         loadAppraiserGoodsDetails();
     }
 
@@ -164,9 +166,11 @@ public class AppraiseResultActivity extends BaseActivity {
                 llAppraisePrice.setVisibility(View.VISIBLE);
                 llAppraiseDetails.setVisibility(View.VISIBLE);
                 tvAppraiseTips.setVisibility(View.VISIBLE);
-                llCommit.setVisibility(View.VISIBLE);
-                llCommit.setOnClickListener(onClickListener);
-                tvCommitPrice.setText(CommonUtils.getString(R.string.rmb_two,appraiseGoodsBean.getPrice()));
+                if(isSeller){
+                    llCommit.setVisibility(View.VISIBLE);
+                    llCommit.setOnClickListener(onClickListener);
+                    tvCommitPrice.setText(CommonUtils.getString(R.string.rmb_two,appraiseGoodsBean.getPrice()));
+                }
             }else{
                 titleName.setText("待鉴定");
                 llCommit.setVisibility(View.GONE);
@@ -179,10 +183,11 @@ public class AppraiseResultActivity extends BaseActivity {
         }
     }
 
-    public static void startAppraiserResultActivity(Activity activity, String appraiseGoodsId) {
+    public static void startAppraiserResultActivity(Activity activity, String appraiseGoodsId,boolean isSeller) {
         if (activity != null) {
             Intent intent = new Intent(activity, AppraiseResultActivity.class);
             intent.putExtra("appraiseGoodsId", appraiseGoodsId);
+            intent.putExtra("isSeller",isSeller);
             activity.startActivity(intent);
         }
     }

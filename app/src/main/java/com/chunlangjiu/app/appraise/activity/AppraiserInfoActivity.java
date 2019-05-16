@@ -23,10 +23,12 @@ import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.PageUtils;
+import com.chunlangjiu.app.util.RatingBarUtils;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.SizeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -86,13 +88,13 @@ public class AppraiserInfoActivity extends BaseActivity {
     }
 
     private void initView(){
-
+        RatingBarUtils.setRatingBarStyle(this,rbEvaluation,1,5,5, SizeUtils.dp2px(10));
         appraiseGoodsAdapter = new AppraiseGoodsAdapter(this,false ,pageUtils.getList());
         appraiseGoodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 AppraiseGoodsBean appraiseBean= appraiseGoodsAdapter.getItem(position);
-                AppraiseResultActivity.startAppraiserResultActivity(AppraiserInfoActivity.this,appraiseBean.getChateau_id());
+                AppraiseResultActivity.startAppraiserResultActivity(AppraiserInfoActivity.this,appraiseBean.getChateau_id(),false);
             }
         });
         appraiseGoodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) rvAppraiserList.getParent(), false));

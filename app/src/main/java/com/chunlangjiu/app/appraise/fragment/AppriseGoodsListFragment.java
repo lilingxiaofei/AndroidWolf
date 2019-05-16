@@ -103,12 +103,12 @@ public class AppriseGoodsListFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 AppraiseGoodsBean item = appraiseGoodsAdapter.getItem(position);
                 if ("true".equals(item.getStatus())) {
-                    AppraiseResultActivity.startAppraiserResultActivity(activity, item.getChateau_id());
+                    AppraiseResultActivity.startAppraiserResultActivity(activity, item.getChateau_id(),isSeller);
                 } else {
                     if (isSeller) {
                         AppraiseAssessActivity.startAppraiserAssessActivity(activity, item.getChateau_id());
                     } else {
-                        AppraiseResultActivity.startAppraiserResultActivity(activity, item.getChateau_id());
+                        AppraiseResultActivity.startAppraiserResultActivity(activity, item.getChateau_id(),isSeller);
                     }
                 }
 
