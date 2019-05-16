@@ -91,7 +91,7 @@
             android:textColor="@color/t_black"
             android:textSize="10sp"
             android:layout_marginTop="10dp"
-            android:text="如何快速变现？"/>
+            android:text="选择鉴定师进行在线估价"/>
     </LinearLayout>
     <LinearLayout android:id="@+id/llContactPlatform"
         android:layout_width="match_parent"

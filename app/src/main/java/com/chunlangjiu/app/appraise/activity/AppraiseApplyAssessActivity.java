@@ -77,9 +77,15 @@ public class AppraiseApplyAssessActivity extends BaseActivity {
     GoodsPicAdapter picAdapter ;
     private ArrayList<ImageItem> mainPicLists;
     private ArrayList<ImageItem> mainPicListsTwo;
+    private ArrayList<ImageItem> mainPicListsThree;
+    private ArrayList<ImageItem> mainPicListsFour;
+    private ArrayList<ImageItem> mainPicListsFive;
     private ArrayList<ImageItem> goodsPicLists = new ArrayList<>();
     private String mainPicOne;
     private String mainPicTwo;
+    private String mainPicThree;
+    private String mainPicFour;
+    private String mainPicFive;
 
     @BindView(R.id.tvCommit)
     TextView tvCommit;
@@ -160,6 +166,7 @@ public class AppraiseApplyAssessActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         setMainPicSize();
         picAdapter = new GoodsPicAdapter(this, goodsPicLists);
+        picAdapter.setMaxCount(8);
         picAdapter.setOnItemChildClickListener(new GoodsPicAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(View view, int position) {

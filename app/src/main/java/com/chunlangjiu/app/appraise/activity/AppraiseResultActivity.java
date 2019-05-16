@@ -167,9 +167,12 @@ public class AppraiseResultActivity extends BaseActivity {
                 llAppraiseDetails.setVisibility(View.VISIBLE);
                 tvAppraiseTips.setVisibility(View.VISIBLE);
                 if(isSeller){
+//                if(isSeller || appraiseGoodsBean.getAuthenticate_id()){
                     llCommit.setVisibility(View.VISIBLE);
                     llCommit.setOnClickListener(onClickListener);
                     tvCommitPrice.setText(CommonUtils.getString(R.string.rmb_two,appraiseGoodsBean.getPrice()));
+                }else{
+                    llCommit.setVisibility(View.GONE);
                 }
             }else{
                 titleName.setText("待鉴定");
