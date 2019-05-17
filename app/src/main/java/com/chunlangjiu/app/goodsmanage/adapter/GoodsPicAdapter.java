@@ -49,6 +49,14 @@ public class GoodsPicAdapter extends BaseAdapter {
         return size;
     }
 
+    public int getMaxCount() {
+        return maxCount;
+    }
+
+    public void setMaxCount(int maxCount) {
+        this.maxCount = maxCount;
+    }
+
     // 根据ListView位置返回View
     @Override
     public ImageItem getItem(int position) {
