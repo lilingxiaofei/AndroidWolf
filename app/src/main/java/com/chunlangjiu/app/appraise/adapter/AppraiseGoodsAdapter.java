@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
 
@@ -19,17 +20,13 @@ import java.util.List;
  * @Describe:
  */
 public class AppraiseGoodsAdapter extends BaseQuickAdapter<AppraiseGoodsBean, BaseViewHolder> {
-    public static final int LIST_LINEAR = 0;
-    public static final int LIST_GRID = 1;
-    private int itemType = LIST_GRID;
 
     private Context context;
-    private boolean isSeller ;
-    private boolean isShowStoreView = true;
+    private String appraiseRole ;
 
-    public AppraiseGoodsAdapter(Context context,boolean isSeller, List<AppraiseGoodsBean> data) {
+    public AppraiseGoodsAdapter(Context context,String appraiseRole, List<AppraiseGoodsBean> data) {
         super(R.layout.appraise_item_goods_grid,data);
-        this.isSeller = isSeller;
+        this.appraiseRole = appraiseRole;
         this.context = context;
 
     }
@@ -62,7 +59,7 @@ public class AppraiseGoodsAdapter extends BaseQuickAdapter<AppraiseGoodsBean, Ba
             if("true".equals(item.getStatus())){
                 helper.setText(R.id.tvAppraise,"鉴定报告");
             }else{
-                if(isSeller){
+                if(CommonUtils.APPRAISE_ROLE_VERIFIER.equals(appraiseRole)){
                     helper.setText(R.id.tvAppraise,"去鉴定");
                 }else{
                     helper.setText(R.id.tvAppraise,"鉴定中");

@@ -87,7 +87,7 @@ public class AppraiseResultActivity extends BaseActivity {
     AppraiseGoodsPicAdapter picAdapter;
 
     private String appraiseGoodsId;
-    private boolean isSeller ;
+    private String appraiseRole ;
     private AppraiseGoodsBean appraiseGoodsBean;
 
     @Override
@@ -99,7 +99,7 @@ public class AppraiseResultActivity extends BaseActivity {
 
     private void initData() {
         appraiseGoodsId = getIntent().getStringExtra("appraiseGoodsId");
-        isSeller = getIntent().getBooleanExtra("isSeller",false);
+        appraiseRole = getIntent().getStringExtra("appraiseRole");
         loadAppraiserGoodsDetails();
     }
 
@@ -166,7 +166,7 @@ public class AppraiseResultActivity extends BaseActivity {
                 llAppraisePrice.setVisibility(View.VISIBLE);
                 llAppraiseDetails.setVisibility(View.VISIBLE);
                 tvAppraiseTips.setVisibility(View.VISIBLE);
-                if(isSeller){
+                if(CommonUtils.APPRAISE_ROLE_APPLY.equals(appraiseRole)){
 //                if(isSeller || appraiseGoodsBean.getAuthenticate_id()){
                     llCommit.setVisibility(View.VISIBLE);
                     llCommit.setOnClickListener(onClickListener);
@@ -186,11 +186,11 @@ public class AppraiseResultActivity extends BaseActivity {
         }
     }
 
-    public static void startAppraiserResultActivity(Activity activity, String appraiseGoodsId,boolean isSeller) {
+    public static void startAppraiserResultActivity(Activity activity, String appraiseGoodsId,String appraiseRole) {
         if (activity != null) {
             Intent intent = new Intent(activity, AppraiseResultActivity.class);
             intent.putExtra("appraiseGoodsId", appraiseGoodsId);
-            intent.putExtra("isSeller",isSeller);
+            intent.putExtra("appraiseRole",appraiseRole);
             activity.startActivity(intent);
         }
     }

@@ -13,6 +13,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseFragmentAdapter;
 import com.chunlangjiu.app.appraise.fragment.AppriseGoodsListFragment;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
 
 import java.lang.reflect.Field;
@@ -50,8 +51,8 @@ public class AppraiserBuyerHomeActivity extends BaseActivity {
     private void initView(){
         llToAppraise.setOnClickListener(onClickListener);
         fragments = new ArrayList<>();
-        AppriseGoodsListFragment fragmentOne = AppriseGoodsListFragment.newInstance(false,"0") ;
-        AppriseGoodsListFragment fragmentTwo = AppriseGoodsListFragment.newInstance(false,"1") ;
+        AppriseGoodsListFragment fragmentOne = AppriseGoodsListFragment.newInstance(CommonUtils.APPRAISE_ROLE_APPLY,"0") ;
+        AppriseGoodsListFragment fragmentTwo = AppriseGoodsListFragment.newInstance(CommonUtils.APPRAISE_ROLE_APPLY,"1") ;
         fragments.add(fragmentOne);
         fragments.add(fragmentTwo);
         initFragmentAdapter("鉴定中\n(0)","已鉴定\n(0)");

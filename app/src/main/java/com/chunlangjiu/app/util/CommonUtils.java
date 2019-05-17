@@ -28,6 +28,9 @@ import io.reactivex.ObservableOnSubscribe;
  * @Describe: 省市区的工具类
  */
 public class CommonUtils {
+    public static final String APPRAISE_ROLE_VERIFIER = "verifier";//鉴定校验者
+    public static final String APPRAISE_ROLE_APPLY = "apply";//鉴定申请者
+    public static final String APPRAISE_ROLE_VISITOR = "visitor";//鉴定访客
 
 
     public static final String GOODS_STATUS_AUDIT_PENDING = "pending";//审核中

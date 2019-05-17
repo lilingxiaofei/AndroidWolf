@@ -89,12 +89,12 @@ public class AppraiserInfoActivity extends BaseActivity {
 
     private void initView(){
         RatingBarUtils.setRatingBarStyle(this,rbEvaluation,1,5,5, SizeUtils.dp2px(10));
-        appraiseGoodsAdapter = new AppraiseGoodsAdapter(this,false ,pageUtils.getList());
+        appraiseGoodsAdapter = new AppraiseGoodsAdapter(this,CommonUtils.APPRAISE_ROLE_VISITOR ,pageUtils.getList());
         appraiseGoodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 AppraiseGoodsBean appraiseBean= appraiseGoodsAdapter.getItem(position);
-                AppraiseResultActivity.startAppraiserResultActivity(AppraiserInfoActivity.this,appraiseBean.getChateau_id(),false);
+                AppraiseResultActivity.startAppraiserResultActivity(AppraiserInfoActivity.this,appraiseBean.getChateau_id(),CommonUtils.APPRAISE_ROLE_VISITOR);
             }
         });
         appraiseGoodsAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) rvAppraiserList.getParent(), false));

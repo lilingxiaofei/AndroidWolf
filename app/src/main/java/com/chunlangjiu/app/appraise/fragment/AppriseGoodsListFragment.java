@@ -19,6 +19,7 @@ import com.chunlangjiu.app.appraise.activity.AppraiseResultActivity;
 import com.chunlangjiu.app.appraise.adapter.AppraiseGoodsAdapter;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PageUtils;
 import com.lzy.imagepicker.util.Utils;
@@ -45,7 +46,7 @@ public class AppriseGoodsListFragment extends BaseFragment {
     private SmartRefreshLayout refreshLayout;
     //分类列表
     private RecyclerView rvAppraiserList;
-    private boolean isSeller = false;//是否卖家
+    private String appraiseRole ;//是否卖家
     private String status = "";
 
     private CompositeDisposable disposable;
@@ -53,11 +54,11 @@ public class AppriseGoodsListFragment extends BaseFragment {
     AppraiseGoodsAdapter appraiseGoodsAdapter;
 
 
-    public static AppriseGoodsListFragment newInstance(boolean isSeller, String status) {
+    public static AppriseGoodsListFragment newInstance(String appraiseRole, String status) {
         Bundle bundle = new Bundle();
         AppriseGoodsListFragment goodsFragment = new AppriseGoodsListFragment();
         bundle.putString("status", status);
-        bundle.putBoolean("isSeller", isSeller);
+        bundle.putString("appraiseRole", appraiseRole);
         goodsFragment.setArguments(bundle);
         return goodsFragment;
     }
@@ -79,7 +80,7 @@ public class AppriseGoodsListFragment extends BaseFragment {
     public void initView() {
         EventManager.getInstance().registerListener(onNotifyListener);
         status = getArguments().getString("status");
-        isSeller = getArguments().getBoolean("isSeller");
+        appraiseRole = getArguments().getString("appraiseRole");
 
 
         disposable = new CompositeDisposable();
@@ -97,19 +98,15 @@ public class AppriseGoodsListFragment extends BaseFragment {
             }
         });
         rvAppraiserList = rootView.findViewById(R.id.rvAppraiserGoodsList);
-        appraiseGoodsAdapter = new AppraiseGoodsAdapter(activity, isSeller, pageUtils.getList());
+        appraiseGoodsAdapter = new AppraiseGoodsAdapter(activity, appraiseRole, pageUtils.getList());
         appraiseGoodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 AppraiseGoodsBean item = appraiseGoodsAdapter.getItem(position);
-                if ("true".equals(item.getStatus())) {
-                    AppraiseResultActivity.startAppraiserResultActivity(activity, item.getChateau_id(),isSeller);
-                } else {
-                    if (isSeller) {
-                        AppraiseAssessActivity.startAppraiserAssessActivity(activity, item.getChateau_id());
-                    } else {
-                        AppraiseResultActivity.startAppraiserResultActivity(activity, item.getChateau_id(),isSeller);
-                    }
+                if(CommonUtils.APPRAISE_ROLE_VERIFIER.equals(appraiseRole) && !"true".equals(item.getStatus())){
+                    AppraiseAssessActivity.startAppraiserAssessActivity(activity, item.getChateau_id());
+                }else{
+                    AppraiseResultActivity.startAppraiserResultActivity(activity, item.getChateau_id(),appraiseRole);
                 }
 
             }
@@ -132,7 +129,7 @@ public class AppriseGoodsListFragment extends BaseFragment {
     private void getAppraiseGoodsList(int page) {
         boolean tempStatus = "1".equals(status);
         Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> flowable;
-        if (isSeller) {
+        if (CommonUtils.APPRAISE_ROLE_VERIFIER.equals(appraiseRole)) {
             flowable = ApiUtils.getInstance().getAppraiseShopGoodsList(tempStatus, page, 10);
         } else {
             flowable = ApiUtils.getInstance().getAppraiseGoodsList(tempStatus, page, 10);

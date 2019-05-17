@@ -85,8 +85,8 @@ public class AppraiserSellerHomeActivity extends BaseActivity {
     private void initView() {
         tvEdit.setOnClickListener(onClickListener);
         fragments = new ArrayList<>();
-        AppriseGoodsListFragment fragmentOne = AppriseGoodsListFragment.newInstance(true,"0") ;
-        AppriseGoodsListFragment fragmentTwo = AppriseGoodsListFragment.newInstance(true,"1") ;
+        AppriseGoodsListFragment fragmentOne = AppriseGoodsListFragment.newInstance(CommonUtils.APPRAISE_ROLE_VERIFIER,"0") ;
+        AppriseGoodsListFragment fragmentTwo = AppriseGoodsListFragment.newInstance(CommonUtils.APPRAISE_ROLE_VERIFIER,"1") ;
         fragments.add(fragmentOne);
         fragments.add(fragmentTwo);
         initFragmentAdapter("待鉴定\n(0)","已鉴定\n(0)");

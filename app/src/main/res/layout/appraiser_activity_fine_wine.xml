@@ -205,7 +205,7 @@
                     android:layout_alignLeft="@+id/imgMainPic"
                     android:layout_alignRight="@+id/imgMainPic"
                     android:layout_alignTop="@+id/imgMainPic"
-                    android:background="@color/bg_gray_two"
+                    android:background="@color/bg_gray"
                     android:gravity="center"
                     android:orientation="vertical">
 
