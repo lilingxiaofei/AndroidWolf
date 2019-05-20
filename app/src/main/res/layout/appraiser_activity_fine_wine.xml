@@ -154,7 +154,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bg_round_white"
-                android:paddingBottom="15dp">
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:id="@+id/tvGoodsMainPic"
@@ -229,7 +229,6 @@
                     android:src="@mipmap/delete_ic"
                     android:visibility="gone" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -237,14 +236,14 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bg_round_white"
-                android:paddingBottom="15dp">
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="商品主图"
+                    android:text="商品细节图"
                     android:textColor="@color/t_black"
                     android:textSize="15sp" />
 
@@ -255,7 +254,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="41dp"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/example_main" />
+                    android:src="@mipmap/example_detail_one" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -311,7 +310,240 @@
                     android:src="@mipmap/delete_ic"
                     android:visibility="gone" />
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_round_white"
+                android:paddingBottom="10dp">
 
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:paddingLeft="10dp"-->
+                    <!--android:text="商品主图"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="15sp" />-->
+
+                <ImageView
+                    android:id="@+id/imgMainExThree"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginLeft="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/example_detail_two" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:layout_alignBottom="@+id/imgMainExThree"
+                    android:layout_alignLeft="@+id/imgMainExThree"
+                    android:layout_alignRight="@+id/imgMainExThree"
+                    android:background="#99000000"
+                    android:gravity="center"
+                    android:text="示例图"
+                    android:textColor="@color/t_white"
+                    android:textSize="12sp" />
+
+
+                <ImageView
+                    android:id="@+id/imgMainPicThree"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:id="@+id/llMainPicAddThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imgMainPicThree"
+                    android:layout_alignLeft="@+id/imgMainPicThree"
+                    android:layout_alignRight="@+id/imgMainPicThree"
+                    android:layout_alignTop="@+id/imgMainPicThree"
+                    android:background="@color/bg_gray_two"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="34dp"
+                        android:src="@mipmap/camera" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgDeleteMainPicThree"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignRight="@+id/imgMainPicThree"
+                    android:layout_alignTop="@+id/imgMainPicThree"
+                    android:layout_marginRight="-6dp"
+                    android:layout_marginTop="-13dp"
+                    android:padding="7dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/delete_ic"
+                    android:visibility="gone" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_round_white"
+                android:paddingBottom="10dp">
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:paddingLeft="10dp"-->
+                    <!--android:text="商品主图"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="15sp" />-->
+
+                <ImageView
+                    android:id="@+id/imgMainExFour"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginLeft="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/example_detail_three" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:layout_alignBottom="@+id/imgMainExFour"
+                    android:layout_alignLeft="@+id/imgMainExFour"
+                    android:layout_alignRight="@+id/imgMainExFour"
+                    android:background="#99000000"
+                    android:gravity="center"
+                    android:text="示例图"
+                    android:textColor="@color/t_white"
+                    android:textSize="12sp" />
+
+
+                <ImageView
+                    android:id="@+id/imgMainPicFour"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:id="@+id/llMainPicAddFour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imgMainPicFour"
+                    android:layout_alignLeft="@+id/imgMainPicFour"
+                    android:layout_alignRight="@+id/imgMainPicFour"
+                    android:layout_alignTop="@+id/imgMainPicFour"
+                    android:background="@color/bg_gray_two"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="34dp"
+                        android:src="@mipmap/camera" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgDeleteMainPicFour"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignRight="@+id/imgMainPicFour"
+                    android:layout_alignTop="@+id/imgMainPicFour"
+                    android:layout_marginRight="-6dp"
+                    android:layout_marginTop="-13dp"
+                    android:padding="7dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/delete_ic"
+                    android:visibility="gone" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_round_white"
+                android:paddingBottom="10dp">
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:paddingLeft="10dp"-->
+                    <!--android:text="商品主图"-->
+                    <!--android:textColor="@color/t_black"-->
+                    <!--android:textSize="15sp" />-->
+
+                <ImageView
+                    android:id="@+id/imgMainExFive"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginLeft="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/example_detail_four" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:layout_alignBottom="@+id/imgMainExFive"
+                    android:layout_alignLeft="@+id/imgMainExFive"
+                    android:layout_alignRight="@+id/imgMainExFive"
+                    android:background="#99000000"
+                    android:gravity="center"
+                    android:text="示例图"
+                    android:textColor="@color/t_white"
+                    android:textSize="12sp" />
+
+
+                <ImageView
+                    android:id="@+id/imgMainPicFive"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:id="@+id/llMainPicAddFive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imgMainPicFive"
+                    android:layout_alignLeft="@+id/imgMainPicFive"
+                    android:layout_alignRight="@+id/imgMainPicFive"
+                    android:layout_alignTop="@+id/imgMainPicFive"
+                    android:background="@color/bg_gray_two"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="34dp"
+                        android:src="@mipmap/camera" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imgDeleteMainPicFive"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignRight="@+id/imgMainPicFive"
+                    android:layout_alignTop="@+id/imgMainPicFive"
+                    android:layout_marginRight="-6dp"
+                    android:layout_marginTop="-13dp"
+                    android:padding="7dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/delete_ic"
+                    android:visibility="gone" />
+            </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

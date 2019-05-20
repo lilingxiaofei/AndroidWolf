@@ -16,6 +16,7 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.jaeger.library.StatusBarUtil;
@@ -224,6 +225,7 @@ public class LoginActivity extends BaseActivity {
     private void checkSmsCode() {
         if (!TextUtils.isEmpty(etAuthCode.getText().toString())) {
             login();
+            CommonUtils.requestFocus(etAuthCode);
         } else {
             ToastUtils.showShort("请输入正确的验证码");
         }

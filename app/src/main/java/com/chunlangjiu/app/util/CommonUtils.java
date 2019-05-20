@@ -8,6 +8,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.widget.EditText;
 
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
@@ -43,6 +44,7 @@ public class CommonUtils {
     public static final String GOODS_STATUS_AUCTION_NOT_START = AUCTION_STATUS_SUB + "pending";//竞拍进行时
     public static final String GOODS_STATUS_AUCTION_ACTIVE = AUCTION_STATUS_SUB + "active";//竞拍进行时
     public static final String GOODS_STATUS_AUCTION_STOP = AUCTION_STATUS_SUB + "stop";//竞拍结束后
+
 
 
     public static String getUniquePsuedoID() {
@@ -116,6 +118,14 @@ public class CommonUtils {
             detailsGoods = ApiUtils.getInstance().shopUploadImage(base64DetailFour, name);
         }
         return detailsGoods;
+    }
+
+
+
+
+    public static void requestFocus(EditText inputEdit) {
+        inputEdit.requestFocus();
+        inputEdit.setSelection(inputEdit.getText().length());
     }
 
     public static boolean isNetworkPic(String picPath) {

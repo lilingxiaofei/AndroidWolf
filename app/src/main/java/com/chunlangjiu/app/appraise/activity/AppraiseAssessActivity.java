@@ -22,6 +22,7 @@ import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
@@ -187,6 +188,9 @@ public class AppraiseAssessActivity extends BaseActivity {
         String otherHelp = etOtherHelp.getText().toString() ;
         if(TextUtils.isEmpty(price)){
             ToastUtils.showShort("请输入价格");
+            return ;
+        }else if(BigDecimalUtils.objToBigDecimal(price).doubleValue()<=0){
+            ToastUtils.showShort("价格必须大于0");
             return ;
         }else if(TextUtils.isEmpty(colour)){
             ToastUtils.showShort("请输入酒成色");

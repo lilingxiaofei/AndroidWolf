@@ -35,7 +35,7 @@
         android:layout_width="85dp"
         android:layout_height="47dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="140dp"
         android:scaleType="centerCrop"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/logo_small" />

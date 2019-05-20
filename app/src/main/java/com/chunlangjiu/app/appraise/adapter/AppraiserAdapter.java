@@ -56,8 +56,8 @@ public class AppraiserAdapter extends BaseQuickAdapter<AppraiseBean, BaseViewHol
             ImageView imgPic = helper.getView(R.id.imgHead);
             GlideUtils.loadImageHead(context, item.getAuthenticate_img(), imgPic);
             helper.setText(R.id.tvName,item.getAuthenticate_name());
-            helper.setText(R.id.tvAppraiseScope,context.getString(R.string.appraise_scope,item.getAuthenticate_scope()));
-            helper.setText(R.id.tvAppraiseRequire,context.getString(R.string.appraise_require,item.getAuthenticate_require()));
+            helper.setText(R.id.tvAppraiseScope,CommonUtils.getString(R.string.appraise_scope,item.getAuthenticate_scope()));
+            helper.setText(R.id.tvAppraiseRequire,CommonUtils.getString(R.string.appraise_require,item.getAuthenticate_require()));
             helper.setText(R.id.tvTipsOne,"日均"+item.getDay());
             helper.setText(R.id.tvTipsTwo,"完成率"+item.getRate());
             String queueUp = item.getLine();

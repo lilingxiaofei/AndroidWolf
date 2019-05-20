@@ -3,6 +3,7 @@ package com.chunlangjiu.app.appraise.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -123,7 +124,9 @@ public class AppraiserMainActivity extends BaseActivity {
                     public void accept(ResultBean<AppraiseListBean<AppraiseBean>> result) throws Exception {
                         refreshLayout.finishRefresh();
                         refreshLayout.finishLoadMore();
-                        tvAppraiseNum.setText(CommonUtils.getString(R.string.appraise_num,result.getData().getCount()));
+                        String count = result.getData().getCount();
+                        String countStr = CommonUtils.getString(R.string.appraise_num,count);
+                        tvAppraiseNum.setText(CommonUtils.setSpecifiedTextsColor(countStr,count, ContextCompat.getColor(AppraiserMainActivity.this,R.color.t_red)));
                         tvTipsOne.setText(result.getData().getContent());
                         pageUtils.loadListSuccess(result.getData().getList());
                         appraiserAdapter.setAddNewData(pageUtils.getList());
@@ -136,6 +139,7 @@ public class AppraiserMainActivity extends BaseActivity {
                     }
                 }));
     }
+
 
     @Override
     public void setTitleView() {

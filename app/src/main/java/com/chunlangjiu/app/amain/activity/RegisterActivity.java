@@ -17,6 +17,7 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.jaeger.library.StatusBarUtil;
@@ -130,6 +131,7 @@ public class RegisterActivity extends BaseActivity {
         if (etPhone.getText().toString().length() == 11) {
             getSmsCode();
             countDownTime();
+            CommonUtils.requestFocus(etAuthCode);
         } else {
             ToastUtils.showShort("请输入正确的手机号码");
         }
@@ -213,7 +215,7 @@ public class RegisterActivity extends BaseActivity {
 
 
     private void toLicence() {
-        WebViewActivity.startWebViewActivity(this, ConstantMsg.WEB_URL_LICENSE, "醇狼APP隐私政策");
+        WebViewActivity.startWebViewActivity(this, ConstantMsg.WEB_URL_LICENSE, "醇狼APP用户协议");
 //        WebViewActivity.startWebViewActivity(RegisterActivity.this, ConstantMsg.WEB_URL_LICENSE, "用户协议");
     }
 

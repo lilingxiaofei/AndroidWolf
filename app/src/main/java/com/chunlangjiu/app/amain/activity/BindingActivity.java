@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
@@ -15,6 +16,7 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.jaeger.library.StatusBarUtil;
@@ -36,6 +38,8 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class BindingActivity extends BaseActivity {
 
+    @BindView(R.id.ivBack)
+    ImageView ivBack;
     @BindView(R.id.etPhone)
     EditText etPhone;
     @BindView(R.id.etAuthCode)
@@ -70,6 +74,7 @@ public class BindingActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.img_title_left:
+                case R.id.ivBack:
                     finish();
                     break;
                 case R.id.tvGetCode:
@@ -98,6 +103,7 @@ public class BindingActivity extends BaseActivity {
         StatusBarUtil.setTranslucentForImageView(this,0,findViewById(R.id.rlTitle));
         StatusBarUtil.setLightMode(this);
         disposable = new CompositeDisposable();
+        ivBack.setOnClickListener(onClickListener);
         tvGetCode.setOnClickListener(onClickListener);
         tvLogin.setOnClickListener(onClickListener);
         tvGetCode.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
@@ -110,6 +116,7 @@ public class BindingActivity extends BaseActivity {
         if (etPhone.getText().toString().length() == 11) {
             getSmsCode();
             countDownTime();
+            CommonUtils.requestFocus(etAuthCode);
         } else {
             ToastUtils.showShort("请输入正确的手机号码");
         }

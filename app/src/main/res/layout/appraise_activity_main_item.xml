@@ -24,14 +24,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/appraise_num"
         android:textColor="@color/t_black"
         android:textSize="13sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvAppraiseScope"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/appraise_scope"
         android:textColor="@color/t_black"
@@ -41,7 +40,7 @@
 
     <TextView
         android:id="@+id/tvAppraiseRequire"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/appraise_require"
         android:layout_marginTop="2dp"
