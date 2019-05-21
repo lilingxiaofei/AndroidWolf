@@ -106,7 +106,14 @@ public class AppraiseAssessActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                String temp = charSequence.toString();
+                String temp = charSequence.toString();
+                if (temp.startsWith("0") && !temp.startsWith("0.") && temp.length()>1) {
+                    temp = temp.substring(1);
+                    etPrice.setText(temp);
+                    CommonUtils.requestFocus(etPrice);
+                }
+
+//                temp = temp.split("\\.")[0];
 //                String str = BigDecimalUtils.objToStrNotNoDecimal(temp);
 //                if (!temp.equals(str)) {
 //                    etPrice.setText(str);
