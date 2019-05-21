@@ -10,7 +10,6 @@ import com.chunlangjiu.app.amain.bean.ItemListBean;
 import com.chunlangjiu.app.amain.bean.ListBean;
 import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.amain.bean.MainClassBean;
-import com.chunlangjiu.app.amain.bean.ThirdpartyLoginBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
@@ -282,6 +281,11 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<AppraiseGoodsBean>> getAppraiseGoodsDetails(@Field("method") String method, @Field("v") String v, @Field("chateau_id") String chateau_id);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> quickCash(@Field("method") String method, @Field("v") String v, @Field("chateau_id") String chateau_id);
+
 
     @POST("index.php/topapi")
     @FormUrlEncoded

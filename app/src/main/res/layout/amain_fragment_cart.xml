@@ -171,7 +171,7 @@
 
                 <include
                     android:id="@+id/rlEmptyView"
-                    layout="@layout/common_empty_view"
+                    layout="@layout/cart_empty_view"
                     android:visibility="gone" />
             </FrameLayout>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>

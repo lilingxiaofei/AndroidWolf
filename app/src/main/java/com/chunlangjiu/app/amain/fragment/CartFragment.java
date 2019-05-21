@@ -63,7 +63,7 @@ public class CartFragment extends BaseFragment {
 
     private RefreshLayout refreshLayout;
     private SwipeMenuRecyclerView recycleView;
-    private RelativeLayout rlEmptyView;
+    private LinearLayout rlEmptyView;
 
     private ImageView img_back;
     private ImageView imgEdit;

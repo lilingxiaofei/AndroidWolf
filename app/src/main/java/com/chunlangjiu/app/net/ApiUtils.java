@@ -319,6 +319,12 @@ public class ApiUtils {
         return apiService.getAppraiseGoodsDetails("authenticate.item.detail", "v1", chateau_id);
     }
 
+
+    public Flowable<ResultBean> quickCash(String chateau_id) {
+        return apiService.quickCash("authenticate.user.sell", "v1", chateau_id);
+    }
+
+
     public Flowable<ResultBean<EvaluateListBean>> getEvaluateList(String item_id, int page_no) {
         return apiService.getEvaluateList("item.rate.list", "v1", 0, item_id, page_no, 10);
     }
