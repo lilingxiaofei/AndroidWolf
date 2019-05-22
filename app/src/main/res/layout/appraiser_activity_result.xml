@@ -212,7 +212,8 @@
         android:layout_height="50dp"
         android:visibility="visible"
         android:gravity="center"
-        android:background="@color/bg_red"
+        android:enabled="true"
+        android:background="@drawable/bg_red_soild"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
         <TextView

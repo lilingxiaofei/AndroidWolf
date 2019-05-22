@@ -45,6 +45,7 @@ public class AppraiseGoodsBean implements Serializable{
     private String accessory;
     private String content;
     private String details;
+    private String sell ;
     private String authenticate_name;
     private String authenticate_img;
 
@@ -137,6 +138,15 @@ public class AppraiseGoodsBean implements Serializable{
 
     public void setAuthenticate_id(String authenticate_id) {
         this.authenticate_id = authenticate_id;
+    }
+
+
+    public String getSell() {
+        return sell;
+    }
+
+    public void setSell(String sell) {
+        this.sell = sell;
     }
 
     public String getColour() {

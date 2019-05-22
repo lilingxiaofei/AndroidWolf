@@ -62,7 +62,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="4dp"
-        android:text="           您申请的估价结果，将在1-3个工作日内通过短信和信息发送给您，请注意查收。"
+        android:text="@string/appraise_success_tips"
         android:textColor="@color/t_gray"
         android:textSize="12sp" />
 </LinearLayout>

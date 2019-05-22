@@ -303,7 +303,7 @@ public class ApiUtils {
 
 
     public Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseGoodsListById(String authenticate_id, int page_no, int page_size ) {
-        return apiService.getAppraiseGoodsListById("authenticate.item.list", "v1", authenticate_id, page_no, page_size);
+        return apiService.getAppraiseGoodsListById("authenticate.item.list", "v1", authenticate_id,true, page_no, page_size);
     }
 
 

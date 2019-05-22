@@ -270,7 +270,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseGoodsListById(@Field("method") String method, @Field("v") String v, @Field("authenticate_id") String authenticate_id,
+    Flowable<ResultBean<ListBean<AppraiseGoodsBean>>> getAppraiseGoodsListById(@Field("method") String method, @Field("v") String v, @Field("authenticate_id") String authenticate_id, @Field("status") boolean status,
                                                                                @Field("page_no") int page_no, @Field("page_size") int page_size);
 
     @POST("index.php/topapi")
