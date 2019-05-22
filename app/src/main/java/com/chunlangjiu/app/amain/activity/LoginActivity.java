@@ -179,6 +179,7 @@ public class LoginActivity extends BaseActivity {
         if (etPhone.getText().toString().length() == 11) {
             getSmsCode();
             countDownTime();
+            CommonUtils.requestFocus(etAuthCode);
         } else {
             ToastUtils.showShort("请输入正确的手机号码");
         }

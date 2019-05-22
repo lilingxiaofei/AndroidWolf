@@ -151,6 +151,14 @@ public abstract class BaseActivity extends FragmentActivity {
         loadingDialog.show();
     }
 
+    public void showLoadingDialog(String loadContent) {
+        if (null == loadingDialog) {
+            loadingDialog = new CommonLoadingDialog(this);
+        }
+        loadingDialog.setLoadingText(loadContent);
+        loadingDialog.show();
+    }
+
     public void hideLoadingDialog() {
         if (null != loadingDialog) {
             loadingDialog.dismiss();

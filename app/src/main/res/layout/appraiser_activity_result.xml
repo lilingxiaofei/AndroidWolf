@@ -212,14 +212,13 @@
         android:layout_height="50dp"
         android:visibility="visible"
         android:gravity="center"
-        android:enabled="true"
         android:background="@drawable/bg_red_soild"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
-        <TextView
+        <TextView android:id="@+id/tvCommitStr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="快速变现"
+            android:text="@string/quick_cash"
             android:gravity="center"
             android:textColor="@color/t_white"
             android:textSize="18sp" />

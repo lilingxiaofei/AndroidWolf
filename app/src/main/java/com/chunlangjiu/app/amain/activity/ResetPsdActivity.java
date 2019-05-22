@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.CommonUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -91,6 +92,7 @@ public class ResetPsdActivity extends BaseActivity {
         if (etPhone.getText().toString().length() == 11) {
             getSmsCode();
             countDownTime();
+            CommonUtils.requestFocus(etAuthCode);
         } else {
             ToastUtils.showShort("请输入正确的手机号码");
         }

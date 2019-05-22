@@ -81,13 +81,16 @@ public class AppraiseResultActivity extends BaseActivity {
     //快速提现UI
     @BindView(R.id.llCommit)
     LinearLayout llCommit;
+
+    @BindView(R.id.tvCommitStr)
+    TextView tvCommitStr;
     @BindView(R.id.tvCommitPrice)
     TextView tvCommitPrice;
 
     @BindView(R.id.tvAppraiseTips)
     TextView tvAppraiseTips ;
 
-    private List<String> picList = new ArrayList<>();
+    private ArrayList<String> picList = new ArrayList<>();
     AppraiseGoodsPicAdapter picAdapter;
 
     private String appraiseGoodsId;
@@ -156,7 +159,9 @@ public class AppraiseResultActivity extends BaseActivity {
             tvGoodsYear.setText(CommonUtils.getString(R.string.appraise_goods_year,appraiseGoodsBean.getYear()));
             tvGoodsExplain.setText(CommonUtils.getString(R.string.appraise_goods_other,appraiseGoodsBean.getContent()));
             if(!TextUtils.isEmpty(appraiseGoodsBean.getImg())){
-                picList = Arrays.asList(appraiseGoodsBean.getImg().split(","));
+                List<String> tempPicList = Arrays.asList(appraiseGoodsBean.getImg().split(","));
+                picList.clear();
+                picList.addAll(tempPicList);
                 picAdapter = new AppraiseGoodsPicAdapter(this,picList);
                 rvPicList.setLayoutManager(new GridLayoutManager(this, 3));
                 rvPicList.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(this, 3), false));
@@ -181,9 +186,13 @@ public class AppraiseResultActivity extends BaseActivity {
                     llCommit.setOnClickListener(onClickListener);
                     tvCommitPrice.setText(CommonUtils.getString(R.string.rmb_two,appraiseGoodsBean.getPrice()));
                     if(!"true".equals(appraiseGoodsBean.getSell())){
-                        llCommit.setEnabled(true);
-                    }else{
                         llCommit.setEnabled(false);
+                        tvCommitPrice.setVisibility(View.GONE);
+                        tvCommitStr.setText(R.string.commit_cash_apply);
+                    }else{
+                        llCommit.setEnabled(true);
+                        tvCommitPrice.setVisibility(View.VISIBLE);
+                        tvCommitStr.setText(R.string.quick_cash);
                     }
                 }else{
                     llCommit.setVisibility(View.GONE);
@@ -238,6 +247,7 @@ public class AppraiseResultActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean result) throws Exception {
                         if(result.getErrorcode() == 0){
+                            ToastUtils.showShort("变现申请提交成功");
                             startActivity(new Intent(AppraiseResultActivity.this,QuickCashActivity.class));
                             initData();
                         }else{
