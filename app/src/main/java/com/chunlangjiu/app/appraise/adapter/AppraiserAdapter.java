@@ -58,10 +58,10 @@ public class AppraiserAdapter extends BaseQuickAdapter<AppraiseBean, BaseViewHol
             helper.setText(R.id.tvName,item.getAuthenticate_name());
             helper.setText(R.id.tvAppraiseScope,CommonUtils.getString(R.string.appraise_scope,item.getAuthenticate_scope()));
             helper.setText(R.id.tvAppraiseRequire,CommonUtils.getString(R.string.appraise_require,item.getAuthenticate_require()));
-            helper.setText(R.id.tvTipsOne,"日均"+item.getDay());
+            helper.setText(R.id.tvTipsOne,"累计鉴定"+item.getLine());
             helper.setText(R.id.tvTipsTwo,"完成率"+item.getRate());
-            String queueUp = item.getLine();
-            helper.setText(R.id.tvTipsThree,CommonUtils.setSpecifiedTextsColor("排队"+queueUp,queueUp, ContextCompat.getColor(context,R.color.t_red)));
+            String queueUp = item.getDay();
+            helper.setText(R.id.tvTipsThree,CommonUtils.setSpecifiedTextsColor("今日鉴定"+queueUp,queueUp, ContextCompat.getColor(context,R.color.t_red)));
         }
 
 

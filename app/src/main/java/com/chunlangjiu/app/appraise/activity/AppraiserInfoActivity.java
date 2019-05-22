@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -175,15 +174,18 @@ public class AppraiserInfoActivity extends BaseActivity {
             tvName.setText(appraiseBean.getAuthenticate_name());
             float grade = BigDecimalUtils.objToBigDecimal(appraiseBean.getAuthenticate_grade()).floatValue();
             rbEvaluation.setRating(grade==0?3:grade);
+            rbEvaluation.setRating(BigDecimalUtils.objToBigDecimal(appraiseBean.getAuthenticate_grade()).floatValue());
             tvRequestAppraise.setOnClickListener(onClickListener);
             tvAppraiseScope.setText(getString(R.string.appraise_scope,appraiseBean.getAuthenticate_scope()));
             tvAppraiseRequire.setText(getString(R.string.appraise_require,appraiseBean.getAuthenticate_require()));
             tvAppraiseAttention.setText(getString(R.string.appraise_attention,appraiseBean.getAuthenticate_content()));
-            tvTipsOne.setText("日均"+appraiseBean.getDay());
-            tvTipsTwo.setText("完成率"+appraiseBean.getRate());
-            rbEvaluation.setRating(BigDecimalUtils.objToBigDecimal(appraiseBean.getAuthenticate_grade()).floatValue());
-            String queueUp = appraiseBean.getLine();
-            tvTipsThree.setText(CommonUtils.setSpecifiedTextsColor("排队"+queueUp,queueUp, ContextCompat.getColor(this,R.color.t_red)));
+            String line = appraiseBean.getLine() ;
+            line = BigDecimalUtils.objToBigDecimal(line).intValue()>999?"999+":line;
+            tvTipsOne.setText(line);
+            tvTipsTwo.setText(appraiseBean.getRate());
+            String day = appraiseBean.getDay() ;
+            day = BigDecimalUtils.objToBigDecimal(day).intValue()>999?"999+":day;
+            tvTipsThree.setText(day);
         }
     }
 
