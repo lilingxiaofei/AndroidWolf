@@ -155,7 +155,7 @@ public class OpenDialog extends Dialog {
                     UmengEventUtil.bannerEvent(context, "竞拍专区");
                     break;
                 case HomeModulesBean.ITEM_ACTIVITY:
-                    FestivalActivity.startActivity(context);
+                    FestivalActivity.startActivity(context,picParams.getWebview());
                     UmengEventUtil.bannerEvent(context, "店铺活动");
                     break;
                 case HomeModulesBean.ITEM_WINERY:

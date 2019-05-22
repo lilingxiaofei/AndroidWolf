@@ -195,7 +195,7 @@ public class SplashActivity extends Activity {
                     UmengEventUtil.bannerEvent(SplashActivity.this, "竞拍专区");
                     break;
                 case HomeModulesBean.ITEM_ACTIVITY:
-                    FestivalActivity.startActivity(SplashActivity.this);
+                    FestivalActivity.startActivity(SplashActivity.this,params.getWebview());
                     UmengEventUtil.bannerEvent(SplashActivity.this, "店铺活动");
                     break;
                 case HomeModulesBean.ITEM_WINERY:

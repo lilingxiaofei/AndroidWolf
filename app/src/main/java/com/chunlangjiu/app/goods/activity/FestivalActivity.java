@@ -63,8 +63,10 @@ public class FestivalActivity extends BaseActivity {
     private List<GoodsListDetailBean> productList = new ArrayList<>();
     private GoodsAdapter goodsAdapter;
 
-    public static void startActivity(Activity activity) {
+    private String required ;
+    public static void startActivity(Activity activity,String required) {
         Intent intent = new Intent(activity, FestivalActivity.class);
+        intent.putExtra("required",required);
         activity.startActivity(intent);
     }
 
@@ -104,7 +106,7 @@ public class FestivalActivity extends BaseActivity {
     private void initView() {
         MyStatusBarUtils.setStatusBar(this, ContextCompat.getColor(this, R.color.bg_red));
         MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlShopTitle), true);
-
+        required = getIntent().getStringExtra("required");
         productList = new ArrayList<>();
         goodsAdapter = new GoodsAdapter(this, productList);
         goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -155,7 +157,7 @@ public class FestivalActivity extends BaseActivity {
     }
 
     private void getHomeList() {
-        disposable.add(ApiUtils.getInstance().getStoreActivityLists()
+        disposable.add(ApiUtils.getInstance().getStoreActivityLists(required)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<StoreActivityBean>>() {

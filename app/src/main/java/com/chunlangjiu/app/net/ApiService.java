@@ -462,7 +462,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<StoreActivityBean>> getStoreActivityLists(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<StoreActivityBean>> getStoreActivityLists(@Field("method") String method, @Field("v") String v, @Field("id") String id);
 
     @POST("index.php/topapi")
     @FormUrlEncoded

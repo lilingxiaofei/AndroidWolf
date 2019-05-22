@@ -169,7 +169,7 @@ public class OpenActivity extends Activity {
                     UmengEventUtil.bannerEvent(OpenActivity.this, "竞拍专区");
                     break;
                 case HomeModulesBean.ITEM_ACTIVITY:
-                    FestivalActivity.startActivity(OpenActivity.this);
+                    FestivalActivity.startActivity(OpenActivity.this,params.getWebview());
                     UmengEventUtil.bannerEvent(OpenActivity.this, "店铺活动");
                     break;
                 case HomeModulesBean.ITEM_WINERY:

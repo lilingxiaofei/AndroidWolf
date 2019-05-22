@@ -29,6 +29,7 @@ public class AppraiseBean implements Serializable{
     private String authenticate_content;
     private String authenticate_img;
     private String authenticate_id;
+    private String authenticate_grade;
     private String line;
     private String rate;
     private String day;
@@ -53,6 +54,15 @@ public class AppraiseBean implements Serializable{
 
     public String getAuthenticate_name() {
         return authenticate_name;
+    }
+
+
+    public String getAuthenticate_grade() {
+        return authenticate_grade;
+    }
+
+    public void setAuthenticate_grade(String authenticate_grade) {
+        this.authenticate_grade = authenticate_grade;
     }
 
     public void setAuthenticate_name(String authenticate_name) {

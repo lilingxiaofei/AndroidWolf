@@ -475,8 +475,8 @@ public class ApiUtils {
         return apiService.getHomeLists("theme.pull.goods", "v1", "index", pageNo, 10);
     }
 
-    public Flowable<ResultBean<StoreActivityBean>> getStoreActivityLists() {
-        return apiService.getStoreActivityLists("app.open.activity", "v1");
+    public Flowable<ResultBean<StoreActivityBean>> getStoreActivityLists(String id) {
+        return apiService.getStoreActivityLists("app.open.activity", "v1",id);
     }
 
     // image_type —— complaints 用户投诉商家图片, aftersales售后图片, rate 评价图片

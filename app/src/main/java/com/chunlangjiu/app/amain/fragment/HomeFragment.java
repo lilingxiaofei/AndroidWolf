@@ -885,7 +885,7 @@ public class HomeFragment extends BaseFragment {
                 }
                 break;
             case HomeModulesBean.ITEM_ACTIVITY:
-                FestivalActivity.startActivity(getActivity());
+                FestivalActivity.startActivity(getActivity(),function.getWebview());
                 if ("banner".equals(type)) {
                     UmengEventUtil.bannerEvent(getActivity(), "店铺活动");
                 } else {

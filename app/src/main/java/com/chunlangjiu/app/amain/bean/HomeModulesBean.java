@@ -76,6 +76,7 @@ public class HomeModulesBean implements Serializable{
     }
 
     public class Params implements Serializable{
+        private String id ;
         private String image;
         private String linktype;
         private String link;
@@ -83,6 +84,13 @@ public class HomeModulesBean implements Serializable{
         private String webview;
 
 
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         private List<Pic> pic;
 

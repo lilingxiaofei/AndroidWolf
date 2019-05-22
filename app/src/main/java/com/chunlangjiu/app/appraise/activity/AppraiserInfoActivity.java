@@ -28,6 +28,7 @@ import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.SizeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -176,6 +177,7 @@ public class AppraiserInfoActivity extends BaseActivity {
             tvAppraiseAttention.setText(getString(R.string.appraise_attention,appraiseBean.getAuthenticate_content()));
             tvTipsOne.setText("日均"+appraiseBean.getDay());
             tvTipsTwo.setText("完成率"+appraiseBean.getRate());
+            rbEvaluation.setRating(BigDecimalUtils.objToBigDecimal(appraiseBean.getAuthenticate_grade()).floatValue());
             String queueUp = appraiseBean.getLine();
             tvTipsThree.setText(CommonUtils.setSpecifiedTextsColor("排队"+queueUp,queueUp, ContextCompat.getColor(this,R.color.t_red)));
         }
