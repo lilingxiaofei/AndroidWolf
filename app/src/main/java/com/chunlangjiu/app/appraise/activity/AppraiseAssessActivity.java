@@ -96,23 +96,26 @@ public class AppraiseAssessActivity extends BaseActivity {
         }
     }
 
-    private void initView(){
+    private void initView() {
+        //判断不能以0开头的就截取
         etPrice.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String numStr = BigDecimalUtils.objToStrNoCanDecimals(s);
-                if(!numStr.equals(s)){
-                    etPrice.setText(numStr);
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String temp = charSequence.toString();
+                if (temp.startsWith("0") && !temp.startsWith("0.") && temp.length()>1) {
+                    temp = temp.substring(1);
+                    etPrice.setText(temp);
+                    CommonUtils.requestFocus(etPrice);
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable editable) {
 
             }
         });
@@ -155,13 +158,13 @@ public class AppraiseAssessActivity extends BaseActivity {
     private void updateView() {
         if (appraiseGoodsBean != null) {
             //商品UI
-            tvGoodsTitle.setText(CommonUtils.getString(R.string.appraise_goods_title,appraiseGoodsBean.getTitle()));
-            tvGoodsSeries.setText(CommonUtils.getString(R.string.appraise_goods_series,appraiseGoodsBean.getSeries()));
-            tvGoodsYear.setText(CommonUtils.getString(R.string.appraise_goods_year,appraiseGoodsBean.getYear()));
-            tvGoodsExplain.setText(CommonUtils.getString(R.string.appraise_goods_other,appraiseGoodsBean.getDetails()));
-            if(!TextUtils.isEmpty(appraiseGoodsBean.getImg())){
+            tvGoodsTitle.setText(CommonUtils.getString(R.string.appraise_goods_title, appraiseGoodsBean.getTitle()));
+            tvGoodsSeries.setText(CommonUtils.getString(R.string.appraise_goods_series, appraiseGoodsBean.getSeries()));
+            tvGoodsYear.setText(CommonUtils.getString(R.string.appraise_goods_year, appraiseGoodsBean.getYear()));
+            tvGoodsExplain.setText(CommonUtils.getString(R.string.appraise_goods_other, appraiseGoodsBean.getDetails()));
+            if (!TextUtils.isEmpty(appraiseGoodsBean.getImg())) {
                 picList = Arrays.asList(appraiseGoodsBean.getImg().split(","));
-                picAdapter = new AppraiseGoodsPicAdapter(this,picList);
+                picAdapter = new AppraiseGoodsPicAdapter(this, picList);
                 rvPicList.setLayoutManager(new GridLayoutManager(this, 3));
                 rvPicList.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(this, 3), false));
                 rvPicList.setAdapter(picAdapter);
@@ -188,13 +191,12 @@ public class AppraiseAssessActivity extends BaseActivity {
     }
 
 
-
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(view.getId() == R.id.img_title_left){
+            if (view.getId() == R.id.img_title_left) {
                 finish();
-            }else if(view.getId() == R.id.llCommit){
+            } else if (view.getId() == R.id.llCommit) {
                 commitAssess();
             }
         }
@@ -202,41 +204,41 @@ public class AppraiseAssessActivity extends BaseActivity {
 
     private void commitAssess() {
 
-        String price = etPrice.getText().toString() ;
-        String colour = etColour.getText().toString() ;
-        String flaw = etFlaw.getText().toString() ;
-        String accessory = etAccessory.getText().toString() ;
-        String otherHelp = etOtherHelp.getText().toString() ;
-        if(TextUtils.isEmpty(price)){
+        String price = etPrice.getText().toString();
+        String colour = etColour.getText().toString();
+        String flaw = etFlaw.getText().toString();
+        String accessory = etAccessory.getText().toString();
+        String otherHelp = etOtherHelp.getText().toString();
+        if (TextUtils.isEmpty(price)) {
             ToastUtils.showShort("请输入价格");
-            return ;
-        }else if(BigDecimalUtils.objToBigDecimal(price).doubleValue()<=0){
+            return;
+        } else if (BigDecimalUtils.objToBigDecimal(price).doubleValue() <= 0) {
             ToastUtils.showShort("价格必须大于0");
-            return ;
-        }else if(TextUtils.isEmpty(colour)){
+            return;
+        } else if (TextUtils.isEmpty(colour)) {
             ToastUtils.showShort("请输入酒成色");
-            return ;
-        }else if(TextUtils.isEmpty(flaw)){
+            return;
+        } else if (TextUtils.isEmpty(flaw)) {
             ToastUtils.showShort("请输入瑕疵情况");
-            return ;
-        }else if(TextUtils.isEmpty(accessory)){
+            return;
+        } else if (TextUtils.isEmpty(accessory)) {
             ToastUtils.showShort("请输入附近情况");
-            return ;
-        }else if(TextUtils.isEmpty(otherHelp)){
+            return;
+        } else if (TextUtils.isEmpty(otherHelp)) {
             ToastUtils.showShort("请输入其内容");
-            return ;
+            return;
         }
 
 
         showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().appraiserGoods(appraiseGoodsId,price, colour,flaw,accessory, otherHelp)
+        disposable.add(ApiUtils.getInstance().appraiserGoods(appraiseGoodsId, price, colour, flaw, accessory, otherHelp)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean>() {
                     @Override
                     public void accept(ResultBean resultBean) throws Exception {
                         hideLoadingDialog();
-                        if(resultBean.getErrorcode() == 0 ){
+                        if (resultBean.getErrorcode() == 0) {
                             ToastUtils.showShort("鉴别成功");
                             EventManager.getInstance().notify(null, ConstantMsg.APPRAISE_GOODS_SUCCESS);
                             finish();
@@ -251,7 +253,7 @@ public class AppraiseAssessActivity extends BaseActivity {
                 }));
     }
 
-    private void quickCash(){
-        startActivity(new Intent(AppraiseAssessActivity.this,QuickCashActivity.class));
+    private void quickCash() {
+        startActivity(new Intent(AppraiseAssessActivity.this, QuickCashActivity.class));
     }
 }

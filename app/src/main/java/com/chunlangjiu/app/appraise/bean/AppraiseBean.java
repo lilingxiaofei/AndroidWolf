@@ -85,6 +85,14 @@ public class AppraiseBean implements Serializable{
         this.authenticate_require = authenticate_require;
     }
 
+    public String getAuthenticate_grade() {
+        return authenticate_grade;
+    }
+
+    public void setAuthenticate_grade(String authenticate_grade) {
+        this.authenticate_grade = authenticate_grade;
+    }
+
     public String getAuthenticate_content() {
         return authenticate_content;
     }

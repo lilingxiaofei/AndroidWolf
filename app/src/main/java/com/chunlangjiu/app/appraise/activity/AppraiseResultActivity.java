@@ -21,6 +21,7 @@ import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.glide.GlideUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -208,6 +209,24 @@ public class AppraiseResultActivity extends BaseActivity {
     };
 
     private void quickCash(){
-        startActivity(new Intent(AppraiseResultActivity.this,QuickCashActivity.class));
+        disposable.add(ApiUtils.getInstance().quickCash(appraiseGoodsId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean>() {
+                    @Override
+                    public void accept(ResultBean result) throws Exception {
+                        if(result.getErrorcode() == 0){
+                            startActivity(new Intent(AppraiseResultActivity.this,QuickCashActivity.class));
+                            initData();
+                        }else{
+                            ToastUtils.showShort("快速提现失败，请稍后重试");
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                }));
     }
 }

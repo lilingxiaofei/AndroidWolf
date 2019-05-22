@@ -104,6 +104,7 @@ public class AppraiserInfoActivity extends BaseActivity {
         rvAppraiserList.addItemDecoration(new GridSpacingItemDecoration(2, Utils.dp2px(this, 5), false));
         rvAppraiserList.setAdapter(appraiseGoodsAdapter);
 
+
         refreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -113,6 +114,7 @@ public class AppraiserInfoActivity extends BaseActivity {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 loadAppraiserGoodsList(pageUtils.firstPage());
+                loadAppraiserDetails();
             }
         });
     }
@@ -171,6 +173,8 @@ public class AppraiserInfoActivity extends BaseActivity {
         if(appraiseBean!=null){
             GlideUtils.loadImageHead(this, appraiseBean.getAuthenticate_img(), imgHead);
             tvName.setText(appraiseBean.getAuthenticate_name());
+            float grade = BigDecimalUtils.objToBigDecimal(appraiseBean.getAuthenticate_grade()).floatValue();
+            rbEvaluation.setRating(grade==0?3:grade);
             tvRequestAppraise.setOnClickListener(onClickListener);
             tvAppraiseScope.setText(getString(R.string.appraise_scope,appraiseBean.getAuthenticate_scope()));
             tvAppraiseRequire.setText(getString(R.string.appraise_require,appraiseBean.getAuthenticate_require()));
