@@ -11,6 +11,7 @@ import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 import com.chunlangjiu.app.util.CommonUtils;
 import com.pkqup.commonlibrary.glide.GlideUtils;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 
 import java.util.Iterator;
 import java.util.List;
@@ -58,10 +59,16 @@ public class AppraiserAdapter extends BaseQuickAdapter<AppraiseBean, BaseViewHol
             helper.setText(R.id.tvName,item.getAuthenticate_name());
             helper.setText(R.id.tvAppraiseScope,CommonUtils.getString(R.string.appraise_scope,item.getAuthenticate_scope()));
             helper.setText(R.id.tvAppraiseRequire,CommonUtils.getString(R.string.appraise_require,item.getAuthenticate_require()));
-            helper.setText(R.id.tvTipsOne,"累计鉴定"+item.getLine());
+
+            String line = item.getLine() ;
+            line = BigDecimalUtils.objToBigDecimal(line).intValue()>999?"999+":line;
+            helper.setText(R.id.tvTipsOne,"累计鉴定"+line);
+
             helper.setText(R.id.tvTipsTwo,"完成率"+item.getRate());
-            String queueUp = item.getDay();
-            helper.setText(R.id.tvTipsThree,CommonUtils.setSpecifiedTextsColor("今日鉴定"+queueUp,queueUp, ContextCompat.getColor(context,R.color.t_red)));
+
+            String day = item.getDay() ;
+            day = BigDecimalUtils.objToBigDecimal(day).intValue()>999?"999+":day;
+            helper.setText(R.id.tvTipsThree,CommonUtils.setSpecifiedTextsColor("今日鉴定"+day,day, ContextCompat.getColor(context,R.color.t_red)));
         }
 
 

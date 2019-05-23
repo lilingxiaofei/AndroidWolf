@@ -7,8 +7,6 @@
     android:background="@drawable/bg_round_white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
     android:paddingTop="15dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -25,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/t_black"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:textSize="13sp"
         android:textStyle="bold" />
 
@@ -35,6 +35,8 @@
         android:text="@string/appraise_scope"
         android:textColor="@color/t_black"
         android:lines="2"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="5dp"
         android:textSize="11sp" />
 
@@ -45,6 +47,8 @@
         android:text="@string/appraise_require"
         android:layout_marginTop="2dp"
         android:singleLine="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:textColor="@color/t_black"
         android:textSize="11sp" />
 
@@ -61,30 +65,28 @@
             android:id="@+id/tvTipsOne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingRight="3dp"
             android:text="多年行业经验"
             android:textColor="@color/t_grey"
-            android:textSize="9sp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/tvTipsTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
             android:text="10项检测"
             android:textColor="@color/t_grey"
-            android:textSize="9sp" />
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/tvTipsThree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingLeft="3dp"
             android:text="精准市场评估"
             android:textColor="@color/t_grey"
-            android:textSize="9sp" />
+            android:textSize="8sp" />
     </LinearLayout>
 </LinearLayout>
