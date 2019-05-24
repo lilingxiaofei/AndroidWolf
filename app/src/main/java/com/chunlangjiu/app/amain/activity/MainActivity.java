@@ -382,6 +382,11 @@ public class MainActivity extends BaseActivity {
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
+            if (eventTag.equals(ConstantMsg.LOGIN_SUCCESS)) {
+                Intent intent = new Intent(MainActivity.this, GeTuiIntentService.class);
+                intent.putExtra("action", true);
+                startService(intent);
+            }
             msgToPageClass(eventTag);//我要买酒
             msgToPageAuction(eventTag);//竞拍专区
             msgToPageCart(eventTag);//购物车

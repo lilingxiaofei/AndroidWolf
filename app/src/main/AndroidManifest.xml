@@ -22,6 +22,18 @@
         <!-- 高德地图定位服务 -->
         <service android:name="com.amap.api.location.APSService" />
 
+
+        <!-- 个推SDK配置开始 -->
+        <!-- 配置SDK核心服务 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="${GETUI_APP_ID}" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="${GETUI_APP_KEY}" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="${GETUI_APP_SECRET}" />
         <!-- 配置个推SDK核心服务 -->
         <service
             android:name=".util.GeTuiPushService"

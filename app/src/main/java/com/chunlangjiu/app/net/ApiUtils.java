@@ -797,4 +797,9 @@ public class ApiUtils {
         return apiService.fundInfo("member.freezeInfo", "v1", log_id);
     }
 
+
+    public Flowable<ResultBean> geTuiRegister(String clientid) {
+        return apiService.geTuiRegister("message.push.igexin", "v1", clientid,"android");
+    }
+
 }

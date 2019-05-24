@@ -864,4 +864,8 @@ public interface ApiService {
     @POST("index.php/topapi")
     @FormUrlEncoded
     Flowable<ResultBean<FundInfoBean>> fundInfo(@Field("method") String method, @Field("v") String v, @Field("log_id") String logid);
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean> geTuiRegister(@Field("method") String method, @Field("v") String v, @Field("clientid") String clientid,@Field("type") String type);
 }

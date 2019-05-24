@@ -17,6 +17,9 @@ android {
                 GETUI_APP_KEY   : "F2cXuwCSvm8AgOkq1gc833",
                 GETUI_APP_SECRET: "XQY0MtICcv7drJesxQn1Y"
         ]
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+        }
 //        signingConfig signingConfigs.release
     }
     signingConfigs {

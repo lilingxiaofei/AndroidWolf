@@ -412,7 +412,7 @@ public class AppraiseApplyAssessActivity extends BaseActivity implements View.On
     }
 
     private void uploadImageNew() {
-        showLoadingDialog("图片真在上传，清稍后...");
+        showLoadingDialog("图片正在上传，清稍后...");
         //一定要上传的五张主图
         Observable<ResultBean<UploadImageBean>> main = ApiUtils.getInstance().shopUploadImage(FileUtils.imgToBase64(mainPicLists.get(0).path), mainPicLists.get(0).name);
         Observable<ResultBean<UploadImageBean>> detailOne = ApiUtils.getInstance().shopUploadImage(FileUtils.imgToBase64(mainPicListsTwo.get(0).path), mainPicListsTwo.get(0).name);

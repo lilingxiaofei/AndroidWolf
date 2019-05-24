@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.awen.photo.photopick.controller.PhotoPagerConfig;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.appraise.adapter.AppraiseGoodsPicAdapter;
@@ -163,11 +165,19 @@ public class AppraiseAssessActivity extends BaseActivity {
             tvGoodsYear.setText(CommonUtils.getString(R.string.appraise_goods_year, appraiseGoodsBean.getYear()));
             tvGoodsExplain.setText(CommonUtils.getString(R.string.appraise_goods_other, appraiseGoodsBean.getDetails()));
             if (!TextUtils.isEmpty(appraiseGoodsBean.getImg())) {
-                picList = Arrays.asList(appraiseGoodsBean.getImg().split(","));
+                List tempPicList = Arrays.asList(appraiseGoodsBean.getImg().split(","));
+                picList.clear();
+                picList.addAll(tempPicList);
                 picAdapter = new AppraiseGoodsPicAdapter(this, picList);
                 rvPicList.setLayoutManager(new GridLayoutManager(this, 3));
                 rvPicList.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(this, 3), false));
                 rvPicList.setAdapter(picAdapter);
+                picAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        toLargeImage(position);
+                    }
+                });
             }
 
 //            //快速提现UI
@@ -190,6 +200,14 @@ public class AppraiseAssessActivity extends BaseActivity {
         }
     }
 
+    private void toLargeImage(int position) {
+        new PhotoPagerConfig.Builder(this)
+                .setBigImageUrls((ArrayList<String>) picList)
+                .setSavaImage(false)
+                .setPosition(position)
+//                        .setSaveImageLocalPath("这里是你想保存的图片地址")
+                .build();
+    }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
