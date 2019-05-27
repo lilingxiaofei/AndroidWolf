@@ -122,11 +122,15 @@ public class PartnerListActivity extends BaseActivity {
                 helper.setText(R.id.tvSellGoods, sellGoods);
             }
             LinearLayout ll_store_label = helper.getView(R.id.ll_store_label);
-            for (int i = 0; i < 3; i++) {
-                View view = LayoutInflater.from(PartnerListActivity.this).inflate(R.layout.partner_list_label_item, null);
-                TextView storeLabel = view.findViewById(R.id.tvLabel1);
-                storeLabel.setText("标签" + i);
-                ll_store_label.addView(view);
+            String labels = item.getLabel_one();
+            if(!TextUtils.isEmpty(labels)){
+                String[] labelList = labels.split(",");
+                for (int i = 0; i < labelList.length; i++) {
+                    View view = LayoutInflater.from(PartnerListActivity.this).inflate(R.layout.partner_list_label_item, null);
+                    TextView storeLabel = view.findViewById(R.id.tvLabel1);
+                    storeLabel.setText(labelList[i]);
+                    ll_store_label.addView(view);
+                }
             }
         }
     }
