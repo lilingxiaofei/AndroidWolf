@@ -19,6 +19,7 @@ public class PartnerBean {
     private String shopname;
     private String shoptype;
     private String num ;
+    private String label_one ;
 
     public String getShop_id() {
         return shop_id;
@@ -122,5 +123,13 @@ public class PartnerBean {
 
     public void setNum(String num) {
         this.num = num;
+    }
+
+    public String getLabel_one() {
+        return label_one;
+    }
+
+    public void setLabel_one(String label_one) {
+        this.label_one = label_one;
     }
 }
