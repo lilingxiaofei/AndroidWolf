@@ -487,7 +487,7 @@ public class AppraiseApplyAssessActivity extends BaseActivity implements View.On
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        ToastUtils.showShort("提交失败");
+                        ToastUtils.showErrorMsg(throwable);
                         hideLoadingDialog();
                     }
                 }));
