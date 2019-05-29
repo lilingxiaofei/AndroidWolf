@@ -25,6 +25,7 @@ public class ConstantMsg {
     public static final String CHANGE_TO_EVALUATE = "msg_change_to_evaluate";//切换到评论tab
     public static final String WEIXIN_PAY_CALLBACK = "weixin_pay_success";//微信支付成功
     public static final String UPDATE_CART_LIST = "update_cart_list";//添加到购物车、支付成功等操作后更新购物车
+    public static final String AUCTION_ORDER_SUCCESS = "auction_order_success";//竞拍创建订单成功
     public static final String UPDATE_WEBVIEW = "update_webview";//刷新网页
 
     public static final String AUCTION_SLIDE_CHANGE = "auction_slide_change";//竞拍商品详情滑动变化

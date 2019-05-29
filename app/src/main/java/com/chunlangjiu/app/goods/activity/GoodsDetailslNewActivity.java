@@ -1149,14 +1149,18 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
-            detailCountEnd(eventTag);
+            if(ConstantMsg.AUCTION_ORDER_SUCCESS.equals(eventTag)){
+                initData();
+            }else if(ConstantMsg.DETAIL_COUNT_END.equals(eventTag)){
+                finish();
+            }
             weixinPaySuccess(object, eventTag);
         }
     };
 
     private void detailCountEnd(String eventTag) {
         if (eventTag.equals(ConstantMsg.DETAIL_COUNT_END)) {
-            finish();
+
         }
     }
 

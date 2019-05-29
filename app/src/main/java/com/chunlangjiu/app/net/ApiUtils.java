@@ -458,6 +458,9 @@ public class ApiUtils {
     public Flowable<ResultBean<CreateAuctionBean>> createAuctionOrder(String auctionitem_id, String addr_id, String price) {
         return apiService.createAuctionOrder("payment.pay.auctionCreate", "v1", auctionitem_id, addr_id, price);
     }
+    public Flowable<ResultBean<CreateAuctionBean>> createAuctionOrder(String auctionitem_id, String addr_id) {
+        return apiService.createAuctionOrder("payment.pay.auctionCreate", "v1", auctionitem_id, addr_id);
+    }
 
     public Flowable<ResultBean> auctionAddPrice(String auctionitem_id, String price) {
         return apiService.auctionAddPrice("item.auction.userAdd", "v1", auctionitem_id, price);

@@ -442,6 +442,10 @@ public interface ApiService {
                                                                @Field("auctionitem_id") String auctionitem_id, @Field("addr_id") String addr_id,
                                                                @Field("price") String price);
 
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<CreateAuctionBean>> createAuctionOrder(@Field("method") String method, @Field("v") String v,
+                                                               @Field("auctionitem_id") String auctionitem_id, @Field("addr_id") String addr_id);
 
     @POST("index.php/topapi")
     @FormUrlEncoded

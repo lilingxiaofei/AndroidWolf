@@ -117,5 +117,8 @@
     <string name="appraise_success_tips">\u3000\u3000您申请的鉴定，将会在1-2个工作日内完成。鉴定结果查看此流程【我的-买家中心-鉴定报告】</string>
     <string name="quick_cash">快速变现</string>
     <string name="commit_cash_apply">已提交变现申请</string>
+    <string name="auction_deposit">该拍品需交纳定金%s。</string>
+    <string name="auction_deposit_tips">建议您使用%s确保账户有足够的钱款哦！</string>
+    <string name="auction_deposit_tips_value">余额支付、微信支付、支付宝支付、银联支付</string>
 
 </resources>
