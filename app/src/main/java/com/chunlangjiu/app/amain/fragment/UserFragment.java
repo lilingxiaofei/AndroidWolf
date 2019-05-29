@@ -1210,6 +1210,16 @@ public class UserFragment extends BaseFragment {
     //退出登录
     private void logoutSuccess(String eventTag) {
         if (eventTag.equals(ConstantMsg.LOGOUT_SUCCESS)) {
+            personStatus = "";
+            companyStatus = "";
+
+            userInfo = null;
+            loginAccount = "";
+            personName = "";
+            companyName = "";
+            shopName = "";
+            shopId = "";
+
             SPUtils.put("token", "");
             BaseApplication.setToken("");
             BaseApplication.initToken();
