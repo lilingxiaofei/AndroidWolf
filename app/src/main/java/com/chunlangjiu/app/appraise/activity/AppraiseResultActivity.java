@@ -186,13 +186,13 @@ public class AppraiseResultActivity extends BaseActivity {
                     llCommit.setOnClickListener(onClickListener);
                     tvCommitPrice.setText(CommonUtils.getString(R.string.rmb_two,appraiseGoodsBean.getPrice()));
                     if(!"true".equals(appraiseGoodsBean.getSell())){
-                        llCommit.setEnabled(false);
-                        tvCommitPrice.setVisibility(View.GONE);
-                        tvCommitStr.setText(R.string.commit_cash_apply);
-                    }else{
                         llCommit.setEnabled(true);
                         tvCommitPrice.setVisibility(View.VISIBLE);
                         tvCommitStr.setText(R.string.quick_cash);
+                    }else{
+                        llCommit.setEnabled(false);
+                        tvCommitPrice.setVisibility(View.GONE);
+                        tvCommitStr.setText(R.string.commit_cash_apply);
                     }
                 }else{
                     llCommit.setVisibility(View.GONE);
