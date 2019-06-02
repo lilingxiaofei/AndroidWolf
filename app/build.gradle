@@ -115,6 +115,7 @@ dependencies {
     //流水布局
     compile 'org.apmem.tools:layouts:1.10@aar'
     implementation 'com.pingxx:pingpp-android:2.2.2'
+
     // (Ping++ 标准版 SDK) 必须添加
     //    implementation 'com.pingxx:pingpp-android-alipay:2.2.0' // 使用支付宝时添加
     //    implementation 'com.pingxx:pingpp-android-upacp:2.2.0' // 使用银联支付时添加

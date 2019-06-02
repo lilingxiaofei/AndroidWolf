@@ -156,6 +156,18 @@ public class CommonUtils {
         return "" ;
     }
 
+    public static String getString(String str,String obj) {
+        try {
+            if (obj == null) {
+                obj = "";
+            }
+            return String.format(str, obj);
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+        return "" ;
+    }
+
 
     public static String joinStr(Object... obj) {
         String joinStr = "";
