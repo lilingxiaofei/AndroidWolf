@@ -580,7 +580,6 @@ public class ConfirmOrderActivity extends BaseActivity {
             if (code == 0) {
                 //支付成功
                 ToastUtils.showShort("支付成功");
-                EventManager.getInstance().notify(null, ConstantMsg.UPDATE_CART_LIST);
             } else if (code == -1) {
                 //支付错误
                 ToastUtils.showShort("支付失败");
@@ -593,6 +592,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
 
     private void toOrderMainActivity() {
+        EventManager.getInstance().notify(null, ConstantMsg.UPDATE_CART_LIST);
         Intent intent = new Intent(this, OrderMainNewActivity.class);
         intent.putExtra(OrderParams.TYPE, 0);
         intent.putExtra(OrderParams.TARGET, 0);
