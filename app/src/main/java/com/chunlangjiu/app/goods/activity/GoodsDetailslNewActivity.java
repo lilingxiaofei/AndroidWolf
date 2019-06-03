@@ -171,6 +171,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private InputPriceDialog inputPriceDialog;
     private PayDialog payDialog;
 
+    private boolean auctionOrderSuccess = false ;
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -253,6 +254,12 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         initPay();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        auctionOrderSuccess();
+    }
+
     private void initPay() {
         wxapi = WXAPIFactory.createWXAPI(this, null);
         wxapi.registerApp("wx0e1869b241d7234f");
@@ -269,6 +276,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
 
     private void initView() {
+        EventManager.getInstance().registerListener(onNotifyListener);
         rlBanner = findViewById(R.id.rlBanner);
         banner = findViewById(R.id.banner);
         indicator = findViewById(R.id.indicator);
@@ -1150,7 +1158,8 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         @Override
         public void onNotify(Object object, String eventTag) {
             if(ConstantMsg.AUCTION_ORDER_SUCCESS.equals(eventTag)){
-                initData();
+                auctionOrderSuccess = true ;
+                getGoodsDetail();
             }else if(ConstantMsg.DETAIL_COUNT_END.equals(eventTag)){
                 finish();
             }
@@ -1158,9 +1167,13 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         }
     };
 
-    private void detailCountEnd(String eventTag) {
-        if (eventTag.equals(ConstantMsg.DETAIL_COUNT_END)) {
-
+    /**
+     * 由于延迟支付成功的延迟问题
+     */
+    private void auctionOrderSuccess(){
+        if(auctionOrderSuccess){
+            getGoodsDetail();
+            auctionOrderSuccess = false ;
         }
     }
 

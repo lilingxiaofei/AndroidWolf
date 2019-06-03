@@ -485,20 +485,28 @@ public class ShopMainActivity extends BaseActivity {
     }
 
     private void getShopInfoSuccess(ShopInfoBean data) {
-        GlideUtils.loadImageShop(this, data.getShopInfo().getShop_logo(), imgHead);
-        tvShopName.setText(data.getShopInfo().getShop_name());
-        tvShopTips.setText(data.getShopInfo().getShop_descript());
-        tvShopPhone.setText(data.getShopInfo().getMobile());
-        tvDesc.setText(data.getShopInfo().getShop_descript());
-        String shopType = data.getShopInfo().getGrade();
+        ShopInfoBean.ShopInfo shopInfo = data.getShopInfo();
 
-        if(!TextUtils.isEmpty(data.getShopInfo().getAuthentication())){
-            tvCompanyStatus.setText(data.getShopInfo().getAuthentication());
+        GlideUtils.loadImageShop(this, shopInfo.getShop_logo(), imgHead);
+        tvShopName.setText(shopInfo.getShop_name());
+        tvShopTips.setText(shopInfo.getShop_descript());
+        tvShopPhone.setText(shopInfo.getMobile());
+        tvDesc.setText(shopInfo.getShop_descript());
+        String shopType = shopInfo.getGrade();
+
+        if("true".equals(shopInfo.getAuthenticate()) && !TextUtils.isEmpty(shopInfo.getAuthenticate())){
+            tvRequestAppraise.setVisibility(View.VISIBLE);
+        }else{
+            tvRequestAppraise.setVisibility(View.GONE);
+        }
+
+        if(!TextUtils.isEmpty(shopInfo.getAuthentication())){
+            tvCompanyStatus.setText(shopInfo.getAuthentication());
         }else{
             tvCompanyStatus.setText("个人认证");
         }
 
-//        String companyStatus = data.getShopInfo().getStatus();
+//        String companyStatus = shopInfo.getStatus();
 //        if (AuthStatusBean.AUTH_SUCCESS.equals(companyStatus)) {
 //            tvCompanyStatus.setText("企业认证");
 //        } else {
