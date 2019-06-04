@@ -121,7 +121,6 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
 //                    showPayMethodDialog();
                     break;
                 case R.id.llCommit:
-                    showPayMethodDialog();
                     checkData();
                     break;
             }
@@ -274,12 +273,6 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
         if (TextUtils.isEmpty(addressId)) {
             ToastUtils.showShort("请选择地址");
         }
-//        else if (TextUtils.isEmpty(payMehtodId)) {
-//            ToastUtils.showShort("请选择支付方式");
-//        }
-//        else if (TextUtils.isEmpty(etPrice.getText().toString().trim())) {
-//            ToastUtils.showShort("请输入出钱金额");
-//        }
         else {
             showPayMethodDialog();
         }
@@ -342,6 +335,7 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
                     public void accept(Throwable throwable) throws Exception {
                         hideLoadingDialog();
                         ToastUtils.showErrorMsg(throwable);
+                        toOrderMainActivity(false);
                     }
                 }));
     }

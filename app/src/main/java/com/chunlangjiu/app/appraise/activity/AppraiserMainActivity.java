@@ -1,5 +1,6 @@
 package com.chunlangjiu.app.appraise.activity;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -39,7 +41,6 @@ import io.reactivex.schedulers.Schedulers;
  * @Describe: 鉴定师主页
  */
 public class AppraiserMainActivity extends BaseActivity {
-
     @BindView(R.id.tvAppraiseNum)
     TextView tvAppraiseNum;
     @BindView(R.id.tvTipsOne)
@@ -69,6 +70,7 @@ public class AppraiserMainActivity extends BaseActivity {
     }
 
     private void initView(){
+        setAppraiseNum("0");
         commonConfirmDialog = new CommonConfirmDialog(this,"“若想成为鉴定师，可拨打400-189-0095”联系平台申请！");
         commonConfirmDialog.setDialogStr("取消","联系");
         commonConfirmDialog.setCallBack(new CommonConfirmDialog.CallBack() {
@@ -124,9 +126,7 @@ public class AppraiserMainActivity extends BaseActivity {
                     public void accept(ResultBean<AppraiseListBean<AppraiseBean>> result) throws Exception {
                         refreshLayout.finishRefresh();
                         refreshLayout.finishLoadMore();
-                        String count = result.getData().getCount();
-                        String countStr = CommonUtils.getString(R.string.appraise_num,count);
-                        tvAppraiseNum.setText(CommonUtils.setSpecifiedTextsColor(countStr,count, ContextCompat.getColor(AppraiserMainActivity.this,R.color.t_red)));
+                        startAnimator(result.getData().getCount());
                         tvTipsOne.setText(result.getData().getContent());
                         pageUtils.loadListSuccess(result.getData().getList());
                         appraiserAdapter.setAddNewData(pageUtils.getList());
@@ -140,6 +140,26 @@ public class AppraiserMainActivity extends BaseActivity {
                 }));
     }
 
+    private void startAnimator(final String countNum){
+        final  int mEndValue  = BigDecimalUtils.objToBigDecimal(countNum).intValue();
+        ValueAnimator animator = ValueAnimator.ofInt(0, mEndValue);
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                String num = animation.getAnimatedValue().toString();
+                setAppraiseNum(num);
+            }
+        });
+        animator.start();
+    }
+
+    private void setAppraiseNum(String num){
+        StringBuffer str = new StringBuffer("累计鉴别已超过");
+        str.append(num);
+        str.append("件");
+        tvAppraiseNum.setText(CommonUtils.setSpecifiedTextsColor(str.toString(),num, ContextCompat.getColor(AppraiserMainActivity.this,R.color.t_red)));
+    }
 
     @Override
     public void setTitleView() {

@@ -34,6 +34,9 @@ public class ShopInfoBean {
         private String authentication ;
         private String grade ;//店铺等级 0普通店铺，1,星级卖家，2城市合伙人
 
+        private String authenticate;
+        private String authenticate_id ;
+
         public String getShopname() {
             return shopname;
         }
@@ -76,6 +79,22 @@ public class ShopInfoBean {
 
         public String getShop_type() {
             return shop_type;
+        }
+
+        public String getAuthenticate() {
+            return authenticate;
+        }
+
+        public void setAuthenticate(String authenticate) {
+            this.authenticate = authenticate;
+        }
+
+        public String getAuthenticate_id() {
+            return authenticate_id;
+        }
+
+        public void setAuthenticate_id(String authenticate_id) {
+            this.authenticate_id = authenticate_id;
         }
 
         public void setShop_type(String shop_type) {

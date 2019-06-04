@@ -147,6 +147,7 @@
                     android:background="@mipmap/appraise_request_white"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/t_white"
+                    android:visibility="gone"
                     android:textSize="11sp"/>
             </RelativeLayout>
 

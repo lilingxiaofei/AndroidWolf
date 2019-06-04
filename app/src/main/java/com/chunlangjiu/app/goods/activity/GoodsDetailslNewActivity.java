@@ -171,6 +171,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private InputPriceDialog inputPriceDialog;
     private PayDialog payDialog;
 
+    private boolean auctionOrderSuccess = false ;
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -253,6 +254,12 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         initPay();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        auctionOrderSuccess();
+    }
+
     private void initPay() {
         wxapi = WXAPIFactory.createWXAPI(this, null);
         wxapi.registerApp("wx0e1869b241d7234f");
@@ -269,6 +276,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
 
     private void initView() {
+        EventManager.getInstance().registerListener(onNotifyListener);
         rlBanner = findViewById(R.id.rlBanner);
         banner = findViewById(R.id.banner);
         indicator = findViewById(R.id.indicator);
@@ -1158,6 +1166,15 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         }
     };
 
+    /**
+     * 由于延迟支付成功的延迟问题
+     */
+    private void auctionOrderSuccess(){
+        if(auctionOrderSuccess){
+            getGoodsDetail();
+            auctionOrderSuccess = false ;
+        }
+    }
 
     private void weixinPaySuccess(Object object, String eventTag) {
         if (eventTag.equals(ConstantMsg.WEIXIN_PAY_CALLBACK)) {
