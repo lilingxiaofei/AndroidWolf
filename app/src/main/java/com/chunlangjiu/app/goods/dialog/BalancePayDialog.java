@@ -2,6 +2,7 @@ package com.chunlangjiu.app.goods.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.Gravity;

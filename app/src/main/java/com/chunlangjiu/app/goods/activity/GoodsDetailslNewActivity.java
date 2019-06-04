@@ -1158,11 +1158,6 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         }
     };
 
-    private void detailCountEnd(String eventTag) {
-        if (eventTag.equals(ConstantMsg.DETAIL_COUNT_END)) {
-
-        }
-    }
 
     private void weixinPaySuccess(Object object, String eventTag) {
         if (eventTag.equals(ConstantMsg.WEIXIN_PAY_CALLBACK)) {
