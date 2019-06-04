@@ -50,7 +50,7 @@
                     android:id="@+id/imgIconOne"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/home_auction"
+                    android:src="@mipmap/home_auction"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -77,7 +77,7 @@
                     android:id="@+id/imgIconTwo"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/home_buy"
+                    android:src="@mipmap/home_buy"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -103,7 +103,7 @@
                     android:id="@+id/imgIconThree"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/home_sell_goods"
+                    android:src="@mipmap/home_sell_goods"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -129,7 +129,7 @@
                     android:id="@+id/imgIconFour"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/home_manor"
+                    android:src="@mipmap/home_manor"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -155,7 +155,7 @@
                     android:id="@+id/imgIconFive"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/home_valuation"
+                    android:src="@mipmap/home_valuation"
                     android:scaleType="centerCrop" />
 
                 <TextView
@@ -180,7 +180,7 @@
                     android:id="@+id/imgPartner"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/home_partner"
+                    android:src="@mipmap/home_partner"
                     android:scaleType="centerCrop" />
 
                 <TextView

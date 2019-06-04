@@ -3,7 +3,8 @@ package com.chunlangjiu.app.goods.dialog;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -19,16 +20,16 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.chunlangjiu.app.R;
-import com.chunlangjiu.app.goods.activity.ConfirmOrderActivity;
-import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.bean.PayPingBean;
 import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.params.OrderParams;
+import com.chunlangjiu.app.user.bean.AddressListDetailBean;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.pingplusplus.android.Pingpp;
+import com.pkqup.commonlibrary.dialog.CommonLoadingDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -49,14 +50,8 @@ import io.reactivex.schedulers.Schedulers;
  * @CreatedbBy: liucun on 2018/7/30
  * @Describe:
  */
-public class PayNewDialog extends Dialog {
+public class PayNewActivity extends Activity {
     private static final int SDK_PAY_FLAG = 1;
-    private static final int PAY_WEIXIN = 0;
-    private static final int PAY_ZHIFUBAO = 1;
-    private static final int PAY_WALLET = 2;
-    private static final int PAY_LARGE = 3;
-
-    View rootView;
 
     RelativeLayout rlWeiXin;
     RelativeLayout rlZhiFuBao;
@@ -64,35 +59,49 @@ public class PayNewDialog extends Dialog {
     TextView tvWalletTips;
     RelativeLayout rlLarge;
 
+    private View rootView;
 
     private IWXAPI wxapi;
 
     private Activity context;
-    private int payMethod = PAY_WEIXIN;
-    private List<PaymentBean.PaymentInfo> payList;
+    private static String paymentId ;//需要支付的交易号Id
+    private static List<PaymentBean.PaymentInfo> payList;
     //    private List<ImageView> imageViewLists;
     private String weixinPayId;
     private String zhifubaoPayId;
     private String yuePayId;
     private String daePayId;
-    private String payMethodId ;
+
     private String payMoney;
+    private String payMethodId ;
+
+    public CommonLoadingDialog loadingDialog;
 
 
-    private String paymentId ;//需要支付的交易号Id
+    public static void startPayActivity(String paymentIds, List<PaymentBean.PaymentInfo> payLists){
+        payList= payLists ;
+        paymentId= paymentIds ;
+    }
 
 
-    public PayNewDialog(Activity context,String paymentId, List<PaymentBean.PaymentInfo> payList) {
-        super(context, R.style.dialog_transparent);
-        this.context = context;
-        this.payList = payList;
-        this.payMoney = payMoney;
-        setCancelable(true);
-        setCanceledOnTouchOutside(true);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.goods_dialog_pay_method);
+        EventManager.getInstance().registerListener(onNotifyListener);
         initView();
         initData();
         initPay();
     }
+
+//    public PayNewActivity(Activity context, String paymentId, List<PaymentBean.PaymentInfo> payList) {
+//        super(context, R.style.dialog_transparent);
+//        this.context = context;
+//        this.payList = payList;
+//        this.payMoney = payMoney;
+//        setCancelable(true);
+//        setCanceledOnTouchOutside(true);
+//    }
 
     private void initPay() {
         wxapi = WXAPIFactory.createWXAPI(context, null);
@@ -101,6 +110,11 @@ public class PayNewDialog extends Dialog {
 
 
     private void initView() {
+        if(payList == null || payList.size()==0){
+            return ;
+        }
+
+
         rootView = LayoutInflater.from(context).inflate(R.layout.goods_dialog_pay_method, null);
         Window window = getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
@@ -134,19 +148,21 @@ public class PayNewDialog extends Dialog {
     }
 
     private void getPaymentList() {
+        showLoadingDialog();
         ApiUtils.getInstance().getPayment()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<PaymentBean>>() {
                     @Override
                     public void accept(ResultBean<PaymentBean> paymentBeanResultBean) throws Exception {
+                        hideLoadingDialog();
                         payList = paymentBeanResultBean.getData().getList();
-                        uipdatePayList();
+                        initView();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
+                        hideLoadingDialog();
                     }
                 });
     }
@@ -182,7 +198,7 @@ public class PayNewDialog extends Dialog {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.imgClose:
-                    dismiss();
+                    finish();
                     break;
                 case R.id.rlWeiXin:
                     choicePay(weixinPayId);
@@ -234,43 +250,46 @@ public class PayNewDialog extends Dialog {
 
 
     private void payMoney(final String payMethodId, String payPwd) {
-//        ApiUtils.getInstance().payDo(paymentId, payMethodId, payPwd)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<ResultBean>() {
-//                    @Override
-//                    public void accept(ResultBean resultBean) throws Exception {
-////                        hideLoadingDialog();
-//                        invokePay(payMethodId, resultBean);
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-////                        hideLoadingDialog();
-//                        ToastUtils.showErrorMsg(throwable);
-//                    }
-//                });
+        if(OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)){
+                    ApiUtils.getInstance().payDo(paymentId, payMethodId, payPwd)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean>() {
+                    @Override
+                    public void accept(ResultBean resultBean) throws Exception {
+                        hideLoadingDialog();
+                        invokePay(payMethodId, resultBean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        hideLoadingDialog();
+                        ToastUtils.showErrorMsg(throwable);
+                    }
+                });
 
-
-                    ApiUtils.getInstance().payPing(paymentId, payMethodId, payPwd)
+        }else{
+            ApiUtils.getInstance().payPing(paymentId, payMethodId, payPwd)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<ResultBean<PayPingBean>>() {
                         @Override
                         public void accept(ResultBean<PayPingBean> resultBean) throws Exception {
-//                            hideLoadingDialog();
-//                            invokePay(resultBean);
+                            hideLoadingDialog();
                             invokePayPing(resultBean);
                         }
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-//                            toOrderMainActivity();
-//                            hideLoadingDialog();
+                            hideLoadingDialog();
                             ToastUtils.showErrorMsg(throwable);
                             payFail();
                         }
                     });
+        }
+
+
+
     }
 
     private void invokePayPing(ResultBean<PayPingBean> data) {
@@ -392,43 +411,66 @@ public class PayNewDialog extends Dialog {
         }
     }
 
-    @Override
-    public void show() {
-        super.show();
-        EventManager.getInstance().registerListener(onNotifyListener);
-    }
 
     @Override
-    public void dismiss() {
-        super.dismiss();
+    protected void onDestroy() {
+        super.onDestroy();
         EventManager.getInstance().unRegisterListener(onNotifyListener);
     }
 
+
     private void paySuccess(){
-        if(callBack!=null){
-            callBack.paySuccess();
-        }
+        EventManager.getInstance().notify(paymentId, ConstantMsg.PAY_SUCCESS);
+        finish();
     }
 
+
     private void payFail(){
-        if(callBack!=null){
-            callBack.payFail();
-        }
+        EventManager.getInstance().notify(paymentId, ConstantMsg.PAY_FAIL);
+        finish();
     }
 
     @Override
-    public void setOnDismissListener(@Nullable OnDismissListener listener) {
-        super.setOnDismissListener(listener);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //支付页面返回处理
+        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+                /* 处理返回值
+                 * "success" - 支付
+                 * 成功
+                 * "fail"    - 支付失败
+                 * "cancel"  - 取消支付
+                 * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
+                 * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
+                 */
+                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+                ToastUtils.showShort(result+"=========="+ errorMsg+"=========="+ extraMsg);
+            }
+        }
     }
 
-    private PayCallBack callBack;
 
-    public void setCallBack(PayCallBack callBack) {
-        this.callBack = callBack;
+    public void showLoadingDialog() {
+        if (null == loadingDialog) {
+            loadingDialog = new CommonLoadingDialog(this);
+        }
+        loadingDialog.show();
     }
 
-    public interface PayCallBack {
-        void paySuccess();
-        void payFail();
+    public void showLoadingDialog(String loadContent) {
+        if (null == loadingDialog) {
+            loadingDialog = new CommonLoadingDialog(this);
+        }
+        loadingDialog.setLoadingText(loadContent);
+        loadingDialog.show();
     }
+
+    public void hideLoadingDialog() {
+        if (null != loadingDialog) {
+            loadingDialog.dismiss();
+        }
+    }
+
 }

@@ -31,6 +31,7 @@ import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
+import com.chunlangjiu.app.goods.dialog.PayNewActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.adapter.OrderAfterSalePicAdapter;
 import com.chunlangjiu.app.order.bean.CancelReasonBean;
@@ -1544,48 +1545,49 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void getPayment() {
-        showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().getPayment()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<PaymentBean>>() {
-                    @Override
-                    public void accept(ResultBean<PaymentBean> paymentBeanResultBean) throws Exception {
-                        hideLoadingDialog();
-                        if (0 == paymentBeanResultBean.getErrorcode()) {
-                            payList = paymentBeanResultBean.getData().getList();
-                            if (payList == null || payList.size() == 0) {
-                                ToastUtils.showShort("获取支付方式失败");
-                            } else {
-                                payDialog = new PayDialog(OrderDetailActivity.this, payList, orderDetailBean.getPayment());
-                                payDialog.setCallBack(new PayDialog.CallBack() {
-                                    @Override
-                                    public void choicePayMethod(String payMethodId) {
-//                                        payDo(payMethod, payMethodId);
-                                        confirmPayMode(payMethodId);
-                                    }
-                                });
-                                payDialog.show();
-                            }
-                        } else {
-                            if (TextUtils.isEmpty(paymentBeanResultBean.getMsg())) {
-                                ToastUtils.showShort("获取支付方式失败");
-                            } else {
-                                ToastUtils.showShort(paymentBeanResultBean.getMsg());
-                            }
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        hideLoadingDialog();
-                        if (TextUtils.isEmpty(throwable.getMessage())) {
-                            ToastUtils.showShort("获取支付方式失败");
-                        } else {
-                            ToastUtils.showShort(throwable.getMessage());
-                        }
-                    }
-                }));
+        PayNewActivity.startPayActivity(paymentId,null);
+//        showLoadingDialog();
+//        disposable.add(ApiUtils.getInstance().getPayment()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<ResultBean<PaymentBean>>() {
+//                    @Override
+//                    public void accept(ResultBean<PaymentBean> paymentBeanResultBean) throws Exception {
+//                        hideLoadingDialog();
+//                        if (0 == paymentBeanResultBean.getErrorcode()) {
+//                            payList = paymentBeanResultBean.getData().getList();
+//                            if (payList == null || payList.size() == 0) {
+//                                ToastUtils.showShort("获取支付方式失败");
+//                            } else {
+//                                payDialog = new PayDialog(OrderDetailActivity.this, payList, orderDetailBean.getPayment());
+//                                payDialog.setCallBack(new PayDialog.CallBack() {
+//                                    @Override
+//                                    public void choicePayMethod(String payMethodId) {
+////                                        payDo(payMethod, payMethodId);
+//                                        confirmPayMode(payMethodId);
+//                                    }
+//                                });
+//                                payDialog.show();
+//                            }
+//                        } else {
+//                            if (TextUtils.isEmpty(paymentBeanResultBean.getMsg())) {
+//                                ToastUtils.showShort("获取支付方式失败");
+//                            } else {
+//                                ToastUtils.showShort(paymentBeanResultBean.getMsg());
+//                            }
+//                        }
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) throws Exception {
+//                        hideLoadingDialog();
+//                        if (TextUtils.isEmpty(throwable.getMessage())) {
+//                            ToastUtils.showShort("获取支付方式失败");
+//                        } else {
+//                            ToastUtils.showShort(throwable.getMessage());
+//                        }
+//                    }
+//                }));
     }
 
 
@@ -2049,6 +2051,9 @@ public class OrderDetailActivity extends BaseActivity {
         public void onNotify(Object object, String eventTag) {
             switch (eventTag) {
                 case OrderParams.REFRESH_ORDER_DETAIL:
+                    initData();
+                    break;
+                case ConstantMsg.PAY_SUCCESS:
                     initData();
                     break;
             }
