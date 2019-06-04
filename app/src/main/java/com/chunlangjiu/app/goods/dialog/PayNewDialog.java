@@ -3,7 +3,6 @@ package com.chunlangjiu.app.goods.dialog;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -19,11 +18,8 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.chunlangjiu.app.R;
-import com.chunlangjiu.app.goods.activity.ConfirmOrderActivity;
-import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.order.bean.PayPingBean;
 import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
@@ -255,9 +251,9 @@ public class PayNewDialog extends Dialog {
                     ApiUtils.getInstance().payPing(paymentId, payMethodId, payPwd)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean<PayPingBean>>() {
+                    .subscribe(new Consumer<ResultBean<Map>>() {
                         @Override
-                        public void accept(ResultBean<PayPingBean> resultBean) throws Exception {
+                        public void accept(ResultBean<Map> resultBean) throws Exception {
 //                            hideLoadingDialog();
 //                            invokePay(resultBean);
                             invokePayPing(resultBean);
@@ -273,9 +269,9 @@ public class PayNewDialog extends Dialog {
                     });
     }
 
-    private void invokePayPing(ResultBean<PayPingBean> data) {
+    private void invokePayPing(ResultBean<Map> data) {
         try {
-            JSONObject jsonObject = new JSONObject(data.getData().getData());
+            JSONObject jsonObject = new JSONObject(data.getData());
             Pingpp.createPayment(context,jsonObject.toString());
         } catch (Exception e) {
             e.printStackTrace();

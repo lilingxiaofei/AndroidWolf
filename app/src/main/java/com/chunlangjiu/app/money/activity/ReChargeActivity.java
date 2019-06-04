@@ -1,11 +1,13 @@
 package com.chunlangjiu.app.money.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -22,6 +24,7 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
+import com.pingplusplus.android.Pingpp;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.SPUtils;
@@ -246,29 +249,6 @@ public class ReChargeActivity extends BaseActivity {
                 }));
     }
 
-    private void getPaymentList() {
-        showLoadingDialog();
-        disposable.add(ApiUtils.getInstance().getPayment()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean<PaymentBean>>() {
-                    @Override
-                    public void accept(ResultBean<PaymentBean> paymentBeanResultBean) throws Exception {
-                        hideLoadingDialog();
-                        payList = paymentBeanResultBean.getData().getList();
-                        if (payList != null & payList.size() > 0) {
-//                            tvPayMethod.setText(payList.get(0).getApp_display_name());
-                            payMehtodId = OrderParams.PAY_APP_WXPAY;
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        hideLoadingDialog();
-                    }
-                }));
-    }
-
     private void createSuccess(String paymentId,String pwd) {
         if (!TextUtils.isEmpty(paymentId)) {
             disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId,pwd)
@@ -291,28 +271,6 @@ public class ReChargeActivity extends BaseActivity {
         }
     }
 
-//    private void createSuccess2(CreateRechargeOrderBean data){
-//        if (null!=data){
-//            disposable.add(ApiUtils.getInstance().storedPay(data.getPayment_id(), payMehtodId,"wap","0.01",String.valueOf(payType.ordinal()))
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Consumer<ResultBean>() {
-//                        @Override
-//                        public void accept(ResultBean resultBean) throws Exception {
-////                            hideLoadingDialog();
-//                            invokePay(resultBean);
-//                        }
-//                    }, new Consumer<Throwable>() {
-//                        @Override
-//                        public void accept(Throwable throwable) throws Exception {
-//                            hideLoadingDialog();
-//                            ToastUtils.showErrorMsg(throwable);
-//                        }
-//                    }));
-//
-//        }
-//
-//    }
 
     private void invokePay(ResultBean resultBean) {
         switch (payMehtodId) {
@@ -390,18 +348,7 @@ public class ReChargeActivity extends BaseActivity {
                 if (TextUtils.equals(resultStatus, "9000")) {
                     // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                     Toast.makeText(ReChargeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                    if (rechargeType==RechargeType.Balance){
-                        EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
-                        finish();
-                    }else if (rechargeType==RechargeType.SecurityDeposit){
-                        EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
-                        Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
-                        intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
-                        intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
-                        intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY,edtMoney.getText().toString());
-                        startActivity(intent);
-                        finish();
-                    }
+                    paySuccess();
 
                 } else {
                     // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
@@ -460,36 +407,54 @@ public class ReChargeActivity extends BaseActivity {
         }
 
     }
-//
-//    public void toggleBalanceSecurityDeposit(RechargeType rechargeType) {
-//        this.rechargeType = rechargeType;
-//        switch (rechargeType) {
-//            case Balance:
-//                imgBalance.setSelected(true);
-//                imgSecurityDeposit.setSelected(false);
-//                break;
-//            case SecurityDeposit:
-//                imgBalance.setSelected(false);
-//                imgSecurityDeposit.setSelected(true);
-//                break;
-//        }
-//
-//    }
 
-//    public void togglePayType(PayType payType) {
-//        this.payType = payType;
-//        switch (payType) {
-//            case Alipay:
-//                payMehtodId = OrderParams.PAY_APP_ALIPAY;
-//                rbZfb.setChecked(true);
-//                break;
-//            case Wx:
-//                rbWx.setChecked(true);
-//                payMehtodId = OrderParams.PAY_APP_WXPAY;
-//                break;
-//        }
-//
-//    }
+    private void paySuccess(){
+        if (rechargeType==RechargeType.Balance){
+            EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
+            finish();
+        }else if (rechargeType==RechargeType.SecurityDeposit){
+            EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
+            Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
+            intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
+            intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
+            intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY,edtMoney.getText().toString());
+            startActivity(intent);
+            finish();
+        }
+    }
+
+
+    private void payFail(){
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //支付页面返回处理
+        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+                if ("success".equals(result)) {
+                    paySuccess();
+                } else {
+                    payFail();
+                }
+                /* 处理返回值
+                 * "success" - 支付
+                 * 成功
+                 * "fail"    - 支付失败
+                 * "cancel"  - 取消支付
+                 * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
+                 * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
+                 */
+                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+                Log.e("Ping++支付结果：", result + "==========" + errorMsg + "==========" + extraMsg);
+            } else {
+                payFail();
+            }
+        }
+    }
 
     public void togglePayType(String payMethodId) {
         payMehtodId = payMethodId;

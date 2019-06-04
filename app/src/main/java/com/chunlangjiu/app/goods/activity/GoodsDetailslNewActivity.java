@@ -38,10 +38,10 @@ import com.chunlangjiu.app.goods.bean.GivePriceBean;
 import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.bean.RecommendGoodsBean;
-import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.CallDialog;
 import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
+import com.chunlangjiu.app.goods.dialog.PayNewActivity;
 import com.chunlangjiu.app.goods.dialog.PriceListDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
@@ -61,9 +61,6 @@ import com.pkqup.commonlibrary.util.SizeUtils;
 import com.pkqup.commonlibrary.util.TimeUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.pkqup.commonlibrary.view.countdownview.CountdownView;
-import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
@@ -165,7 +162,6 @@ public class GoodsDetailslNewActivity extends BaseActivity {
 
     //竞拍所需数据
     private List<GivePriceBean> priceList;//出价列表
-    private IWXAPI wxapi;
     private String payment_id;
     private List<PaymentBean.PaymentInfo> payList;
     private InputPriceDialog inputPriceDialog;
@@ -251,7 +247,6 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         setContentView(R.layout.goods_activity_details_new);
         initView();
         initData();
-        initPay();
     }
 
     @Override
@@ -260,10 +255,6 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         auctionOrderSuccess();
     }
 
-    private void initPay() {
-        wxapi = WXAPIFactory.createWXAPI(this, null);
-        wxapi.registerApp("wx0e1869b241d7234f");
-    }
 
     @Override
     public void setTitleView() {
@@ -941,7 +932,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                 }
                 inputPriceDialog.show();
             } else {
-                showPayMethodDialog();
+                PayNewActivity.startPayActivity(this,payment_id,payList);
             }
         } else {
             AuctionConfirmOrderActivity.startConfirmOrderActivity(this, goodsDetailBean);
@@ -989,91 +980,9 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     }
 
 
-    private void showPayMethodDialog() {
-        if (payList == null & payList.size() == 0) {
-            ToastUtils.showShort("获取支付方式失败");
-        } else {
-            if (payDialog == null) {
-                String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
-                payDialog = new PayDialog(this, payList,payMoney);
-                payDialog.setCallBack(new PayDialog.CallBack() {
-                    @Override
-                    public void choicePayMethod(String payMethodId) {
-                        confirmPayMode(payMethodId);
-                    }
-                });
-            }
-            payDialog.show();
-        }
-    }
-
-    /**
-     * 确认支付方式
-     */
-    private void confirmPayMode(final String payMethodId){
-        if(OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)){
-            String payMoney = goodsDetailBean.getItem().getAuction().getPledge() ;
-            BalancePayDialog balancePayDialog = new BalancePayDialog(this,payMoney);
-            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
-                @Override
-                public void cancelPay() {
-                }
-                @Override
-                public void confirmPay(String pwd) {
-                    payMoney(payMethodId,pwd);
-                }
-            });
-            balancePayDialog.show();
-        }else{
-            payMoney(payMethodId,"");
-        }
-    }
-
-    private void payMoney( final String payMethodId, String payPwd) {
-        disposable.add(ApiUtils.getInstance().payDo(payment_id, payMethodId,payPwd)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean>() {
-                    @Override
-                    public void accept(ResultBean resultBean) throws Exception {
-                        hideLoadingDialog();
-                        invokePay(payMethodId, resultBean);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        hideLoadingDialog();
-                        ToastUtils.showErrorMsg(throwable);
-                    }
-                }));
-    }
 
 
-    private void invokePay(String payMethodId, ResultBean data) {
-        switch (payMethodId) {
-            case OrderParams.PAY_APP_WXPAY:
-                invokeWeixinPay(data);
-                break;
-            case OrderParams.PAY_APP_ALIPAY:
-                invokeZhifubaoPay(data);
-                break;
-            case OrderParams.PAY_APP_DEPOSIT:
-                toOrderMainActivity();
-                break;
-        }
-    }
 
-    private void invokeWeixinPay(ResultBean data) {
-        PayReq request = new PayReq();
-        request.appId = "wx0e1869b241d7234f";
-        request.partnerId = data.getPartnerid();
-        request.prepayId = data.getPrepayid();
-        request.packageValue = data.getPackageName();
-        request.nonceStr = data.getNoncestr();
-        request.timeStamp = data.getTimestamp();
-        request.sign = data.getSign();
-        wxapi.sendReq(request);
-    }
 
     /**
      * 以下两个接口代替 activity.onStart() 和 activity.onStop(), 控制 timer 的开关
@@ -1157,7 +1066,12 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
-            if(ConstantMsg.AUCTION_ORDER_SUCCESS.equals(eventTag)){
+            if(ConstantMsg.PAY_SUCCESS.equals(eventTag)){
+                getGoodsDetail();
+                toOrderMainActivity();
+            }else if(ConstantMsg.PAY_FAIL.equals(eventTag)){
+//                toOrderMainActivity();
+            }else if(ConstantMsg.AUCTION_ORDER_SUCCESS.equals(eventTag)){
                 initData();
             }else if(ConstantMsg.DETAIL_COUNT_END.equals(eventTag)){
                 finish();

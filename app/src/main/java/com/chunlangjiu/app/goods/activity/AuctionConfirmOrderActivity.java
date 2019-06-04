@@ -23,6 +23,7 @@ import com.chunlangjiu.app.goods.bean.GoodsDetailBean;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
+import com.chunlangjiu.app.goods.dialog.PayNewActivity;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
 import com.chunlangjiu.app.order.bean.PayResultBean;
@@ -274,7 +275,8 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
             ToastUtils.showShort("请选择地址");
         }
         else {
-            showPayMethodDialog();
+            commitOrder();
+//            showPayMethodDialog();
         }
     }
 
@@ -321,23 +323,24 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     }
 
     private void payMoney(CreateAuctionBean data) {
-        disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId, payPwd)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean>() {
-                    @Override
-                    public void accept(ResultBean resultBean) throws Exception {
-                        hideLoadingDialog();
-                        invokePay(resultBean);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        hideLoadingDialog();
-                        ToastUtils.showErrorMsg(throwable);
-                        toOrderMainActivity(false);
-                    }
-                }));
+        PayNewActivity.startPayActivity(this,data.getPayment_id(),payList);
+//        disposable.add(ApiUtils.getInstance().payDo(data.getPayment_id(), payMehtodId, payPwd)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<ResultBean>() {
+//                    @Override
+//                    public void accept(ResultBean resultBean) throws Exception {
+//                        hideLoadingDialog();
+//                        invokePay(resultBean);
+//                    }
+//                }, new Consumer<Throwable>() {
+//                    @Override
+//                    public void accept(Throwable throwable) throws Exception {
+//                        hideLoadingDialog();
+//                        ToastUtils.showErrorMsg(throwable);
+//                        toOrderMainActivity(false);
+//                    }
+//                }));
     }
 
 
@@ -466,6 +469,11 @@ public class AuctionConfirmOrderActivity extends BaseActivity {
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
+            if(ConstantMsg.PAY_SUCCESS.equals(eventTag)){
+                toOrderMainActivity(true);
+            }else if(ConstantMsg.PAY_FAIL.equals(eventTag)){
+                toOrderMainActivity(false);
+            }
             weixinPaySuccess(object, eventTag);
         }
     };
