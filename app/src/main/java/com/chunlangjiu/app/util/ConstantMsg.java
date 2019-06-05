@@ -28,6 +28,8 @@ public class ConstantMsg {
     public static final String AUCTION_ORDER_SUCCESS = "auction_order_success";//竞拍创建订单成功
     public static final String PAY_SUCCESS = "paySuccess";//支付成功
     public static final String PAY_FAIL = "payFail";//支付失败
+    public static final int PAY_SUCCESS_INT = 1002;//支付成功
+    public static final int PAY_FAIL_INT = 1003;//支付失败
     public static final String UPDATE_WEBVIEW = "update_webview";//刷新网页
 
     public static final String AUCTION_SLIDE_CHANGE = "auction_slide_change";//竞拍商品详情滑动变化

@@ -137,6 +137,15 @@ public class CommonUtils {
         return false;
     }
 
+    public static boolean isLocalPic(String picPath) {
+        if (TextUtils.isEmpty(picPath)) {
+            return false;
+        } else if (picPath.startsWith("file://") || picPath.startsWith("https://")) {
+            return true;
+        }
+        return false;
+    }
+
     public static boolean isAuctionGoods(String status) {
         boolean isAuction = GOODS_STATUS_AUCTION_NOT_START.equals(status) || GOODS_STATUS_AUCTION_ACTIVE.equals(status) || GOODS_STATUS_AUCTION_STOP.equals(status) ? true : false;
         return isAuction;

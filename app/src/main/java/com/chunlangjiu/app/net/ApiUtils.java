@@ -432,8 +432,8 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<PaymentBean>> getPayment() {
-//        return apiService.getPayment("payment.pay.paycenter", "v3");
-        return apiService.getPayment("payment.pay.paycenter", "v2");
+        return apiService.getPayment("payment.pay.paycenter", "v3");
+//        return apiService.getPayment("payment.pay.paycenter", "v2");
     }
 
     public Flowable<ResultBean<CreateOrderBean>> createOrder(String mode, String md5, String addrId, String paymentId, String shippingType,
@@ -449,6 +449,10 @@ public class ApiUtils {
 
     public Flowable<ResultBean<PayResultBean>> payDo(String payment_id, String payment_type, String payPwd) {
         return apiService.payDo("payment.pay.do", "v1", payment_id, payment_type, payPwd);
+    }
+
+    public Flowable<Map> payDoPing(String payment_id, String payment_type, String payPwd) {
+        return apiService.payDoPing("payment.pay.do", "v1", payment_id, payment_type, payPwd);
     }
 
     public Flowable<ResultBean<Map>> payPing(String payment_id, String payment_type, String payPwd) {

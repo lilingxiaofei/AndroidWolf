@@ -362,6 +362,7 @@ public class OrderDetailActivity extends BaseActivity {
             myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             disposable = new CompositeDisposable();
         }
+        showLoadingDialog();
         switch (type) {
             case 0:
                 disposable.add(ApiUtils.getInstance().getOrderDetail(tid)
@@ -370,6 +371,7 @@ public class OrderDetailActivity extends BaseActivity {
                         .subscribe(new Consumer<ResultBean<OrderDetailBean>>() {
                             @Override
                             public void accept(ResultBean<OrderDetailBean> orderDetailBeanResultBean) throws Exception {
+                                hideLoadingDialog();
                                 if (0 == orderDetailBeanResultBean.getErrorcode()) {
                                     orderDetailBean = orderDetailBeanResultBean.getData();
                                     processData();
@@ -385,6 +387,7 @@ public class OrderDetailActivity extends BaseActivity {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                hideLoadingDialog();
                                 if (TextUtils.isEmpty(throwable.getMessage())) {
                                     ToastUtils.showShort("获取订单详情失败");
                                 } else {
@@ -402,6 +405,7 @@ public class OrderDetailActivity extends BaseActivity {
                         .subscribe(new Consumer<ResultBean<OrderDetailBean>>() {
                             @Override
                             public void accept(ResultBean<OrderDetailBean> orderDetailBeanResultBean) throws Exception {
+                                hideLoadingDialog();
                                 if (0 == orderDetailBeanResultBean.getErrorcode()) {
                                     orderDetailBean = orderDetailBeanResultBean.getData();
                                     processData();
@@ -417,6 +421,7 @@ public class OrderDetailActivity extends BaseActivity {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                hideLoadingDialog();
                                 if (TextUtils.isEmpty(throwable.getMessage())) {
                                     ToastUtils.showShort("获取订单详情失败");
                                 } else {
@@ -435,6 +440,7 @@ public class OrderDetailActivity extends BaseActivity {
                         .subscribe(new Consumer<ResultBean<OrderDetailBean>>() {
                             @Override
                             public void accept(ResultBean<OrderDetailBean> orderDetailBeanResultBean) throws Exception {
+                                hideLoadingDialog();
                                 if (0 == orderDetailBeanResultBean.getErrorcode()) {
                                     orderDetailBean = orderDetailBeanResultBean.getData();
                                     processData();
@@ -450,6 +456,7 @@ public class OrderDetailActivity extends BaseActivity {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                hideLoadingDialog();
                                 if (TextUtils.isEmpty(throwable.getMessage())) {
                                     ToastUtils.showShort("获取订单详情失败");
                                 } else {
@@ -468,6 +475,7 @@ public class OrderDetailActivity extends BaseActivity {
                         .subscribe(new Consumer<ResultBean<SellerOrderDetailBean>>() {
                             @Override
                             public void accept(ResultBean<SellerOrderDetailBean> orderDetailBeanResultBean) throws Exception {
+                                hideLoadingDialog();
                                 if (0 == orderDetailBeanResultBean.getErrorcode()) {
                                     BeanCopyUitl beanCopyUitl = new BeanCopyUitl();
                                     orderDetailBean = new OrderDetailBean();
@@ -488,6 +496,7 @@ public class OrderDetailActivity extends BaseActivity {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                hideLoadingDialog();
                                 if (TextUtils.isEmpty(throwable.getMessage())) {
                                     ToastUtils.showShort("获取订单详情失败");
                                 } else {
@@ -506,6 +515,7 @@ public class OrderDetailActivity extends BaseActivity {
                         .subscribe(new Consumer<ResultBean<OrderDetailBean>>() {
                             @Override
                             public void accept(ResultBean<OrderDetailBean> orderDetailBeanResultBean) throws Exception {
+                                hideLoadingDialog();
                                 if (0 == orderDetailBeanResultBean.getErrorcode()) {
                                     orderDetailBean = orderDetailBeanResultBean.getData();
                                     processData();
@@ -521,6 +531,7 @@ public class OrderDetailActivity extends BaseActivity {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                hideLoadingDialog();
                                 if (TextUtils.isEmpty(throwable.getMessage())) {
                                     ToastUtils.showShort("获取订单详情失败");
                                 } else {
@@ -539,6 +550,7 @@ public class OrderDetailActivity extends BaseActivity {
                         .subscribe(new Consumer<ResultBean<OrderDetailBean>>() {
                             @Override
                             public void accept(ResultBean<OrderDetailBean> orderDetailBeanResultBean) throws Exception {
+                                hideLoadingDialog();
                                 if (0 == orderDetailBeanResultBean.getErrorcode()) {
                                     orderDetailBean = orderDetailBeanResultBean.getData();
                                     processData();
@@ -554,6 +566,7 @@ public class OrderDetailActivity extends BaseActivity {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                hideLoadingDialog();
                                 if (TextUtils.isEmpty(throwable.getMessage())) {
                                     ToastUtils.showShort("获取订单详情失败");
                                 } else {
@@ -563,6 +576,9 @@ public class OrderDetailActivity extends BaseActivity {
                                 Log.e(OrderDetailActivity.class.getSimpleName(), throwable.toString());
                             }
                         }));
+                break;
+            default:
+                hideLoadingDialog();
                 break;
         }
     }
@@ -1058,18 +1074,18 @@ public class OrderDetailActivity extends BaseActivity {
             //预防后台数据格式错误问题
             Object afterSalePicObj = orderDetailBean.getEvidence_pic();
 
-            if(afterSalePicObj!=null){
-                if(afterSalePicObj instanceof ArrayList){
-                    afterSalePicList = (ArrayList)afterSalePicObj;
-                }else if(afterSalePicObj.toString().length()>0){
-                    String afterSalePic = afterSalePicObj.toString() ;
+            if (afterSalePicObj != null) {
+                if (afterSalePicObj instanceof ArrayList) {
+                    afterSalePicList = (ArrayList) afterSalePicObj;
+                } else if (afterSalePicObj.toString().length() > 0) {
+                    String afterSalePic = afterSalePicObj.toString();
                     String[] afterSalePics = afterSalePic.split(",");
                     afterSalePicList = new ArrayList<>(Arrays.asList(afterSalePics));
                 }
             }
 
             rlAfterSalePic.setVisibility(View.VISIBLE);
-            if (afterSalePicList!=null && afterSalePicList.size()>0) {
+            if (afterSalePicList != null && afterSalePicList.size() > 0) {
                 OrderAfterSalePicAdapter goodsAdapter = new OrderAfterSalePicAdapter(this, afterSalePicList);
                 goodsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
@@ -1545,213 +1561,9 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void getPayment() {
-        PayNewActivity.startPayActivity(this,paymentId,null);
-//        showLoadingDialog();
-//        disposable.add(ApiUtils.getInstance().getPayment()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<ResultBean<PaymentBean>>() {
-//                    @Override
-//                    public void accept(ResultBean<PaymentBean> paymentBeanResultBean) throws Exception {
-//                        hideLoadingDialog();
-//                        if (0 == paymentBeanResultBean.getErrorcode()) {
-//                            payList = paymentBeanResultBean.getData().getList();
-//                            if (payList == null || payList.size() == 0) {
-//                                ToastUtils.showShort("获取支付方式失败");
-//                            } else {
-//                                payDialog = new PayDialog(OrderDetailActivity.this, payList, orderDetailBean.getPayment());
-//                                payDialog.setCallBack(new PayDialog.CallBack() {
-//                                    @Override
-//                                    public void choicePayMethod(String payMethodId) {
-////                                        payDo(payMethod, payMethodId);
-//                                        confirmPayMode(payMethodId);
-//                                    }
-//                                });
-//                                payDialog.show();
-//                            }
-//                        } else {
-//                            if (TextUtils.isEmpty(paymentBeanResultBean.getMsg())) {
-//                                ToastUtils.showShort("获取支付方式失败");
-//                            } else {
-//                                ToastUtils.showShort(paymentBeanResultBean.getMsg());
-//                            }
-//                        }
-//                    }
-//                }, new Consumer<Throwable>() {
-//                    @Override
-//                    public void accept(Throwable throwable) throws Exception {
-//                        hideLoadingDialog();
-//                        if (TextUtils.isEmpty(throwable.getMessage())) {
-//                            ToastUtils.showShort("获取支付方式失败");
-//                        } else {
-//                            ToastUtils.showShort(throwable.getMessage());
-//                        }
-//                    }
-//                }));
+        PayNewActivity.startPayActivity(this, paymentId, null);
     }
 
-
-    /**
-     * 确认支付方式
-     */
-    private void confirmPayMode(final String payMethodId) {
-        if (OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)) {
-            String payMoney = orderDetailBean.getPayment();
-            if (TextUtils.isEmpty(payMoney)) {
-                payMoney = orderDetailBean.getCost_price();
-            }
-            BalancePayDialog balancePayDialog = new BalancePayDialog(this, payMoney);
-            balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
-                @Override
-                public void cancelPay() {
-                }
-
-                @Override
-                public void confirmPay(String pwd) {
-                    payDo(payMethodId, pwd);
-                }
-            });
-            balancePayDialog.show();
-        } else {
-            payDo(payMethodId, "");
-        }
-    }
-
-    private void payDo(String payMethodId, String payPwd) {
-        showLoadingDialog();
-        this.payMehtodId = payMethodId;
-        disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId, payPwd)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ResultBean>() {
-                    @Override
-                    public void accept(ResultBean resultBean) throws Exception {
-                        hideLoadingDialog();
-                        if (0 == resultBean.getErrorcode()) {
-                            invokePay(resultBean);
-                        } else {
-                            if (TextUtils.isEmpty(resultBean.getMsg())) {
-                                ToastUtils.showShort("支付失败");
-                            } else {
-                                ToastUtils.showShort(resultBean.getMsg());
-                            }
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        hideLoadingDialog();
-                        if (TextUtils.isEmpty(throwable.getMessage())) {
-                            ToastUtils.showShort("支付失败");
-                        } else {
-                            ToastUtils.showShort(throwable.getMessage());
-                        }
-                    }
-                }));
-    }
-
-    private void invokePay(ResultBean data) {
-        switch (payMehtodId) {
-            case OrderParams.PAY_APP_WXPAY:
-                invokeWeixinPay(data);
-                break;
-            case OrderParams.PAY_APP_ALIPAY:
-                invokeZhifubaoPay(data);
-                break;
-            case OrderParams.PAY_APP_DEPOSIT:
-                invokeYuePay(data);
-                break;
-        }
-    }
-
-    private void invokeWeixinPay(ResultBean data) {
-        PayReq request = new PayReq();
-        request.appId = "wx0e1869b241d7234f";
-        request.partnerId = data.getPartnerid();
-        request.prepayId = data.getPrepayid();
-        request.packageValue = data.getPackageName();
-        request.nonceStr = data.getNoncestr();
-        request.timeStamp = data.getTimestamp();
-        request.sign = data.getSign();
-        wxapi.sendReq(request);
-    }
-
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            if (msg.what == SDK_PAY_FLAG) {
-                @SuppressWarnings("unchecked")
-                PayResult payResult = new PayResult((Map<String, String>) msg.obj);
-                /**
-                 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
-                 */
-                String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-                String resultStatus = payResult.getResultStatus();
-                // 判断resultStatus 为9000则代表支付成功
-                if (TextUtils.equals(resultStatus, "9000")) {
-                    // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                    Toast.makeText(OrderDetailActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                    EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
-                    EventManager.getInstance().notify(null, ConstantMsg.UPDATE_CART_LIST);
-                    finish();
-                } else {
-                    // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                    Toast.makeText(OrderDetailActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    };
-
-    private void invokeZhifubaoPay(ResultBean data) {
-        final String url = data.getUrl();
-        Runnable payRunnable = new Runnable() {
-            @Override
-            public void run() {
-                PayTask alipay = new PayTask(OrderDetailActivity.this);
-                Map<String, String> stringStringMap = alipay.payV2(url, true);
-                Message msg = new Message();
-                msg.what = SDK_PAY_FLAG;
-                msg.obj = stringStringMap;
-                mHandler.sendMessage(msg);
-            }
-        };
-        // 必须异步调用
-        Thread payThread = new Thread(payRunnable);
-        payThread.start();
-    }
-
-    private void invokeYuePay(ResultBean data) {
-        PayResultBean payResultBean = (PayResultBean) data.getData();
-        if (payResultBean != null && "success".equals(payResultBean.getStatus())) {
-            Toast.makeText(OrderDetailActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-            EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
-            EventManager.getInstance().notify(null, ConstantMsg.UPDATE_CART_LIST);
-            finish();
-        }
-    }
-
-    private void invokeDaePay(ResultBean data) {
-
-    }
-
-    private void weixinPaySuccess(Object object, String eventTag) {
-        if (eventTag.equals(ConstantMsg.WEIXIN_PAY_CALLBACK)) {
-            int code = (int) object;
-            if (code == 0) {
-                //支付成功
-                ToastUtils.showShort("支付成功");
-                finish();
-                EventManager.getInstance().notify(null, OrderParams.REFRESH_ORDER_LIST);
-                EventManager.getInstance().notify(null, ConstantMsg.UPDATE_CART_LIST);
-            } else if (code == -1) {
-                //支付错误
-                ToastUtils.showShort("支付失败");
-            } else if (code == -2) {
-                //支付取消
-                ToastUtils.showShort("支付失败");
-            }
-        }
-    }
 
     private void getCancelReason() {
         showLoadingDialog();
@@ -2046,6 +1858,7 @@ public class OrderDetailActivity extends BaseActivity {
         myClipboard.setPrimaryClip(text);
         ToastUtils.showShort("物流单号已复制");
     }
+
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {

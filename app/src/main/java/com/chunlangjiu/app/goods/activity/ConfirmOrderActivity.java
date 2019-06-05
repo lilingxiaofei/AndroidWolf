@@ -30,6 +30,7 @@ import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
+import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.bean.AddressListDetailBean;
@@ -297,9 +298,11 @@ public class ConfirmOrderActivity extends BaseActivity {
         this.payMehtodId = payMethodId;
         switch (payMehtodId) {
             case OrderParams.PAY_APP_WXPAY:
+            case OrderParams.PAY_PING_WXPAY:
                 tvPayMethod.setText("微信支付");
                 break;
             case OrderParams.PAY_APP_ALIPAY:
+            case OrderParams.PAY_PING_ALIPAY:
                 tvPayMethod.setText("支付宝支付");
                 break;
             case OrderParams.PAY_APP_DEPOSIT:
@@ -391,66 +394,77 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     private void createSuccess(String payPwd) {
         if (null != createOrderBean) {
-//            disposable.add(ApiUtils.getInstance().payDo(createOrderBean.getPayment_id(), payMehtodId, payPwd)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Consumer<ResultBean>() {
-//                        @Override
-//                        public void accept(ResultBean resultBean) throws Exception {
-//                            hideLoadingDialog();
-//                            invokePay(resultBean);
-//                        }
-//                    }, new Consumer<Throwable>() {
-//                        @Override
-//                        public void accept(Throwable throwable) throws Exception {
-//                            toOrderMainActivity();
-//                            hideLoadingDialog();
-//                            ToastUtils.showErrorMsg(throwable);
-//                        }
-//                    }));
+            if(OrderParams.PAY_PING_ALIPAY.equals(payMehtodId) || OrderParams.PAY_PING_WXPAY.equals(payMehtodId)){
+                disposable.add(ApiUtils.getInstance().payDoPing(createOrderBean.getPayment_id(), payMehtodId, payPwd)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<Map>() {
+                            @Override
+                            public void accept(Map resultBean) throws Exception {
+                                hideLoadingDialog();
+                                invokePay(resultBean);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                toOrderMainActivity();
+                                hideLoadingDialog();
+                                ToastUtils.showErrorMsg(throwable);
+                            }
+                        }));
+            }else{
+                disposable.add(ApiUtils.getInstance().payDo(createOrderBean.getPayment_id(), payMehtodId, payPwd)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<ResultBean<PayResultBean>>() {
+                            @Override
+                            public void accept(ResultBean<PayResultBean> resultBean) throws Exception {
+                                hideLoadingDialog();
+                                invokePay(resultBean);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                toOrderMainActivity();
+                                hideLoadingDialog();
+                                ToastUtils.showErrorMsg(throwable);
+                            }
+                        }));
+            }
 
-            disposable.add(ApiUtils.getInstance().payPing(createOrderBean.getPayment_id(), payMehtodId, payPwd)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean<Map>>() {
-                        @Override
-                        public void accept(ResultBean<Map> resultBean) throws Exception {
-                            hideLoadingDialog();
-//                            invokePay(resultBean);
-                            invokePayPing(resultBean);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            toOrderMainActivity();
-                            hideLoadingDialog();
-                            ToastUtils.showErrorMsg(throwable);
-                        }
-                    }));
         }
     }
 
 
-    private void invokePayPing(ResultBean<Map> data) {
+    private void invokePayPing(Map data) {
         try {
-            JSONObject jsonObject = new JSONObject(data.getData());
+            JSONObject jsonObject = new JSONObject(data);
             Pingpp.createPayment(ConfirmOrderActivity.this,jsonObject.toString());
         } catch (Exception e) {
+            toOrderMainActivity();
             e.printStackTrace();
         }
     }
 
-    private void invokePay(ResultBean data) {
-        switch (payMehtodId) {
-            case OrderParams.PAY_APP_WXPAY:
-                invokeWeixinPay(data);
-                break;
-            case OrderParams.PAY_APP_ALIPAY:
-                invokeZhifubaoPay(data);
-                break;
-            case OrderParams.PAY_APP_DEPOSIT:
-                invokeYuePay(data);
-                break;
+    private void invokePay(Object data) {
+        try {
+            switch (payMehtodId) {
+                case OrderParams.PAY_APP_WXPAY:
+                    invokeWeixinPay((ResultBean)data);
+                    break;
+                case OrderParams.PAY_APP_ALIPAY:
+                    invokeZhifubaoPay((ResultBean)data);
+                    break;
+                case OrderParams.PAY_APP_DEPOSIT:
+                    invokeYuePay((ResultBean)data);
+                    break;
+                case OrderParams.PAY_PING_ALIPAY:
+                case OrderParams.PAY_PING_WXPAY:
+                    invokePayPing((Map) data);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -544,6 +558,11 @@ public class ConfirmOrderActivity extends BaseActivity {
         if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getExtras().getString("pay_result");
+                if ("success".equals(result)) {
+                    toOrderMainActivity();
+                } else {
+                    toOrderMainActivity();
+                }
                 /* 处理返回值
                  * "success" - 支付
                  * 成功

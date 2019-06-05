@@ -21,6 +21,7 @@ import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.money.bean.CreateRechargeOrderBean;
 import com.chunlangjiu.app.money.bean.DepositBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.order.bean.PayResultBean;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
@@ -32,6 +33,8 @@ import com.pkqup.commonlibrary.util.ToastUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -46,7 +49,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ReChargeActivity extends BaseActivity {
     private static final int SDK_PAY_FLAG = 1;
     public static final String ReChargeType = "ReChargeType";
-    public static final String DepositMoney="DepositMoney";
+    public static final String DepositMoney = "DepositMoney";
 
 //    @BindView(R.id.relBalance)
 //    RelativeLayout relBalance;
@@ -66,15 +69,15 @@ public class ReChargeActivity extends BaseActivity {
     @BindView(R.id.edtMoney)
     EditText edtMoney;
 
-//    private PayType payType = PayType.Wx;
+    //    private PayType payType = PayType.Wx;
     private static RechargeType rechargeType = RechargeType.Balance;
     private List<PaymentBean.PaymentInfo> payList;
-    private String paymentId ;
-    private String payMehtodId=OrderParams.PAY_APP_WXPAY ;//支付方式类型
+    private String paymentId;
+    private String payMehtodId = OrderParams.PAY_APP_WXPAY;//支付方式类型
 
     private CompositeDisposable disposable;
 
-    private BalancePayDialog balancePayDialog ;
+    private BalancePayDialog balancePayDialog;
     private IWXAPI wxapi;
 //
 //    enum PayType {
@@ -91,8 +94,8 @@ public class ReChargeActivity extends BaseActivity {
         disposable = new CompositeDisposable();
         setContentView(R.layout.activity_re_charge);
         rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
-        if (rechargeType==null){
-            rechargeType=RechargeType.Balance;
+        if (rechargeType == null) {
+            rechargeType = RechargeType.Balance;
         }
 //        togglePayType(PayType.Wx);
         initPay();
@@ -109,14 +112,14 @@ public class ReChargeActivity extends BaseActivity {
         @Override
         public void onNotify(Object object, String eventTag) {
             if (eventTag.equals(String.valueOf(RechargeType.Balance.ordinal()))) {
-                EventManager.getInstance().notify(null,ConstantMsg.RECHARGE);
+                EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
                 finish();
-            }else if (eventTag.equals(String.valueOf(RechargeType.SecurityDeposit.ordinal()))){
-                EventManager.getInstance().notify(null,ConstantMsg.DEPOSIT_CREATE);
+            } else if (eventTag.equals(String.valueOf(RechargeType.SecurityDeposit.ordinal()))) {
+                EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
                 Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
                 intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
-                intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
-                intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY,edtMoney.getText().toString());
+                intent.putExtra(SecurityDepositManagerActivity.STATUS, SecurityDepositManagerActivity.PAY_SUCCESS);
+                intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY, edtMoney.getText().toString());
                 startActivity(intent);
                 finish();
 
@@ -133,22 +136,22 @@ public class ReChargeActivity extends BaseActivity {
 
     private void initView() {
 
-        if (rechargeType==RechargeType.SecurityDeposit){
+        if (rechargeType == RechargeType.SecurityDeposit) {
             String money = getIntent().getStringExtra(DepositMoney);
             setDepositMoney(money);
             edtMoney.setEnabled(false);
             rbBalance.setVisibility(View.VISIBLE);
             togglePayType(OrderParams.PAY_APP_DEPOSIT);
-        }else{
+        } else {
             togglePayType(OrderParams.PAY_APP_WXPAY);
             rbBalance.setVisibility(View.GONE);
         }
     }
 
-    private void setDepositMoney(String money){
-        if(!TextUtils.isEmpty(money)){
+    private void setDepositMoney(String money) {
+        if (!TextUtils.isEmpty(money)) {
             edtMoney.setText(money);
-            balancePayDialog = new BalancePayDialog(this,money);
+            balancePayDialog = new BalancePayDialog(this, money);
             balancePayDialog.setCallBack(new BalancePayDialog.CallBack() {
                 @Override
                 public void cancelPay() {
@@ -157,10 +160,10 @@ public class ReChargeActivity extends BaseActivity {
 
                 @Override
                 public void confirmPay(String payPwd) {
-                    createSuccess(paymentId,payPwd);
+                    createSuccess(paymentId, payPwd);
                 }
             });
-        }else{
+        } else {
             getDepositMoney();
         }
     }
@@ -211,8 +214,8 @@ public class ReChargeActivity extends BaseActivity {
                 .subscribe(new Consumer<ResultBean<CreateRechargeOrderBean>>() {
                     @Override
                     public void accept(ResultBean<CreateRechargeOrderBean> resultBean) throws Exception {
-                        paymentId = resultBean.getData().getPayment_id() ;
-                            createSuccess(paymentId,"");
+                        paymentId = resultBean.getData().getPayment_id();
+                        createSuccess(paymentId, "");
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -230,14 +233,14 @@ public class ReChargeActivity extends BaseActivity {
                 .subscribe(new Consumer<ResultBean<CreateRechargeOrderBean>>() {
                     @Override
                     public void accept(ResultBean<CreateRechargeOrderBean> resultBean) throws Exception {
-                        paymentId = resultBean.getData().getPayment_id() ;
-                        if(OrderParams.PAY_APP_DEPOSIT.equals(payMehtodId)){
-                            if(balancePayDialog == null){
+                        paymentId = resultBean.getData().getPayment_id();
+                        if (OrderParams.PAY_APP_DEPOSIT.equals(payMehtodId)) {
+                            if (balancePayDialog == null) {
                                 String money = getIntent().getStringExtra(DepositMoney);
-                                balancePayDialog = new BalancePayDialog(ReChargeActivity.this,money);
+                                balancePayDialog = new BalancePayDialog(ReChargeActivity.this, money);
                             }
                             balancePayDialog.show();
-                        }else {
+                        } else {
                             createSuccess(paymentId, "");
                         }
                     }
@@ -249,39 +252,71 @@ public class ReChargeActivity extends BaseActivity {
                 }));
     }
 
-    private void createSuccess(String paymentId,String pwd) {
+    private void createSuccess(String paymentId, String pwd) {
         if (!TextUtils.isEmpty(paymentId)) {
-            disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId,pwd)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean>() {
-                        @Override
-                        public void accept(ResultBean resultBean) throws Exception {
+            if(OrderParams.PAY_PING_ALIPAY.equals(payMehtodId) || OrderParams.PAY_PING_WXPAY.equals(payMehtodId)){
+                disposable.add(ApiUtils.getInstance().payDoPing(paymentId, payMehtodId, pwd)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<Map>() {
+                            @Override
+                            public void accept(Map resultBean) throws Exception {
 //                            hideLoadingDialog();
-                            invokePay(resultBean);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            hideLoadingDialog();
-                            ToastUtils.showErrorMsg(throwable);
-                        }
-                    }));
+                                invokePay(resultBean);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                hideLoadingDialog();
+                                ToastUtils.showErrorMsg(throwable);
+                            }
+                        }));
+            }else{
+                disposable.add(ApiUtils.getInstance().payDo(paymentId, payMehtodId, pwd)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<ResultBean>() {
+                            @Override
+                            public void accept(ResultBean resultBean) throws Exception {
+//                            hideLoadingDialog();
+                                invokePay(resultBean);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                hideLoadingDialog();
+                                ToastUtils.showErrorMsg(throwable);
+                            }
+                        }));
+            }
 
         }
     }
 
+    private void invokePayPing(Map data) {
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            Pingpp.createPayment(this, jsonObject.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-    private void invokePay(ResultBean resultBean) {
+
+    private void invokePay(Object resultBean) {
         switch (payMehtodId) {
             case OrderParams.PAY_APP_DEPOSIT:
-                invokeBalancePay();
+                invokeBalancePay((ResultBean)resultBean);
                 break;
             case OrderParams.PAY_APP_WXPAY:
-                invokeWeixinPay(resultBean);
+                invokeWeixinPay((ResultBean)resultBean);
                 break;
             case OrderParams.PAY_APP_ALIPAY:
-                invokeZhifubaoPay(resultBean);
+                invokeZhifubaoPay((ResultBean)resultBean);
+                break;
+            case OrderParams.PAY_PING_ALIPAY:
+            case OrderParams.PAY_PING_WXPAY:
+                invokePayPing((Map)resultBean);
                 break;
         }
 
@@ -309,16 +344,13 @@ public class ReChargeActivity extends BaseActivity {
 
     }
 
-    private void invokeBalancePay() {
-        Toast.makeText(ReChargeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-        EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
-        EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
-        Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
-        intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
-        intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY,edtMoney.getText().toString());
-        intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
-        startActivity(intent);
-        finish();
+    private void invokeBalancePay(ResultBean data) {
+        PayResultBean payResultBean = (PayResultBean) data.getData();
+        if (payResultBean != null && "success".equals(payResultBean.getStatus())) {
+            paySuccess();
+        } else {
+            payFail();
+        }
     }
 
     private void invokeWeixinPay(ResultBean data) {
@@ -363,20 +395,20 @@ public class ReChargeActivity extends BaseActivity {
     @Override
     public void setTitleView() {
         rechargeType = (RechargeType) getIntent().getSerializableExtra(ReChargeType);
-        if (rechargeType==RechargeType.SecurityDeposit){
+        if (rechargeType == RechargeType.SecurityDeposit) {
             titleName.setText(R.string.payment_deposit);
-        }else {
+        } else {
             titleName.setText("充值");
         }
     }
 
-    @OnClick({R.id.btnOk, R.id.rbBalance,R.id.rbWx, R.id.rbZfb, R.id.img_title_left})
+    @OnClick({R.id.btnOk, R.id.rbBalance, R.id.rbWx, R.id.rbZfb, R.id.img_title_left})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnOk:
                 String money = edtMoney.getText().toString().trim();
                 if (rechargeType == RechargeType.Balance) {
-                    if (TextUtils.isEmpty(money)){
+                    if (TextUtils.isEmpty(money)) {
                         ToastUtils.showShort("请输入充值金额");
                         return;
                     }
@@ -395,10 +427,10 @@ public class ReChargeActivity extends BaseActivity {
 //                break;
             case R.id.rbWx:
 //                togglePayType(PayType.Wx);
-                payMehtodId = OrderParams.PAY_APP_WXPAY;
+                payMehtodId = OrderParams.PAY_PING_WXPAY;
                 break;
             case R.id.rbZfb:
-                payMehtodId = OrderParams.PAY_APP_ALIPAY;
+                payMehtodId = OrderParams.PAY_PING_ALIPAY;
 //                togglePayType(PayType.Alipay);
                 break;
             case R.id.img_title_left:
@@ -408,23 +440,23 @@ public class ReChargeActivity extends BaseActivity {
 
     }
 
-    private void paySuccess(){
-        if (rechargeType==RechargeType.Balance){
+    private void paySuccess() {
+        if (rechargeType == RechargeType.Balance) {
             EventManager.getInstance().notify(null, ConstantMsg.RECHARGE);
             finish();
-        }else if (rechargeType==RechargeType.SecurityDeposit){
+        } else if (rechargeType == RechargeType.SecurityDeposit) {
             EventManager.getInstance().notify(null, ConstantMsg.DEPOSIT_CREATE);
             Intent intent = new Intent(ReChargeActivity.this, SecurityDepositManagerActivity.class);
             intent.putExtra(SecurityDepositManagerActivity.SECURITY_DEPOSIT_TYPE, SecurityDepositManagerActivity.PAYING_DEPOSIT);
-            intent.putExtra(SecurityDepositManagerActivity.STATUS,SecurityDepositManagerActivity.PAY_SUCCESS);
-            intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY,edtMoney.getText().toString());
+            intent.putExtra(SecurityDepositManagerActivity.STATUS, SecurityDepositManagerActivity.PAY_SUCCESS);
+            intent.putExtra(SecurityDepositManagerActivity.PAYMENT_MONEY, edtMoney.getText().toString());
             startActivity(intent);
             finish();
         }
     }
 
 
-    private void payFail(){
+    private void payFail() {
 
     }
 
@@ -462,10 +494,12 @@ public class ReChargeActivity extends BaseActivity {
             case OrderParams.PAY_APP_DEPOSIT:
                 rbBalance.setChecked(true);
                 break;
-            case  OrderParams.PAY_APP_ALIPAY:
+            case OrderParams.PAY_APP_ALIPAY:
+            case OrderParams.PAY_PING_ALIPAY:
                 rbZfb.setChecked(true);
                 break;
-            case  OrderParams.PAY_APP_WXPAY:
+            case OrderParams.PAY_APP_WXPAY:
+            case OrderParams.PAY_PING_WXPAY:
                 rbWx.setChecked(true);
                 break;
         }

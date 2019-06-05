@@ -106,7 +106,7 @@ public class AppraiserInfoEditActivity extends BaseActivity {
             } else if (view.getId() == R.id.imgHead) {
                 setHeadIcon();
             } else if (view.getId() == R.id.tv_right) {
-                if (CommonUtils.isNetworkPic(headUrl)) {
+                if (TextUtils.isEmpty(headUrl) && CommonUtils.isNetworkPic(headUrl)) {
                     editAppraiserInfo();
                 } else {
                     uploadHeadIcon();
@@ -191,10 +191,7 @@ public class AppraiserInfoEditActivity extends BaseActivity {
         String scope = etAppraiseScope.getText().toString();
         String require = etAppraiseRequire.getText().toString();
         String attention = etAppraiseAttention.getText().toString();
-        if (TextUtils.isEmpty(headUrl)) {
-            ToastUtils.showShort("请选择鉴定师头像");
-            return;
-        } else if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name)) {
             ToastUtils.showShort("请输入鉴定师名称");
             return;
         } else if (TextUtils.isEmpty(scope)) {

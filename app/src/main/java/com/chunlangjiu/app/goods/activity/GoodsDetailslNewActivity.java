@@ -1066,12 +1066,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
     private EventManager.OnNotifyListener onNotifyListener = new EventManager.OnNotifyListener() {
         @Override
         public void onNotify(Object object, String eventTag) {
-            if(ConstantMsg.PAY_SUCCESS.equals(eventTag)){
-                getGoodsDetail();
-                toOrderMainActivity();
-            }else if(ConstantMsg.PAY_FAIL.equals(eventTag)){
-//                toOrderMainActivity();
-            }else if(ConstantMsg.AUCTION_ORDER_SUCCESS.equals(eventTag)){
+            if(ConstantMsg.AUCTION_ORDER_SUCCESS.equals(eventTag)){
                 initData();
             }else if(ConstantMsg.DETAIL_COUNT_END.equals(eventTag)){
                 finish();
@@ -1135,6 +1130,15 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                 priceListDialog = new PriceListDialog(this, priceList);
             }
             priceListDialog.show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(ConstantMsg.PAY_SUCCESS_INT== resultCode){
+                getGoodsDetail();
+                toOrderMainActivity();
         }
     }
 

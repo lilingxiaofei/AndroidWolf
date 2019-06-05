@@ -81,7 +81,7 @@ public class PayNewActivity extends Activity {
         paymentId = paymentIds;
         if (activity != null) {
             Intent intent = new Intent(activity, PayNewActivity.class);
-            activity.startActivity(intent);
+            activity.startActivityForResult(intent,1010);
         }
     }
 
@@ -251,7 +251,25 @@ public class PayNewActivity extends Activity {
 
 
     private void payMoney(final String payMethodId, String payPwd) {
-        if (OrderParams.PAY_APP_DEPOSIT.equals(payMethodId)) {
+        if(OrderParams.PAY_PING_ALIPAY.equals(payMethodId) || OrderParams.PAY_PING_WXPAY.equals(payMethodId)) {
+            ApiUtils.getInstance().payDoPing(paymentId, payMethodId, payPwd)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Map>() {
+                        @Override
+                        public void accept(Map resultBean) throws Exception {
+                            hideLoadingDialog();
+                            invokePay(payMethodId, resultBean);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            payFail();
+                            hideLoadingDialog();
+                            ToastUtils.showErrorMsg(throwable);
+                        }
+                    });
+        }else{
             ApiUtils.getInstance().payDo(paymentId, payMethodId, payPwd)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -269,50 +287,40 @@ public class PayNewActivity extends Activity {
                             ToastUtils.showErrorMsg(throwable);
                         }
                     });
-
-        } else {
-            ApiUtils.getInstance().payPing(paymentId, payMethodId, payPwd)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean<Map>>() {
-                        @Override
-                        public void accept(ResultBean<Map> resultBean) throws Exception {
-                            hideLoadingDialog();
-                            invokePayPing(resultBean);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            hideLoadingDialog();
-                            ToastUtils.showErrorMsg(throwable);
-                            payFail();
-                        }
-                    });
         }
+
 
 
     }
 
-    private void invokePayPing(ResultBean<Map> data) {
+    private void invokePayPing(Map data) {
         try {
-            JSONObject jsonObject = new JSONObject(data.getData());
+            JSONObject jsonObject = new JSONObject(data);
             Pingpp.createPayment(this, jsonObject.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void invokePay(String payMethodId, ResultBean data) {
-        switch (payMethodId) {
-            case OrderParams.PAY_APP_WXPAY:
-                invokeWeixinPay(data);
-                break;
-            case OrderParams.PAY_APP_ALIPAY:
-                invokeZhifubaoPay(data);
-                break;
-            case OrderParams.PAY_APP_DEPOSIT:
-                invokeYuePay(data);
-                break;
+    private void invokePay(String payMethodId, Object data) {
+        try {
+            switch (payMethodId) {
+                case OrderParams.PAY_APP_WXPAY:
+                    invokeWeixinPay((ResultBean)data);
+                    break;
+                case OrderParams.PAY_APP_ALIPAY:
+                    invokeZhifubaoPay((ResultBean)data);
+                    break;
+                case OrderParams.PAY_APP_DEPOSIT:
+                    invokeYuePay((ResultBean)data);
+                    break;
+                case OrderParams.PAY_PING_ALIPAY:
+                case OrderParams.PAY_PING_WXPAY:
+                    invokePayPing((Map) data);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -421,12 +429,14 @@ public class PayNewActivity extends Activity {
 
     private void paySuccess() {
         EventManager.getInstance().notify(paymentId, ConstantMsg.PAY_SUCCESS);
+        setResult(ConstantMsg.PAY_SUCCESS_INT);
         finish();
     }
 
 
     private void payFail() {
         EventManager.getInstance().notify(paymentId, ConstantMsg.PAY_FAIL);
+        setResult(ConstantMsg.PAY_FAIL_INT);
         finish();
     }
 
@@ -449,8 +459,8 @@ public class PayNewActivity extends Activity {
                  * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
                  * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
                  */
-                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
                 String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
                 Log.e("Ping++支付结果：", result + "==========" + errorMsg + "==========" + extraMsg);
             } else {
                 payFail();
@@ -480,12 +490,12 @@ public class PayNewActivity extends Activity {
         }
     }
 
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

@@ -428,6 +428,12 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
+    Flowable<Map> payDoPing(@Field("method") String method, @Field("v") String v,
+                                    @Field("payment_id") String payment_id, @Field("pay_app_id") String pay_app_id, @Field("deposit_password") String deposit_password);
+
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
     Flowable<ResultBean<Map>> payPing(@Field("method") String method, @Field("v") String v,
                                               @Field("payment_id") String payment_id, @Field("pay_app_id") String pay_app_id, @Field("deposit_password") String deposit_password);
 

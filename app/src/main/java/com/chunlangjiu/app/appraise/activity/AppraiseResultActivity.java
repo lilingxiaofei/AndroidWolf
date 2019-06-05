@@ -3,6 +3,7 @@ package com.chunlangjiu.app.appraise.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -186,11 +187,11 @@ public class AppraiseResultActivity extends BaseActivity {
                     llCommit.setOnClickListener(onClickListener);
                     tvCommitPrice.setText(CommonUtils.getString(R.string.rmb_two,appraiseGoodsBean.getPrice()));
                     if(!"true".equals(appraiseGoodsBean.getSell())){
-                        llCommit.setEnabled(true);
+                        llCommit.setBackgroundColor(ContextCompat.getColor(this,R.color.bg_red));
                         tvCommitPrice.setVisibility(View.VISIBLE);
                         tvCommitStr.setText(R.string.quick_cash);
                     }else{
-                        llCommit.setEnabled(false);
+                        llCommit.setBackgroundColor(ContextCompat.getColor(this,R.color.t_gray));
                         tvCommitPrice.setVisibility(View.GONE);
                         tvCommitStr.setText(R.string.commit_cash_apply);
                     }
@@ -234,7 +235,12 @@ public class AppraiseResultActivity extends BaseActivity {
             if(view.getId() == R.id.img_title_left){
                 finish();
             }else if(view.getId() == R.id.llCommit){
-                quickCash();
+                if(!"true".equals(appraiseGoodsBean.getSell())){
+                    quickCash();
+                }else{
+                    startActivity(new Intent(AppraiseResultActivity.this,QuickCashActivity.class));
+                }
+
             }
         }
     };
