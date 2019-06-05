@@ -27,7 +27,6 @@ import com.chunlangjiu.app.goods.dialog.InputPriceDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.goods.dialog.PayNewActivity;
 import com.chunlangjiu.app.net.ApiUtils;
-import com.chunlangjiu.app.order.activity.OrderApplyForAfterSaleActivity;
 import com.chunlangjiu.app.order.activity.OrderComplainActivity;
 import com.chunlangjiu.app.order.activity.OrderDetailActivity;
 import com.chunlangjiu.app.order.activity.OrderEvaluationDetailActivity;
@@ -49,14 +48,12 @@ import com.chunlangjiu.app.util.CommonUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.PayResult;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
-import com.pkqup.commonlibrary.net.GSonUtils;
 import com.pkqup.commonlibrary.net.HttpUtils;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.ToastUtils;
@@ -67,7 +64,6 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -1190,7 +1186,7 @@ public class OrderListFragment extends BaseFragment {
     }
 
     private void getPayment() {
-        PayNewActivity.startPayActivity(paymentId,null);
+        PayNewActivity.startPayActivity(activity,paymentId,null);
 //        activity.showLoadingDialog();
 //        disposable.add(ApiUtils.getInstance().getPayment()
 //                .subscribeOn(Schedulers.io())

@@ -1545,7 +1545,7 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void getPayment() {
-        PayNewActivity.startPayActivity(paymentId,null);
+        PayNewActivity.startPayActivity(this,paymentId,null);
 //        showLoadingDialog();
 //        disposable.add(ApiUtils.getInstance().getPayment()
 //                .subscribeOn(Schedulers.io())

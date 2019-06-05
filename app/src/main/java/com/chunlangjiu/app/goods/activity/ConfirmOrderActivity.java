@@ -30,7 +30,6 @@ import com.chunlangjiu.app.goods.dialog.BalancePayDialog;
 import com.chunlangjiu.app.goods.dialog.PayDialog;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.order.activity.OrderMainNewActivity;
-import com.chunlangjiu.app.order.bean.PayPingBean;
 import com.chunlangjiu.app.order.params.OrderParams;
 import com.chunlangjiu.app.user.activity.AddressListActivity;
 import com.chunlangjiu.app.user.bean.AddressListDetailBean;
@@ -392,33 +391,14 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     private void createSuccess(String payPwd) {
         if (null != createOrderBean) {
-            disposable.add(ApiUtils.getInstance().payDo(createOrderBean.getPayment_id(), payMehtodId, payPwd)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean>() {
-                        @Override
-                        public void accept(ResultBean resultBean) throws Exception {
-                            hideLoadingDialog();
-                            invokePay(resultBean);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            toOrderMainActivity();
-                            hideLoadingDialog();
-                            ToastUtils.showErrorMsg(throwable);
-                        }
-                    }));
-
-//            disposable.add(ApiUtils.getInstance().payPing(createOrderBean.getPayment_id(), payMehtodId, payPwd)
+//            disposable.add(ApiUtils.getInstance().payDo(createOrderBean.getPayment_id(), payMehtodId, payPwd)
 //                    .subscribeOn(Schedulers.io())
 //                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Consumer<ResultBean<PayPingBean>>() {
+//                    .subscribe(new Consumer<ResultBean>() {
 //                        @Override
-//                        public void accept(ResultBean<PayPingBean> resultBean) throws Exception {
+//                        public void accept(ResultBean resultBean) throws Exception {
 //                            hideLoadingDialog();
-////                            invokePay(resultBean);
-//                            invokePayPing(resultBean);
+//                            invokePay(resultBean);
 //                        }
 //                    }, new Consumer<Throwable>() {
 //                        @Override
@@ -428,13 +408,32 @@ public class ConfirmOrderActivity extends BaseActivity {
 //                            ToastUtils.showErrorMsg(throwable);
 //                        }
 //                    }));
+
+            disposable.add(ApiUtils.getInstance().payPing(createOrderBean.getPayment_id(), payMehtodId, payPwd)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<ResultBean<Map>>() {
+                        @Override
+                        public void accept(ResultBean<Map> resultBean) throws Exception {
+                            hideLoadingDialog();
+//                            invokePay(resultBean);
+                            invokePayPing(resultBean);
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            toOrderMainActivity();
+                            hideLoadingDialog();
+                            ToastUtils.showErrorMsg(throwable);
+                        }
+                    }));
         }
     }
 
 
-    private void invokePayPing(ResultBean<PayPingBean> data) {
+    private void invokePayPing(ResultBean<Map> data) {
         try {
-            JSONObject jsonObject = new JSONObject(data.getData().getData());
+            JSONObject jsonObject = new JSONObject(data.getData());
             Pingpp.createPayment(ConfirmOrderActivity.this,jsonObject.toString());
         } catch (Exception e) {
             e.printStackTrace();
