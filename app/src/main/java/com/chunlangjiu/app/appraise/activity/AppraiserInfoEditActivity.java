@@ -106,7 +106,7 @@ public class AppraiserInfoEditActivity extends BaseActivity {
             } else if (view.getId() == R.id.imgHead) {
                 setHeadIcon();
             } else if (view.getId() == R.id.tv_right) {
-                if (TextUtils.isEmpty(headUrl) && CommonUtils.isNetworkPic(headUrl)) {
+                if (TextUtils.isEmpty(headUrl) || CommonUtils.isNetworkPic(headUrl)) {
                     editAppraiserInfo();
                 } else {
                     uploadHeadIcon();

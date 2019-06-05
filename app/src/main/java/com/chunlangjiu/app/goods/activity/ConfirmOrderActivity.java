@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -573,7 +574,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                  */
                 String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
                 String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
-                ToastUtils.showShort(result+"=========="+ errorMsg+"=========="+ extraMsg);
+               Log.e("ping++支付结果：",result+"=========="+ errorMsg+"=========="+ extraMsg);
             }
         }
     }
