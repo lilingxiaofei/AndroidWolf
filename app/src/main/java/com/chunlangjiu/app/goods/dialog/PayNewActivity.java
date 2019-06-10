@@ -9,7 +9,6 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -55,6 +54,7 @@ public class PayNewActivity extends Activity {
     RelativeLayout rlWeiXin;
     RelativeLayout rlZhiFuBao;
     RelativeLayout rlWallet;
+    RelativeLayout rlUnionPay ;
     TextView tvWalletTips;
     RelativeLayout rlLarge;
     ImageView imgClose;
@@ -69,6 +69,7 @@ public class PayNewActivity extends Activity {
     private String zhifubaoPayId;
     private String yuePayId;
     private String daePayId;
+    private String upPayId;
 
     private String payMoney;
     private String payMethodId;
@@ -124,11 +125,13 @@ public class PayNewActivity extends Activity {
         rlWeiXin = findViewById(R.id.rlWeiXin);
         rlZhiFuBao = findViewById(R.id.rlZhiFuBao);
         rlWallet = findViewById(R.id.rlWallet);
+        rlUnionPay = findViewById(R.id.rlUnionPay);
         tvWalletTips = findViewById(R.id.tvWalletTips);
         rlLarge = findViewById(R.id.rlLarge);
         rlWeiXin.setOnClickListener(onClickListener);
         rlZhiFuBao.setOnClickListener(onClickListener);
         rlWallet.setOnClickListener(onClickListener);
+        rlUnionPay.setOnClickListener(onClickListener);
         rlLarge.setOnClickListener(onClickListener);
         imgClose.setOnClickListener(onClickListener);
         rlWeiXin.setVisibility(View.GONE);
@@ -185,6 +188,10 @@ public class PayNewActivity extends Activity {
                         yuePayId = payList.get(i).getApp_id();
                         rlWallet.setVisibility(View.VISIBLE);
                     }
+                    if (displayName.contains("银联")) {
+                        upPayId = payList.get(i).getApp_id();
+                        rlUnionPay.setVisibility(View.VISIBLE);
+                    }
                     if (displayName.contains("大额")) {
                         daePayId = payList.get(i).getApp_id();
                         rlLarge.setVisibility(View.VISIBLE);
@@ -213,6 +220,9 @@ public class PayNewActivity extends Activity {
                     break;
                 case R.id.rlLarge:
                     choicePay(daePayId);
+                    break;
+                case R.id.rlUnionPay:
+                    choicePay(upPayId);
                     break;
             }
         }
@@ -251,7 +261,7 @@ public class PayNewActivity extends Activity {
 
 
     private void payMoney(final String payMethodId, String payPwd) {
-        if(OrderParams.PAY_PING_ALIPAY.equals(payMethodId) || OrderParams.PAY_PING_WXPAY.equals(payMethodId)) {
+        if(OrderParams.PAY_PING_ALIPAY.equals(payMethodId) || OrderParams.PAY_PING_WXPAY.equals(payMethodId) || OrderParams.PAY_PING_UNIONPAY.equals(payMethodId)) {
             ApiUtils.getInstance().payDoPing(paymentId, payMethodId, payPwd)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -316,6 +326,7 @@ public class PayNewActivity extends Activity {
                     break;
                 case OrderParams.PAY_PING_ALIPAY:
                 case OrderParams.PAY_PING_WXPAY:
+                case OrderParams.PAY_PING_UNIONPAY:
                     invokePayPing((Map) data);
                     break;
             }

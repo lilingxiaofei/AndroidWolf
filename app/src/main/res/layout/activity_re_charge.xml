@@ -153,6 +153,22 @@
             android:text="支付宝"
             android:textColor="@color/black" />
 
+        <RadioButton
+            android:id="@+id/rbYl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/bg_white"
+            android:button="@null"
+            android:drawableLeft="@mipmap/pay_large"
+            android:visibility="gone"
+            android:drawableRight="@drawable/recharge_select"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="银联"
+            android:textColor="@color/black" />
+
     </RadioGroup>
 
     <LinearLayout

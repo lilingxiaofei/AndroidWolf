@@ -7,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.goods.bean.PaymentBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +29,7 @@ public class PayDialog extends Dialog {
     RelativeLayout rlWeiXin;
     RelativeLayout rlZhiFuBao;
     RelativeLayout rlWallet;
+    RelativeLayout rlUnionPay ;
     TextView tvWalletTips;
     RelativeLayout rlLarge;
 
@@ -43,6 +42,7 @@ public class PayDialog extends Dialog {
     private String zhifubaoPayId;
     private String yuePayId;
     private String daePayId;
+    private String upPayId;
 
     private String payMoney;
 
@@ -69,15 +69,18 @@ public class PayDialog extends Dialog {
         rlWeiXin = findViewById(R.id.rlWeiXin);
         rlZhiFuBao = findViewById(R.id.rlZhiFuBao);
         rlWallet = findViewById(R.id.rlWallet);
+        rlUnionPay = findViewById(R.id.rlUnionPay );
         tvWalletTips = findViewById(R.id.tvWalletTips);
         rlLarge = findViewById(R.id.rlLarge);
         rlWeiXin.setOnClickListener(onClickListener);
         rlZhiFuBao.setOnClickListener(onClickListener);
         rlWallet.setOnClickListener(onClickListener);
+        rlUnionPay.setOnClickListener(onClickListener);
         rlLarge.setOnClickListener(onClickListener);
         rlWeiXin.setVisibility(View.GONE);
         rlZhiFuBao.setVisibility(View.GONE);
         rlWallet.setVisibility(View.GONE);
+        rlUnionPay.setVisibility(View.GONE);
         rlLarge.setVisibility(View.GONE);
 //        ImageView imgChoiceWeixin = findViewById(R.id.imgChoiceWeixin);
 //        ImageView imgChoiceZhifubao = findViewById(R.id.imgChoiceZhifubao);
@@ -107,6 +110,12 @@ public class PayDialog extends Dialog {
                     yuePayId = payList.get(i).getApp_id();
                     rlWallet.setVisibility(View.VISIBLE);
                 }
+
+                if (displayName.contains("银联")) {
+                    upPayId = payList.get(i).getApp_id();
+                    rlUnionPay.setVisibility(View.VISIBLE);
+                }
+
                 if (displayName.contains("大额")) {
                     daePayId = payList.get(i).getApp_id();
                     rlLarge.setVisibility(View.VISIBLE);
@@ -131,6 +140,9 @@ public class PayDialog extends Dialog {
                     break;
                 case R.id.rlWallet:
                     choicePay( yuePayId);
+                    break;
+                case R.id.rlUnionPay:
+                    choicePay(upPayId);
                     break;
                 case R.id.rlLarge:
                     choicePay(daePayId);

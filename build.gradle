@@ -19,11 +19,13 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
         maven { url "https://jitpack.io" }
         maven { url "https://maven.google.com" }
         maven {
             url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/"
-        }// 添加下面的 bintray 仓库地址
+        }
+        // 添加下面的 bintray 仓库地址
         maven {
             url  "https://dl.bintray.com/pingxx/maven"
         }

@@ -108,21 +108,22 @@ dependencies {
     //个推
     implementation 'com.getui:sdk:2.12.4.0'
     //微信支付
-//    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
+    //    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
     implementation 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
     //横向滑动删除功能
     compile 'com.daimajia.swipelayout:library:1.2.0@aar'
     //流水布局
     compile 'org.apmem.tools:layouts:1.10@aar'
     implementation 'com.pingxx:pingpp-android:2.2.2'
-
     // (Ping++ 标准版 SDK) 必须添加
     //    implementation 'com.pingxx:pingpp-android-alipay:2.2.0' // 使用支付宝时添加
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6' // 使用微信支付时添加,具体版本参考微信官方文档
-//    implementation 'com.pingxx:pingpp-android-alipay:2.2.0' // 使用支付宝时添加
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
+    // 使用微信支付时添加,具体版本参考微信官方文档
     //    implementation 'com.pingxx:pingpp-android-upacp:2.2.0' // 使用银联支付时添加
     //    implementation 'com.pingxx:pingpp-qpay:2.1.19' // 使用QQ钱包时添加
     //    implementation 'com.pingxx:pingpp-cmbwallet:2.1.19' // 使用招行一网通时添加
     //    implementation 'com.pingxx:pingpp-ccbpay:2.1.19' // 使用建行支付时添加
     //    implementation 'com.pingxx:pingpp-android-cmpay:2.2.2' // 使用和包支付时添加
+    implementation files('libs/UPPayAssistEx.jar')
+    implementation files('libs/UPPayPluginExPro.jar')
 }

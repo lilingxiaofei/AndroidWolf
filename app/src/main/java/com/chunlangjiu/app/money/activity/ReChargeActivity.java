@@ -66,6 +66,9 @@ public class ReChargeActivity extends BaseActivity {
     RadioButton rbWx;
     @BindView(R.id.rbZfb)
     RadioButton rbZfb;
+    @BindView(R.id.rbYl)
+    RadioButton rbYl;
+
     @BindView(R.id.edtMoney)
     EditText edtMoney;
 
@@ -254,7 +257,7 @@ public class ReChargeActivity extends BaseActivity {
 
     private void createSuccess(String paymentId, String pwd) {
         if (!TextUtils.isEmpty(paymentId)) {
-            if(OrderParams.PAY_PING_ALIPAY.equals(payMehtodId) || OrderParams.PAY_PING_WXPAY.equals(payMehtodId)){
+            if(OrderParams.PAY_PING_ALIPAY.equals(payMehtodId) || OrderParams.PAY_PING_WXPAY.equals(payMehtodId) || OrderParams.PAY_PING_UNIONPAY.equals(payMehtodId)){
                 disposable.add(ApiUtils.getInstance().payDoPing(paymentId, payMehtodId, pwd)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -316,6 +319,7 @@ public class ReChargeActivity extends BaseActivity {
                 break;
             case OrderParams.PAY_PING_ALIPAY:
             case OrderParams.PAY_PING_WXPAY:
+            case OrderParams.PAY_PING_UNIONPAY:
                 invokePayPing((Map)resultBean);
                 break;
         }
@@ -402,7 +406,7 @@ public class ReChargeActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.btnOk, R.id.rbBalance, R.id.rbWx, R.id.rbZfb, R.id.img_title_left})
+    @OnClick({R.id.btnOk, R.id.rbBalance, R.id.rbWx, R.id.rbZfb,R.id.rbYl, R.id.img_title_left})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnOk:
@@ -433,6 +437,11 @@ public class ReChargeActivity extends BaseActivity {
                 payMehtodId = OrderParams.PAY_PING_ALIPAY;
 //                togglePayType(PayType.Alipay);
                 break;
+            case R.id.rbYl:
+                payMehtodId = OrderParams.PAY_PING_UNIONPAY;
+//                togglePayType(PayType.Alipay);
+                break;
+
             case R.id.img_title_left:
                 finish();
                 break;
@@ -501,6 +510,9 @@ public class ReChargeActivity extends BaseActivity {
             case OrderParams.PAY_APP_WXPAY:
             case OrderParams.PAY_PING_WXPAY:
                 rbWx.setChecked(true);
+                break;
+            case OrderParams.PAY_PING_UNIONPAY:
+                rbYl.setChecked(true);
                 break;
         }
 

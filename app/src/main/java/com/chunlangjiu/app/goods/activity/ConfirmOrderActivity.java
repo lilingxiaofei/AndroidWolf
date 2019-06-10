@@ -306,6 +306,9 @@ public class ConfirmOrderActivity extends BaseActivity {
             case OrderParams.PAY_PING_ALIPAY:
                 tvPayMethod.setText("支付宝支付");
                 break;
+            case OrderParams.PAY_PING_UNIONPAY:
+                tvPayMethod.setText("银联支付");
+                break;
             case OrderParams.PAY_APP_DEPOSIT:
                 tvPayMethod.setText("余额支付");
                 break;
@@ -395,7 +398,7 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     private void createSuccess(String payPwd) {
         if (null != createOrderBean) {
-            if(OrderParams.PAY_PING_ALIPAY.equals(payMehtodId) || OrderParams.PAY_PING_WXPAY.equals(payMehtodId)){
+            if(OrderParams.PAY_PING_ALIPAY.equals(payMehtodId) || OrderParams.PAY_PING_WXPAY.equals(payMehtodId)  || OrderParams.PAY_PING_UNIONPAY.equals(payMehtodId) ){
                 disposable.add(ApiUtils.getInstance().payDoPing(createOrderBean.getPayment_id(), payMehtodId, payPwd)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -461,6 +464,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                     break;
                 case OrderParams.PAY_PING_ALIPAY:
                 case OrderParams.PAY_PING_WXPAY:
+                case OrderParams.PAY_PING_UNIONPAY:
                     invokePayPing((Map) data);
                     break;
             }

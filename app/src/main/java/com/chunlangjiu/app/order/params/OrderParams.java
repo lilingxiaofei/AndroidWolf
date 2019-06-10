@@ -33,6 +33,7 @@ public class OrderParams {
     public static final String PAY_APP_WXPAY ="wxpayApp";
     public static final String PAY_PING_ALIPAY = "alipayPing";
     public static final String PAY_PING_WXPAY = "wxPing";
+    public static final String PAY_PING_UNIONPAY =  "upacpPing";
 
 
 }
