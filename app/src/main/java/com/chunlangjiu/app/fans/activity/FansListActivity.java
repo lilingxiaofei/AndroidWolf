@@ -1,6 +1,7 @@
 package com.chunlangjiu.app.fans.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,11 +17,15 @@ import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
 import com.chunlangjiu.app.fans.bean.FansNumBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.PageUtils;
 import com.chunlangjiu.app.util.ShareUtils;
 import com.chunlangjiu.app.web.WebViewActivity;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.BigDecimalUtils;
 import com.pkqup.commonlibrary.util.TimeUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
@@ -39,10 +44,12 @@ public class FansListActivity extends BaseActivity {
 //    private View llHead;
     private TextView tvFansNum;
     private TextView tvTotalPrice;
-    private RecyclerView rvFansList;
     private TextView tvShare;
 
-    private List<FansItemBean> list;
+    private SmartRefreshLayout refreshLayout;
+    private RecyclerView rvFansList;
+
+    private PageUtils<FansItemBean> pageUtils ;
     private FansListAdapter fansAdapter;
 
     private CompositeDisposable disposable;
@@ -62,39 +69,54 @@ public class FansListActivity extends BaseActivity {
 //        llHead = getLayoutInflater().inflate(R.layout.fans_list_head, null);
         tvFansNum = findViewById(R.id.tvFansNum);
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
+        refreshLayout= findViewById(R.id.refreshLayout);
         rvFansList = findViewById(R.id.rv_fans_list);
         tvShare = findViewById(R.id.tvShare);
         tvShare.setOnClickListener(onClickListener);
         rvFansList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        list = new ArrayList<>();
-        fansAdapter = new FansListAdapter(R.layout.fans_list_item, list);
+        pageUtils = new PageUtils<>();
+        fansAdapter = new FansListAdapter(R.layout.fans_list_item, pageUtils.getList());
         rvFansList.setAdapter(fansAdapter);
         fansAdapter.setEmptyView(getLayoutInflater().inflate(R.layout.common_empty_view, (ViewGroup) rvFansList.getParent(), false));
+
+        refreshLayout.setOnLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                loadFansList(pageUtils.nextPage());
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                loadFansList(pageUtils.firstPage());
+            }
+        });
     }
 
     private void initData() {
         loadFansSum();
-        loadFansList();
+        loadFansList(pageUtils.firstPage());
     }
 
-    private void loadFansList() {
+    private void loadFansList(int page) {
         //获取粉丝信息
-        disposable.add(ApiUtils.getInstance().getFansList()
+        disposable.add(ApiUtils.getInstance().getFansList(page,10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<ResultBean<ListBean<FansItemBean>>>() {
                     @Override
                     public void accept(ResultBean<ListBean<FansItemBean>> result) throws Exception {
+                        refreshLayout.finishLoadMore();
+                        refreshLayout.finishRefresh();
                         if (result != null && result.getData() != null && null != result.getData().getList()) {
-                            list.clear();
-                            list.addAll(result.getData().getList());
-                            fansAdapter.setNewData(list);
+                            pageUtils.loadListSuccess(result.getData().getList());
+                            fansAdapter.setNewData(pageUtils.getList());
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
+                        refreshLayout.finishLoadMore();
+                        refreshLayout.finishRefresh();
                     }
                 }));
     }

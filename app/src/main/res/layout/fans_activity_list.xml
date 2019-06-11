@@ -15,12 +15,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <include layout="@layout/fans_list_head" android:id="@+id/headLayout"/>
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnableFooterFollowWhenLoadFinished="true"
+            app:srlEnableScrollContentWhenLoaded="true">
         <android.support.v7.widget.RecyclerView android:id="@+id/rv_fans_list"
             android:layout_below="@+id/headLayout"
             android:layout_width="match_parent"
             android:background="@color/white"
             android:layout_height="match_parent"
             android:layout_marginBottom="65dp"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
     <!--</android.support.v4.widget.NestedScrollView>-->
 

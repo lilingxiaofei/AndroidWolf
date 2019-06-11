@@ -164,7 +164,6 @@
         <RelativeLayout
             android:id="@+id/rlUnionPay"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="50dp">
 
             <ImageView
@@ -173,7 +172,7 @@
                 android:layout_height="16dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
-                android:src="@mipmap/pay_large" />
+                android:src="@mipmap/pay_unionpay" />
 
             <TextView
                 android:id="@+id/tvUnionPay"
@@ -197,7 +196,7 @@
                 <!--android:textSize="12sp" />-->
 
             <ImageView
-                android:id="@+id/imgChoiceLarge"
+                android:id="@+id/imgChoiceUnionPay"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_alignParentRight="true"

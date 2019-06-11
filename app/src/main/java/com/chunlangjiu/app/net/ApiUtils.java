@@ -83,6 +83,7 @@ import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import retrofit2.http.Field;
 
 /**
  * @CreatedbBy: liucun on 2018/7/6
@@ -711,8 +712,8 @@ public class ApiUtils {
         return apiService.getPartnerList("shop.featured", "v1");
     }
 
-    public Flowable<ResultBean<ListBean<FansItemBean>>> getFansList() {
-        return apiService.getFansList("member.fans.list", "v1");
+    public Flowable<ResultBean<ListBean<FansItemBean>>> getFansList(int pageNo,int pageSize) {
+        return apiService.getFansList("member.fans.list", "v1",pageNo,pageSize);
     }
 
     public Flowable<ResultBean<FansNumBean>> getFansInfo() {

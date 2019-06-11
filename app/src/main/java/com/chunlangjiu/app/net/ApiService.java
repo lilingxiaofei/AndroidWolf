@@ -786,7 +786,7 @@ public interface ApiService {
 
     @POST("index.php/topapi")
     @FormUrlEncoded
-    Flowable<ResultBean<ListBean<FansItemBean>>> getFansList(@Field("method") String method, @Field("v") String v);
+    Flowable<ResultBean<ListBean<FansItemBean>>> getFansList(@Field("method") String method, @Field("v") String v, @Field("page_no") int page_no, @Field("page_size") int page_size);
 
 
     @POST("index.php/topapi")
