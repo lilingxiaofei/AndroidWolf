@@ -51,12 +51,24 @@
         android:textColor="@color/t_gray"
         android:textSize="@dimen/sp_small" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvPicList"
+        android:layout_below="@+id/tvContent"
+        android:layout_marginTop="10dp"
+        android:nestedScrollingEnabled="false"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/tvContent"
+        android:layout_below="@id/rvPicList"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="4dp"

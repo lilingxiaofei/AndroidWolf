@@ -1,6 +1,7 @@
 package com.chunlangjiu.app.goods.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +13,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseFragment;
+import com.chunlangjiu.app.appraise.adapter.AppraiseGoodsPicAdapter;
 import com.chunlangjiu.app.goods.bean.EvaluateListBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.lzy.imagepicker.util.Utils;
+import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.TimeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -22,6 +26,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -146,6 +151,26 @@ public class GoodsCommentFragment extends BaseFragment {
             helper.setText(R.id.tvContent, item.getContent());
             helper.setText(R.id.tvTime, TimeUtils.millisToYearMD(item.getCreated_time() + "000"));
             RatingBar ratingBar = helper.getView(R.id.ratingBar);
+
+            RecyclerView rvPicList = helper.getView(R.id.rvPicList);
+            String pics[] = item.getRate_pic();
+            if(pics != null && pics.length>0){
+                rvPicList.setVisibility(View.VISIBLE);
+                List<String> picList = Arrays.asList(item.getRate_pic());
+                AppraiseGoodsPicAdapter picAdapter = new AppraiseGoodsPicAdapter(activity,picList);
+                rvPicList.setLayoutManager(new GridLayoutManager(activity, 3));
+                rvPicList.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(activity, 3), false));
+                rvPicList.setAdapter(picAdapter);
+            }else{
+                rvPicList.setVisibility(View.GONE);
+            }
+
+//            picAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                    toLargeImage(position);
+//                }
+//            });
             String result = item.getResult();
             if ("good".equals(result)) {
                 ratingBar.setRating(5);

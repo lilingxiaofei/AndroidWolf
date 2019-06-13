@@ -30,6 +30,7 @@ import com.chunlangjiu.app.abase.BaseActivity;
 import com.chunlangjiu.app.abase.BaseApplication;
 import com.chunlangjiu.app.amain.activity.LoginMainActivity;
 import com.chunlangjiu.app.amain.bean.CartCountBean;
+import com.chunlangjiu.app.appraise.adapter.AppraiseGoodsPicAdapter;
 import com.chunlangjiu.app.cart.CartActivity;
 import com.chunlangjiu.app.cart.ChoiceNumDialog;
 import com.chunlangjiu.app.goods.bean.ConfirmOrderBean;
@@ -74,6 +75,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -522,6 +524,19 @@ public class GoodsDetailslNewActivity extends BaseActivity {
                 RatingBar ratingBar = evaluateView.findViewById(R.id.ratingBar);
                 TextView tvContent = evaluateView.findViewById(R.id.tvContent);
                 TextView tvTime = evaluateView.findViewById(R.id.tvTime);
+
+                RecyclerView rvPicList = evaluateView.findViewById(R.id.rvPicList);
+                String pics[] = bean.getRate_pic();
+                if(pics != null && pics.length>0){
+                    rvPicList.setVisibility(View.VISIBLE);
+                    List<String> picList = Arrays.asList(pics);
+                    AppraiseGoodsPicAdapter picAdapter = new AppraiseGoodsPicAdapter(this,picList);
+                    rvPicList.setLayoutManager(new GridLayoutManager(this, 3));
+                    rvPicList.addItemDecoration(new GridSpacingItemDecoration(3, Utils.dp2px(this, 3), false));
+                    rvPicList.setAdapter(picAdapter);
+                }else{
+                    rvPicList.setVisibility(View.GONE);
+                }
                 tvName.setText(list.get(i).getUser_name());
                 if ("good".equals(bean.getResult())) {
                     ratingBar.setRating(5);
