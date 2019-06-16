@@ -99,6 +99,7 @@ public class HomeFragment extends BaseFragment {
     private ImageView imgMsg;
 
     private View headerView;
+    private int bannerIndex = 0 ;
     private Banner banner;
     private LinearLayout indicator;
     private List<ImageView> imageViews;
@@ -359,6 +360,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
+                bannerIndex = position ;
                 for (int i = 0; i < imageViews.size(); i++) {
                     if (position == i) {
                         imageViews.get(i).setImageResource(R.drawable.banner_select);
@@ -377,7 +379,7 @@ public class HomeFragment extends BaseFragment {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                HomeModulesBean.Pic fuction = bannerPicLists.get(position);
+                HomeModulesBean.Pic fuction = bannerPicLists.get(bannerIndex);
                 functionJump(fuction, "banner");
             }
         });
