@@ -142,7 +142,13 @@ public class OrderDetailActivity extends BaseActivity {
     @BindView(R.id.tvRightContent)
     TextView tvRightContent;
 
-    @BindView(R.id.llApplyReason)
+
+
+    @BindView(R.id.llCancelCause)
+    LinearLayout llCancelCause;
+    @BindView(R.id.tvApplyReason)
+    TextView tvCancelCause;
+    @BindView(R.id.tvCancelCause)
     LinearLayout llApplyReason;
     @BindView(R.id.tvApplyReason)
     TextView tvApplyReason;
@@ -897,12 +903,11 @@ public class OrderDetailActivity extends BaseActivity {
                     tvFinishTime.setText(TimeUtils.millisToDate(String.valueOf(orderDetailBean.getEnd_time())));
                     break;
                 case OrderParams.TRADE_CLOSED_BY_SYSTEM://已关闭
-                    llOrderTitleRightContent.setVisibility(View.VISIBLE);
                     if (0 == type) {
                         tvDelete.setVisibility(View.VISIBLE);
                     }
-                    tvRightContentDesc.setText("取消原因：");
-                    tvRightContent.setText(orderDetailBean.getCancel_reason());
+                    llCancelCause.setVisibility(View.VISIBLE);
+                    tvCancelCause.setText(orderDetailBean.getCancel_reason());
                     llPayTime.setVisibility(View.GONE);
                     llSendTime.setVisibility(View.GONE);
                     llFinishTime.setVisibility(View.GONE);

@@ -38,6 +38,51 @@
         android:divider="@drawable/line_vertical"
         android:showDividers="middle"
         android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rlWallet"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/imgWallet"
+                android:layout_width="18dp"
+                android:layout_height="16dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:src="@mipmap/pay_wallet" />
+
+            <TextView android:id="@+id/tvWallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/imgWallet"
+                android:text="余额支付"
+                android:textColor="@color/t_black"
+                android:textSize="@dimen/sp_small" />
+
+            <TextView android:id="@+id/tvWalletTips"
+                android:layout_toRightOf="@id/tvWallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="12dp"
+                android:textColor="@color/t_gray"
+                android:textSize="11sp" />
+
+            <ImageView
+                android:id="@+id/imgChoiceWallet"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/pay_choice"
+                android:visibility="gone" />
+        </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/rlWeiXin"
             android:layout_width="match_parent"
@@ -116,49 +161,7 @@
             <!--android:layout_height="1px"-->
             <!--android:background="@color/line" />-->
 
-        <RelativeLayout
-            android:id="@+id/rlWallet"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
 
-            <ImageView
-                android:id="@+id/imgWallet"
-                android:layout_width="18dp"
-                android:layout_height="16dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:src="@mipmap/pay_wallet" />
-
-            <TextView android:id="@+id/tvWallet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/imgWallet"
-                android:text="余额支付"
-                android:textColor="@color/t_black"
-                android:textSize="@dimen/sp_small" />
-
-            <TextView android:id="@+id/tvWalletTips"
-                android:layout_toRightOf="@id/tvWallet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="12dp"
-                android:textColor="@color/t_gray"
-                android:textSize="11sp" />
-
-            <ImageView
-                android:id="@+id/imgChoiceWallet"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/pay_choice"
-                android:visibility="gone" />
-        </RelativeLayout>
 
 
         <RelativeLayout
