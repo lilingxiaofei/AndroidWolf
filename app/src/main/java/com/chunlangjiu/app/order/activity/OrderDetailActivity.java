@@ -146,9 +146,9 @@ public class OrderDetailActivity extends BaseActivity {
 
     @BindView(R.id.llCancelCause)
     LinearLayout llCancelCause;
-    @BindView(R.id.tvApplyReason)
-    TextView tvCancelCause;
     @BindView(R.id.tvCancelCause)
+    TextView tvCancelCause;
+    @BindView(R.id.llApplyReason)
     LinearLayout llApplyReason;
     @BindView(R.id.tvApplyReason)
     TextView tvApplyReason;

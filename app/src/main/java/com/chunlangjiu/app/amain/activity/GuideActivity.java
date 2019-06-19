@@ -80,17 +80,15 @@ public class GuideActivity extends AppCompatActivity {
             iv.setImageResource(imgs[i]);//为ImageView添加图片资源
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);//这里也是一个图片的适配
             imageViews.add(iv);
-//            if (i == imgs.length - 1) {
-                //为最后一张图片添加点击事件
-//                iv.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent intent = new Intent(GuideActivity.this, MainActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                });
-//            }
+            if (i == imgs.length - 1) {
+//                为最后一张图片添加点击事件
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startMainActivity();
+                    }
+                });
+            }
         }
         vpAdapter = new VpAdapter(imageViews);
         vpGuide.setAdapter(vpAdapter);

@@ -28,6 +28,7 @@ import com.chunlangjiu.app.amain.bean.HomeBean;
 import com.chunlangjiu.app.amain.bean.HomeListBean;
 import com.chunlangjiu.app.amain.bean.HomeModulesBean;
 import com.chunlangjiu.app.appraise.activity.AppraiserMainActivity;
+import com.chunlangjiu.app.appraise.bean.MsgBean;
 import com.chunlangjiu.app.fans.dialog.InviteCodeDialog;
 import com.chunlangjiu.app.goods.activity.FestivalActivity;
 import com.chunlangjiu.app.goods.activity.GoodsDetailslNewActivity;
@@ -73,6 +74,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -97,6 +99,7 @@ public class HomeFragment extends BaseFragment {
     private TextView tvCity;
     private RelativeLayout rlTitleSearch;
     private ImageView imgMsg;
+    private TextView tvMsgNum ;
 
     private View headerView;
     private int bannerIndex = 0 ;
@@ -205,6 +208,7 @@ public class HomeFragment extends BaseFragment {
         tvCity = rootView.findViewById(R.id.tvCity);
         tvCity.setOnClickListener(onClickListener);
         imgMsg = rootView.findViewById(R.id.imgMsg);
+        tvMsgNum = rootView.findViewById(R.id.tvMsgNum);
         imgMsg.setOnClickListener(onClickListener);
         rlTitleSearch = rootView.findViewById(R.id.rlTitleSearch);
         rlTitleSearch.setOnClickListener(onClickListener);
@@ -259,6 +263,7 @@ public class HomeFragment extends BaseFragment {
         initBrandRecycleView();
         initRecyclerView();
         getHomeModules();
+        getMsgNum();
         getHomeList(pageNo, true);
     }
 
@@ -445,6 +450,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onRefresh(final RefreshLayout refreshLayout) {
                 getHomeModules();
+                getMsgNum();
                 getHomeList(1, true);
             }
         });
@@ -533,6 +539,29 @@ public class HomeFragment extends BaseFragment {
                     public void accept(Throwable throwable) throws Exception {
                         rlLoading.setVisibility(View.GONE);
                         refreshLayout.setVisibility(View.VISIBLE);
+                    }
+                }));
+    }
+
+
+    private void getMsgNum() {
+        disposable.add(ApiUtils.getInstance().getNewMsgNum()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<ResultBean<MsgBean>>() {
+                    @Override
+                    public void accept(ResultBean<MsgBean> result) throws Exception {
+                        if(result.getData()!=null && result.getData().getCount()>0){
+                            tvMsgNum.setText(result.getData().getCount()+"");
+                            tvMsgNum.setVisibility(View.VISIBLE);
+                        }else{
+                            tvMsgNum.setVisibility(View.GONE);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
                     }
                 }));
     }

@@ -15,6 +15,7 @@ import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
+import com.chunlangjiu.app.appraise.bean.MsgBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
@@ -478,6 +479,12 @@ public class ApiUtils {
     public Flowable<ResultBean<HomeModulesBean>> getHomeModules() {
         return apiService.getHomeModules("theme.modules", "v1", "index");
     }
+
+    public Flowable<ResultBean<MsgBean>> getNewMsgNum() {
+        return apiService.getNewMsgNum("member.notice.get", "v1");
+    }
+
+
 
 
     public Flowable<ResultBean<HomeModulesBean>> getOpenAd() {

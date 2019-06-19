@@ -13,6 +13,7 @@ import com.chunlangjiu.app.amain.bean.MainClassBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseGoodsBean;
 import com.chunlangjiu.app.appraise.bean.AppraiseListBean;
+import com.chunlangjiu.app.appraise.bean.MsgBean;
 import com.chunlangjiu.app.fans.bean.FansBean;
 import com.chunlangjiu.app.fans.bean.FansCodeBean;
 import com.chunlangjiu.app.fans.bean.FansItemBean;
@@ -467,6 +468,10 @@ public interface ApiService {
     Flowable<ResultBean<HomeModulesBean>> getHomeModules(@Field("method") String method, @Field("v") String v,
                                                          @Field("tmpl") String payment_id);
 
+
+    @POST("index.php/topapi")
+    @FormUrlEncoded
+    Flowable<ResultBean<MsgBean>> getNewMsgNum(@Field("method") String method, @Field("v") String v);
 
     @POST("index.php/topapi")
     @FormUrlEncoded

@@ -45,7 +45,8 @@ public class SplashActivity extends Activity {
     private int loadTime = 4000;
     private final int WHAT_COUNT_DOWN = 88;
 
-    HomeModulesBean.Params params ;
+    HomeModulesBean.Params params;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +98,7 @@ public class SplashActivity extends Activity {
                 .subscribe(new Consumer<ResultBean<HomeModulesBean>>() {
                     @Override
                     public void accept(ResultBean<HomeModulesBean> brandsListBeanResultBean) throws Exception {
-                        if(null != brandsListBeanResultBean.getData()){
+                        if (null != brandsListBeanResultBean.getData()) {
                             params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
                         }
                     }
@@ -136,19 +137,18 @@ public class SplashActivity extends Activity {
     }
 
     private void startNextActivity() {
-//        if(params == null){
-            boolean isFirstStart = (boolean) SPUtils.get("firstStart", true);
-            if (isFirstStart) {
-                Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
-                intent.putExtra("openParams",params);
-                startActivity(intent);
-            } else {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                intent.putExtra("openParams",params);
-                startActivity(intent);
-            }
-            SPUtils.put("firstStart", false);
-//        }
+        boolean isFirstStart = (boolean) SPUtils.get("firstStart", true);
+//        isFirstStart = true ;
+        if (isFirstStart) {
+            Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
+            intent.putExtra("openParams", params);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            intent.putExtra("openParams", params);
+            startActivity(intent);
+        }
+        SPUtils.put("firstStart", false);
         SplashActivity.this.finish();
     }
 
@@ -170,9 +170,9 @@ public class SplashActivity extends Activity {
 
 
     public void functionJump() {
-        String type = params .getLinktype() ;
+        String type = params.getLinktype();
         String value = params.getLink();
-        if(type != null) {
+        if (type != null) {
             switch (type) {
                 case HomeModulesBean.ITEM_GOODS:
                     GoodsDetailslNewActivity.startActivity(SplashActivity.this, value);
@@ -187,7 +187,7 @@ public class SplashActivity extends Activity {
                     UmengEventUtil.bannerEvent(SplashActivity.this, "全部");
                     break;
                 case HomeModulesBean.ITEM_BRAND:
-                    GoodsListNewActivity.startGoodsListNewActivity(SplashActivity.this,"","", value, "", "");
+                    GoodsListNewActivity.startGoodsListNewActivity(SplashActivity.this, "", "", value, "", "");
                     UmengEventUtil.bannerEvent(SplashActivity.this, "品牌");
                     break;
                 case HomeModulesBean.ITEM_AUCTION:
@@ -195,7 +195,7 @@ public class SplashActivity extends Activity {
                     UmengEventUtil.bannerEvent(SplashActivity.this, "竞拍专区");
                     break;
                 case HomeModulesBean.ITEM_ACTIVITY:
-                    FestivalActivity.startActivity(SplashActivity.this,params.getWebview());
+                    FestivalActivity.startActivity(SplashActivity.this, params.getWebview());
                     UmengEventUtil.bannerEvent(SplashActivity.this, "店铺活动");
                     break;
                 case HomeModulesBean.ITEM_WINERY:
@@ -238,7 +238,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != disposable){
+        if (null != disposable) {
             disposable.dispose();
         }
     }
