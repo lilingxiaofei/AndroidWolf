@@ -16,6 +16,7 @@ import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.activity.BankCardActivity;
 import com.chunlangjiu.app.user.bean.BankCardListBean;
 import com.chunlangjiu.app.util.ConstantMsg;
+import com.pkqup.commonlibrary.dialog.CommonConfirmDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.BigDecimalUtils;
@@ -55,6 +56,8 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
     private String bankCardId = "";
     private BankCardListBean.BankCardDetailBean bankCardDetailBean;
 
+    private CommonConfirmDialog confirmDialog ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,7 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
             btnOk.setText("撤销保证金");
         } else {
             tvTips.setText(getResources().getString(R.string.refund_tips));
+            confirmDialog = new CommonConfirmDialog(this,"您好本次提现周期为1-2个工作日，具体时间以银行为准，提现记录详见“资金管理-明细”，如有疑问可致电400-189-0095，谢谢！");
             String count =getIntent().getStringExtra(MoneyCount);
             edtAmount.setHint(String.format("可提余额（¥%s）", BigDecimalUtils.objToStr(count)));
             btnOk.setText("确认提现");
@@ -100,7 +104,7 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
                 startActivityForResult(intent, BankCardRequestCode);
                 break;
             case R.id.btnOk:
-                String amount = edtAmount.getText().toString().trim();
+                final String amount = edtAmount.getText().toString().trim();
                 if (TextUtils.isEmpty(bankCardId)) {
                     ToastUtils.showShort("请选择银行卡");
                     return;
@@ -111,7 +115,18 @@ public class WithDrawActivity extends BaseActivity {//最多可提（¥1250.00�
                         ToastUtils.showShort("请输入提现金额");
                         return;
                     }
-                    depositCash(bankCardId, amount);
+                    confirmDialog.setCallBack(new CommonConfirmDialog.CallBack() {
+                        @Override
+                        public void onConfirm() {
+                            depositCash(bankCardId, amount);
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
+                    confirmDialog.show();
                 } else if (DepositRefund.equals(type)) {
                     depositRefund();
                 }
