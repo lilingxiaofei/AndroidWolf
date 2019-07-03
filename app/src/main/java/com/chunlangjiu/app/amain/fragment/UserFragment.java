@@ -410,6 +410,7 @@ public class UserFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        checkLogin();
         if (BaseApplication.isLogin()) {
             getUserInfo();
             getBuyerOrderNumIndex();
