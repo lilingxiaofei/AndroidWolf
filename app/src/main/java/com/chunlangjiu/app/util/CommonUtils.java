@@ -13,8 +13,10 @@ import android.widget.EditText;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.user.bean.UploadImageBean;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
+import com.pkqup.commonlibrary.net.exception.ApiException;
 import com.pkqup.commonlibrary.util.AppUtils;
 import com.pkqup.commonlibrary.util.FileUtils;
+import com.pkqup.commonlibrary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +122,17 @@ public class CommonUtils {
         return detailsGoods;
     }
 
+
+
+
+    public static void checkToken(Throwable throwable) {
+        if (throwable instanceof ApiException) {
+            ApiException apiException = (ApiException) throwable;
+            if(apiException.getCode() == 20001){
+
+            }
+        }
+    }
 
 
 

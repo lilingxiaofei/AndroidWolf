@@ -76,7 +76,7 @@ public class ReChargeActivity extends BaseActivity {
     private static RechargeType rechargeType = RechargeType.Balance;
     private List<PaymentBean.PaymentInfo> payList;
     private String paymentId;
-    private String payMehtodId = OrderParams.PAY_APP_WXPAY;//支付方式类型
+    private String payMehtodId = OrderParams.PAY_PING_WXPAY;//支付方式类型
 
     private CompositeDisposable disposable;
 

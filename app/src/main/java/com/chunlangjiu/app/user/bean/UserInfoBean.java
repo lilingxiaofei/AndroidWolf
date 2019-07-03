@@ -4,7 +4,7 @@ package com.chunlangjiu.app.user.bean;
  * @CreatedbBy: liucun on 2018/9/17
  * @Describe:
  */
-public class UserInfoBean {
+public class  UserInfoBean {
 
 
     private String login_account;

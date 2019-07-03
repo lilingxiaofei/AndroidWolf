@@ -750,6 +750,7 @@ public class UserFragment extends BaseFragment {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        ToastUtils.showErrorMsg(throwable);
                     }
                 }));
     }
@@ -1241,19 +1242,19 @@ public class UserFragment extends BaseFragment {
             tvSellGoodsNum.setVisibility(View.GONE);
 
             llNotUseMoney.setVisibility(View.VISIBLE);
-            disposable.add(ApiUtils.getInstance().logout()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<ResultBean>() {
-                        @Override
-                        public void accept(ResultBean loginBeanResultBean) throws Exception {
-
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                        }
-                    }));
+//            disposable.add(ApiUtils.getInstance().logout()
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Consumer<ResultBean>() {
+//                        @Override
+//                        public void accept(ResultBean loginBeanResultBean) throws Exception {
+//
+//                        }
+//                    }, new Consumer<Throwable>() {
+//                        @Override
+//                        public void accept(Throwable throwable) throws Exception {
+//                        }
+//                    }));
         }
     }
 
