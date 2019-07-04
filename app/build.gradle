@@ -124,6 +124,6 @@ dependencies {
     //    implementation 'com.pingxx:pingpp-cmbwallet:2.1.19' // 使用招行一网通时添加
     //    implementation 'com.pingxx:pingpp-ccbpay:2.1.19' // 使用建行支付时添加
     //    implementation 'com.pingxx:pingpp-android-cmpay:2.2.2' // 使用和包支付时添加
-    implementation files('libs/UPPayAssistEx.jar')
-    implementation files('libs/UPPayPluginExPro.jar')
+//    implementation files('libs/UPPayAssistEx.jar')
+//    implementation files('libs/UPPayPluginExPro.jar')
 }
