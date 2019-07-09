@@ -426,7 +426,7 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        MyStatusBarUtils.setTitleBarPadding(getActivity(), rootView.findViewById(R.id.rlUserHead));
+        MyStatusBarUtils.setHomeFragment(getActivity(), rootView.findViewById(R.id.rlUserHead));
         userCheckAuthDialog = new UserCheckAuthDialog(activity);
         rlContentLayout = rootView.findViewById(R.id.rlContentLayout);
         llNotLogin = rootView.findViewById(R.id.llNotLogin);
@@ -434,7 +434,7 @@ public class UserFragment extends BaseFragment {
         tvToLogin.setOnClickListener(onClickListener);
         rlHead = rootView.findViewById(R.id.rlHead);
         ivSetting = rootView.findViewById(R.id.ivSetting);
-        MyStatusBarUtils.setTitleBarPadding(getActivity(), ivSetting);
+//        MyStatusBarUtils.setTitleBarPadding(getActivity(), ivSetting);
         if (Build.VERSION.SDK_INT >= 21) {
             // 获得状态栏高度
             int statusBarHeight = MyStatusBarUtils.getStatusBarHeight(activity);

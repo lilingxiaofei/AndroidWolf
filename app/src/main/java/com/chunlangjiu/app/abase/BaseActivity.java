@@ -1,8 +1,10 @@
 package com.chunlangjiu.app.abase;
 
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chunlangjiu.app.R;
+import com.chunlangjiu.app.util.MyStatusBarUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.pkqup.commonlibrary.dialog.CommonLoadingDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -102,8 +105,14 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     private void setStatusBarColor() {
+//        StatusBarUtil.setLightMode(this);
+        //根据状态栏颜色来决定状态栏文字用黑色还是白色
+
         StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_red),0);
+//        MyStatusBarUtils.setStatusBarFontColor(this,ContextCompat.getColor(this, R.color.bg_white));
     }
+
+
 
     public abstract void setTitleView();
 

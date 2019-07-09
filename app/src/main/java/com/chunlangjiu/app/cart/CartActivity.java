@@ -19,7 +19,7 @@ public class CartActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cart_activity_main);
-        MyStatusBarUtils.setStatusBar(this, ContextCompat.getColor(this, R.color.bg_red));
+        MyStatusBarUtils.setStatusBar(this, ContextCompat.getColor(this, R.color.bg_white));
         CartFragment cartFragment = new CartFragment();
         cartFragment.setIsActivity(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.llContent, cartFragment)

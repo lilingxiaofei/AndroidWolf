@@ -44,6 +44,7 @@ import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.net.bean.ResultBean;
 import com.pkqup.commonlibrary.util.AppUtils;
 import com.pkqup.commonlibrary.util.PermissionUtils;
+import com.pkqup.commonlibrary.util.SPUtils;
 import com.pkqup.commonlibrary.util.ToastUtils;
 import com.pkqup.commonlibrary.view.MyViewPager;
 import com.yanzhenjie.permission.PermissionListener;
@@ -128,6 +129,20 @@ public class MainActivity extends BaseActivity {
         initView();
         initData();
         checkUpdate();
+//        showErrorLog();
+    }
+
+    private void showErrorLog(){
+        String errorLog = SPUtils.get("errorLog","").toString();
+        if(!TextUtils.isEmpty(errorLog)){
+            CommonConfirmDialog commonConfirmDialog = new CommonConfirmDialog(this,errorLog);
+            commonConfirmDialog.show();
+        }
+        String errorLogTwo = SPUtils.get("errorLogTwo","").toString();
+        if(!TextUtils.isEmpty(errorLogTwo)){
+            CommonConfirmDialog commonConfirmDialog = new CommonConfirmDialog(this,errorLogTwo);
+            commonConfirmDialog.show();
+        }
     }
 
     private void initGeTuiPush() {

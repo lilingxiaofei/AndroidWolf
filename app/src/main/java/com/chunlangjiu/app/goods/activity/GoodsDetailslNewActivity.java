@@ -265,6 +265,7 @@ public class GoodsDetailslNewActivity extends BaseActivity {
         titleImgRightOne.setImageResource(R.mipmap.white_share);
         titleImgRightOne.setOnClickListener(onClickListener);
         titleImgLeft.setOnClickListener(onClickListener);
+
     }
 
 

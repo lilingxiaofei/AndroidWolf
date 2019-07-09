@@ -139,7 +139,7 @@ public class CartFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.rlCartTitle));
+        MyStatusBarUtils.setHomeFragment(getActivity(),rootView.findViewById(R.id.rlCartTitle));
         EventManager.getInstance().registerListener(onNotifyListener);
         disposable = new CompositeDisposable();
 

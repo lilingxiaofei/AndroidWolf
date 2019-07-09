@@ -132,7 +132,7 @@ public class GoodsManageHomeActivity extends BaseActivity {
     }
 
     private void initView() {
-        MyStatusBarUtils.setStatusBar(this,ContextCompat.getColor(this, R.color.bg_red));
+        MyStatusBarUtils.setStatusBar(this,ContextCompat.getColor(this, R.color.bg_white));
         MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlShopTitle),true);
         ivBack.setOnClickListener(onClickListener);
          llSaleLayout.setOnClickListener(onClickListener);

@@ -485,10 +485,10 @@
         <activity
             android:name="com.chunlangjiu.app.goods.dialog.PayNewActivity"
             android:label="@string/title_activity_goods_audit"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:theme="@style/dialog_transparent"></activity>
 
+        <!--android:screenOrientation="portrait"-->
     </application>
 
 </manifest>

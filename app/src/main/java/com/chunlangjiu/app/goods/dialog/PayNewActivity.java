@@ -177,23 +177,23 @@ public class PayNewActivity extends Activity {
                     String displayName = payInfo.getApp_display_name();
                     displayName = null != displayName ? displayName : "";
                     if (displayName.contains("微信")) {
-                        weixinPayId = payList.get(i).getApp_id();
+                        weixinPayId = payInfo.getApp_id();
                         rlWeiXin.setVisibility(View.VISIBLE);
                     }
                     if (displayName.contains("支付宝")) {
-                        zhifubaoPayId = payList.get(i).getApp_id();
+                        zhifubaoPayId = payInfo.getApp_id();
                         rlZhiFuBao.setVisibility(View.VISIBLE);
                     }
                     if (displayName.contains("余额")) {
-                        yuePayId = payList.get(i).getApp_id();
+                        yuePayId = payInfo.getApp_id();
                         rlWallet.setVisibility(View.VISIBLE);
                     }
                     if (displayName.contains("银联")) {
-                        upPayId = payList.get(i).getApp_id();
+                        upPayId = payInfo.getApp_id();
                         rlUnionPay.setVisibility(View.VISIBLE);
                     }
                     if (displayName.contains("大额")) {
-                        daePayId = payList.get(i).getApp_id();
+                        daePayId = payInfo.getApp_id();
                         rlLarge.setVisibility(View.VISIBLE);
                     }
                 }

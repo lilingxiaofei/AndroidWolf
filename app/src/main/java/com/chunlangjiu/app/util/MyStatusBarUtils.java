@@ -4,9 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+
+import com.chunlangjiu.app.R;
 
 /**
  * Created by Administrator on 2019/1/22.
@@ -43,8 +48,29 @@ public class MyStatusBarUtils {
             statusBarView.setBackgroundColor(colorResId);
             decorView.addView(statusBarView, lp);
         }
-
     }
+
+
+    public static void setStatusBarFontColor(Activity activity,@ColorInt int color){
+        // 如果亮色，设置状态栏文字为黑色
+        if (isLightColor(color)) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        }
+    }
+
+    /**
+     * 判断颜色是不是亮色
+     *
+     * @param color
+     * @return
+     * @from https://stackoverflow.com/questions/24260853/check-if-color-is-dark-or-light-in-android
+     */
+    private  static boolean isLightColor(@ColorInt int color) {
+        return ColorUtils.calculateLuminance(color) >= 0.5;
+    }
+
 
     public static void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
         View decor = activity.getWindow().getDecorView();
@@ -79,6 +105,12 @@ public class MyStatusBarUtils {
         }
     }
 
+
+
+
+    public static void setHomeFragment(Activity context, View view) {
+        setTitleBarPadding(context,view);
+    }
 
     /**
      * 设置页面最外层布局 FitsSystemWindows 属性

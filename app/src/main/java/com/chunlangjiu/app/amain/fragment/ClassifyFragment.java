@@ -80,7 +80,7 @@ public class ClassifyFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.title_view));
+        MyStatusBarUtils.setHomeFragment(getActivity(),rootView.findViewById(R.id.title_view));
         initTitleView();
 
         disposable = new CompositeDisposable();

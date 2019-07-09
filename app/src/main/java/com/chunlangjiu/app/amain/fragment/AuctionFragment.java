@@ -152,7 +152,7 @@ public class AuctionFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        MyStatusBarUtils.setTitleBarPadding(getActivity(), rootView.findViewById(R.id.title_view));
+        MyStatusBarUtils.setHomeFragment(getActivity(), rootView.findViewById(R.id.title_view));
         disposable = new CompositeDisposable();
         titleView.setVisibility(View.VISIBLE);
         tvTitleF.setText("竞拍专区");

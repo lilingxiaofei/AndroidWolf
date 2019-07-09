@@ -203,7 +203,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        MyStatusBarUtils.setTitleBarPadding(getActivity(),rootView.findViewById(R.id.headLayout));
+        MyStatusBarUtils.setHomeFragment(getActivity(),rootView.findViewById(R.id.headLayout));
         disposable = new CompositeDisposable();
         tvCity = rootView.findViewById(R.id.tvCity);
         tvCity.setOnClickListener(onClickListener);

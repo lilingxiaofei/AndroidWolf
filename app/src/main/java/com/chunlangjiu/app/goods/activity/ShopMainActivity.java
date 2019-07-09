@@ -294,7 +294,7 @@ public class ShopMainActivity extends BaseActivity {
 
 
     private void initView() {
-        MyStatusBarUtils.setStatusBar(this,ContextCompat.getColor(this, R.color.bg_red));
+        MyStatusBarUtils.setStatusBar(this,ContextCompat.getColor(this, R.color.bg_white));
         MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlShopTitle),true);
         tv_title.setText(R.string.store_home);
         imgShow.setOnClickListener(onClickListener);

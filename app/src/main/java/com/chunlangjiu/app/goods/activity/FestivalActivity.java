@@ -23,6 +23,7 @@ import com.chunlangjiu.app.goods.bean.StoreActivityBean;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.chunlangjiu.app.util.ConstantMsg;
 import com.chunlangjiu.app.util.MyStatusBarUtils;
+import com.jaeger.library.StatusBarUtil;
 import com.lzy.imagepicker.util.Utils;
 import com.lzy.imagepicker.view.GridSpacingItemDecoration;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
@@ -104,8 +105,11 @@ public class FestivalActivity extends BaseActivity {
 
 
     private void initView() {
-        MyStatusBarUtils.setStatusBar(this, ContextCompat.getColor(this, R.color.bg_red));
-        MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlShopTitle), true);
+//        MyStatusBarUtils.setStatusBar(this, ContextCompat.getColor(this, R.color.bg_white));
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_white),0);
+        MyStatusBarUtils.setStatusBarFontColor(this,ContextCompat.getColor(this, R.color.bg_white));
+//        StatusBarUtil.setLightMode(this);
+//        MyStatusBarUtils.setFitsSystemWindows(findViewById(R.id.rlShopTitle), true);
         required = getIntent().getStringExtra("required");
         productList = new ArrayList<>();
         goodsAdapter = new GoodsAdapter(this, productList);

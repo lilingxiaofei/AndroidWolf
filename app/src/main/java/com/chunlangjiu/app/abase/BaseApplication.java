@@ -8,6 +8,7 @@ import com.awen.photo.FrescoImageLoader;
 import com.chunlangjiu.app.net.ApiUtils;
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.github.promeg.pinyinhelper.PinyinMapDict;
+import com.pkqup.commonlibrary.crash.CrashHandler;
 import com.pkqup.commonlibrary.util.AppUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -48,7 +49,7 @@ public class BaseApplication extends MultiDexApplication {
         initUM();
         initPinyinCity();
         FrescoImageLoader.init(this);
-        //CrashHandler.getInstance().init(this);
+//        CrashHandler.getInstance().init(this);
         KLog.init(AppUtils.isDebug());
     }
 
