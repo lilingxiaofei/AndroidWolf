@@ -2,6 +2,7 @@ package com.chunlangjiu.app.goods.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -181,8 +182,13 @@ public class FestivalActivity extends BaseActivity {
 
         if (activityBean != null) {
             productList.clear();
-            GlideUtils.loadImage(this, activityBean.getTop_img(),ivBgHead);
-            GlideUtils.loadImage(this, activityBean.getBottom_img(), ivBgBottom);
+            if("1".equals(activityBean.getPattern())){
+                GlideUtils.loadImage(this, activityBean.getImg(),ivBgHead);
+            }else{
+                GlideUtils.loadImage(this, activityBean.getTop_img(),ivBgHead);
+                GlideUtils.loadImage(this, activityBean.getBottom_img(), ivBgBottom);
+            }
+
             try {
                 rlRootLayout.setBackgroundColor(Color.parseColor(activityBean.getColor()));
             } catch (Exception e) {

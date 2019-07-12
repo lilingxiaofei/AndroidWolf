@@ -240,6 +240,7 @@ public class MainActivity extends BaseActivity {
     private void initData() {
         fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
+
 //        fragments.add(GoodsFragment.newInstance("", false, "", ""));
         fragments.add(new ClassifyFragment());
         fragments.add(new AuctionFragment());

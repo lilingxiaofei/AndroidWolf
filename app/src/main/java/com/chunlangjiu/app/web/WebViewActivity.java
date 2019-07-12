@@ -75,7 +75,7 @@ public class WebViewActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_activity_webview);
         EventManager.getInstance().registerListener(onNotifyListener);
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_white),0);
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.bg_red),0);
         ButterKnife.bind(this);
         initView();
         initData();

@@ -9,6 +9,8 @@ import java.util.List;
 public class StoreActivityBean {
     private String top_img;
     private String bottom_img;
+    private String img ;
+    private String pattern;//1单图，2多图
     private String color;
     private String open;
     private List<GoodsListDetailBean> item;
@@ -60,5 +62,21 @@ public class StoreActivityBean {
 
     public void setAuction(List<GoodsListDetailBean> auction) {
         this.auction = auction;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
     }
 }
