@@ -1,16 +1,21 @@
 package com.chunlangjiu.app.abase;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
 import com.awen.photo.FrescoImageLoader;
+import com.chunlangjiu.app.amain.bean.LoginBean;
 import com.chunlangjiu.app.net.ApiUtils;
+import com.chunlangjiu.app.util.ConstantMsg;
 import com.github.promeg.pinyinhelper.Pinyin;
 import com.github.promeg.pinyinhelper.PinyinMapDict;
 import com.pkqup.commonlibrary.crash.CrashHandler;
+import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.util.AppUtils;
 import com.pkqup.commonlibrary.util.SPUtils;
+import com.pkqup.commonlibrary.util.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -120,6 +125,20 @@ public class BaseApplication extends MultiDexApplication {
         BaseApplication.token = token;
     }
 
+
+    public static void loginSuccess(Activity activity, LoginBean loginBean){
+        ToastUtils.showShort("登录成功");
+        SPUtils.put("token", loginBean.getAccessToken());
+//        SPUtils.put("account", etPhone.getText().toString());/
+        SPUtils.put("account", loginBean.getAccount());
+        BaseApplication.setToken(loginBean.getAccessToken());
+        BaseApplication.initToken();
+        if ("false".equals(loginBean.getReferrer())) {
+            EventManager.getInstance().notify(null, ConstantMsg.SET_INVITATION_CODE);
+        }
+        EventManager.getInstance().notify(null, ConstantMsg.LOGIN_SUCCESS);
+        activity.finish();
+    }
     static {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {

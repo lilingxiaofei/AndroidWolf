@@ -59,6 +59,14 @@ public class OpenDialog extends Dialog {
         initView();
     }
 
+    @Override
+    public void show() {
+        if(!context.isFinishing()){
+            super.show();
+        }
+
+    }
+
     public void setCallBack(CallBack callBack) {
         this.callBack = callBack;
     }

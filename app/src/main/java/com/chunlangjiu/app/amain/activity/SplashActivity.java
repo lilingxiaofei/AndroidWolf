@@ -87,7 +87,7 @@ public class SplashActivity extends Activity {
 //            setOpenPic();
 //        }
         startCountDown();
-        loadOpen();
+//        loadOpen();
     }
 
 

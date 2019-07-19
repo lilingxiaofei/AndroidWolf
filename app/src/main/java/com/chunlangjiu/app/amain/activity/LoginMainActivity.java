@@ -6,9 +6,11 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chunlangjiu.app.R;
 import com.chunlangjiu.app.abase.BaseActivity;
@@ -42,6 +44,8 @@ import io.reactivex.schedulers.Schedulers;
  * @Describe: 登录页面
  */
 public class LoginMainActivity extends BaseActivity {
+    private long exitTime;
+
 
     @BindView(R.id.ivBack)
     ImageView ivBack;
@@ -230,6 +234,41 @@ public class LoginMainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                exit();
+            }
+        }
+        return true;
+    }
+
+
+//    /**退出程序**/
+//    protected void exit() {
+//        exitTime = 0 ;
+//        Intent intent = new Intent();
+//        intent.setClass(this,ExitActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+//        finish();
+//    }
+
+    /**退出程序*/
+    protected void exit() {
+        // 这里使用clear + new task的方式清空整个任务栈,只保留新打开的Main页面
+        // 然后Main页面接收到退出的标志位exit=true,finish自己,这样就关闭了全部页面
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("exit", true);
+        startActivity(intent);
+        finish();
+    }
+
 
     @Override
     protected void onDestroy() {

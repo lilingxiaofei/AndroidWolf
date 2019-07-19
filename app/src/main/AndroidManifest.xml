@@ -22,7 +22,6 @@
         <!-- 高德地图定位服务 -->
         <service android:name="com.amap.api.location.APSService" />
 
-
         <!-- 个推SDK配置开始 -->
         <!-- 配置SDK核心服务 -->
         <meta-data
@@ -43,10 +42,10 @@
         <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复 -->
         <service android:name=".util.GeTuiIntentService" />
 
-
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5b3b3744f43e4879b8000236"/>
+            android:value="5b3b3744f43e4879b8000236" />
+
         <activity
             android:name=".amain.activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -58,29 +57,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".amain.activity.OpenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Flash.Theme"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-
-
         <activity
             android:name=".goods.activity.FestivalActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".amain.activity.GuideActivity"
@@ -124,7 +124,6 @@
             android:name=".cart.CartActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
         <activity
             android:name=".goods.activity.GoodsDetailsActivity"
             android:screenOrientation="portrait"
@@ -315,9 +314,6 @@
             android:targetActivity="com.pingplusplus.android.PaymentActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-
-
-
         <!-- 微信分享回调 -->
 
 
@@ -385,110 +381,102 @@
         <activity
             android:name=".goodsmanage.activity.GoodsManageListActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".goodsmanage.activity.GoodsManageHomeActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".goodsmanage.activity.GoodsManageSetAuctionActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".goodsmanage.activity.GoodsManageDetailsActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
-
-
-
-        <activity-alias
-            android:name="com.chunlangjiu.app.wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.pingplusplus.android.PaymentActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+
+        <activity-alias
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
 
         <!-- 银联支付 -->
-        <!-- 银联支付需要的   application标签下-->
+        <!-- 银联支付需要的   application标签下 -->
         <uses-library
             android:name="org.simalliance.openmobileapi"
             android:required="false" />
 
         <activity
             android:name="com.unionpay.uppay.PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"/>
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
         <activity
             android:name="com.unionpay.UPPayWapActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
-
-
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.AppraiserSellerHomeActivity"
+            android:name=".appraise.activity.AppraiserSellerHomeActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
-
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.AppraiserBuyerHomeActivity"
+            android:name=".appraise.activity.AppraiserBuyerHomeActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.AppraiserMainActivity"
+            android:name=".appraise.activity.AppraiserMainActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.AppraiseResultActivity"
+            android:name=".appraise.activity.AppraiseResultActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.AppraiserInfoActivity"
+            android:name=".appraise.activity.AppraiserInfoActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.NoviceMustSeeActivity"
+            android:name=".appraise.activity.NoviceMustSeeActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.AppraiseReportActivity"
+            android:name=".appraise.activity.AppraiseReportActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.QuickCashActivity"
+            android:name=".appraise.activity.QuickCashActivity"
             android:label="@string/title_activity_goods_audit"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.AppraiserInfoEditActivity"
+            android:name=".appraise.activity.AppraiserInfoEditActivity"
             android:label="@string/title_activity_goods_audit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.AppraiseAssessActivity"
+            android:name=".appraise.activity.AppraiseAssessActivity"
             android:label="@string/title_activity_goods_audit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:theme="@style/AppTheme"></activity>
-
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name="com.chunlangjiu.app.appraise.activity.AppraiseApplyAssessActivity"
+            android:name=".appraise.activity.AppraiseApplyAssessActivity"
             android:label="@string/title_activity_goods_audit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:theme="@style/AppTheme"></activity>
-
-
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
-            android:name="com.chunlangjiu.app.goods.dialog.PayNewActivity"
+            android:name=".goods.dialog.PayNewActivity"
             android:label="@string/title_activity_goods_audit"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:theme="@style/dialog_transparent"></activity>
+            android:theme="@style/dialog_transparent"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
-        <!--android:screenOrientation="portrait"-->
+        <!-- android:screenOrientation="portrait" -->
+        <activity android:name=".amain.activity.ExitActivity"></activity>
     </application>
 
 </manifest>

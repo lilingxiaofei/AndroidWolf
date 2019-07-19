@@ -241,6 +241,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void accept(ResultBean<LoginBean> loginBeanResultBean) throws Exception {
                         hideLoadingDialog();
+//                        BaseApplication.loginSuccess(LoginActivity.this,);
                         ToastUtils.showShort("登录成功");
                         SPUtils.put("token", loginBeanResultBean.getData().getAccessToken());
                         SPUtils.put("account", etPhone.getText().toString());

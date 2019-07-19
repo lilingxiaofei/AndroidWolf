@@ -63,7 +63,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
-
+    OpenDialog dialog ;
 
     @BindView(R.id.view_pager)
     MyViewPager viewPager;
@@ -129,7 +129,14 @@ public class MainActivity extends BaseActivity {
         initView();
         initData();
         checkUpdate();
+
 //        showErrorLog();
+    }
+
+    private void checkedLogin(){
+        if(!BaseApplication.isLogin()){
+            LoginMainActivity.startLoginActivity(this);
+        }
     }
 
     private void showErrorLog(){
@@ -267,7 +274,7 @@ public class MainActivity extends BaseActivity {
                         public void accept(ResultBean<HomeModulesBean> brandsListBeanResultBean) throws Exception {
                             if(null != brandsListBeanResultBean.getData()){
                                 params = brandsListBeanResultBean.getData().getModules().get(0).getParams();
-                                OpenDialog dialog = new OpenDialog(MainActivity.this,params);
+                                dialog = new OpenDialog(MainActivity.this,params);
                                 dialog.show();
                             }
                         }
@@ -282,6 +289,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
+        checkedLogin();
 //        if(viewPager.getCurrentItem() == ){
 //
 //        }
@@ -439,6 +447,7 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         EventManager.getInstance().unRegisterListener(onNotifyListener);
         disposable.dispose();
+        dialog.dismiss();
     }
 
     @Override
@@ -454,6 +463,16 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            boolean isExit = intent.getBooleanExtra("exit", false);
+            if (isExit) {
+                finish();
+            }
+        }
+    }
 
     private void checkUpdate() {
         disposable.add(ApiUtils.getInstance().checkUpdate()

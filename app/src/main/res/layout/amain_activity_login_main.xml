@@ -15,6 +15,7 @@
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="@dimen/title_bar_height"
             android:padding="10dp"
+            android:visibility="gone"
             android:src="@mipmap/black_left_arrow_two" />
 
         <TextView
