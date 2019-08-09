@@ -1109,7 +1109,19 @@
                                 android:layout_centerVertical="true"
                                 android:textColor="@color/t_black"
                                 android:textSize="@dimen/sp_small" />
-
+                            <EditText
+                                android:id="@+id/etSize"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_toRightOf="@+id/tvSizeStr"
+                                android:layout_alignParentBottom="true"
+                                android:background="@null"
+                                android:gravity="center_vertical"
+                                android:hint=""
+                                android:inputType="number"
+                                android:singleLine="true"
+                                android:textColor="@color/t_black"
+                                android:textSize="@dimen/sp_small" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -1143,20 +1155,7 @@
                                 android:textColor="@color/t_black"
                                 android:textSize="@dimen/sp_small" />
 
-                            <EditText
-                                android:id="@+id/etSize"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_alignLeft="@+id/etChateau"
-                                android:layout_alignParentBottom="true"
-                                android:layout_alignStart="@+id/etChateau"
-                                android:background="@null"
-                                android:gravity="center_vertical"
-                                android:hint=""
-                                android:inputType="number"
-                                android:singleLine="true"
-                                android:textColor="@color/t_black"
-                                android:textSize="@dimen/sp_small" />
+
 
                         </RelativeLayout>
 
