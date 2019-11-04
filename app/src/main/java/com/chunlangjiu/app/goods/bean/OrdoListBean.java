@@ -1,24 +1,26 @@
 package com.chunlangjiu.app.goods.bean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @CreatedbBy: liucun on 2018/9/27
  * @Describe:
  */
-public class OrdoListBean {
+public class OrdoListBean implements Serializable {
 
-    private List<OrdoBean> list;
+    private ArrayList<OrdoBean> list;
 
-    public List<OrdoBean> getList() {
+    public ArrayList<OrdoBean> getList() {
         return list;
     }
 
-    public void setList(List<OrdoBean> list) {
+    public void setList(ArrayList<OrdoBean> list) {
         this.list = list;
     }
 
-    public class OrdoBean{
+    public class OrdoBean implements Serializable{
 
         private String odor_id;
         private String odor_name;

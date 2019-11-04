@@ -566,6 +566,8 @@ public class AuctionFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         EventManager.getInstance().unRegisterListener(onNotifyListener);
-        disposable.dispose();
+        if(disposable!=null){
+            disposable.dispose();
+        }
     }
 }

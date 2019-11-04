@@ -1,33 +1,35 @@
 package com.chunlangjiu.app.goods.bean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @CreatedbBy: liucun on 2018/9/27
  * @Describe:
  */
-public class BrandsListBean {
+public class BrandsListBean implements Serializable{
 
-    private List<BrandBean> brands;
-    private List<BrandBean> list;
+    private ArrayList<BrandBean> brands;
+    private ArrayList<BrandBean> list;
 
-    public List<BrandBean> getList() {
+    public ArrayList<BrandBean> getList() {
         return list;
     }
 
-    public void setList(List<BrandBean> list) {
+    public void setList(ArrayList<BrandBean> list) {
         this.list = list;
     }
 
-    public List<BrandBean> getBrands() {
+    public ArrayList<BrandBean> getBrands() {
         return brands;
     }
 
-    public void setBrands(List<BrandBean> brands) {
+    public void setBrands(ArrayList<BrandBean> brands) {
         this.brands = brands;
     }
 
-    public class BrandBean{
+    public class BrandBean implements Serializable {
 
         private String brand_id;
         private String brand_name;

@@ -6,6 +6,7 @@
         android:name=".abase.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/launcher"
+        android:roundIcon="@mipmap/launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme">

@@ -446,8 +446,12 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventManager.getInstance().unRegisterListener(onNotifyListener);
-        disposable.dispose();
-        dialog.dismiss();
+        if(disposable!=null){
+            disposable.dispose();
+        }
+        if(dialog!=null){
+            dialog.dismiss();
+        }
     }
 
     @Override

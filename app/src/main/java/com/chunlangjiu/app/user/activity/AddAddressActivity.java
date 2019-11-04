@@ -191,13 +191,20 @@ public class AddAddressActivity extends BaseActivity {
             public void onAddressSelected(ArrayList<ISelectAble> selectAbles) {
                 String areaName = "";
                 if (selectAbles.get(0).getName().equals(selectAbles.get(1).getName())) {
-                    areaName = selectAbles.get(1).getName() + " " + selectAbles.get(2).getName();
+                    areaName = selectAbles.get(1).getName();
                 } else {
-                    areaName = selectAbles.get(0).getName() + " " + selectAbles.get(1).getName() + " " + selectAbles.get(2).getName();
+                    areaName = selectAbles.get(0).getName() + " " + selectAbles.get(1).getName();
                 }
                 provinceId = ((LocalAreaBean.ProvinceData) (selectAbles.get(0).getArg())).getId();
                 cityId = ((LocalAreaBean.ProvinceData.City) (selectAbles.get(1).getArg())).getId();
-                districtId = ((LocalAreaBean.ProvinceData.City.District) (selectAbles.get(2).getArg())).getId();
+
+                if(selectAbles.size()>=3 && null != selectAbles.get(2)){
+                    areaName += " " + selectAbles.get(2).getName();
+                    districtId = ((LocalAreaBean.ProvinceData.City.District) (selectAbles.get(2).getArg())).getId();
+                }
+
+
+
                 tvArea.setText(areaName);
                 areaDialog.dismiss();
             }
@@ -262,25 +269,34 @@ public class AddAddressActivity extends BaseActivity {
     private ArrayList<ISelectAble> getDistrict(int index) {
         this.cityIndex = index;
         ArrayList<ISelectAble> data = new ArrayList<>();
-        for (int j = 0; j < areaLists.get(provinceIndex).getChildren().get(cityIndex).getChildren().size(); j++) {
-            final int finalJ = j;
-            data.add(new ISelectAble() {
-                @Override
-                public String getName() {
-                    return areaLists.get(provinceIndex).getChildren().get(cityIndex).getChildren().get(finalJ).getValue();
-                }
+        try {
+            List<LocalAreaBean.ProvinceData.City> araListOne = areaLists.get(provinceIndex).getChildren();
+            final List<LocalAreaBean.ProvinceData.City.District> disList = araListOne.get(cityIndex).getChildren();
+            if(null != disList){
+                for (int j = 0; j < disList.size(); j++) {
+                    final int finalJ = j;
+                    data.add(new ISelectAble() {
+                        @Override
+                        public String getName() {
+                            return disList.get(finalJ).getValue();
+                        }
 
-                @Override
-                public int getId() {
-                    return finalJ;
-                }
+                        @Override
+                        public int getId() {
+                            return finalJ;
+                        }
 
-                @Override
-                public Object getArg() {
-                    return areaLists.get(provinceIndex).getChildren().get(cityIndex).getChildren().get(finalJ);
+                        @Override
+                        public Object getArg() {
+                            return areaLists.get(provinceIndex).getChildren().get(cityIndex).getChildren().get(finalJ);
+                        }
+                    });
                 }
-            });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
         return data;
     }
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
+import com.noober.api.NeedSave;
 import com.pkqup.commonlibrary.dialog.ChoicePhotoDialog;
 import com.pkqup.commonlibrary.eventmsg.EventManager;
 import com.pkqup.commonlibrary.glide.GlideUtils;
@@ -101,15 +103,24 @@ public class PersonAuthActivity extends BaseActivity {
     private ChoicePhotoDialog behindDialog;
     private ChoicePhotoDialog personDialog;
 
-    private ArrayList<ImageItem> frontLists;
-    private ArrayList<ImageItem> behindLists;
-    private ArrayList<ImageItem> personLists;
-    private String base64HandCard;
-    private String urlHandCard;
-    private String base64Front;
-    private String urlFront;
-    private String base64Reverse;
-    private String urlReverse;
+    @NeedSave
+    ArrayList<ImageItem> frontLists;
+    @NeedSave
+    ArrayList<ImageItem> behindLists;
+    @NeedSave
+     ArrayList<ImageItem> personLists;
+    @NeedSave
+     String base64HandCard;
+    @NeedSave
+     String urlHandCard;
+    @NeedSave
+     String base64Front;
+    @NeedSave
+     String urlFront;
+    @NeedSave
+     String base64Reverse;
+    @NeedSave
+     String urlReverse;
 //    private View.OnClickListener onClickListener = new View.OnClickListener() {
 //        @Override
 //        public void onClick(View view) {
@@ -157,11 +168,13 @@ public class PersonAuthActivity extends BaseActivity {
 
     @Override
     public void setTitleView() {
-//        titleName.setText("实名认证");
         titleName.setText("个人认证信息");
-//        titleImgLeft.setOnClickListener(onClickListener);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,6 +182,8 @@ public class PersonAuthActivity extends BaseActivity {
         initImagePicker();
         initView();
         initData();
+        setImgPic();
+
     }
 
     private void initImagePicker() {
@@ -269,7 +284,7 @@ public class PersonAuthActivity extends BaseActivity {
                     }
                 }, new Consumer<Throwable>() {
                     @Override
-                    public void accept(Throwable throwable) throws Exception {
+                    public void accept(Throwable throwable) throws  Exception {
                     }
                 }));
     }
@@ -388,7 +403,7 @@ public class PersonAuthActivity extends BaseActivity {
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64Front = FileUtils.imgToBase64(frontLists.get(0).path);
 //                    GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgFrontPic);
-                    GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgFront);
+                    setImgPic();
                 } else if (requestCode == REQUEST_CODE_SELECT_BEHIND) {
                     behindLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                     ImageItem imageItem = behindLists.get(0);
@@ -396,7 +411,7 @@ public class PersonAuthActivity extends BaseActivity {
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64Reverse = FileUtils.imgToBase64(behindLists.get(0).path);
 //                    GlideUtils.loadImage(PersonAuthActivity.this, behindLists.get(0).path, imgBehindPic);
-                    GlideUtils.loadImage(PersonAuthActivity.this, behindLists.get(0).path, imgBehind);
+                    setImgPic();
                 } else if (requestCode == REQUEST_CODE_SELECT_PERSON) {
                     personLists = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                     ImageItem imageItem = personLists.get(0);
@@ -404,11 +419,26 @@ public class PersonAuthActivity extends BaseActivity {
                     imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
                     base64HandCard = FileUtils.imgToBase64(personLists.get(0).path);
 //                    GlideUtils.loadImage(PersonAuthActivity.this, personLists.get(0).path, imgCardPic);
-                    GlideUtils.loadImage(PersonAuthActivity.this, personLists.get(0).path, imgPerson);
+                    setImgPic();
                 }
-
             }
         }
+    }
+
+    private void setImgPic(){
+        if(frontLists!=null && frontLists.get(0).path!=null){
+            GlideUtils.loadImage(PersonAuthActivity.this, frontLists.get(0).path, imgFront);
+        }
+        if(behindLists!=null && behindLists.get(0).path!=null){
+            GlideUtils.loadImage(PersonAuthActivity.this, behindLists.get(0).path, imgBehind);
+        }
+        if(personLists!=null && personLists.get(0).path!=null){
+            GlideUtils.loadImage(PersonAuthActivity.this, personLists.get(0).path, imgPerson);
+        }
+        Log.d("setImgPicbase64Front",base64Front+"-----");
+        Log.d("setImgPicbase64HandCard",base64HandCard+"-----");
+        Log.d("setImgPicbase64Reverse",base64Reverse+"-----");
+
     }
 
     private void checkData() {

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'AutoSave'
 
 android {
     compileSdkVersion 27
@@ -98,12 +99,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation project(':common:commonlibrary')
-    implementation project(':common:imagepicker')
-    implementation project(':common:citypick')
-    implementation project(':common:umengshare')
-    implementation project(':common:TimePickerDialog')
-    implementation project(':common:photoLibrary')
+    api project(':common:commonlibrary')
+    api project(':common:imagepicker')
+    api project(':common:citypick')
+    api project(':common:umengshare')
+    api project(':common:TimePickerDialog')
+    api project(':common:photoLibrary')
     //依赖注入
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -119,6 +120,11 @@ dependencies {
     //流水布局
     compile 'org.apmem.tools:layouts:1.10@aar'
     implementation 'com.pingxx:pingpp-android:2.2.2'
+
+    //图片内存不足的时候启动照相容易回收资源，这个是用来恢复资源的
+//    api 'com.xiaoqi:xqauto-api:1.1.0'
+//    api 'com.xiaoqi:xqauto-savehelper:1.1.0'
+//    annotationProcessor 'com.xiaoqi:xqauto-processor:1.1.0'
     // (Ping++ 标准版 SDK) 必须添加
     //    implementation 'com.pingxx:pingpp-android-alipay:2.2.0' // 使用支付宝时添加
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'

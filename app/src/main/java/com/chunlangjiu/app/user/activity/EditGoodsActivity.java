@@ -47,6 +47,7 @@ import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.lzy.imagepicker.view.CropImageView;
+import com.noober.api.NeedSave;
 import com.pkqup.commonlibrary.dialog.ChoicePhotoDialog;
 import com.pkqup.commonlibrary.glide.GlideApp;
 import com.pkqup.commonlibrary.glide.GlideUtils;
@@ -79,7 +80,6 @@ public class EditGoodsActivity extends BaseActivity {
     public static final int REQUEST_CODE_SELECT_DETAIL_THREE_PIC = 10023;
     public static final int REQUEST_CODE_SELECT_DETAIL_FOUR_PIC = 10024;
     public static final int REQUEST_CODE_SELECT_GOODS_PIC = 1003;
-    private int codeType;
 
     @BindView(R.id.rlChoiceClass)
     RelativeLayout rlChoiceClass;
@@ -215,49 +215,86 @@ public class EditGoodsActivity extends BaseActivity {
     @BindView(R.id.tvCommit)
     TextView tvCommit;
 
+
+    @NeedSave
+    int codeType;
     //分类列表
-    private ShopClassPopWindow shopPopWindow;
-    private List<ThirdClassBean> classLists;
-    private String classId;
+    ShopClassPopWindow shopPopWindow;
+    @NeedSave
+    ArrayList<ThirdClassBean> classLists;
+    @NeedSave
+    String classId;
+    @NeedSave
+    String className;
 
     //品牌列表
-    private ChoiceBrandPopWindow choiceBrandPopWindow;
-    private List<BrandsListBean.BrandBean> brandLists = new ArrayList<>();
-    private String brandId;
+    ChoiceBrandPopWindow choiceBrandPopWindow;
+    @NeedSave
+    ArrayList<BrandsListBean.BrandBean> brandLists = new ArrayList<>();
+    @NeedSave
+    String brandId;
+    @NeedSave
+    String brandName;
 
     //产地列表
-    private ChoiceAreaPopWindow choiceAreaPopWindow;
-    private List<AreaListBean.AreaBean> areaLists = new ArrayList<>();
-    private String areaId = "";
+    ChoiceAreaPopWindow choiceAreaPopWindow;
+    @NeedSave
+    ArrayList<AreaListBean.AreaBean> areaLists = new ArrayList<>();
+    @NeedSave
+    String areaId = "";
+    @NeedSave
+    String areaName = "";
 
     //香型列表
-    private ChoiceOrdoPopWindow choiceOrdoPopWindow;
-    private List<OrdoListBean.OrdoBean> ordoLists = new ArrayList<>();
-    private String ordoId = "";
+    ChoiceOrdoPopWindow choiceOrdoPopWindow;
+    @NeedSave
+    ArrayList<OrdoListBean.OrdoBean> ordoLists = new ArrayList<>();
+    @NeedSave
+    String ordoId = "";
+    @NeedSave
+    String ordoName = "";
 
     //酒精度列表
-    private ChoiceAlcPopWindow choiceAlcPopWindow;
-    private List<AlcListBean.AlcBean> alcLists = new ArrayList<>();
-    private String alcId = "";
+    ChoiceAlcPopWindow choiceAlcPopWindow;
+    @NeedSave
+    ArrayList<AlcListBean.AlcBean> alcLists = new ArrayList<>();
+    @NeedSave
+    String alcId = "";
+    @NeedSave
+    String alcName = "";
 
-    private CompositeDisposable disposable;
-    private ChoicePhotoDialog photoDialog;
-    private ArrayList<ImageItem> mainPicLists;
-    private ArrayList<ImageItem> detailOnePicLists;
-    private ArrayList<ImageItem> detailTwoPicLists;
-    private ArrayList<ImageItem> detailThreePicLists;
-    private ArrayList<ImageItem> detailFourPicLists;
-    private GoodsPicAdapter goodsAdapter;
-    private ArrayList<ImageItem> goodsPicLists = new ArrayList<>();
-    private String base64Main;
-    private String base64DetailOne;
-    private String base64DetailTwo;
-    private String base64DetailThree;
-    private String base64DetailFour;
-    private String base64Goods;
+    CompositeDisposable disposable;
+    ChoicePhotoDialog photoDialog;
+    @NeedSave
+    ArrayList<ImageItem> mainPicLists;
+    @NeedSave
+    ArrayList<ImageItem> detailOnePicLists;
+    @NeedSave
+    ArrayList<ImageItem> detailTwoPicLists;
+    @NeedSave
+    ArrayList<ImageItem> detailThreePicLists;
+    @NeedSave
+    ArrayList<ImageItem> detailFourPicLists;
 
 
-    private String itemId;
+    GoodsPicAdapter goodsAdapter;
+    @NeedSave
+    ArrayList<ImageItem> goodsPicLists = new ArrayList<>();
+    @NeedSave
+    String base64Main;
+    @NeedSave
+    String base64DetailOne;
+    @NeedSave
+    String base64DetailTwo;
+    @NeedSave
+    String base64DetailThree;
+    @NeedSave
+    String base64DetailFour;
+    @NeedSave
+    String base64Goods;
+
+
+    String itemId;
 
     public static void startEditGoodsDetailsActivity(Activity activity, String item_id) {
         Intent intent = new Intent(activity, EditGoodsActivity.class);
@@ -346,7 +383,60 @@ public class EditGoodsActivity extends BaseActivity {
         setContentView(R.layout.user_activity_add_goods);
         initView();
         initImagePicker();
-        initData();
+        if(savedInstanceState==null){
+            initData();
+        }else{
+            setImgPic();
+            setChooserName();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    private void setChooserName() {
+        tvPlateClass.setText(className);
+        tvBrand.setText(brandName);
+        tvChoiceArea.setText(areaName);
+        tvIncense.setText(ordoName);
+        tvDegree.setText(alcName);
+    }
+
+    private void setImgPic() {
+        if (!TextUtils.isEmpty(base64Main)) {
+            GlideUtils.loadImage(EditGoodsActivity.this, base64Main, imgMainPic);
+            imgMainPic.setVisibility(View.VISIBLE);
+            imgDeleteMainPic.setVisibility(View.VISIBLE);
+        }
+        if (!TextUtils.isEmpty(base64DetailOne)) {
+            GlideUtils.loadImage(EditGoodsActivity.this, base64DetailOne, imgDescOnePic);
+            imgDescOnePic.setVisibility(View.VISIBLE);
+            imgDeleteDescOnePic.setVisibility(View.VISIBLE);
+            rlDescTwo.setVisibility(View.VISIBLE);
+        }
+        if (!TextUtils.isEmpty(base64DetailTwo)) {
+            GlideUtils.loadImage(EditGoodsActivity.this, base64DetailTwo, imgDescTwoPic);
+            imgDescTwoPic.setVisibility(View.VISIBLE);
+            imgDeleteDescTwoPic.setVisibility(View.VISIBLE);
+            rlDescThree.setVisibility(View.VISIBLE);
+        }
+        if (!TextUtils.isEmpty(base64DetailThree)) {
+            GlideUtils.loadImage(EditGoodsActivity.this, base64DetailThree, imgDescFourPic);
+            imgDescThreePic.setVisibility(View.VISIBLE);
+            imgDeleteDescThreePic.setVisibility(View.VISIBLE);
+            rlDescFour.setVisibility(View.VISIBLE);
+        }
+        if (!TextUtils.isEmpty(base64DetailFour)) {
+            GlideUtils.loadImage(EditGoodsActivity.this, base64DetailFour, imgDescThreePic);
+            imgDescFourPic.setVisibility(View.VISIBLE);
+            imgDeleteDescFourPic.setVisibility(View.VISIBLE);
+            recyclerViewGoods.setVisibility(View.VISIBLE);
+        }
+        if (goodsPicLists != null) {
+            goodsAdapter.notifyDataSetChanged();
+        }
     }
 
     private void initView() {
@@ -400,9 +490,9 @@ public class EditGoodsActivity extends BaseActivity {
         goodsAdapter.setOnItemChildClickListener(new GoodsPicAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(View view, int position) {
-                if(view.getId() == R.id.llAdd){
+                if (view.getId() == R.id.llAdd) {
                     showPhotoDialog(REQUEST_CODE_SELECT_GOODS_PIC);
-                }else if(view.getId() == R.id.ivDeleteGoodsPic){
+                } else if (view.getId() == R.id.ivDeleteGoodsPic) {
                     goodsPicLists.remove(position);
                     goodsAdapter.notifyDataSetChanged();
                 }
@@ -450,6 +540,7 @@ public class EditGoodsActivity extends BaseActivity {
 
                         for (int i = 0; i < classLists.size(); i++) {
                             if (classLists.get(i).getCat_id().equals(classId)) {
+                                EditGoodsActivity.this.className = classLists.get(i).getCat_name();
                                 tvPlateClass.setText(classLists.get(i).getCat_name());
                             }
                         }
@@ -498,7 +589,7 @@ public class EditGoodsActivity extends BaseActivity {
         etPrice.setText(item.getPrice());
         etCount.setText(item.getStore());
         etGoodsDesc.setText(item.getExplain());
-
+        setChooserName();
         try {
             String parameter = item.getParameter();
             List<AddGoodsValueBean> ps = new Gson().fromJson(parameter, new TypeToken<List<AddGoodsValueBean>>() {
@@ -580,8 +671,8 @@ public class EditGoodsActivity extends BaseActivity {
 //                    base64DetailFour = FileUtils.bitMapToBase64(resource);
 //                }
 //            });
-            if(images.size()>=5){
-                for (int i = 5; i <images.size() ; i++) {
+            if (images.size() >= 5) {
+                for (int i = 5; i < images.size(); i++) {
                     ImageItem imageItem = new ImageItem();
                     imageItem.path = images.get(i);
                     goodsPicLists.add(imageItem);
@@ -610,19 +701,16 @@ public class EditGoodsActivity extends BaseActivity {
                     @Override
                     public void choiceClassId(String className, String classIdChoice) {
                         classId = classIdChoice;
-                        tvPlateClass.setText(className);
+                        EditGoodsActivity.this.className = className;
                         brandId = "";
                         areaId = "";
                         ordoId = "";
                         alcId = "";
-                        tvBrand.setText("");
-                        tvChoiceArea.setText("");
-                        tvIncense.setText("");
-                        tvDegree.setText("");
                         getBrandLists();
                         getAreaLists();
                         getInsenceLists();
                         getAlcLists();
+                        setChooserName();
                     }
                 });
             }
@@ -642,6 +730,7 @@ public class EditGoodsActivity extends BaseActivity {
                         for (int i = 0; i < brandLists.size(); i++) {
                             if (brandLists.get(i).getBrand_id().equals(brandId)) {
                                 tvBrand.setText(brandLists.get(i).getBrand_name());
+                                EditGoodsActivity.this.brandName = brandLists.get(i).getBrand_name();
                             }
                         }
                     }
@@ -663,6 +752,7 @@ public class EditGoodsActivity extends BaseActivity {
                         for (int i = 0; i < areaLists.size(); i++) {
                             if (areaLists.get(i).getArea_id().equals(areaId)) {
                                 tvChoiceArea.setText(areaLists.get(i).getArea_name());
+                                EditGoodsActivity.this.areaName = areaLists.get(i).getArea_name();
                             }
                         }
                     }
@@ -684,6 +774,7 @@ public class EditGoodsActivity extends BaseActivity {
                         for (int i = 0; i < ordoLists.size(); i++) {
                             if (ordoLists.get(i).getOdor_id().equals(ordoId)) {
                                 tvIncense.setText(ordoLists.get(i).getOdor_name());
+                                EditGoodsActivity.this.ordoName = ordoLists.get(i).getOdor_name();
                             }
                         }
                     }
@@ -705,6 +796,7 @@ public class EditGoodsActivity extends BaseActivity {
                         for (int i = 0; i < alcLists.size(); i++) {
                             if (alcLists.get(i).getAlcohol_id().equals(alcId)) {
                                 tvDegree.setText(alcLists.get(i).getAlcohol_name());
+                                EditGoodsActivity.this.alcName = alcLists.get(i).getAlcohol_name();
                             }
                         }
                     }
@@ -727,6 +819,7 @@ public class EditGoodsActivity extends BaseActivity {
                     choiceBrandPopWindow.setCallBack(new ChoiceBrandPopWindow.CallBack() {
                         @Override
                         public void choiceBrand(String brandName, String brandIdC) {
+                            EditGoodsActivity.this.className = brandName;
                             tvBrand.setText(brandName);
                             brandId = brandIdC;
                         }
@@ -752,6 +845,7 @@ public class EditGoodsActivity extends BaseActivity {
                         @Override
                         public void choiceBrand(String brandName, String brandId) {
                             tvChoiceArea.setText(brandName);
+                            EditGoodsActivity.this.areaName = areaName;
                             areaId = brandId;
                         }
                     });
@@ -774,6 +868,7 @@ public class EditGoodsActivity extends BaseActivity {
                     choiceOrdoPopWindow.setCallBack(new ChoiceOrdoPopWindow.CallBack() {
                         @Override
                         public void choiceBrand(String brandName, String brandId) {
+                            EditGoodsActivity.this.ordoName = brandName;
                             tvIncense.setText(brandName);
                             ordoId = brandId;
                         }
@@ -798,6 +893,7 @@ public class EditGoodsActivity extends BaseActivity {
                     choiceAlcPopWindow.setCallBack(new ChoiceAlcPopWindow.CallBack() {
                         @Override
                         public void choiceBrand(String brandName, String brandId) {
+                            EditGoodsActivity.this.alcName = brandName;
                             tvDegree.setText(brandName);
                             alcId = brandId;
                         }
@@ -885,9 +981,9 @@ public class EditGoodsActivity extends BaseActivity {
         tempList.add(CommonUtils.getUploadPic(base64DetailThree, (detailThreePicLists == null || detailThreePicLists.size() == 0) ? "main.jpg" : detailThreePicLists.get(0).name));
         tempList.add(CommonUtils.getUploadPic(base64DetailFour, (detailFourPicLists == null || detailFourPicLists.size() == 0) ? "main.jpg" : detailFourPicLists.get(0).name));
         //可选上传的图片
-        if(goodsPicLists!= null && goodsPicLists.size()>0){
-            for (final ImageItem imageItem:goodsPicLists) {
-                tempList.add(CommonUtils.getUploadPic(imageItem.path,imageItem.name));
+        if (goodsPicLists != null && goodsPicLists.size() > 0) {
+            for (final ImageItem imageItem : goodsPicLists) {
+                tempList.add(CommonUtils.getUploadPic(imageItem.path, imageItem.name));
             }
         }
 
@@ -896,8 +992,8 @@ public class EditGoodsActivity extends BaseActivity {
             @Override
             public List<String> apply(Object[] objects) throws Exception {
                 List<String> imageLists = new ArrayList<>();
-                for (Object obj:objects) {
-                    ResultBean<UploadImageBean> resultBeans = (ResultBean<UploadImageBean>)obj;
+                for (Object obj : objects) {
+                    ResultBean<UploadImageBean> resultBeans = (ResultBean<UploadImageBean>) obj;
                     imageLists.add(resultBeans.getData().getUrl());
                 }
                 return imageLists;
@@ -907,9 +1003,9 @@ public class EditGoodsActivity extends BaseActivity {
                 .subscribe(new Consumer<List<String>>() {
                     @Override
                     public void accept(List<String> strings) throws Exception {
-                        if(strings != null && strings.size()>0){
+                        if (strings != null && strings.size() > 0) {
                             uploadSuccess(strings);
-                        }else{
+                        } else {
                             hideLoadingDialog();
                             ToastUtils.showShort("上传图片失败");
                         }
@@ -996,7 +1092,6 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = mainPicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-//                        base64Main = FileUtils.imgToBase64(mainPicLists.get(0).path);
                         base64Main = mainPicLists.get(0).path;
                         imgMainPic.setVisibility(View.VISIBLE);
                         imgDeleteMainPic.setVisibility(View.VISIBLE);
@@ -1006,7 +1101,6 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = detailOnePicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-//                        base64DetailOne = FileUtils.imgToBase64(detailOnePicLists.get(0).path);
                         base64DetailOne = detailOnePicLists.get(0).path;
                         imgDescOnePic.setVisibility(View.VISIBLE);
                         imgDeleteDescOnePic.setVisibility(View.VISIBLE);
@@ -1017,7 +1111,6 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = detailTwoPicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-//                        base64DetailTwo = FileUtils.imgToBase64(detailTwoPicLists.get(0).path);
                         base64DetailTwo = detailTwoPicLists.get(0).path;
                         imgDescTwoPic.setVisibility(View.VISIBLE);
                         imgDeleteDescTwoPic.setVisibility(View.VISIBLE);
@@ -1028,7 +1121,6 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = detailThreePicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-//                        base64DetailThree = FileUtils.imgToBase64(detailThreePicLists.get(0).path);
                         base64DetailThree = detailThreePicLists.get(0).path;
                         imgDescThreePic.setVisibility(View.VISIBLE);
                         imgDeleteDescThreePic.setVisibility(View.VISIBLE);
@@ -1039,12 +1131,10 @@ public class EditGoodsActivity extends BaseActivity {
                         ImageItem imageItem = detailFourPicLists.get(0);
                         int index = imageItem.path.lastIndexOf("/");
                         imageItem.name = imageItem.path.substring(index + 1, imageItem.path.length());
-//                        base64DetailFour = FileUtils.imgToBase64(detailFourPicLists.get(0).path);
                         base64DetailFour = detailFourPicLists.get(0).path;
                         imgDescFourPic.setVisibility(View.VISIBLE);
                         imgDeleteDescFourPic.setVisibility(View.VISIBLE);
                         GlideUtils.loadImage(EditGoodsActivity.this, detailFourPicLists.get(0).path, imgDescFourPic);
-//                        rlGoods.setVisibility(View.VISIBLE);
                         recyclerViewGoods.setVisibility(View.VISIBLE);
                     } else if (requestCode == REQUEST_CODE_SELECT_GOODS_PIC) {
                         ArrayList<ImageItem> tempItem = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);

@@ -1,24 +1,26 @@
 package com.chunlangjiu.app.goods.bean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @CreatedbBy: liucun on 2018/9/27
  * @Describe:
  */
-public class AlcListBean {
+public class AlcListBean implements Serializable {
 
-    private List<AlcBean> list;
+    private ArrayList<AlcBean> list;
 
-    public List<AlcBean> getList() {
+    public ArrayList<AlcBean> getList() {
         return list;
     }
 
-    public void setList(List<AlcBean> list) {
+    public void setList(ArrayList<AlcBean> list) {
         this.list = list;
     }
 
-    public class AlcBean{
+    public class AlcBean implements Serializable{
 
         private String alcohol_id;
         private String alcohol_name;

@@ -179,6 +179,8 @@ public class ClassifyFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        disposable.dispose();
+        if(disposable!=null){
+            disposable.dispose();
+        }
     }
 }

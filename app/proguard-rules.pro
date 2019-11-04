@@ -133,3 +133,10 @@
 -keepattributes InnerClasses
 -keepattributes EnclosingMethod
 -dontoptimize
+
+# ----------------------- AutoSave  start  ------------------------------
+-dontwarn  com.noober.**
+ -keep class com.noober.api.**{*;}
+ -keep class com.noober.savehelper.**{*;}
+ -keep class * implements com.noober.savehelper.ISaveInstanceStateHelper {*;}
+ # ----------------------- AutoSave  end  ------------------------------
