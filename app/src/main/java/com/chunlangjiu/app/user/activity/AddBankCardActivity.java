@@ -314,7 +314,7 @@ public class AddBankCardActivity extends BaseActivity {
     }
 
     private void showAreaDialog() {
-        Selector selector = new Selector(this, 3);
+        Selector selector = new Selector(this, 2);
         selector.setDataProvider(new DataProvider() {
             @Override
             public void provideData(int currentDeep, int index, DataReceiver receiver) {
@@ -332,18 +332,20 @@ public class AddBankCardActivity extends BaseActivity {
         selector.setSelectedListener(new SelectedListener() {
             @Override
             public void onAddressSelected(ArrayList<ISelectAble> selectAbles) {
-                String areaName = "";
-                if (selectAbles.get(0).getName().equals(selectAbles.get(1).getName())) {
-                    areaName = selectAbles.get(1).getName() + " " + selectAbles.get(2).getName();
-                } else {
-                    areaName = selectAbles.get(0).getName() + " " + selectAbles.get(1).getName() + " " + selectAbles.get(2).getName();
-                }
+//                String areaName = "";
+//                if (selectAbles.get(0).getName().equals(selectAbles.get(1).getName())) {
+//                    areaName = selectAbles.get(1).getName() + " " + selectAbles.get(2).getName();
+//                } else {
+//                    areaName = selectAbles.get(0).getName() + " " + selectAbles.get(1).getName() + " " + selectAbles.get(2).getName();
+//                }
                 tvProvince.setText(((LocalAreaBean.ProvinceData) (selectAbles.get(0).getArg())).getValue());
                 tvCity.setText(((LocalAreaBean.ProvinceData.City) (selectAbles.get(1).getArg())).getValue());
                 provinceId = ((LocalAreaBean.ProvinceData) (selectAbles.get(0).getArg())).getId();
                 cityId = ((LocalAreaBean.ProvinceData.City) (selectAbles.get(1).getArg())).getId();
-                districtId = ((LocalAreaBean.ProvinceData.City.District) (selectAbles.get(2).getArg())).getId();
-//                tvArea.setText(areaName);
+
+//                if(selectAbles.size()>=3 && null != selectAbles.get(2)){
+//                    districtId = ((LocalAreaBean.ProvinceData.City.District) (selectAbles.get(2).getArg())).getId();
+//                }
                 areaDialog.dismiss();
             }
         });

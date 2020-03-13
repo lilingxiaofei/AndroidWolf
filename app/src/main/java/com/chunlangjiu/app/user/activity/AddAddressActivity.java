@@ -202,9 +202,6 @@ public class AddAddressActivity extends BaseActivity {
                     areaName += " " + selectAbles.get(2).getName();
                     districtId = ((LocalAreaBean.ProvinceData.City.District) (selectAbles.get(2).getArg())).getId();
                 }
-
-
-
                 tvArea.setText(areaName);
                 areaDialog.dismiss();
             }
