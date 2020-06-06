@@ -8,8 +8,8 @@ android {
         applicationId "com.chunlangjiu.app"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 12
-        versionName "2.1.1"
+        versionCode 13
+        versionName "2.1.2"
         multiDexEnabled true
         flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -93,9 +93,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    api  fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -106,20 +106,20 @@ dependencies {
     api project(':common:TimePickerDialog')
     api project(':common:photoLibrary')
     //依赖注入
-    implementation 'com.jakewharton:butterknife:8.8.1'
+    api 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    //高德地图定位
-    implementation 'com.amap.api:location:4.0.1'
+    //高德地图定位H
+    api 'com.amap.api:location:4.0.1'
     //个推
-    implementation 'com.getui:sdk:2.12.4.0'
+    api 'com.getui:sdk:2.12.4.0'
     //微信支付
     //    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
-    implementation 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
+    api 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
     //横向滑动删除功能
-    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
+    api 'com.daimajia.swipelayout:library:1.2.0@aar'
     //流水布局
-    compile 'org.apmem.tools:layouts:1.10@aar'
-    implementation 'com.pingxx:pingpp-android:2.2.2'
+    api 'org.apmem.tools:layouts:1.10@aar'
+    api 'com.pingxx:pingpp-android:2.3.5' // (Ping++ 标准版 SDK) 必须添加
 
     //图片内存不足的时候启动照相容易回收资源，这个是用来恢复资源的
 //    api 'com.xiaoqi:xqauto-api:1.1.0'
@@ -127,7 +127,8 @@ dependencies {
 //    annotationProcessor 'com.xiaoqi:xqauto-processor:1.1.0'
     // (Ping++ 标准版 SDK) 必须添加
     //    implementation 'com.pingxx:pingpp-android-alipay:2.2.0' // 使用支付宝时添加
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
+    api 'com.pingxx:pingpp-android-upacp:3.4.9' // 使用银联支付时添加
     // 使用微信支付时添加,具体版本参考微信官方文档
     //    implementation 'com.pingxx:pingpp-android-upacp:2.2.0' // 使用银联支付时添加
     //    implementation 'com.pingxx:pingpp-qpay:2.1.19' // 使用QQ钱包时添加
