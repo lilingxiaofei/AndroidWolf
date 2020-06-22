@@ -4,7 +4,6 @@ package com.chunlangjiu.app.user.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -1077,13 +1076,13 @@ public class AddGoodsActivity extends BaseActivity {
             rlDescThree.setVisibility(View.VISIBLE);
         }
         if (!TextUtils.isEmpty(base64DetailThree)) {
-            GlideUtils.loadImage(AddGoodsActivity.this, base64DetailThree, imgDescFourPic);
+            GlideUtils.loadImage(AddGoodsActivity.this, base64DetailThree, imgDescThreePic);
             imgDescThreePic.setVisibility(View.VISIBLE);
             imgDeleteDescThreePic.setVisibility(View.VISIBLE);
             rlDescFour.setVisibility(View.VISIBLE);
         }
         if (!TextUtils.isEmpty(base64DetailFour)) {
-            GlideUtils.loadImage(AddGoodsActivity.this, base64DetailFour, imgDescThreePic);
+            GlideUtils.loadImage(AddGoodsActivity.this, base64DetailFour, imgDescFourPic);
             imgDescFourPic.setVisibility(View.VISIBLE);
             imgDeleteDescFourPic.setVisibility(View.VISIBLE);
             recyclerViewGoods.setVisibility(View.VISIBLE);

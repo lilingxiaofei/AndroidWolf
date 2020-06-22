@@ -434,8 +434,8 @@ public class ApiUtils {
     }
 
     public Flowable<ResultBean<PaymentBean>> getPayment() {
-        return apiService.getPayment("payment.pay.paycenter", "v3");
-//        return apiService.getPayment("payment.pay.paycenter", "v2");
+//        return apiService.getPayment("payment.pay.paycenter", "v3");
+        return apiService.getPayment("payment.pay.paycenter", "v2");
     }
 
     public Flowable<ResultBean<CreateOrderBean>> createOrder(String mode, String md5, String addrId, String paymentId, String shippingType,

@@ -261,25 +261,25 @@ public class PayNewActivity extends Activity {
 
 
     private void payMoney(final String payMethodId, String payPwd) {
-        if(OrderParams.PAY_PING_ALIPAY.equals(payMethodId) || OrderParams.PAY_PING_WXPAY.equals(payMethodId) || OrderParams.PAY_PING_UNIONPAY.equals(payMethodId)) {
-            ApiUtils.getInstance().payDoPing(paymentId, payMethodId, payPwd)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Map>() {
-                        @Override
-                        public void accept(Map resultBean) throws Exception {
-                            hideLoadingDialog();
-                            invokePay(payMethodId, resultBean);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            payFail();
-                            hideLoadingDialog();
-                            ToastUtils.showErrorMsg(throwable);
-                        }
-                    });
-        }else{
+//        if(OrderParams.PAY_PING_ALIPAY.equals(payMethodId) || OrderParams.PAY_PING_WXPAY.equals(payMethodId) || OrderParams.PAY_PING_UNIONPAY.equals(payMethodId)) {
+//            ApiUtils.getInstance().payDoPing(paymentId, payMethodId, payPwd)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Consumer<Map>() {
+//                        @Override
+//                        public void accept(Map resultBean) throws Exception {
+//                            hideLoadingDialog();
+//                            invokePay(payMethodId, resultBean);
+//                        }
+//                    }, new Consumer<Throwable>() {
+//                        @Override
+//                        public void accept(Throwable throwable) throws Exception {
+//                            payFail();
+//                            hideLoadingDialog();
+//                            ToastUtils.showErrorMsg(throwable);
+//                        }
+//                    });
+//        }else{
             ApiUtils.getInstance().payDo(paymentId, payMethodId, payPwd)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -297,7 +297,7 @@ public class PayNewActivity extends Activity {
                             ToastUtils.showErrorMsg(throwable);
                         }
                     });
-        }
+//        }
 
 
 

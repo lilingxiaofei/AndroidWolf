@@ -312,9 +312,18 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:targetActivity="com.pingplusplus.android.PaymentActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
+        <!-- PING++需要 -->
+        <!--<activity-->
+            <!--android:name=".wxapi.WXPayEntryActivity"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+            <!--android:exported="true"-->
+            <!--android:targetActivity="com.pingplusplus.android.PaymentActivity"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!--<activity-alias-->
+        <!--android:name=".wxapi.WXPayEntryActivity"-->
+        <!--android:exported="true"-->
+        <!--android:targetActivity="com.pingplusplus.android.PaymentActivity" />-->
         <!-- 微信分享回调 -->
 
 
@@ -401,10 +410,7 @@
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
-        <activity-alias
-            android:name=".wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
+
 
         <!-- 银联支付 -->
         <!-- 银联支付需要的   application标签下 -->
