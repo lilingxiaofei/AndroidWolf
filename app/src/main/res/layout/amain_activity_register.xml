@@ -135,8 +135,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="45dp"
             android:text="用户协议"
+            android:textColor="@color/t_red"
+            android:textSize="@dimen/sp_small" />
+        <TextView
+            android:id="@+id/tvUserProtocolThree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="45dp"
+            android:text="、隐私政策"
             android:textColor="@color/t_red"
             android:textSize="@dimen/sp_small" />
 

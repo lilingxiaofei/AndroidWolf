@@ -59,6 +59,10 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.tvUserProtocolTwo)
     TextView tvUserProtocolTwo;
 
+    @BindView(R.id.tvUserProtocolThree)
+    TextView tvUserProtocolThree;
+
+
     private CompositeDisposable disposable;
 
     private CountDownTimer countDownTimer;
@@ -85,8 +89,11 @@ public class RegisterActivity extends BaseActivity {
                     checkSmsCode();
                     break;
                 case R.id.tvLicence:
-                case R.id.llUserProtocol:
-                    toLicence();
+                case R.id.tvUserProtocolTwo:
+                     toLicence();
+                     break;
+                case R.id.tvUserProtocolThree:
+                    WebViewActivity.startWebViewActivity(RegisterActivity.this, ConstantMsg.WEB_URL_PRIVACY, "醇狼APP隐私政策");
                     break;
             }
         }
@@ -118,12 +125,16 @@ public class RegisterActivity extends BaseActivity {
         tvGetCode.setOnClickListener(onClickListener);
         tvLogin.setOnClickListener(onClickListener);
         llUserProtocol.setOnClickListener(onClickListener);
+        tvUserProtocolTwo.setOnClickListener(onClickListener);
+        tvUserProtocolThree.setOnClickListener(onClickListener);
         tvGetCode.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvGetCode.getPaint().setAntiAlias(true);//抗锯齿
         tvUserProtocolOne.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvUserProtocolOne.getPaint().setAntiAlias(true);//抗锯齿z
         tvUserProtocolTwo.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
         tvUserProtocolTwo.getPaint().setAntiAlias(true);//抗锯齿z
+        tvUserProtocolThree.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        tvUserProtocolThree.getPaint().setAntiAlias(true);//抗锯齿z
     }
 
 

@@ -54,6 +54,7 @@ public class ConstantMsg {
     public static final String WEB_URL_MESSAGE = HttpUtils.BASE_URL+ "index.php/wap/app-information.html?apitoken=";//消息
     public static final String WEB_URL_SETTING = HttpUtils.BASE_URL+ "index.php/wap/app-setting.html?apitoken=";//设置
     public static final String WEB_URL_LICENSE = HttpUtils.BASE_URL+ "index.php/wap/app-license.html";//协议
+    public static final String WEB_URL_PRIVACY = HttpUtils.BASE_URL+ "privacy.html";//政策
 
     public static final String WEB_URL_GOODS_MANAGER = HttpUtils.BASE_URL+ "index.php/wap/app-itemCenter.html?apitoken=";//商品管理
     public static final String WEB_URL_SELL_GOODS = HttpUtils.BASE_URL+ "index.php/wap/onsale.html?apitoken=";//在售商品
